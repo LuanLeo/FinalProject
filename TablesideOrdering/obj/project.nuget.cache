@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6EYa1tFSq28HUOBvzlm+iE188Pr/EKCxHxaOSlyk80IS6XGYd5lOULaF04QLgy4+25Lx/Q5DTO2H6glI36CcbA==",
+  "dgSpecHash": "sLW3MkO3D5GtDLUnkkK62oxxweKV3R3hUUHEQOopGtKb40uN+r17U1ZXyRG8AIBD8j1nA3Dyu4TaP+mnVaYhyw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\1682\\TablesideOrdering\\TablesideOrdering\\TablesideOrdering.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
