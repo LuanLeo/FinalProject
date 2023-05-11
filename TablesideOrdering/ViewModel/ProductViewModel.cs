@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace TablesideOrdering.Models
+namespace TablesideOrdering.ViewModel
 {
-    public class Product
+    public class ProductViewModel
     {
         [Key]
         public int ProductId { get; set; }
@@ -12,6 +11,6 @@ namespace TablesideOrdering.Models
         public string Description { get; set; }
         public string Price { get; set; }
         public string Pic { get; set; }
-        
+        public IFormFile PicFile { get; set; } 
     }
 }
