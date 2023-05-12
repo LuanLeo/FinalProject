@@ -13,8 +13,8 @@
         <form asp-action="Create" asp-controller="Products" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <input asp-for="CategoryId" class="form-control" />
+                <label class=" control-label">Category Id</label>
+                <select asp-for="CategoryId" asp-items="@ViewBag.CategoryList" class="form-control">Select</select>
                 <span asp-validation-for="CategoryId" class="text-danger"></span>
             </div>
             <div class="form-group">

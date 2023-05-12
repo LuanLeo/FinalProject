@@ -65,6 +65,7 @@ namespace TablesideOrdering.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
+            ViewBag.CategoryList = CategoryList();
             return View();
         }
 
@@ -99,6 +100,7 @@ namespace TablesideOrdering.Controllers
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
+            ViewBag.CategoryList = CategoryList();
             var product = GetProductByID(id);
             ProductViewModel model = new()
             {
@@ -188,10 +190,7 @@ namespace TablesideOrdering.Controllers
             var pro = _context.Products.FirstOrDefault(x => x.ProductId == id);
             return pro.Pic;
         }
-        private bool ProductExists(int id)
-        {
-            return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
-        }
+
         private string UploadFile(IFormFile formFile)
         {
             string UniqueFileName = formFile.FileName;
@@ -201,6 +200,21 @@ namespace TablesideOrdering.Controllers
                 formFile.CopyTo(stream);
             }
             return UniqueFileName;
+        }
+        
+        public List<SelectListItem> CategoryList()
+        {
+            var list = new List<SelectListItem>();
+            foreach (var cate in _context.Categories)
+            { 
+                list.Add(new SelectListItem() { Value = cate.CategoryId.ToString(), Text = cate.CategoryName});
+            }
+            return list;
+        }
+
+        private bool ProductExists(int id)
+        {
+            return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
         }
     }
 }
