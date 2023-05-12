@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create" asp-controller="Products" enctype="multipart/form-data">
+        <form asp-action="Create" asp-controller="Products" enctype="multipart/form-data" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label"></label>
@@ -35,6 +35,7 @@
             <div class="form-group">
                 <label asp-for="PicFile" class="control-label"></label>
                 <input asp-for="PicFile" accept="image/*" />
+                <p class="text-danger">@ViewBag.NullFile</p>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -47,6 +48,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

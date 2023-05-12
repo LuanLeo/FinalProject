@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TablesideOrdering.Models.Product>
+﻿@model TablesideOrdering.ViewModel.ProductViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -31,7 +31,8 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model.Product)
+        {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.CategoryId)

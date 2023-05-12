@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -28,9 +29,19 @@ namespace TablesideOrdering.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-              return _context.Products != null ? 
-                          View(await _context.Products.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Products'  is null.");
+            var prodata = new ProductViewModel();
+            var product = (from products in _context.Products
+                           select new Product
+                           {
+                               ProductId = products.ProductId,
+                               Price = products.Price,
+                               Description = products.Description,
+                               Name = products.Name,
+                               Pic = products.Pic,
+                               CategoryId = products.CategoryId,
+                           });
+            prodata.Product = product;
+            return View(prodata);
         }
 
         // GET: Products/Details/5
@@ -64,33 +75,41 @@ namespace TablesideOrdering.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductViewModel model, Product product)
         {
-                       
-                product.Name= model.Name;   
-                product.Description= model.Description;
-                product.Price= model.Price;
-                product.CategoryId = model.CategoryId;
+            product.Name = model.Name;
+            product.Description = model.Description;
+            product.Price = model.Price;
+            product.CategoryId = model.CategoryId;
+            if (model.PicFile == null)
+            {
+                ViewBag.NullFile = "Please upload an image!";
+                return View();
+            }
+            if (model.PicFile != null)
+            {
                 product.Pic = UploadFile(model.PicFile);
                 _context.Products.Add(product);
-                await _context.SaveChangesAsync();                 
+                await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
-            
-          
+
+            }
+
+            return RedirectToAction("Index");
         }
 
         // GET: Products/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null || _context.Products == null)
+            var product = GetProductByID(id);
+            ProductViewModel model = new()
             {
-                return NotFound();
-            }
-
-            var product = await _context.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return View(product);
+                ProductId = product.ProductId,
+                Name = product.Name,
+                Description = product.Description,
+                CategoryId = product.CategoryId,
+                Price = product.Price,
+                ExistingImage = product.Pic,
+            };
+            return View(model);
         }
 
         // POST: Products/Edit/5
@@ -98,38 +117,32 @@ namespace TablesideOrdering.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductId,CategoryId,Name,Description,Price,Pic")] Product product)
+        public async Task<IActionResult> Edit(int id, ProductViewModel model)
         {
-            if (id != product.ProductId)
-            {
-                return NotFound();
-            }
 
-            if (ModelState.IsValid)
+            //var products = model.Product.FirstOrDefault(x=>x.ProductId==id);
+            Product product = _context.Products.FirstOrDefault(x => x.ProductId == id);
+            product.Price = model.Price;
+            product.CategoryId = model.CategoryId;
+            product.Description = model.Description;
+            product.Name = model.Name;
+            if (model.PicFile != null)
             {
-                try
+                if (product.Pic != null)
                 {
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
+                    string ExitingFile = Path.Combine(_hostEnvironment.WebRootPath, "ProductImage", product.Pic);
+                    System.IO.File.Delete(ExitingFile);
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductExists(product.ProductId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                product.Pic = UploadFile(model.PicFile);
             }
-            return View(product);
+            _context.Update(product);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
+
         // GET: Products/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null || _context.Products == null)
             {
@@ -151,23 +164,33 @@ namespace TablesideOrdering.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Products == null)
+            Product pro = GetProductByID(id);
+            if (pro.Pic != null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Products'  is null.");
+                string ExistingFile = Path.Combine(_hostEnvironment.WebRootPath, "ProductImage", pro.Pic);
+                System.IO.File.Delete(ExistingFile);
             }
-            var product = await _context.Products.FindAsync(id);
-            if (product != null)
+            if (pro != null)
             {
-                _context.Products.Remove(product);
+                _context.Products.Remove(pro);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+        public Product GetProductByID(int id)
+        {
+            return _context.Products.FirstOrDefault(x => x.ProductId == id);
+        }
+        public string GetProductImage(int id)
+        {
 
+            var pro = _context.Products.FirstOrDefault(x => x.ProductId == id);
+            return pro.Pic;
+        }
         private bool ProductExists(int id)
         {
-          return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
+            return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
         }
         private string UploadFile(IFormFile formFile)
         {

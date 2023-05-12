@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TablesideOrdering.Models;
 
 namespace TablesideOrdering.ViewModel
 {
@@ -12,5 +13,7 @@ namespace TablesideOrdering.ViewModel
         public string Price { get; set; }
         public string Pic { get; set; }
         public IFormFile PicFile { get; set; } 
+        public IQueryable<Product> Product { get; set; }
+        public string ExistingImage { get; set; }
     }
 }
