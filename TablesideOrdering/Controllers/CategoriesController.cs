@@ -29,23 +29,6 @@ namespace TablesideOrdering.Controllers
             return View(CatViewModel);
         }
 
-        // GET: Categories/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || context.Categories == null)
-            {
-                return NotFound();
-            }
-
-            var category = await context.Categories.FirstOrDefaultAsync(m => m.CategoryId == id);
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
-        }
-
         // GET: Categories/Create
         public IActionResult Create()
         {

@@ -11,13 +11,11 @@ namespace TablesideOrdering.Controllers
         {
             _roleManager = roleManager;
         }
-       
-        public IActionResult Index()
+        public IActionResult Index() 
         {
             var roles = _roleManager.Roles;
             return View(roles);
         }
-
         [HttpGet]
         public IActionResult Create()
         {
