@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using TablesideOrdering.Models;
 
-namespace TablesideOrdering.ViewModel
+namespace TablesideOrdering.ViewModels
 {
     public class ProductViewModel
     {
