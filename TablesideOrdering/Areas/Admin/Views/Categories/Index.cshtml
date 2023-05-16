@@ -1,4 +1,4 @@
-﻿@model TablesideOrdering.ViewModels.CategoryViewModel
+﻿@model IEnumerable<TablesideOrdering.Models.Category>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Bootstrap Example</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -20,31 +19,8 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateCategory">
         Create
     </button>
-    <div class="modal fade" id="CreateCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Create New Category</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form asp-action="Create">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label class="control-label">Category Name</label>
-                        <input asp-for="Category.CategoryName" class="form-control" />
-                        <span asp-validation-for="Category.CategoryName" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
+    @await Html.PartialAsync("Create", new Category())
 
-    <!-- Edit Category -->
     <table class="table">
         <thead>
             <tr>
@@ -55,19 +31,27 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Categories)
+            @foreach (var item in Model)
             {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.CategoryName)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.CategoryId">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.CategoryId">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.CategoryId">Delete</a>
+                        <button type="button" data-toggle="modal" data-target="@("#EditCategory-" + item.CategoryId)" data-url="@Url.Action($"Edit/{item.CategoryId}")">
+                            Edit
+                        </button>
+                        @await Html.PartialAsync("Edit", item)
+                        <button type="button" data-toggle="modal" data-target="@("#DeleteCategory-" + item.CategoryId)" data-url="@Url.Action($"Delete/{item.CategoryId}")">
+                            Delete
+                        </button>
+                        @await Html.PartialAsync("Delete", item)
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </body>
+
+@await Component.InvokeAsync("Notyf")
+</html>

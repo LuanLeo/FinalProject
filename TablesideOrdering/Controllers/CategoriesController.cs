@@ -1,51 +1,56 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TablesideOrdering.Data;
 using TablesideOrdering.Models;
-using TablesideOrdering.ViewModels;
 
 namespace TablesideOrdering.Controllers
 {
     public class CategoriesController : Controller
     {
         private readonly ApplicationDbContext context;
+        public INotyfService notyfService { get; }
 
-        public CategoriesController(ApplicationDbContext _context)
+        public CategoriesController(ApplicationDbContext _context, INotyfService _notyfService)
         {
             context = _context;
+            notyfService = _notyfService;
         }
 
         // GET: Categories
         public async Task<IActionResult> Index()
         {
             var categories = await context.Categories.ToListAsync();
-            CategoryViewModel CatViewModel = new CategoryViewModel();
-            CatViewModel.Categories = categories;
-            return View(CatViewModel);
+            return View(categories);
         }
 
         // GET: Categories/Create
         public IActionResult Create()
         {
-            return View();
+            Category Category = new Category();
+            return PartialView("Create", Category);
         }
 
         // POST: Categories/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CategoryId,CategoryName")] Category category)
+        public async Task<IActionResult> Create(Category category)
         {
             if (ModelState.IsValid)
             {
                 context.Add(category);
                 await context.SaveChangesAsync();
+
+                notyfService.Success("New category has been created");
                 return RedirectToAction(nameof(Index));
             }
+            notyfService.Error("Something went wrong, please try again!");
             return View(category);
         }
 
@@ -56,25 +61,19 @@ namespace TablesideOrdering.Controllers
             {
                 return NotFound();
             }
-
             var category = await context.Categories.FindAsync(id);
             if (category == null)
             {
                 return NotFound();
             }
-            return View(category);
+            return PartialView("Edit", category);
         }
 
         // POST: Categories/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CategoryId,CategoryName")] Category category)
+        public async Task<IActionResult> Edit(Category category)
         {
-            if (id != category.CategoryId)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
                 try
@@ -93,8 +92,10 @@ namespace TablesideOrdering.Controllers
                         throw;
                     }
                 }
+                notyfService.Information("The category info has been updated", 5);
                 return RedirectToAction(nameof(Index));
             }
+            notyfService.Error("Something went wrong, please try again!");
             return View(category);
         }
 
@@ -112,32 +113,26 @@ namespace TablesideOrdering.Controllers
                 return NotFound();
             }
 
-            return View(category);
+            return PartialView("Delete", category);
         }
 
         // POST: Categories/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(Category category)
         {
-            if (context.Categories == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Category'  is null.");
-            }
-
-            var category = await context.Categories.FindAsync(id);
             if (category != null)
             {
                 context.Categories.Remove(category);
             }
-            
             await context.SaveChangesAsync();
+            notyfService.Success("The category is deleted", 5);
             return RedirectToAction(nameof(Index));
         }
 
         private bool CategoryExists(int id)
         {
-          return (context.Categories?.Any(e => e.CategoryId == id)).GetValueOrDefault();
+            return (context.Categories?.Any(e => e.CategoryId == id)).GetValueOrDefault();
         }
     }
 }

@@ -1115,3 +1115,6 @@ C:\Users\Admin\OneDrive\Máy tính\1682\TablesideOrdering\obj\Debug\net6.0\Table
 C:\Users\Admin\OneDrive\Máy tính\1682\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.genruntimeconfig.cache
 C:\Users\Admin\OneDrive\Máy tính\1682\TablesideOrdering\obj\Debug\net6.0\ref\TablesideOrdering.dll
 C:\Users\Admin\OneDrive\Máy tính\1682\TablesideOrdering\obj\Debug\net6.0\scopedcss\Areas\Admin\Views\Shared\_AdminLayout.cshtml.rz.scp.css
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\AspNetCoreHero.ToastNotification.Views.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\AspNetCoreHero.ToastNotification.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\obj\Debug\net6.0\scopedcss\Areas\Admin\Views\Shared\_AdminLayout.cshtml.rz.scp.css

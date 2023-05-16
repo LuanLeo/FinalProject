@@ -203,13 +203,13 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             }
             return UniqueFileName;
         }
-        
+
         public List<SelectListItem> CategoryList()
         {
             var list = new List<SelectListItem>();
             foreach (var cate in _context.Categories)
-            { 
-                list.Add(new SelectListItem() { Value = cate.CategoryId.ToString(), Text = cate.CategoryName});
+            {
+                list.Add(new SelectListItem() { Value = cate.CategoryId.ToString(), Text = cate.CategoryName });
             }
             return list;
         }
