@@ -130,7 +130,7 @@ ol {
 	right: 0;
 	height: 4px;
 	width: 80px;
-	background: #7fad39;
+	background: #4a2511;
 	content: "";
 	margin: 0 auto;
 }
@@ -165,10 +165,10 @@ ol {
 	display: inline-block;
 	font-size: 14px;
 	padding: 10px 28px 10px;
-	color: #ffffff;
+	color: #4a2511;
 	text-transform: uppercase;
 	font-weight: 700;
-	background: #7fad39;
+	background: #ffd59a;
 	letter-spacing: 2px;
 }
 
@@ -179,7 +179,7 @@ ol {
 	text-transform: uppercase;
 	display: inline-block;
 	padding: 13px 30px 12px;
-	background: #7fad39;
+	background: #4A2511;
 	border: none;
 }
 
@@ -461,7 +461,7 @@ ol {
 }
 
 .header__menu ul li.active a {
-	color: #7fad39;
+	color: #65350F;
 }
 
 .header__menu ul li:hover .header__menu__dropdown {
@@ -588,7 +588,7 @@ ol {
 }
 
 .hero__categories__all {
-	background: #7fad39;
+	background: #4A2511;
 	position: relative;
 	padding: 10px 25px 10px 40px;
 	cursor: pointer;
@@ -744,10 +744,11 @@ ol {
 
 .hero__text h2 {
 	font-size: 46px;
-	color: #252525;
+	color: #ffffff;
 	line-height: 52px;
 	font-weight: 700;
 	margin: 10px 0;
+	margin-top: -50px;
 }
 
 .hero__text p {
@@ -841,7 +842,7 @@ ol {
 	bottom: -2px;
 	width: 100%;
 	height: 2px;
-	background: #7fad39;
+	background: #4a2511;
 	content: "";
 	opacity: 0;
 }
