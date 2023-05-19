@@ -129,6 +129,10 @@
       "PackagePath": "staticwebassets\\img\\360_F_503250032_MkRvSf8OPCWcSkXizCisDpvzRkdNeL3x.jpg"
     },
     {
+      "Id": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\img\\Coffee_Grain_Cart.jpg",
+      "PackagePath": "staticwebassets\\img\\Coffee_Grain_Cart.jpg"
+    },
+    {
       "Id": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\img\\banner\\banner-1.jpg",
       "PackagePath": "staticwebassets\\img\\banner\\banner-1.jpg"
     },
@@ -223,10 +227,6 @@
     {
       "Id": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\img\\coffee-beans.avif",
       "PackagePath": "staticwebassets\\img\\coffee-beans.avif"
-    },
-    {
-      "Id": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\img\\coffee-brown-background-1ujch.webp",
-      "PackagePath": "staticwebassets\\img\\coffee-brown-background-1ujch.webp"
     },
     {
       "Id": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\img\\featured\\feature-1.jpg",
