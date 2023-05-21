@@ -26,9 +26,6 @@
 </head>
 
 <body>
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
     <!-- Humberger End -->
     <!-- Header Section Begin -->
     <!-- Header Section End -->
@@ -131,13 +128,12 @@
                         <div class="featured__item">
                             <div class="featured__item__pic set-bg" data-setbg="ProductImage/@pro.Pic">
                                 <ul class="featured__item__pic__hover">
-                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                                    <li><a asp-action="Index" asp-controller="Carts" asp-route-id="@pro.ProductId"><i class="fa fa-shopping-cart"></i></a></li>
                                 </ul>
                             </div>
                             <div class="featured__item__text">
                                 <h6><a href="#">@pro.Name</a></h6>
-                                <h5>@pro.Price VND</h5>
+                                <h5>VND</h5>
                             </div>
                         </div>
                     </div>

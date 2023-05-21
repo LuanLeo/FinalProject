@@ -1,10 +1,9 @@
-﻿@model TablesideOrdering.Models.Category
+﻿@model TablesideOrdering.Models.ProductSize
 
 @{
     ViewData["Title"] = "Edit";
 }
-
-<div class="modal fade" id="EditCategory-@Model.CategoryId" aria-hidden="true">
+<div class="modal fade" id="EditSize-@Model.SizeId" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,11 +14,11 @@
             </div>
             <form asp-action="Edit" method="post">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="CategoryId" />
+                <input type="hidden" asp-for="SizeId" />
                 <div class="form-group">
-                    <label asp-for="CategoryName" class="control-label"></label>
-                    <input asp-for="CategoryName" class="form-control" />
-                    <span asp-validation-for="CategoryName" class="text-danger"></span>
+                    <label asp-for="SizeName" class="control-label"></label>
+                    <input asp-for="SizeName" class="form-control" />
+                    <span asp-validation-for="SizeName" class="text-danger"></span>
                 </div>
                 <div class="modal-footer">
                     <input type="submit" value="Save" class="btn btn-primary" />

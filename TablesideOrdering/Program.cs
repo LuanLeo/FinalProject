@@ -1,5 +1,4 @@
 using AspNetCoreHero.ToastNotification;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TablesideOrdering.Data;

@@ -12,8 +12,8 @@ using TablesideOrdering.Data;
 namespace TablesideOrdering.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230511142959_Product")]
-    partial class Product
+    [Migration("20230521132303_product")]
+    partial class product
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -232,6 +232,23 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("TablesideOrdering.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"), 1L, 1);
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
+                });
+
             modelBuilder.Entity("TablesideOrdering.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -252,10 +269,6 @@ namespace TablesideOrdering.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Pic")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Price")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

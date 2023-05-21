@@ -36,7 +36,6 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                            select new Product
                            {
                                ProductId = products.ProductId,
-                               Price = products.Price,
                                Description = products.Description,
                                Name = products.Name,
                                Pic = products.Pic,
@@ -80,7 +79,6 @@ namespace TablesideOrdering.Areas.Admin.Controllers
         {
             product.Name = model.Name;
             product.Description = model.Description;
-            product.Price = model.Price;
             product.CategoryId = model.CategoryId;
             if (model.PicFile == null)
             {
@@ -110,7 +108,6 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                 Name = product.Name,
                 Description = product.Description,
                 CategoryId = product.CategoryId,
-                Price = product.Price,
                 ExistingImage = product.Pic,
             };
             return View(model);
@@ -126,7 +123,6 @@ namespace TablesideOrdering.Areas.Admin.Controllers
 
             //var products = model.Product.FirstOrDefault(x=>x.ProductId==id);
             Product product = _context.Products.FirstOrDefault(x => x.ProductId == id);
-            product.Price = model.Price;
             product.CategoryId = model.CategoryId;
             product.Description = model.Description;
             product.Name = model.Name;

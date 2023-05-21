@@ -24,7 +24,6 @@ namespace TablesideOrdering.Controllers
                            select new Product
                            {
                                ProductId = products.ProductId,
-                               Price = products.Price,
                                Description = products.Description,
                                Name = products.Name,
                                Pic = products.Pic,
@@ -50,10 +49,6 @@ namespace TablesideOrdering.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-        public IActionResult Cart()
-        {
-            return View();
         }
     }
 }

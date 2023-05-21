@@ -1,0 +1,18 @@
+﻿@model TablesideOrdering.ViewModels.AddToCartViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (Model.CartList.Count > 0)
+{
+    @foreach (var item in Model.CartList)
+    {
+        <h5>@item.Product</h5>
+        <h5>@item.Quantity</h5>
+    }
+    <h5>@Model.CartAmount</h5>
+}
+else {
+    <h5>There is nothing here</h5>
+}
