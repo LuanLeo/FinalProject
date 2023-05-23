@@ -101,6 +101,7 @@
                             <thead>
                                 <tr>
                                     <th class="shoping__product">Products</th>
+                                    <th>Size</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
@@ -131,14 +132,13 @@
                                                 </div>
                                             </td>
                                             <td class="shoping__cart__total">
-                                                $@item.
+                                                $@item.Price
                                             </td>
                                             <td class="shoping__cart__item__close">
                                                 <span class="icon_close"></span>
                                             </td>
                                         </tr>
                                     }
-                                    <h5>@Model.CartAmount</h5>
                                 }
                                 else
                                 {
