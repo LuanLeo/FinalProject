@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AspNetCore;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using TablesideOrdering.Data;
 using TablesideOrdering.Models;
 using TablesideOrdering.ViewModels;
@@ -20,15 +22,26 @@ namespace TablesideOrdering.Controllers
         public IActionResult Index()
         {
             var Homedata = new HomeViewModel();
-            var product = (from products in _context.Products
-                           select new Product
-                           {
-                               ProductId = products.ProductId,
-                               Description = products.Description,
-                               Name = products.Name,
-                               Pic = products.Pic,
-                               CategoryId = products.CategoryId,
-                           });
+            List<Product> products = _context.Products.ToList();
+
+            List<ProductSizePriceViewModel> productlist = new List<ProductSizePriceViewModel>();
+
+            ProductSizePriceViewModel product = new ProductSizePriceViewModel();
+
+            var productList = (from ProSP in _context.ProductSizePrice
+                               join Pro in _context.Products on ProSP.ProductId equals Pro.ProductId
+                               select new ProductSizePriceViewModel
+                               {
+                                   SizePriceId = ProSP.Id,
+                                   ProductId = Pro.ProductId,
+                                   Name = Pro.Name,
+                                   CategoryId = Pro.CategoryId,
+                                   Description = Pro.Description,
+                                   Pic = Pro.Pic,
+                                   Size = ProSP.Size,
+                                   Price = ProSP.Price
+                               });
+
             var cat = (from categories in _context.Categories
                        select new Category
                        {
@@ -36,7 +49,7 @@ namespace TablesideOrdering.Controllers
                            CategoryName = categories.CategoryName,
                        });
             Homedata.Category = cat;
-            Homedata.Product = product;
+            Homedata.Product = productList;
             return View(Homedata);
         }
 

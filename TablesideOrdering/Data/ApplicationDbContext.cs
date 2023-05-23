@@ -12,7 +12,8 @@ namespace TablesideOrdering.Data
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<TablesideOrdering.Models.ProductSize>? ProductSize { get; set; }
+        public DbSet<ProductSize> ProductSize { get; set; }
+        public DbSet<ProductSizePrice> ProductSizePrice { get; set; }
 
     }
 }

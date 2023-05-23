@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using TablesideOrdering.Data;
 using TablesideOrdering.Models;
 using TablesideOrdering.ViewModels;
@@ -9,7 +10,7 @@ namespace TablesideOrdering.Controllers
     {
         private readonly ApplicationDbContext _context;
         public static List<AddToCart> carts = new List<AddToCart>();
-        public static float TotalPrice = 0;
+        public static float TotalPrice;
         public CartsController(ApplicationDbContext context)
         {
             _context = context;
@@ -23,49 +24,52 @@ namespace TablesideOrdering.Controllers
             return View(cartlist);
         }
 
-        /*public IActionResult Index(int id)
+        public IActionResult AddToCart(int id)
         {
-            if (ModelState.IsValid)
-                {
-                AddToCart model = new AddToCart();
-                Product product = _context.Products.Find(id);
+            AddToCart cart = new AddToCart();
+            ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
+            ProductSizePriceViewModel model = new ProductSizePriceViewModel();
 
-                if (carts.Count() == 0)
+            if (carts.Count() == 0)
+            {
+                cart.Product = _context.Products.Find(productprice.ProductId);
+                cart.Quantity = 1;
+                cart.Size = productprice.Size;
+                cart.Price = productprice.Price;
+
+                carts.Add(cart);
+            }
+            else
+            {
+                if (carts.Any(x => x.Id == productprice.Id))
                 {
-                    model.Product = product;
-                    model.Quantity += 1;
-                    model.Total = model.Quantity * model.Product.Price;
-                    carts.Add(model);
+                    cart = carts.Single(x => x.Id == productprice.Id && x.Size == productprice.Size);
+                    cart.Quantity += 1;
                 }
                 else
                 {
-                    if (carts.Any(x => x.Product.ProductId == id))
-                    {
-                        model = carts.Single(x => x.Product.ProductId == id);
-                        model.Quantity += 1;
-                        model.Total = model.Quantity * model.Product.Price;
-                    }
-                    else
-                    {
-                        model.Product = product;
-                        model.Quantity = 1;
-                        model.Total = product.Price;
-                        carts.Add(model);
-                    }
-                }
-                foreach (var item in carts)
-                {
-                    TotalPrice += item.Total;
-                }
-                ViewBag.CartQuantity = carts.Count();
-                ViewBag.CartPrice = TotalPrice;
+                    cart.Product = _context.Products.Find(productprice.ProductId);
+                    cart.Quantity = 1;
+                    cart.Size = productprice.Size;
+                    cart.Price = productprice.Price * Product;
 
-                AddToCartViewModel cartlist = new AddToCartViewModel();
-                cartlist.CartList = carts;
-                cartlist.CartAmount = TotalPrice;
-                return View(cartlist);
+                    carts.Add(cart);
+                }
             }
-            return View("Index");
-        }*/
+
+            TotalPrice = 0;
+            foreach (var item in carts)
+            {
+                float Total = item.Quantity * item.Price;
+                TotalPrice += Total;
+            }
+            ViewBag.CartQuantity = carts.Count();
+            ViewBag.CartPrice = TotalPrice;
+            var Cart = carts.Count();
+            AddToCartViewModel cartlist = new AddToCartViewModel();
+            cartlist.CartList = carts;
+            cartlist.CartAmount = TotalPrice;
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

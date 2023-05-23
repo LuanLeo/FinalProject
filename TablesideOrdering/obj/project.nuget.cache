@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dovEOK2yGWChxhie4CmaJ0lAMFRCJeeC2MawsmpHogZA25C/yfAp4bIBo1XZqXQ/WwjlPCM1zinSFF2rA3Pjig==",
+  "dgSpecHash": "jy5W6sq+37LngRStL+Wda/di6bBJtVBJcfVpfcg49zM1+ufHpJ0crn02QTFphNXexRY6K1eflxA/GCQrgVnN9A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\USER\\Desktop\\FinalProject - Copy\\TablesideOrdering\\TablesideOrdering.csproj",
+  "projectFilePath": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\USER\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\aspnetcorehero.toastnotification.1.1.0.nupkg.sha512",
     "C:\\Users\\USER\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
