@@ -109,8 +109,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var productSize = await _context.ProductSize
-                .FirstOrDefaultAsync(m => m.SizeId == id);
+            var productSize = await _context.ProductSize.FirstOrDefaultAsync(m => m.SizeId == id);
             if (productSize == null)
             {
                 return NotFound();

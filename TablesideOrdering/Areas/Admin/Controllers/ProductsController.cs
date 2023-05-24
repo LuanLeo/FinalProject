@@ -36,6 +36,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
+            ViewBag.CategoryList = CategoryList();
             var prodata = new ProductViewModel();
             var prodataList = new List<ProductViewModel>();
             prodataList.Add(prodata);
@@ -44,7 +45,6 @@ namespace TablesideOrdering.Areas.Admin.Controllers
         // GET: Products/Create
         public IActionResult Create()
         {
-            ViewBag.CategoryList = CategoryList();
             ProductViewModel ViewModel = new ProductViewModel();
             return PartialView("Create", ViewModel);
         }
@@ -81,7 +81,6 @@ namespace TablesideOrdering.Areas.Admin.Controllers
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            ViewBag.CategoryList = CategoryList();
             var product = GetProductByID(id);
             ProductViewModel model = new()
             {

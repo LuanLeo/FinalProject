@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TablesideOrdering.Data;
+using TablesideOrdering.Migrations;
 using TablesideOrdering.Models;
 
 namespace TablesideOrdering.Areas.Admin.Controllers
@@ -14,16 +16,20 @@ namespace TablesideOrdering.Areas.Admin.Controllers
     public class ProductSizePricesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        public INotyfService notyfService { get; }
 
-        public ProductSizePricesController(ApplicationDbContext context)
+        public ProductSizePricesController(ApplicationDbContext context, INotyfService _notyfService)
         {
             _context = context;
+            notyfService = _notyfService;
         }
 
         // GET: Admin/ProductSizePrices
         public async Task<IActionResult> Index()
         {
-              return _context.ProductSizePrice != null ? 
+            ViewBag.ProductList = ProductList();
+            ViewBag.SizeList = SizeList();
+            return _context.ProductSizePrice != null ? 
                           View(await _context.ProductSizePrice.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.ProductSizePrice'  is null.");
         }
@@ -31,9 +37,8 @@ namespace TablesideOrdering.Areas.Admin.Controllers
         // GET: Admin/ProductSizePrices/Create
         public IActionResult Create()
         {
-            ViewBag.ProductList = ProductList();
-            ViewBag.SizeList = SizeList();
-            return View();
+            ProductSizePrice sizePrice = new ProductSizePrice();
+            return PartialView("Create", sizePrice);
         }
 
         // POST: Admin/ProductSizePrices/Create
@@ -46,16 +51,18 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             {
                 _context.Add(productSizePrice);
                 await _context.SaveChangesAsync();
+
+                notyfService.Success("New product's size and price have been created");
                 return RedirectToAction(nameof(Index));
             }
+            notyfService.Error("Something went wrong, please try again!");
+
             return View(productSizePrice);
         }
 
         // GET: Admin/ProductSizePrices/Edit/5
         public async Task<IActionResult> Edit(int? id)
-        {
-            ViewBag.ProductList = ProductList();
-            ViewBag.SizeList = SizeList();
+        { 
             if (id == null || _context.ProductSizePrice == null)
             {
                 return NotFound();
@@ -66,7 +73,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View(productSizePrice);
+            return PartialView("Edit", productSizePrice);
         }
 
         // POST: Admin/ProductSizePrices/Edit/5
@@ -97,8 +104,10 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                         throw;
                     }
                 }
+                notyfService.Information("The product's size and price info have been updated", 5);
                 return RedirectToAction(nameof(Index));
             }
+            notyfService.Error("Something went wrong, please try again!");
             return View(productSizePrice);
         }
 
@@ -117,24 +126,18 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            return View(productSizePrice);
+            return PartialView("Delete", productSizePrice);
         }
 
         // POST: Admin/ProductSizePrices/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(ProductSizePrice productSizePrice)
         {
-            if (_context.ProductSizePrice == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.ProductSizePrice'  is null.");
-            }
-            var productSizePrice = await _context.ProductSizePrice.FindAsync(id);
             if (productSizePrice != null)
             {
                 _context.ProductSizePrice.Remove(productSizePrice);
             }
-            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
