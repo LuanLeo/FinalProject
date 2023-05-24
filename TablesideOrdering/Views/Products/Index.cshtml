@@ -1,4 +1,4 @@
-﻿@model TablesideOrdering.ViewModels.ProductViewModel
+﻿@model IEnumerable<TablesideOrdering.ViewModels.ProductViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -6,10 +6,7 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-@foreach (var item in Model.Product)
+@foreach (var item in Model)
 {
     <div class="col-lg-3 col-md-4 col-sm-6 ">
         <div class="featured__item">

@@ -98,19 +98,19 @@
                 <div class="col-lg-12">
                     <div class="shoping__cart__table">
                         <table>
-                            <thead>
-                                <tr>
-                                    <th class="shoping__product">Products</th>
-                                    <th>Size</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.CartList.Count > 0)
-                                {
+                            @if (Model.CartList.Count > 0)
+                            {
+                                <thead>
+                                    <tr>
+                                        <th class="shoping__product">Products</th>
+                                        <th>Size</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     @foreach (var item in Model.CartList)
                                     {
                                         <tr>
@@ -122,7 +122,7 @@
                                                 @item.Size
                                             </td>
                                             <td class="shoping__cart__price">
-                                                $@item.Price
+                                                @item.Price VND
                                             </td>
                                             <td class="shoping__cart__quantity">
                                                 <div class="quantity">
@@ -132,20 +132,19 @@
                                                 </div>
                                             </td>
                                             <td class="shoping__cart__total">
-                                                $@item.Price
+                                                @item.TotalProPrice VND
                                             </td>
                                             <td class="shoping__cart__item__close">
-                                                <span class="icon_close"></span>
+                                                <a asp-action="DeleteFromCart" asp-controller="Carts" asp-route-id="@item.SizePriceId"><span class="icon_close"></span></a>
                                             </td>
                                         </tr>
                                     }
-                                }
-                                else
-                                {
-                                    <h5>There is nothing here</h5>
-                                }
-
-                            </tbody>
+                                </tbody>
+                            }
+                            else
+                            {
+                                <h5>There is nothing here</h5>
+                            }
                         </table>
                     </div>
                 </div>

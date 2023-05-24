@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Notyf;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +12,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using TablesideOrdering.Data;
+using TablesideOrdering.Migrations;
 using TablesideOrdering.Models;
 using TablesideOrdering.ViewModels;
 
@@ -21,63 +24,38 @@ namespace TablesideOrdering.Areas.Admin.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _hostEnvironment;
+        public INotyfService notyfService { get; }
 
-        public ProductsController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment)
+        public ProductsController(ApplicationDbContext context, IWebHostEnvironment hostEnvironment, INotyfService _notyfService)
         {
             _hostEnvironment = hostEnvironment;
             _context = context;
+            notyfService = _notyfService;
         }
 
         // GET: Products
         public async Task<IActionResult> Index()
         {
             var prodata = new ProductViewModel();
-            var product = (from products in _context.Products
-                           select new Product
-                           {
-                               ProductId = products.ProductId,
-                               Description = products.Description,
-                               Name = products.Name,
-                               Pic = products.Pic,
-                               CategoryId = products.CategoryId,
-                           });
-            prodata.Product = product;
-            return View(prodata);
+            var prodataList = new List<ProductViewModel>();
+            prodataList.Add(prodata);
+            return View(prodataList);
         }
-
-        // GET: Products/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Products == null)
-            {
-                return NotFound();
-            }
-
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-
         // GET: Products/Create
         public IActionResult Create()
         {
             ViewBag.CategoryList = CategoryList();
-            Product Products = new Product();
-            return PartialView("Create", Products);
+            ProductViewModel ViewModel = new ProductViewModel();
+            return PartialView("Create", ViewModel);
         }
 
         // POST: Products/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ProductViewModel model, Product product)
+        public async Task<IActionResult> Create(ProductViewModel model)
         {
+            Product product = new Product();
             product.Name = model.Name;
             product.Description = model.Description;
             product.CategoryId = model.CategoryId;
@@ -86,15 +64,17 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                 ViewBag.NullFile = "Please upload an image!";
                 return View();
             }
+
             if (model.PicFile != null)
             {
                 product.Pic = UploadFile(model.PicFile);
                 _context.Products.Add(product);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
 
+                notyfService.Success("New category has been created");
+                return RedirectToAction(nameof(Index));
             }
-
+            notyfService.Error("Something went wrong, please try again!");
             return RedirectToAction("Index");
         }
 
@@ -111,22 +91,19 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                 CategoryId = product.CategoryId,
                 ExistingImage = product.Pic,
             };
-            return View(model);
+            return PartialView("Edit", model);
         }
 
         // POST: Products/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, ProductViewModel model)
+        public async Task<IActionResult> Edit(ProductViewModel model)
         {
-
-            //var products = model.Product.FirstOrDefault(x=>x.ProductId==id);
-            Product product = _context.Products.FirstOrDefault(x => x.ProductId == id);
+            Product product = _context.Products.FirstOrDefault(x => x.ProductId == model.ProductId);
             product.CategoryId = model.CategoryId;
             product.Description = model.Description;
             product.Name = model.Name;
+
             if (model.PicFile != null)
             {
                 if (product.Pic != null)
@@ -136,36 +113,34 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                 }
                 product.Pic = UploadFile(model.PicFile);
             }
+
             _context.Update(product);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
-
-        // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.Products == null)
-            {
-                return NotFound();
-            }
 
-            var product = await _context.Products
-                .FirstOrDefaultAsync(m => m.ProductId == id);
-            if (product == null)
+            var product = GetProductByID(id);
+            ProductViewModel model = new()
             {
-                return NotFound();
-            }
+                ProductId = product.ProductId,
+                Name = product.Name,
+                Description = product.Description,
+                CategoryId = product.CategoryId,
+                ExistingImage = product.Pic,
+            };
 
-            return View(product);
+            return PartialView("Delete", model);
         }
 
-        // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: Categories/Delete/5
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> Delete(ProductViewModel model)
         {
-            Product pro = GetProductByID(id);
+            Product pro = GetProductByID(model.ProductId);
             if (pro.Pic != null)
             {
                 string ExistingFile = Path.Combine(_hostEnvironment.WebRootPath, "ProductImage", pro.Pic);
@@ -177,15 +152,17 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             }
 
             await _context.SaveChangesAsync();
+            notyfService.Success("The category is deleted", 5);
             return RedirectToAction(nameof(Index));
         }
+
         public Product GetProductByID(int id)
         {
             return _context.Products.FirstOrDefault(x => x.ProductId == id);
         }
+
         public string GetProductImage(int id)
         {
-
             var pro = _context.Products.FirstOrDefault(x => x.ProductId == id);
             return pro.Pic;
         }

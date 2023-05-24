@@ -10,5 +10,6 @@ namespace TablesideOrdering.Models
         public string Size { get; set; }
         public int Quantity { get; set; }
         public float Price { get; set; }
+        public float TotalProPrice { get; set; }
     }
 }

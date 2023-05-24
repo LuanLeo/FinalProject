@@ -32,17 +32,7 @@ namespace TablesideOrdering.Controllers
         // GET: Products
         public async Task<IActionResult> Index()
         {
-            var prodata = new ProductViewModel();
-            var product = (from products in _context.Products
-                           select new Product
-                           {
-                               ProductId = products.ProductId,
-                               Description = products.Description,
-                               Name = products.Name,
-                               Pic = products.Pic,
-                               CategoryId = products.CategoryId,
-                           });
-            prodata.Product = product;
+            var prodata = new List<ProductViewModel>();
             return View(prodata);
         }
     }
