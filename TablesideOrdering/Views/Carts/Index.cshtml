@@ -98,19 +98,19 @@
                 <div class="col-lg-12">
                     <div class="shoping__cart__table">
                         <table>
-                            <thead>
-                                <tr>
-                                    <th class="shoping__product">Products</th>
-                                    <th>Size</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.CartList.Count > 0)
-                                {
+                                                            @if (Model.CartList.Count > 0)
+                            {
+                                <thead>
+                                    <tr>
+                                        <th class="shoping__product">Products</th>
+                                        <th>Size</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
+                                        <th>Total</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     @foreach (var item in Model.CartList)
                                     {
                                         <tr>
@@ -132,20 +132,19 @@
                                                 </div>
                                             </td>
                                             <td class="shoping__cart__total">
-                                                $@item.Price
+                                                $@item.TotalProPrice
                                             </td>
                                             <td class="shoping__cart__item__close">
-                                                <span class="icon_close"></span>
+                                                <a asp-action="DeleteFromCart" asp-controller="Carts" asp-route-id="@item.SizePriceId"><span class="icon_close"></span></a>
                                             </td>
                                         </tr>
                                     }
-                                }
-                                else
-                                {
-                                    <h5>There is nothing here</h5>
-                                }
-
-                            </tbody>
+                                </tbody>
+                            }
+                            else
+                            {
+                                <h5>There is nothing here</h5>
+                            }
                         </table>
                     </div>
                 </div>
@@ -153,7 +152,14 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                        <a asp-action="Index" asp-controller="Carts" class="primary-btn cart-btn">
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                                </svg>
+                            </span>
+                            CONTINUE SHOPPING
+                            </a>
                         <a href="#" class="primary-btn cart-btn cart-btn-right">
                             <span class="icon_loading"></span>
                             Upadate Cart

@@ -28,7 +28,6 @@ namespace TablesideOrdering.Controllers
         public IActionResult AddToCart(int id)
         {
             AddToCart cart = new AddToCart();
-
             ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
             ProductSizePriceViewModel model = new ProductSizePriceViewModel();
 
@@ -38,17 +37,17 @@ namespace TablesideOrdering.Controllers
                 cart.Product = _context.Products.Find(productprice.ProductId);
                 cart.Quantity = 1;
                 cart.Size = productprice.Size;
-                cart.Price = productprice.Price * cart.Quantity;
-
+                cart.Price = productprice.Price;
+                cart.TotalProPrice = productprice.Price * cart.Quantity;
                 carts.Add(cart);
             }
             else
             {
-                if (carts.Find(x  => x.SizePriceId == productprice.Id) != null)
+                if (carts.Find(x => x.SizePriceId == productprice.Id) != null)
                 {
                     cart = carts.Single(x => x.SizePriceId == productprice.Id);
                     cart.Quantity += 1;
-                    cart.Price = productprice.Price * cart.Quantity;
+                    cart.TotalProPrice = productprice.Price * cart.Quantity;
                 }
                 else
                 {
@@ -56,7 +55,8 @@ namespace TablesideOrdering.Controllers
                     cart.Product = _context.Products.Find(productprice.ProductId);
                     cart.Quantity = 1;
                     cart.Size = productprice.Size;
-                    cart.Price = productprice.Price * cart.Quantity;
+                    cart.Price = productprice.Price;
+                    cart.TotalProPrice = productprice.Price * cart.Quantity;
 
                     carts.Add(cart);
                 }
@@ -77,6 +77,30 @@ namespace TablesideOrdering.Controllers
             cartlist.CartAmount = TotalPrice;
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult DeleteFromCart(int id)
+        {
+            AddToCart cart = new AddToCart();
+            cart = carts.Find(x => x.SizePriceId == id);
+
+            if (cart != null)
+            {
+                carts.Remove(cart);
+            }
+
+            TotalPrice = 0;
+            foreach (var item in carts)
+            {
+                float Total = item.Quantity * item.Price;
+                TotalPrice += Total;
+            }
+
+            AddToCartViewModel cartlist = new AddToCartViewModel();
+            cartlist.CartList = carts;
+            cartlist.CartAmount = TotalPrice;
+
+            return RedirectToAction("Index", "Carts");
         }
     }
 }
