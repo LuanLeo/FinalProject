@@ -67,7 +67,8 @@ namespace TablesideOrdering.Areas.Admin.Controllers
         public IActionResult Create()
         {
             ViewBag.CategoryList = CategoryList();
-            return View();
+            Product Products = new Product();
+            return PartialView("Create", Products);
         }
 
         // POST: Products/Create
