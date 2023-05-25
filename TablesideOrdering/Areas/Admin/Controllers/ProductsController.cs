@@ -34,13 +34,22 @@ namespace TablesideOrdering.Areas.Admin.Controllers
         }
 
         // GET: Products
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
+            
             ViewBag.CategoryList = CategoryList();
             var prodata = new ProductViewModel();
-            var prodataList = new List<ProductViewModel>();
-            prodataList.Add(prodata);
-            return View(prodataList);
+            var products= (from p in _context.Products
+                           select new ProductViewModel
+                           {
+                               ProductId= p.ProductId,
+                               CategoryId= p.CategoryId,
+                               Description= p.Description,
+                               Pic= p.Pic,
+                               Name= p.Name,
+                           });
+      
+            return View(products);
         }
         // GET: Products/Create
         public IActionResult Create()

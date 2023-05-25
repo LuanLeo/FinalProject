@@ -20,50 +20,50 @@
             <div class="container-fluid">
                 <h1>All Sizes</h1>
 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateSize">
-                Create
-            </button>
-            @await Html.PartialAsync("Create", new ProductSize())
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateSize">
+                    Create
+                </button>
+                @await Html.PartialAsync("Create", new ProductSize())
 
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.SizeName)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SizeName)
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="@("#EditSize-" + item.SizeId)" data-url="@Url.Action($"Edit/{item.SizeId}")">
-                                    Edit
-                                </button>
-                                @await Html.PartialAsync("Edit", item)
-                                    <button type="button" class="btn btn-danger m-1"  data-toggle="modal" data-target="@("#DeleteSize-" + item.SizeId)" data-url="@Url.Action($"Delete/{item.SizeId}")">
-                                    Delete
-                                </button>
-                                @await Html.PartialAsync("Delete", item)
-                            </td>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SizeName)
+                            </th>
+                            <th></th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SizeName)
+                                </td>
+                                <td align="center">
+                                    <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="@("#EditSize-" + item.SizeId)" data-url="@Url.Action($"Edit/{item.SizeId}")">
+                                        Edit
+                                    </button>
+                                    @await Html.PartialAsync("Edit", item)
+                                    <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteSize-" + item.SizeId)" data-url="@Url.Action($"Delete/{item.SizeId}")">
+                                        Delete
+                                    </button>
+                                    @await Html.PartialAsync("Delete", item)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
 
+            </div>
+            <script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
+            <script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="~/assets/js/sidebarmenu.js"></script>
+            <script src="~/assets/js/app.min.js"></script>
+            <script src="~/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+            <script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
+            <script src="~/assets/js/dashboard.js"></script>
         </div>
-        <script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
-        <script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="~/assets/js/sidebarmenu.js"></script>
-        <script src="~/assets/js/app.min.js"></script>
-        <script src="~/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-        <script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
-        <script src="~/assets/js/dashboard.js"></script>
-    </div>
 </body>
 @await Component.InvokeAsync("Notyf")

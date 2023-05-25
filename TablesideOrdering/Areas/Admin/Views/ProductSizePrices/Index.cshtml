@@ -15,54 +15,56 @@
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
          data-sidebar-position="fixed" data-header-position="fixed">
         <div class="body-wrapper">
-            <h1>All Product's Sizes &Aacute; Prices</h1>
+            <div class="container-fluid">
+                <h1>All Product's Sizes With Prices</h1>
 
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateSizePrice">
-                Create
-            </button>
-            @await Html.PartialAsync("Create", new ProductSizePrice())
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.ProductId)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Size)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Price)
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateSizePrice">
+                    Create
+                </button>
+                @await Html.PartialAsync("Create", new ProductSizePrice())
+                <table class="table">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ProductId)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Size)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Price)
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="@("#EditSizePrice-" + item.Id)" data-url="@Url.Action($"Edit/{item.Id}")">
-                                    Edit
-                                </button>
-                                @await Html.PartialAsync("Edit",item)
-                                <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteSizePrice-" + item.Id)" data-url="@Url.Action($"Delete/{item.Id}")">
-                                    Delete
-                                </button>
-                                @await Html.PartialAsync("Delete",item)
-                            </td>
+                            <th>
+                                @Html.DisplayNameFor(model => model.ProductId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Size)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Price)
+                            </th>
+                            <th></th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Size)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Price)
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="@("#EditSizePrice-" + item.Id)" data-url="@Url.Action($"Edit/{item.Id}")">
+                                        Edit
+                                    </button>
+                                    @await Html.PartialAsync("Edit",item)
+                                    <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteSizePrice-" + item.Id)" data-url="@Url.Action($"Delete/{item.Id}")">
+                                        Delete
+                                    </button>
+                                    @await Html.PartialAsync("Delete",item)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
         <script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
         <script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
