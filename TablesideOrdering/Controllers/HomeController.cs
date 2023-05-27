@@ -5,13 +5,14 @@ using System.Text.RegularExpressions;
 using TablesideOrdering.Data;
 using TablesideOrdering.Models;
 using TablesideOrdering.ViewModels;
-
 namespace TablesideOrdering.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+        public static List<AddToCart> carts = new List<AddToCart>();
+        public static float TotalPrice;
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
@@ -23,9 +24,7 @@ namespace TablesideOrdering.Controllers
         {
             var Homedata = new HomeViewModel();
             List<Product> products = _context.Products.ToList();
-
             List<ProductSizePriceViewModel> productlist = new List<ProductSizePriceViewModel>();
-
             ProductSizePriceViewModel product = new ProductSizePriceViewModel();
 
             var productList = (from ProSP in _context.ProductSizePrice
@@ -48,16 +47,115 @@ namespace TablesideOrdering.Controllers
                            CategoryId = categories.CategoryId,
                            CategoryName = categories.CategoryName,
                        });
+
+
+            CartList cartlist = new CartList();
+            cartlist.CartLists = carts;
+            cartlist.CartAmount = TotalPrice;
+
             Homedata.Category = cat;
             Homedata.Product = productList;
+            Homedata.Cart = cartlist;
+
+            //Homedata.Cart
             return View(Homedata);
         }
 
-        public IActionResult Privacy()
+        public IActionResult Cart()
         {
-            return View();
+            CartList cartlist = new CartList();
+            cartlist.CartLists = carts;
+            cartlist.CartAmount = TotalPrice;
+
+            HomeViewModel home = new HomeViewModel();
+            home.Cart = cartlist;
+
+            return View(home);
         }
 
+        public IActionResult AddToCart(int id)
+        {
+            AddToCart cart = new AddToCart();
+            ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
+            ProductSizePriceViewModel model = new ProductSizePriceViewModel();
+
+            if (carts.Count() == 0)
+            {
+                cart.SizePriceId = productprice.Id;
+                cart.Product = _context.Products.Find(productprice.ProductId);
+                cart.Quantity = 1;
+                cart.Size = productprice.Size;
+                cart.Price = productprice.Price;
+                cart.TotalProPrice = productprice.Price * cart.Quantity;
+                carts.Add(cart);
+            }
+            else
+            {
+                if (carts.Find(x => x.SizePriceId == productprice.Id) != null)
+                {
+                    cart = carts.Single(x => x.SizePriceId == productprice.Id);
+                    cart.Quantity += 1;
+                    cart.TotalProPrice = productprice.Price * cart.Quantity;
+                }
+                else
+                {
+                    cart.SizePriceId = productprice.Id;
+                    cart.Product = _context.Products.Find(productprice.ProductId);
+                    cart.Quantity = 1;
+                    cart.Size = productprice.Size;
+                    cart.Price = productprice.Price;
+                    cart.TotalProPrice = productprice.Price * cart.Quantity;
+
+                    carts.Add(cart);
+                }
+            }
+
+            TotalPrice = 0;
+            foreach (var item in carts)
+            {
+                float Total = item.Quantity * item.Price;
+                TotalPrice += Total;
+            }
+
+            ViewBag.CartQuantity = carts.Count();
+            ViewBag.CartPrice = TotalPrice;
+
+            CartList cartlist = new CartList();
+            cartlist.CartLists = carts;
+            cartlist.CartAmount = TotalPrice;
+
+            HomeViewModel home = new HomeViewModel();
+            home.Cart = cartlist;
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult DeleteFromCart(int id)
+        {
+            AddToCart cart = new AddToCart();
+            cart = carts.Find(x => x.SizePriceId == id);
+
+            if (cart != null)
+            {
+                carts.Remove(cart);
+            }
+
+            TotalPrice = 0;
+            foreach (var item in carts)
+            {
+                float Total = item.Quantity * item.Price;
+                TotalPrice += Total;
+            }
+
+            CartList cartlist = new CartList();
+            cartlist.CartLists = carts;
+            cartlist.CartAmount = TotalPrice;
+
+            HomeViewModel home = new HomeViewModel();
+            home.Cart = cartlist;
+
+            return RedirectToAction("Cart", "Home");
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

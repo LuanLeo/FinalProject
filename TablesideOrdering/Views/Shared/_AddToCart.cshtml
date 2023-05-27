@@ -1,8 +1,10 @@
-﻿<div class="col-lg-3">
-    <div class="header__cart">
-        <ul>
-            <li><a asp-action="Index" asp-controller="Carts"><i class="fa fa-shopping-bag"></i> <span>@ViewBag.CartQuantity</span></a></li>
-        </ul>
-        <div class="header__cart__price">item: <span>@ViewBag.CartPrice</span></div>
+﻿@model TablesideOrdering.ViewModels.HomeViewModel 
+
+    <div class="col-lg-3">
+        <div class="header__cart">
+            <ul>
+                <li><a asp-action="Cart" asp-controller="Home"><i class="fa fa-shopping-bag"></i> <span>@Model.Cart.CartLists.Count()</span></a></li>
+            </ul>
+            <div class="header__cart__price">item: <span>@Model.Cart.CartAmount</span></div>
+        </div>
     </div>
-</div>

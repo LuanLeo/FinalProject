@@ -6,5 +6,6 @@ namespace TablesideOrdering.ViewModels
     {
         public IQueryable<Category> Category { get; set; }
         public IQueryable<ProductSizePriceViewModel> Product { get; set; }
+        public CartList Cart { get; set; }
     }
 }
