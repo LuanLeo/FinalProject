@@ -1,4 +1,5 @@
 ﻿using AspNetCore;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
@@ -11,15 +12,19 @@ namespace TablesideOrdering.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+        public INotyfService _notyfService { get; }
+
         public static List<AddToCart> carts = new List<AddToCart>();
         public static float TotalPrice;
-
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+        public static string PhoneNumber = "";
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, INotyfService notyfService)
         {
             _logger = logger;
             _context = context;
+            _notyfService = notyfService;
         }
 
+        //HOME page
         public IActionResult Index()
         {
             var Homedata = new HomeViewModel();
@@ -48,31 +53,44 @@ namespace TablesideOrdering.Controllers
                            CategoryName = categories.CategoryName,
                        });
 
-
             CartList cartlist = new CartList();
             cartlist.CartLists = carts;
             cartlist.CartAmount = TotalPrice;
+            cartlist.PhoneNumber = PhoneNumber;
 
+            Homedata.Cart = cartlist;
             Homedata.Category = cat;
             Homedata.Product = productList;
-            Homedata.Cart = cartlist;
 
             //Homedata.Cart
             return View(Homedata);
         }
 
-        public IActionResult Cart()
+        //GET take phone number
+        [HttpGet]
+        public IActionResult PhoneValidation()
         {
-            CartList cartlist = new CartList();
-            cartlist.CartLists = carts;
-            cartlist.CartAmount = TotalPrice;
-
-            HomeViewModel home = new HomeViewModel();
-            home.Cart = cartlist;
-
+            HomeViewModel home = NavData();
             return View(home);
         }
 
+        //POST take phone number
+        [HttpPost]
+        public IActionResult PhoneValidation(HomeViewModel phone)
+        {
+                PhoneNumber = phone.PhoneNumber;
+                return RedirectToAction("Index", "Home");
+
+        }
+
+        //CART page
+        public IActionResult Cart()
+        {
+            HomeViewModel home = NavData();
+            return View(home);
+        }
+
+        //ADD to cart
         public IActionResult AddToCart(int id)
         {
             AddToCart cart = new AddToCart();
@@ -116,25 +134,18 @@ namespace TablesideOrdering.Controllers
                 float Total = item.Quantity * item.Price;
                 TotalPrice += Total;
             }
-
             ViewBag.CartQuantity = carts.Count();
             ViewBag.CartPrice = TotalPrice;
 
-            CartList cartlist = new CartList();
-            cartlist.CartLists = carts;
-            cartlist.CartAmount = TotalPrice;
-
-            HomeViewModel home = new HomeViewModel();
-            home.Cart = cartlist;
-
+            NavData();
             return RedirectToAction("Index", "Home");
         }
 
+        //DELETE from cart
         public IActionResult DeleteFromCart(int id)
         {
             AddToCart cart = new AddToCart();
             cart = carts.Find(x => x.SizePriceId == id);
-
             if (cart != null)
             {
                 carts.Remove(cart);
@@ -147,15 +158,24 @@ namespace TablesideOrdering.Controllers
                 TotalPrice += Total;
             }
 
+            NavData();
+            _notyfService.Success("The product is deleted", 5);
+            return RedirectToAction("Cart", "Home");
+        }
+
+        public HomeViewModel NavData()
+        {
             CartList cartlist = new CartList();
             cartlist.CartLists = carts;
             cartlist.CartAmount = TotalPrice;
+            cartlist.PhoneNumber = PhoneNumber;
 
             HomeViewModel home = new HomeViewModel();
             home.Cart = cartlist;
 
-            return RedirectToAction("Cart", "Home");
+            return home;
         }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

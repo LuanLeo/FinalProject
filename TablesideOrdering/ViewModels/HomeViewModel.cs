@@ -1,4 +1,5 @@
-﻿using TablesideOrdering.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using TablesideOrdering.Models;
 
 namespace TablesideOrdering.ViewModels
 {
@@ -7,5 +8,6 @@ namespace TablesideOrdering.ViewModels
         public IQueryable<Category> Category { get; set; }
         public IQueryable<ProductSizePriceViewModel> Product { get; set; }
         public CartList Cart { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

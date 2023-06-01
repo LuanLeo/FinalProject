@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using TablesideOrdering.Models;
+using TablesideOrdering.ViewModels;
 
 namespace TablesideOrdering.Areas.Admin.Controllers
 {
