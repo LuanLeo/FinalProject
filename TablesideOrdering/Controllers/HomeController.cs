@@ -16,7 +16,7 @@ namespace TablesideOrdering.Controllers
 
         public static List<AddToCart> carts = new List<AddToCart>();
         public static float TotalPrice;
-        public static string PhoneNumber = "";
+        public static string PhoneNumber;
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, INotyfService notyfService)
         {
             _logger = logger;
@@ -27,10 +27,7 @@ namespace TablesideOrdering.Controllers
         //HOME page
         public IActionResult Index()
         {
-            var Homedata = new HomeViewModel();
-            List<Product> products = _context.Products.ToList();
             List<ProductSizePriceViewModel> productlist = new List<ProductSizePriceViewModel>();
-            ProductSizePriceViewModel product = new ProductSizePriceViewModel();
 
             var productList = (from ProSP in _context.ProductSizePrice
                                join Pro in _context.Products on ProSP.ProductId equals Pro.ProductId
@@ -53,12 +50,8 @@ namespace TablesideOrdering.Controllers
                            CategoryName = categories.CategoryName,
                        });
 
-            CartList cartlist = new CartList();
-            cartlist.CartLists = carts;
-            cartlist.CartAmount = TotalPrice;
-            cartlist.PhoneNumber = PhoneNumber;
-
-            Homedata.Cart = cartlist;
+            HomeViewModel Homedata = new HomeViewModel();
+            Homedata = NavData();
             Homedata.Category = cat;
             Homedata.Product = productList;
 
@@ -70,28 +63,33 @@ namespace TablesideOrdering.Controllers
         [HttpGet]
         public IActionResult PhoneValidation()
         {
-            if (ModelState.IsValid)
-            {
-                HomeViewModel home = NavData();
-                return View(home);
-            }
-            return View();
+            HomeViewModel home = NavData();
+            return View(home);
         }
 
         //POST take phone number
         [HttpPost]
-        public IActionResult PhoneValidation(HomeViewModel phone)
+        public IActionResult PhoneValidation(HomeViewModel home)
         {
-                PhoneNumber = phone.PhoneNumber;
+            if (home.PhoneValid.PhoneNumber == home.PhoneValid.PhoneConfirmed &&
+                (home.PhoneValid.PhoneNumber != null && home.PhoneValid.PhoneConfirmed != null))
+            {
+                PhoneNumber = home.PhoneValid.PhoneNumber;
                 return RedirectToAction("Index", "Home");
-
+            }
+            return View();
         }
 
         //CART page
         public IActionResult Cart()
         {
             HomeViewModel home = NavData();
-            return View(home);
+            if (home.Cart.PhoneNumber != null)
+            {
+                return View(home);
+            }
+            _notyfService.Error("The cart hasn't signed yet, please try again");
+            return RedirectToAction("Index");
         }
 
         //ADD to cart
@@ -165,6 +163,42 @@ namespace TablesideOrdering.Controllers
             NavData();
             _notyfService.Success("The product is deleted", 5);
             return RedirectToAction("Cart", "Home");
+        }
+
+        public IActionResult PlaceOrder()
+        {
+            //Save order to database
+            Order order = new Order();
+            order.OrderDate = DateTime.Now;
+            order.OrderPrice = TotalPrice;
+            order.ProductQuantity = carts.Count();
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+
+            //Save order list to database
+            List<OrderDetail> orderDetailList = new List<OrderDetail>();
+            foreach (var item in carts)
+            {
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.OrderId = order.OrderId;
+                orderDetail.ProductName = item.Product.Name;
+                orderDetail.Size = item.Size;
+                orderDetail.ProQuantity = item.Quantity;
+                orderDetail.Price = item.Quantity * item.Price;
+
+                orderDetailList.Add(orderDetail);
+            }
+            foreach (var orderDt in orderDetailList)
+            {
+                _context.OrderDetails.Add(orderDt);
+            }
+            _context.SaveChanges();
+
+            //Renew the cart and notify customer
+            TotalPrice = 0;
+            carts.Clear();
+            _notyfService.Success("Your order has been received");
+            return RedirectToAction("Index");
         }
 
         public HomeViewModel NavData()

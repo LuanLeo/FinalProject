@@ -24,31 +24,7 @@
     <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../css/style.css" type="text/css">
 </head>
-
-<!--<div class="modal fade" id="PhoneValidation" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Enter Your Phone Number</h5>
-            </div>
-            <div class="container-fluid">
-                <form asp-action="PhoneValidation" asp-controller="Home" enctype="multipart/form-data" method="post">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label>PhoneNumber</label>
-                        <input type="tel" data-val="true" data-val-phone="Please enter a valid Phone No" asp-for="Cart.PhoneNumber" class="form-control" aria-required="true" />
-                        <span asp-validation-for="Cart.PhoneNumber" class="text-danger"></span>
-                    </div>
-                    <div class="modal-footer">
-                        <input type="submit" value="Enter" class="btn btn-success" />
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>-->
 <body>
-    
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
          data-sidebar-position="fixed" data-header-position="fixed">
         <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
@@ -64,8 +40,13 @@
                                 <form asp-action="PhoneValidation" asp-controller="Home" enctype="multipart/form-data" method="post">
                                     <div class="mb-3">
                                         <label>Phone Number</label>
-                                        <input type="tel" data-val="true" data-val-phone="Please enter a valid Phone No" asp-for="PhoneNumber" class="form-control" aria-required="true" />
-                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                        <input type="tel" data-val="true" asp-for="PhoneValid.PhoneNumber" class="form-control" aria-required="true" />
+                                        <span asp-validation-for="PhoneValid.PhoneNumber" class="text-danger"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label>Phone Confirm</label>
+                                        <input type="tel" data-val="true" asp-for="PhoneValid.PhoneConfirmed" class="form-control" aria-required="true" />
+                                        <span asp-validation-for="PhoneValid.PhoneConfirmed" class="text-danger"></span>
                                     </div>
                                     <input type="submit" value="Enter" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">
                                 </form>
@@ -79,6 +60,7 @@
     <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
