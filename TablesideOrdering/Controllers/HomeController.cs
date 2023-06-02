@@ -172,6 +172,7 @@ namespace TablesideOrdering.Controllers
             order.OrderDate = DateTime.Now;
             order.OrderPrice = TotalPrice;
             order.ProductQuantity = carts.Count();
+            order.PhoneNumber = PhoneNumber;
             _context.Orders.Add(order);
             _context.SaveChanges();
 

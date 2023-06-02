@@ -261,6 +261,10 @@ namespace TablesideOrdering.Migrations
                     b.Property<float>("OrderPrice")
                         .HasColumnType("real");
 
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("ProductQuantity")
                         .HasColumnType("int");
 
