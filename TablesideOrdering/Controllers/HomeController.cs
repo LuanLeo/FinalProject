@@ -70,8 +70,12 @@ namespace TablesideOrdering.Controllers
         [HttpGet]
         public IActionResult PhoneValidation()
         {
-            HomeViewModel home = NavData();
-            return View(home);
+            if (ModelState.IsValid)
+            {
+                HomeViewModel home = NavData();
+                return View(home);
+            }
+            return View();
         }
 
         //POST take phone number
