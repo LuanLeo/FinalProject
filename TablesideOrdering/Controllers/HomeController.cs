@@ -7,8 +7,11 @@ using System.Diagnostics;
 using System.Security.Cryptography.Pkcs;
 using System.Text.RegularExpressions;
 using TablesideOrdering.Data;
-using TablesideOrdering.Models;
+using TablesideOrdering.Models.Admin;
+using TablesideOrdering.Models.Customer;
 using TablesideOrdering.ViewModels;
+using TablesideOrdering.ViewModels.Admin;
+using TablesideOrdering.ViewModels.Customer;
 using Twilio;
 using Twilio.Clients;
 using Twilio.Rest.Api.V2010.Account;
@@ -220,12 +223,9 @@ namespace TablesideOrdering.Controllers
             string number = ConvertToPhoneValid();
 
             TwilioClient.Init(_SMSMessage.Value.AccountSid, _SMSMessage.Value.AuthToken);
-            var From = new PhoneNumber(_SMSMessage.Value.PhoneFrom);
-            var To = new PhoneNumber(number);
-
             var message = MessageResource.Create(
-                to: To,
-                from: From,
+                to: new PhoneNumber(number),
+                from: new PhoneNumber(_SMSMessage.Value.PhoneFrom),
                 body: Message);
         }
 

@@ -20,7 +20,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using TablesideOrdering.Models;
+using TablesideOrdering.Models.Admin;
 
 namespace TablesideOrdering.Areas.Identity.Pages.Account
 {

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TablesideOrdering.Data;
-using TablesideOrdering.Models;
+using TablesideOrdering.Models.Admin;
 using TablesideOrdering.ViewModels;
 
 namespace TablesideOrdering.Areas.Admin.Controllers

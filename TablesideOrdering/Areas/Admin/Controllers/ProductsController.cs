@@ -13,8 +13,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using TablesideOrdering.Data;
 using TablesideOrdering.Migrations;
-using TablesideOrdering.Models;
-using TablesideOrdering.ViewModels;
+using TablesideOrdering.Models.Admin;
+using TablesideOrdering.ViewModels.Admin;
 
 namespace TablesideOrdering.Areas.Admin.Controllers
 {

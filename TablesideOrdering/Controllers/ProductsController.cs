@@ -12,9 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using TablesideOrdering.Data;
 using TablesideOrdering.Migrations;
-using TablesideOrdering.Models;
-using TablesideOrdering.ViewModels;
-using Product = TablesideOrdering.Models.Product;
+using TablesideOrdering.ViewModels.Admin;
+using Product = TablesideOrdering.Models.Admin.Product;
 
 namespace TablesideOrdering.Controllers
 {
