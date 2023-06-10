@@ -1,27 +1,39 @@
 ﻿using AspNetCore;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.Options;
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
+using System.Security.Cryptography.Pkcs;
 using System.Text.RegularExpressions;
 using TablesideOrdering.Data;
 using TablesideOrdering.Models;
 using TablesideOrdering.ViewModels;
+using Twilio;
+using Twilio.Clients;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
+
 namespace TablesideOrdering.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+        private readonly IOptions<SMSMessage> _SMSMessage;
         public INotyfService _notyfService { get; }
 
         public static List<AddToCart> carts = new List<AddToCart>();
         public static float TotalPrice;
         public static string PhoneNumber;
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, INotyfService notyfService)
+        public static string Message;
+
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, INotyfService notyfService, IOptions<SMSMessage> SMSMessage)
         {
             _logger = logger;
             _context = context;
             _notyfService = notyfService;
+            _SMSMessage = SMSMessage;
         }
 
         //HOME page
@@ -54,7 +66,6 @@ namespace TablesideOrdering.Controllers
             Homedata = NavData();
             Homedata.Category = cat;
             Homedata.Product = productList;
-
             //Homedata.Cart
             return View(Homedata);
         }
@@ -71,8 +82,7 @@ namespace TablesideOrdering.Controllers
         [HttpPost]
         public IActionResult PhoneValidation(HomeViewModel home)
         {
-            if (home.PhoneValid.PhoneNumber == home.PhoneValid.PhoneConfirmed &&
-                (home.PhoneValid.PhoneNumber != null && home.PhoneValid.PhoneConfirmed != null))
+            if (home.PhoneValid.PhoneNumber == home.PhoneValid.PhoneConfirmed && (home.PhoneValid.PhoneNumber != null && home.PhoneValid.PhoneConfirmed != null))
             {
                 PhoneNumber = home.PhoneValid.PhoneNumber;
                 return RedirectToAction("Index", "Home");
@@ -139,6 +149,9 @@ namespace TablesideOrdering.Controllers
             ViewBag.CartQuantity = carts.Count();
             ViewBag.CartPrice = TotalPrice;
 
+            Message = "Hello";
+
+            SendSMS();
             NavData();
             return RedirectToAction("Index", "Home");
         }
@@ -200,6 +213,27 @@ namespace TablesideOrdering.Controllers
             carts.Clear();
             _notyfService.Success("Your order has been received");
             return RedirectToAction("Index");
+        }
+
+        public void SendSMS()
+        {
+            string number = ConvertToPhoneValid();
+
+            TwilioClient.Init(_SMSMessage.Value.AccountSid, _SMSMessage.Value.AuthToken);
+            var From = new PhoneNumber(_SMSMessage.Value.PhoneFrom);
+            var To = new PhoneNumber(number);
+
+            var message = MessageResource.Create(
+                to: To,
+                from: From,
+                body: Message);
+        }
+
+        public string ConvertToPhoneValid()
+        {
+            string number = PhoneNumber.Substring(1);
+            string validnum = "+84" + number;
+            return validnum;
         }
 
         public HomeViewModel NavData()

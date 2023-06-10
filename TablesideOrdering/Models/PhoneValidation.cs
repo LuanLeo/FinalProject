@@ -4,6 +4,8 @@ namespace TablesideOrdering.Models
 {
     public class PhoneValidation
     {
+        public string CountryNumber { get; set; }
+
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your phone number")]
         [Phone(ErrorMessage = "Please enter a valid phone number")]
         [StringLength(maximumLength: 10, MinimumLength = 10, ErrorMessage = "Length must be 10")]

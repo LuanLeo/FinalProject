@@ -1685,3 +1685,5 @@ C:\Users\USER\Desktop\Final Project\TablesideOrdering\obj\Debug\net6.0\refint\Ta
 C:\Users\USER\Desktop\Final Project\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.pdb
 C:\Users\USER\Desktop\Final Project\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.genruntimeconfig.cache
 C:\Users\USER\Desktop\Final Project\TablesideOrdering\obj\Debug\net6.0\ref\TablesideOrdering.dll
+C:\Users\USER\Desktop\FinalProject - Copy\TablesideOrdering\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\USER\Desktop\FinalProject - Copy\TablesideOrdering\bin\Debug\net6.0\Twilio.dll
