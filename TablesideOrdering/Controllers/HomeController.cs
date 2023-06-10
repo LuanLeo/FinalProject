@@ -151,7 +151,7 @@ namespace TablesideOrdering.Controllers
 
             Message = "Hello";
 
-            SendSMS();
+            //SendSMS();
             NavData();
             return RedirectToAction("Index", "Home");
         }

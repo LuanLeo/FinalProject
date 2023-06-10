@@ -1687,3 +1687,5 @@ C:\Users\USER\Desktop\Final Project\TablesideOrdering\obj\Debug\net6.0\Tableside
 C:\Users\USER\Desktop\Final Project\TablesideOrdering\obj\Debug\net6.0\ref\TablesideOrdering.dll
 C:\Users\USER\Desktop\FinalProject - Copy\TablesideOrdering\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
 C:\Users\USER\Desktop\FinalProject - Copy\TablesideOrdering\bin\Debug\net6.0\Twilio.dll
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\Twilio.dll
