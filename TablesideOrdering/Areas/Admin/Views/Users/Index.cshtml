@@ -55,6 +55,10 @@
                                     @Html.DisplayFor(modelItem => item.Roles)
                                 </td>
                                 <td align="center">
+                                    <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="@("#EditUser-" + item.UserID)" data-url="@Url.Action($"Edit/{item.UserID}")">
+                                        Edit
+                                    </button>
+                                    @await Html.PartialAsync("Edit", item)
                                     <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteUser-" + item.UserID)" data-url="@Url.Action($"Delete/{item.UserID}")">
                                         Delete
                                     </button>
@@ -63,8 +67,7 @@
                             </tr>
                         }
                     </tbody>
-                </table>
-                @await Component.InvokeAsync("Notyf")
+                </table>                
             </div>
         </div>
     </div>
@@ -76,3 +79,4 @@
     <script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
     <script src="~/assets/js/dashboard.js"></script>
 </body>
+@await Component.InvokeAsync("Notyf")

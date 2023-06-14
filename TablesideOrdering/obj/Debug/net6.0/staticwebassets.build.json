@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "mUsdNGptOz2mL+nQF6+91dSdm7LyIv9Arc5MDDZqc6g=",
+  "Hash": "K82aJmKOuFZBDk29JfZXKXiqEvguZ//jFRxYjf6N9eg=",
   "Source": "TablesideOrdering",
   "BasePath": "_content/TablesideOrdering",
   "Mode": "Default",
@@ -14669,23 +14669,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
-    },
-    {
-      "Identity": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\08a3cb702f3be59.ico",
-      "SourceId": "TablesideOrdering",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\",
-      "BasePath": "_content/TablesideOrdering",
-      "RelativePath": "ProductImage/08a3cb702f3be59.ico",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\ProductImage\\08a3cb702f3be59.ico"
     },
     {
       "Identity": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\2.PNG",

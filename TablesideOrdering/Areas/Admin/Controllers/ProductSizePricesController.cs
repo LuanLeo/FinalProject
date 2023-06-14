@@ -62,7 +62,10 @@ namespace TablesideOrdering.Areas.Admin.Controllers
 
         // GET: Admin/ProductSizePrices/Edit/5
         public async Task<IActionResult> Edit(int? id)
-        { 
+        {
+            ViewBag.ProductList = ProductList();
+            ViewBag.SizeList = SizeList();
+
             if (id == null || _context.ProductSizePrice == null)
             {
                 return NotFound();
@@ -73,6 +76,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+            notyfService.Success("New product's size and price have been edited");
             return PartialView("Edit", productSizePrice);
         }
 

@@ -95,6 +95,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
 
                 //Delete roles
                 await _roleManager.DeleteAsync(roles);
+                _notyfService.Success("The role is deleted", 5);
                 return RedirectToAction("Index");
             }
             else
