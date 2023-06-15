@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using TablesideOrdering.Models.Admin;
+using TablesideOrdering.Areas.Admin.Models;
 
 namespace TablesideOrdering.Data
 {

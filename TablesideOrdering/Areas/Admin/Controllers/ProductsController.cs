@@ -11,10 +11,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using TablesideOrdering.Areas.Admin.Models;
+using TablesideOrdering.Areas.Admin.ViewModels;
 using TablesideOrdering.Data;
 using TablesideOrdering.Migrations;
-using TablesideOrdering.Models.Admin;
-using TablesideOrdering.ViewModels.Admin;
 
 namespace TablesideOrdering.Areas.Admin.Controllers
 {

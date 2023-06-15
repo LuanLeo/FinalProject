@@ -21,7 +21,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using TablesideOrdering.Models.Admin;
+using TablesideOrdering.Areas.Admin.Models;
 
 namespace TablesideOrdering.Areas.Identity.Pages.Account
 {

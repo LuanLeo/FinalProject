@@ -7,8 +7,8 @@ using AspNetCoreHero.ToastNotification.Notyf;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TablesideOrdering.Areas.Admin.Models;
 using TablesideOrdering.Data;
-using TablesideOrdering.Models.Admin;
 using TablesideOrdering.ViewModels;
 
 namespace TablesideOrdering.Areas.Admin.Controllers

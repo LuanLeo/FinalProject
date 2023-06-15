@@ -13,8 +13,6 @@ using System.Data;
 using TablesideOrdering.Areas.Admin.Models;
 using TablesideOrdering.Areas.Identity.Pages.Account;
 using TablesideOrdering.Data;
-using TablesideOrdering.Models.Admin;
-using TablesideOrdering.ViewModels.Admin;
 
 namespace TablesideOrdering.Areas.Admin.Controllers
 {

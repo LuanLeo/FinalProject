@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.Xml.Linq;
 using TablesideOrdering.Areas.Identity.Pages.Account;
-using TablesideOrdering.Models.Admin;
 
 namespace TablesideOrdering.Areas.Admin.Models
 {

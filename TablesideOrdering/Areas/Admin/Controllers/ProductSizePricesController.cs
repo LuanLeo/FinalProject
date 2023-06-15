@@ -6,9 +6,9 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using TablesideOrdering.Areas.Admin.Models;
 using TablesideOrdering.Data;
 using TablesideOrdering.Migrations;
-using TablesideOrdering.Models.Admin;
 
 namespace TablesideOrdering.Areas.Admin.Controllers
 {

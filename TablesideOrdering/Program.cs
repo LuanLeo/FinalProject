@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using NuGet.Protocol.Core.Types;
 using TablesideOrdering.Data;
 using System.Configuration;
-using TablesideOrdering.Models.Customer;
+using TablesideOrdering.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
