@@ -141,6 +141,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+
             var viewUser = (from user in context.ApplicationUsers
                             join ur in context.UserRoles on user.Id equals ur.UserId
                             join r in context.Roles on ur.RoleId equals r.Id
@@ -153,7 +154,6 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                                 Email = user.Email,
                                 Roles = r.Name,
                             });
-            var view = viewUser;
             return PartialView("Edit", viewUser);
         }
 
@@ -168,27 +168,27 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                 return NotFound();
             }
 
-            var userWithSameEmail = await userManager.FindByEmailAsync(model.Register.Email);
+            var userWithSameEmail = await userManager.FindByEmailAsync(model.Email);
             if (userWithSameEmail != null && userWithSameEmail.Id != model.UserID)
             {
                 ModelState.AddModelError("Email", "This email is already used");
                 return View(model);
             }
 
-            if (model.Register.Role == "--Please select role--")
+            if (model.Roles == "--Please select role--")
             {
                 return RedirectToAction("Index");
             }
 
-            user.Firstname = model.Register.Firstname;
-            user.Lastname = model.Register.Lastname;
-            user.Email = model.Register.Email;
-            user.UserName = model.Register.Email;
+            user.Firstname = model.FirstName;
+            user.Lastname = model.LastName;
+            user.Email = model.Email;
+            user.UserName = model.Email;
 
             await userManager.UpdateAsync(user);
 
             var users = await userManager.FindByIdAsync(model.UserID);
-            var role = await roleManager.FindByNameAsync(model.Register.Role);
+            var role = await roleManager.FindByNameAsync(model.Roles);
             var oldrole = await userManager.GetRolesAsync(users);
             var newrole = await roleManager.GetRoleNameAsync(role);
 
@@ -198,6 +198,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             notyfService.Information("The user info has been updated", 5);
             return RedirectToAction("Index");
         }
+
         public async Task DropDownList()
         {
             var model = new UsersViewModel();

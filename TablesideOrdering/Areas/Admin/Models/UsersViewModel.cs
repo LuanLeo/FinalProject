@@ -20,7 +20,5 @@ namespace TablesideOrdering.Areas.Admin.Models
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Roles { get; set; }
-        public IQueryable<UsersViewModel> Users { get; set; }
-
     }
 }

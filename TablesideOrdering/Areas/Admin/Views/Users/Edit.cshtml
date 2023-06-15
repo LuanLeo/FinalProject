@@ -16,24 +16,24 @@
                     <input type="hidden" asp-for="UserID" />
                     <h3>Enter new user information</h3>
                     <div class="form-group">
-                        <label asp-for="Register.Firstname">First Name</label>
-                        <input asp-for="Register.Firstname" class="form-control" />
-                        <span asp-validation-for="Register.Firstname" class="text-danger"></span>
+                        <label asp-for="FirstName">First Name</label>
+                        <input asp-for="FirstName" class="form-control" />
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Register.Lastname">Last Name</label>
-                        <input asp-for="Register.Lastname" class="form-control" />
-                        <span asp-validation-for="Register.Lastname" class="text-danger"></span>
+                        <label asp-for="LastName">Last Name</label>
+                        <input asp-for="LastName" class="form-control" />
+                        <span asp-validation-for="LastName" class="text-danger"></span>
                     </div>                    
                     <div class="form-group">
-                        <label asp-for="Register.Email"></label>
-                        <input asp-for="Register.Email" class="form-control" />
-                        <span asp-validation-for="Register.Email" class="text-danger"></span>
+                        <label asp-for="Email"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Register.Role">Role</label>
-                        <select asp-for="Register.Role" asp-items="@ViewBag.RolesList" class="form-select"><option selected>--Please select role--</option></select>
-                        <span asp-validation-for="Register.Role" class="text-danger"></span>
+                        <label asp-for="Roles">Role</label>
+                        <select asp-for="Roles" asp-items="@ViewBag.RolesList" class="form-select"><option selected>--Please select role--</option></select>
+                        <span asp-validation-for="Roles" class="text-danger"></span>
                     </div>
                     <div class="modal-footer">
                         <input type="submit" value="Save" class="btn btn-success" />
