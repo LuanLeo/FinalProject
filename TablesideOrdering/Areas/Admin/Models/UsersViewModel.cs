@@ -1,19 +1,26 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
+using TablesideOrdering.Areas.Identity.Pages.Account;
 using TablesideOrdering.Models.Admin;
 
 namespace TablesideOrdering.Areas.Admin.Models
 {
     public class UsersViewModel
     {
-        public List<ApplicationUser> UserList { get; set; }
+        public RegisterModel.InputModel Register { get; set; }
+
+        [BindProperty]
+        public RegisterModel.InputModel inputModel { get; set; }
         public string UserID { get; set; }
-        public string Username { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
         public string Roles { get; set; }
-        public string RoleId { get; set; }       
-        public IdentityUser User { get; set; }
-        public IQueryable<UsersViewModel> Users { get; set; }        
+        public IQueryable<UsersViewModel> Users { get; set; }
+
     }
 }

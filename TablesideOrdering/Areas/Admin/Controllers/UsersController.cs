@@ -1,12 +1,17 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Microsoft.Extensions.Logging;
+using Microsoft.Win32;
 using System.Data;
 using TablesideOrdering.Areas.Admin.Models;
+using TablesideOrdering.Areas.Identity.Pages.Account;
 using TablesideOrdering.Data;
 using TablesideOrdering.Models.Admin;
 using TablesideOrdering.ViewModels.Admin;
@@ -16,24 +21,35 @@ namespace TablesideOrdering.Areas.Admin.Controllers
     [Area("Admin")]
     public class UsersController : Controller
     {
-        public readonly ApplicationDbContext context;
-        public readonly UserManager<IdentityUser> userManager;
-        public readonly RoleManager<IdentityRole> roleManager;
-        public string RoleName;
+        private readonly ApplicationDbContext context;
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly IUserStore<IdentityUser> _userStore;
+        private readonly ILogger<RegisterModel> _logger;
+
+
         public INotyfService notyfService { get; }
-        public UsersController(ApplicationDbContext _context, UserManager<IdentityUser> _userManager, RoleManager<IdentityRole> _roleManager)
+
+        public string RoleName;
+
+        public UsersController(ApplicationDbContext _context, UserManager<IdentityUser> _userManager,
+            RoleManager<IdentityRole> _roleManager, INotyfService _notyfService, IUserStore<IdentityUser> userStore,
+            ILogger<RegisterModel> logger,
+            IEmailSender emailSender)
         {
             context = _context;
             userManager = _userManager;
             roleManager = _roleManager;
+            notyfService = _notyfService;
+            _userStore = userStore;
+            _logger = logger;
         }
         public IActionResult Index()
         {
             DropDownList();
-            var userData = new UsersViewModel();
-            var users = (from user in context.ApplicationUsers                         
+            var users = (from user in context.ApplicationUsers
                          join ur in context.UserRoles on user.Id equals ur.UserId
-                         join r in context.Roles on ur.RoleId equals r.Id                       
+                         join r in context.Roles on ur.RoleId equals r.Id
                          select new UsersViewModel
                          {
                              UserID = user.Id,
@@ -42,15 +58,43 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                              Email = user.Email,
                              Roles = r.Name,
                          });
-            userData.Users = users;
-            return View(users);
+            IQueryable userData = users;
+            return View(userData);
         }
+
         [HttpGet]
         public IActionResult Create()
         {
-            IdentityUser user = new IdentityUser();
+            UsersViewModel user = new UsersViewModel();
+            DropDownList();
             return PartialView("Create", user);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(UsersViewModel model)
+        {
+            var user = CreateUser();
+            user.Firstname = model.Register.Firstname;
+            user.Lastname = model.Register.Lastname;
+            user.UserName = model.Register.Email;
+            user.Email = model.Register.Email;
+
+            var result = await userManager.CreateAsync(user, model.Register.Password);
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, model.Register.Role);
+                return RedirectToAction("Index");
+            }
+            notyfService.Error("Something went wrong, please try again", 5);
+            return RedirectToAction("Index");
+        }
+
+        private ApplicationUser CreateUser()
+        {
+            return Activator.CreateInstance<ApplicationUser>();
+        }
+
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null || context.ApplicationUsers == null)
@@ -69,14 +113,15 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                                 Email = user.Email,
                                 Roles = r.Name,
                             });
+
             return PartialView("Delete", viewUser);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(UsersViewModel model)
         {
-
             var user = await context.ApplicationUsers.FindAsync(model.UserID);
             if (user == null)
             {
@@ -87,6 +132,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             notyfService.Success("The user is deleted", 5);
             return RedirectToAction(nameof(Index));
         }
+
         [HttpGet]
         public async Task<IActionResult> Edit(string id)
         {
@@ -95,7 +141,6 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var User = await context.ApplicationUsers.FindAsync(id);
             var viewUser = (from user in context.ApplicationUsers
                             join ur in context.UserRoles on user.Id equals ur.UserId
                             join r in context.Roles on ur.RoleId equals r.Id
@@ -103,23 +148,15 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                             select new UsersViewModel
                             {
                                 UserID = id,
-                                RoleId = r.Id,
-                                FirstName = User.Firstname,
-                                LastName = User.Lastname,
-                                Email = User.Email,
+                                FirstName = user.Firstname,
+                                LastName = user.Lastname,
+                                Email = user.Email,
+                                Roles = r.Name,
                             });
-
-            UsersViewModel view = new UsersViewModel();
-            foreach (var views in viewUser)
-            {
-                view.UserID = views.UserID;
-                view.RoleId = views.RoleId;
-                view.FirstName = views.FirstName;
-                view.LastName = views.LastName;
-                view.Email = views.Email;
-            }
-            return PartialView("Edit", view);
+            var view = viewUser;
+            return PartialView("Edit", viewUser);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UsersViewModel model)
@@ -130,41 +167,49 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            var userWithSameEmail = await userManager.FindByEmailAsync(model.Email);
+
+            var userWithSameEmail = await userManager.FindByEmailAsync(model.Register.Email);
             if (userWithSameEmail != null && userWithSameEmail.Id != model.UserID)
             {
                 ModelState.AddModelError("Email", "This email is already used");
                 return View(model);
             }
 
-            if (model.RoleId == "--Please select role--")
+            if (model.Register.Role == "--Please select role--")
             {
                 return RedirectToAction("Index");
             }
 
-            user.UserName = model.Email;
-            user.Firstname = model.FirstName;
-            user.Lastname = model.LastName;
-            user.Email = model.Email;
+            user.Firstname = model.Register.Firstname;
+            user.Lastname = model.Register.Lastname;
+            user.Email = model.Register.Email;
+            user.UserName = model.Register.Email;
+
             await userManager.UpdateAsync(user);
 
-
             var users = await userManager.FindByIdAsync(model.UserID);
-            var role = await roleManager.FindByIdAsync(model.RoleId);
+            var role = await roleManager.FindByNameAsync(model.Register.Role);
             var oldrole = await userManager.GetRolesAsync(users);
             var newrole = await roleManager.GetRoleNameAsync(role);
+
             await userManager.RemoveFromRolesAsync(user, oldrole);
             await userManager.AddToRoleAsync(user, newrole);
+
+            notyfService.Information("The user info has been updated", 5);
             return RedirectToAction("Index");
         }
-        public void DropDownList()
+        public async Task DropDownList()
         {
-            List<SelectListItem> roles = new List<SelectListItem>();
-            foreach (var rol in context.Roles)
+            var model = new UsersViewModel();
+            model.inputModel = new RegisterModel.InputModel()
             {
-                roles.Add(new SelectListItem { Text = rol.Name, Value = Convert.ToString(rol.Id) });
-            }
-            ViewBag.RolesList = roles;
+                RoleList = roleManager.Roles.Select(x => x.Name).Select(i => new SelectListItem
+                {
+                    Text = i,
+                    Value = i
+                })
+            };
+            ViewBag.RolesList = model.inputModel.RoleList;
         }
     }
 }

@@ -1,0 +1,63 @@
+﻿@using TablesideOrdering.Areas.Admin.Models;
+@model UsersViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="modal fade" id="CreateUser" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create New User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form asp-action="Create">
+                <input type="hidden" asp-for="UserID" />
+                <h3>Enter new user information</h3>
+                <div class="form-group">
+                    <label asp-for="Register.Firstname">First Name</label>
+                    <input asp-for="Register.Firstname" class="form-control" />
+                    <span asp-validation-for="Register.Firstname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Register.Lastname">Last Name</label>
+                    <input asp-for="Register.Lastname" class="form-control" />
+                    <span asp-validation-for="Register.Lastname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Register.Email"></label>
+                    <input asp-for="Register.Email" class="form-control" />
+                    <span asp-validation-for="Register.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Register.Password">Password</label>
+                    <input asp-for="Register.Password" autocomplete="new-password" class="form-control" />
+                    <span asp-validation-for="Register.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Register.ConfirmPassword">Confirm Password</label>
+                    <input asp-for="Register.ConfirmPassword" autocomplete="new-password" class="form-control" />
+                    <span asp-validation-for="Register.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Register.Role">Role</label>
+                    <select asp-for=Register.Role asp-items="@ViewBag.RolesList" class="form-select"><option selected>--Please select role--</option></select>
+                    <span asp-validation-for="Register.Role" class="text-danger"></span>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Save" class="btn btn-success" />
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
