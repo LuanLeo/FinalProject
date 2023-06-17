@@ -51,7 +51,11 @@ app.UseEndpoints(endpoints =>
 });
 app.MapControllerRoute(
 
-    name: "default",
-    pattern: "{controller=Home}/{action=PhoneValidation}/{id?}");
+    /*name: "default",
+    pattern: "{controller=Home}/{action=PhoneValidation}/{id?}"*/
+      name: "default",
+      pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}"
+    );
+
 
 app.Run();

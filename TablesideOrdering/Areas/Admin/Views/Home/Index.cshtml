@@ -1,4 +1,5 @@
-﻿<!doctype html>
+﻿@model TablesideOrdering.Areas.Admin.ViewModels.HomeAdminViewModel
+<!doctype html>
 @{
     ViewData["Title"] = " Admin home Page";
     Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
@@ -22,7 +23,29 @@
         <!--  Main wrapper -->
         <div class="body-wrapper">
             <!--  Header Start -->
-           
+            <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                window.onload = function () {
+                    var chart = new CanvasJS.Chart("chartContainer", {
+                        animationEnabled: true,
+                        theme: "light2", // "light1", "light2", "dark1", "dark2"
+                        title: {
+                            text: "@ViewBag.Title1"
+                        },
+                        axisY: {
+                            title: "Revenues (VND)"
+                        },
+                        data: [{
+                            type: "column",
+                            dataPoints: @Html.Raw(ViewBag.OrderPrice)
+                                                    }]
+                    });
+                    chart.render();
+
+                }
+            </script>
+
             <!--  Header End -->
             <div class="container-fluid">
                 <!--  Row 1 -->
@@ -30,20 +53,21 @@
                     <div class="col-lg-8 d-flex align-items-strech">
                         <div class="card w-100">
                             <div class="card-body">
-                                <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
-                                    <div class="mb-3 mb-sm-0">
-                                        <h5 class="card-title fw-semibold">Sales Overview</h5>
-                                    </div>
+                                <form asp-action="Index" class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                                    <button type="submit" class="btn btn-info">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                        </svg>
+                                    </button>
                                     <div>
-                                        <select class="form-select">
-                                            <option value="1">March 2023</option>
-                                            <option value="2">April 2023</option>
-                                            <option value="3">May 2023</option>
-                                            <option value="4">June 2023</option>
+                                        <select asp-for="Time" class="form-select">
+                                            <option value="Day">Day</option>
+                                            <option value="Month">Month</option>
+                                            <option value="Year">Year</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div id="chart"></div>
+                                </form>
+                                <div id="chartContainer"></div>
                             </div>
                         </div>
                     </div>
@@ -370,9 +394,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="py-6 px-6 text-center">
-                    <p class="mb-0 fs-4">Design and Developed by <a href="https://adminmart.com/" target="_blank" class="pe-1 text-primary text-decoration-underline">AdminMart.com</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a></p>
                 </div>
             </div>
         </div>
