@@ -183,7 +183,7 @@ namespace TablesideOrdering.Controllers
         public IActionResult PlaceOrder()
         {
             //Save order to database
-            Order order = new Order();
+            Orders order = new Orders();
             order.OrderDate = DateTime.Now;
             order.OrderPrice = TotalPrice;
             order.ProductQuantity = carts.Count();

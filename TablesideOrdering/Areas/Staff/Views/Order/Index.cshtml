@@ -1,0 +1,90 @@
+﻿@using TablesideOrdering.Areas.Admin.Models;
+@model IEnumerable<Orders>
+@{
+    ViewData["Title"] = "Application Roles";
+    Layout = "~/Areas/Staff/Views/Shared/_StaffLayout.cshtml";
+}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<body>
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+         data-sidebar-position="fixed" data-header-position="fixed">
+        <div class="body-wrapper">
+            <div class="container-fluid">
+                <h1>Roles List</h1>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateRole">
+                    Create
+                </button>
+                @*await Html.PartialAsync("Create", new IdentityRole())*@
+
+                <table class="table" id="tblOrder">
+                    <thead>
+                        <tr>
+                            <th>
+                                Order ID
+                            </th>
+                            <th>
+                                Order Date
+                            </th>
+                            <th>
+                                Total Price
+                            </th>
+                            <th>
+                                Product Quantity
+                            </th>
+                            <th>
+                                Phone Number
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @*foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderPrice)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductQuantity)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OrderDate)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                </td>
+                                <td align="center">
+                                    <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteCategory-" + item.OrderId)" data-url="@Url.Action($"Delete/{item.OrderId}")">
+                                        Delete
+                                    </button>
+                                    @*await Html.PartialAsync("Delete", item)
+                                </td>
+                            </tr>
+                        }*@
+                    </tbody>
+                </table>
+                @await Component.InvokeAsync("Notyf")
+            </div>
+        </div>
+    </div>
+    <script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/sidebarmenu.js"></script>
+    <script src="~/assets/js/app.min.js"></script>
+    <script src="~/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
+    <script src="~/assets/js/dashboard.js"></script>
+    
+</body>
+@section Scripts{
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/order.js"></script>
+
+}

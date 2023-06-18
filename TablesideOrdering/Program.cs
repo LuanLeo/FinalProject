@@ -6,12 +6,19 @@ using NuGet.Protocol.Core.Types;
 using TablesideOrdering.Data;
 using System.Configuration;
 using TablesideOrdering.Models;
+using TablesideOrdering.Hubs;
+using TablesideOrdering.MiddlewareExtensions;
+using TablesideOrdering.SubscribeTableDependencies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 
+//DI
+builder.Services.AddSingleton<OrderHub>();
+builder.Services.AddSingleton<SubscribeOrderTableDependency>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TablesideOrdering")));
 builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders().AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
@@ -41,6 +48,8 @@ app.UseAuthentication(); ;
 
 app.UseAuthorization();
 
+app.MapHub<OrderHub>("/orderHub");
+
 app.MapRazorPages();
 app.UseEndpoints(endpoints =>
 {
@@ -51,11 +60,16 @@ app.UseEndpoints(endpoints =>
 });
 app.MapControllerRoute(
 
-    /*name: "default",
-    pattern: "{controller=Home}/{action=PhoneValidation}/{id?}"*/
-      name: "default",
-      pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}"
+    name: "default",
+    pattern: "{controller=Home}/{action=PhoneValidation}/{id?}"
+      /*name: "default",
+      pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}"*/
     );
+/*
+ * call SubscribeTableDependency() here
+ * create a middleware and call SubscribeTableDependency() method in the middleware
+ */
 
+app.UseOrderTableDependency();
 
 app.Run();

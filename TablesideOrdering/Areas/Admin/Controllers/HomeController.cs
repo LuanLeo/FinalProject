@@ -33,7 +33,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
         public void StatisticOrder(string time)
         {
             //Take list from database
-            List<Order> orders = new List<Order>();
+            List<Orders> orders = new List<Orders>();
             foreach (var order in context.Orders)
             {
                 orders.Add(order);

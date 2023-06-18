@@ -15,7 +15,7 @@ namespace TablesideOrdering.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductSize> ProductSize { get; set; }
         public DbSet<ProductSizePrice> ProductSizePrice { get; set; }
-        public DbSet<Order> Orders { get; set; }
+        public DbSet<Orders> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
 
     }
