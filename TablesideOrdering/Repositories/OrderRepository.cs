@@ -27,7 +27,8 @@ namespace TablesideOrdering.Repositories
                     OrderDate = Convert.ToDateTime(row["OrderDate"]),
                     OrderPrice = Convert.ToSingle(row["OrderPrice"]),
                     ProductQuantity = Convert.ToInt32(row["ProductQuantity"]),
-                    PhoneNumber = row["PhoneNumber"].ToString()
+                    PhoneNumber = row["PhoneNumber"].ToString(),
+                    TableNo = row["TableNo"].ToString()
                 };
                 orders.Add(order);
             }
@@ -36,7 +37,7 @@ namespace TablesideOrdering.Repositories
         
         public DataTable GetOrderDetailsFromDb()
         {
-            var query = "SELECT OrderId, OrderDate, OrderPrice, ProductQuantity, PhoneNumber FROM Orders";
+            var query = "SELECT OrderId, OrderDate, OrderPrice, ProductQuantity, PhoneNumber, TableNo FROM Orders";
             DataTable dataTable = new DataTable();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

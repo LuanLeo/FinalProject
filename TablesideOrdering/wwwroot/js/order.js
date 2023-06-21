@@ -31,6 +31,7 @@ function BindOrdersToGrid(orders) {
         tr.append(`<td>${(order.orderPrice)}</td>`);
         tr.append(`<td>${(order.productQuantity)}</td>`);
         tr.append(`<td>${(order.phoneNumber)}</td>`);
+        tr.append(`<td>${(order.tableNo)}</td>`);
         $('#tblOrder').append(tr);
     });
 }
