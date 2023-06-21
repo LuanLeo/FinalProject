@@ -23,10 +23,12 @@ namespace TablesideOrdering.SubscribeTableDependencies
             tableDependency.Start();
 
         }
+
         private void TableDependency_OnError(object sender, TableDependency.SqlClient.Base.EventArgs.ErrorEventArgs e) 
         {
             Console.WriteLine($"{nameof(Orders)} SqlTableDependency error: {e.Error.Message}");
         }
+
         private void TableDependency_OnChanged(object sender, TableDependency.SqlClient.Base.EventArgs.RecordChangedEventArgs<Orders> e) 
         {
             if(e.ChangeType != TableDependency.SqlClient.Base.Enums.ChangeType.None)

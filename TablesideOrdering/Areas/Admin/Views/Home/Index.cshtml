@@ -41,24 +41,6 @@
                         }]
                     });
                     OrderStatistic.render();
-
-                    var FoodStatistic = new CanvasJS.Chart("FoodStatistic", {
-                        theme: "light2", // "light1", "light2", "dark1", "dark2"
-                        exportEnabled: true,
-                        animationEnabled: true,
-                        title: {
-                            text: "Food Species",
-                            fontSize: 21
-                        },
-                        data: [{
-                            type: "pie",
-                            startAngle: 160,
-                            toolTipContent: "<b>{label}</b>: {y}%",
-                            indexLabel: "{label} - {y}%",
-                            dataPoints: @Html.Raw(ViewBag.FoodList)
-                    }]
-                    });
-                    FoodStatistic.render();
                 }
             </script>
             <!--  Header End -->
@@ -94,7 +76,7 @@
                                     <div class="card-body p-4">
                                         <h5 class="card-title mb-9 fw-semibold">Yearly Breakup</h5>
                                         <div class="row align-items-center">
-                                            <!--<div class="col-8">
+                                            <div class="col-8">
                                                 <h4 class="fw-semibold mb-3">$36,358</h4>
                                                 <div class="d-flex align-items-center mb-3">
                                                     <span class="me-1 rounded-circle bg-light-success round-20 d-flex align-items-center justify-content-center">
@@ -113,7 +95,7 @@
                                                         <span class="fs-2">2023</span>
                                                     </div>
                                                 </div>
-                                            </div>-->
+                                            </div>
                                             <div class="col-4">
                                                 <div class="d-flex justify-content-center">
                                                     <div id="FoodStatistic"></div>

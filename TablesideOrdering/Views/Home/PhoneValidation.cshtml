@@ -6,11 +6,11 @@
 }
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Ogani Template">
-    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="description">
+    <meta name="keywords">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani | Template</title>
+    <title>L&L Coffee</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -34,10 +34,10 @@
                     <div class="col-md-8 col-lg-6 col-xxl-3">
                         <div class="card mb-0">
                             <div class="card-body">
-                                <a href="./index.html" class="text-nowrap logo-img text-center d-block py-3 w-100">
-                                    <img src="../assets/images/logos/dark-logo.svg" width="180" alt="">
+                                <a class="text-nowrap logo-img text-center d-block py-3 w-100">
+                                    <img src="/Logo/Logo.png" width="180">
                                 </a>
-                                <p class="text-center">Please enter your phone number to get notification when your order done!</p>
+                                <p class="text-center" style="font-size:20px">Please enter your phone number to get notification when your order done!</p>
                                 <form asp-action="PhoneValidation" asp-controller="Home" enctype="multipart/form-data" method="post">
                                     <div class="mb-3">
                                         <label>Phone Number</label>
@@ -54,7 +54,7 @@
                                         <input type="tel" data-val="true" asp-for="PhoneValid.TableNo" class="form-control" aria-required="true" />
                                         <span asp-validation-for="PhoneValid.TableNo" class="text-danger"></span>
                                     </div>
-                                    <input type="submit" value="Enter" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2">
+                                    <input type="submit" value="Enter" style="display: block; margin: auto; " class="btn btn-primary w-50 py-8 fs-4 mb-4 rounded-2">
                                 </form>
                             </div>
                         </div>
