@@ -230,7 +230,7 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Models.Category", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -247,33 +247,7 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Models.Order", b =>
-                {
-                    b.Property<int>("OrderId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
-
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<float>("OrderPrice")
-                        .HasColumnType("real");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductQuantity")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderId");
-
-                    b.ToTable("Orders");
-                });
-
-            modelBuilder.Entity("TablesideOrdering.Models.OrderDetail", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.OrderDetail", b =>
                 {
                     b.Property<int>("OrderDetailId")
                         .ValueGeneratedOnAdd()
@@ -303,7 +277,37 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Models.Product", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.Orders", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("OrderPrice")
+                        .HasColumnType("real");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TableNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
@@ -331,7 +335,7 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Models.ProductSize", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.ProductSize", b =>
                 {
                     b.Property<int>("SizeId")
                         .ValueGeneratedOnAdd()
@@ -348,7 +352,7 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("ProductSize");
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Models.ProductSizePrice", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.ProductSizePrice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -371,7 +375,7 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("ProductSizePrice");
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Models.ApplicationUser", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 

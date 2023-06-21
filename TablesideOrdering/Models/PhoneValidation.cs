@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using System.ComponentModel.DataAnnotations;
 
 namespace TablesideOrdering.Models
 {
@@ -14,5 +15,7 @@ namespace TablesideOrdering.Models
         [Phone(ErrorMessage = "Please enter a valid phone number")]
         [StringLength(maximumLength: 10, MinimumLength = 10, ErrorMessage = "Length must be 10")]
         public string PhoneConfirmed { get; set; }
+
+        public string TableNo { get; set; }
     }
 }

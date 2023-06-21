@@ -29,6 +29,7 @@ namespace TablesideOrdering.Controllers
         public static float TotalPrice;
         public static string PhoneNumber;
         public static string Message;
+        public static string TableNo;
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, INotyfService notyfService, IOptions<SMSMessage> SMSMessage)
         {
@@ -87,6 +88,7 @@ namespace TablesideOrdering.Controllers
             if (home.PhoneValid.PhoneNumber == home.PhoneValid.PhoneConfirmed && (home.PhoneValid.PhoneNumber != null && home.PhoneValid.PhoneConfirmed != null))
             {
                 PhoneNumber = home.PhoneValid.PhoneNumber;
+                TableNo = home.PhoneValid.TableNo;
                 return RedirectToAction("Index", "Home");
             }
             return View();
@@ -188,6 +190,8 @@ namespace TablesideOrdering.Controllers
             order.OrderPrice = TotalPrice;
             order.ProductQuantity = carts.Count();
             order.PhoneNumber = PhoneNumber;
+            order.TableNo = TableNo;
+
             _context.Orders.Add(order);
             _context.SaveChanges();
 
@@ -204,6 +208,7 @@ namespace TablesideOrdering.Controllers
 
                 orderDetailList.Add(orderDetail);
             }
+
             foreach (var orderDt in orderDetailList)
             {
                 _context.OrderDetails.Add(orderDt);

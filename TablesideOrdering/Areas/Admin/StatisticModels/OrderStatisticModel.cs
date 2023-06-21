@@ -7,9 +7,7 @@ namespace TablesideOrdering.Areas.Admin.StatisticModels
     public class OrderStatisticModel
     {
         public string Date { get; set; }
-        public int Quantity {get; set;}
         public float Price { get; set; }
-
     }
 
     [DataContract]

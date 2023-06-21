@@ -10,5 +10,6 @@ namespace TablesideOrdering.Areas.Admin.Models
         public float OrderPrice { get; set; }
         public int ProductQuantity { get; set; }
         public string PhoneNumber { get; set; }
+        public string TableNo { get; set; }
     }
 }

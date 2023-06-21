@@ -62,7 +62,7 @@ app.MapControllerRoute(
 
     name: "default",
     pattern: "{controller=Home}/{action=PhoneValidation}/{id?}"
-      /*name: "default",
+     /* name: "default",
       pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}"*/
     );
 /*
