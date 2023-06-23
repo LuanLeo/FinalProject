@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\Logo\\Logo.png"
     },
     {
+      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\Logo\\coffeehouse.jpg",
+      "PackagePath": "staticwebassets\\Logo\\coffeehouse.jpg"
+    },
+    {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\Logo\\horizontal logo.png",
       "PackagePath": "staticwebassets\\Logo\\horizontal logo.png"
     },
@@ -2705,10 +2709,6 @@
       "PackagePath": "staticwebassets\\img\\360_F_503250032_MkRvSf8OPCWcSkXizCisDpvzRkdNeL3x.jpg"
     },
     {
-      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\img\\Coffee_Grain_Cart.jpg",
-      "PackagePath": "staticwebassets\\img\\Coffee_Grain_Cart.jpg"
-    },
-    {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\img\\banner\\banner-1.jpg",
       "PackagePath": "staticwebassets\\img\\banner\\banner-1.jpg"
     },
@@ -2861,10 +2861,6 @@
       "PackagePath": "staticwebassets\\img\\latest-product\\lp-3.jpg"
     },
     {
-      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\img\\logo.png",
-      "PackagePath": "staticwebassets\\img\\logo.png"
-    },
-    {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\img\\payment-item.png",
       "PackagePath": "staticwebassets\\img\\payment-item.png"
     },
@@ -3007,6 +3003,10 @@
     {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\js\\order.js",
       "PackagePath": "staticwebassets\\js\\order.js"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\js\\order1.js",
+      "PackagePath": "staticwebassets\\js\\order1.js"
     },
     {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\js\\owl.carousel.min.js",

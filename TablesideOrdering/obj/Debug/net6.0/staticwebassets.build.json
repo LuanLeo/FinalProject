@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "lpOQeu9U7ZZwNVlkhUHOTdw2bbFGBo5kSLBbYjHurBM=",
+  "Hash": "8D4hlZURlR4b3e1XpVbS4mGC9Ev2QkzMGWBpuF0MgRw=",
   "Source": "TablesideOrdering",
   "BasePath": "_content/TablesideOrdering",
   "Mode": "Default",
@@ -12784,23 +12784,6 @@
       "OriginalItemSpec": "wwwroot\\img\\categories\\cat-5.jpg"
     },
     {
-      "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\img\\Coffee_Grain_Cart.jpg",
-      "SourceId": "TablesideOrdering",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\",
-      "BasePath": "_content/TablesideOrdering",
-      "RelativePath": "img/Coffee_Grain_Cart.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\Coffee_Grain_Cart.jpg"
-    },
-    {
       "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\img\\coffee-beans.avif",
       "SourceId": "TablesideOrdering",
       "SourceType": "Discovered",
@@ -13054,23 +13037,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\latest-product\\lp-3.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\img\\logo.png",
-      "SourceId": "TablesideOrdering",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\",
-      "BasePath": "_content/TablesideOrdering",
-      "RelativePath": "img/logo.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\logo.png"
     },
     {
       "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\img\\payment-item.png",
@@ -13683,6 +13649,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\order.js"
+    },
+    {
+      "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\js\\order1.js",
+      "SourceId": "TablesideOrdering",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\",
+      "BasePath": "_content/TablesideOrdering",
+      "RelativePath": "js/order1.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\order1.js"
     },
     {
       "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\js\\owl.carousel.min.js",
@@ -14720,6 +14703,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\microsoft\\signalr\\dist\\browser\\signalr.min.js"
+    },
+    {
+      "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\Logo\\coffeehouse.jpg",
+      "SourceId": "TablesideOrdering",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\",
+      "BasePath": "_content/TablesideOrdering",
+      "RelativePath": "Logo/coffeehouse.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Logo\\coffeehouse.jpg"
     },
     {
       "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\Logo\\horizontal logo.png",

@@ -45,32 +45,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @*foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.OrderId)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.OrderPrice)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.ProductQuantity)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.OrderDate)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                                </td>
-                                <td align="center">
-                                    <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteCategory-" + item.OrderId)" data-url="@Url.Action($"Delete/{item.OrderId}")">
-                                        Delete
-                                    </button>
-                                    @*await Html.PartialAsync("Delete", item)
-                                </td>
-                            </tr>
-                        }*@
                     </tbody>
                 </table>
                 @await Component.InvokeAsync("Notyf")
