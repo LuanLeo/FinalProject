@@ -135,16 +135,19 @@ namespace TablesideOrdering.Areas.Admin.Controllers
 
             if (time == null || time == "Day")
             {
+                ViewBag.Title2 = "Favorite food category Today";
                 comparedTime = DateTime.Now.ToShortDateString();
             }
             else
             {
                 if (time == "Month")
                 {
+                    ViewBag.Title2 = "Favorite food category this Month";
                     comparedTime = DateTime.Now.Month.ToString();
                 }
                 else
                 {
+                    ViewBag.Title2 = "Favorite food category this Year";
                     comparedTime = DateTime.Now.Year.ToString();
                 }
             }
