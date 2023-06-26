@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Collections;
@@ -18,6 +19,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext context;
+
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext _context)
         {
             _logger = logger;
@@ -27,7 +29,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
         public IActionResult Index(string? time)
         {
             StatisticOrder(time);
-            TopFood(time);
+            FoodTopPercentage(time);
             return View();
         }
 
@@ -111,7 +113,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             ViewBag.OrderPrice = JsonConvert.SerializeObject(OrderPrice);
         }
 
-        public void TopFood(string time)
+        public void FoodTopPercentage(string time)
         {
             //Take list from database
             List<Orders> orders = new List<Orders>();
@@ -135,19 +137,19 @@ namespace TablesideOrdering.Areas.Admin.Controllers
 
             if (time == null || time == "Day")
             {
-                ViewBag.Title2 = "Favorite food category Today";
+                ViewBag.Title2 = "Today";
                 comparedTime = DateTime.Now.ToShortDateString();
             }
             else
             {
                 if (time == "Month")
                 {
-                    ViewBag.Title2 = "Favorite food category this Month";
+                    ViewBag.Title2 = "this Month";
                     comparedTime = DateTime.Now.Month.ToString();
                 }
                 else
                 {
-                    ViewBag.Title2 = "Favorite food category this Year";
+                    ViewBag.Title2 = "this Year";
                     comparedTime = DateTime.Now.Year.ToString();
                 }
             }
@@ -168,12 +170,14 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                 }
             }
 
+            float TotalPrice = 0;
             foreach (var id in orderId)
             {
                 foreach (var order in ordersDetails)
                 {
                     if (order.OrderId == id)
                     {
+                        TotalPrice += order.Price;
                         orderDetails.Add(order);
                     }
                 }
@@ -185,7 +189,8 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                 FoodDistinct.Add(f);
             }
 
-            List<FoodStatisticModel> topFoodList = new List<FoodStatisticModel>();
+            List<FoodStatisticModel> FoodPercentage = new List<FoodStatisticModel>();
+            List<FoodStatisticModel> TopFood = new List<FoodStatisticModel>();
             foreach (var food in FoodDistinct)
             {
                 float Price = 0;
@@ -196,20 +201,34 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                         Price += item.Price;
                     }
                 }
+                float Percentage = (Price / TotalPrice) * 100;
+
+                FoodStatisticModel foodPercent = new FoodStatisticModel();
+                foodPercent.FoodName = food;
+                foodPercent.Value = Percentage;
+                FoodPercentage.Add(foodPercent);
 
                 FoodStatisticModel topFood = new FoodStatisticModel();
                 topFood.FoodName = food;
-                topFood.Price = Price;
-                topFoodList.Add(topFood);
+                topFood.Value = Price;
+                TopFood.Add(topFood);
             }
 
             //Save to model
-            List<TopFoodLogicModel> FoodList = new List<TopFoodLogicModel>();
-            foreach(var top in topFoodList)
+            List<TopFoodLogicModel> FoodPercentageList = new List<TopFoodLogicModel>();
+            foreach (var per in FoodPercentage)
             {
-                FoodList.Add(new TopFoodLogicModel(top.FoodName, top.Price));
+                FoodPercentageList.Add(new TopFoodLogicModel(per.FoodName, per.Value));
             }
-            ViewBag.FoodList = JsonConvert.SerializeObject(FoodList);
+            ViewBag.FoodList = JsonConvert.SerializeObject(FoodPercentageList);
+
+            List<TopFoodLogicModel> FoodTopList = new List<TopFoodLogicModel>();
+            var top = TopFood.OrderByDescending(i => i.Value).Take(3).ToList();
+            foreach (var t in top)
+            {
+                FoodTopList.Add(new TopFoodLogicModel(t.FoodName, t.Value));
+            }
+            ViewBag.TopFood = JsonConvert.SerializeObject(FoodTopList);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

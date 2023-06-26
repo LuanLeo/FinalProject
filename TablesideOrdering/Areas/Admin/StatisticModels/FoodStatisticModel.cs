@@ -6,7 +6,7 @@ namespace TablesideOrdering.Areas.Admin.StatisticModels
     public class FoodStatisticModel
     {
         public string FoodName { get; set; }
-        public float Price { get; set; }
+        public float Value { get; set; }
     }
     [DataContract]
     public class TopFoodLogicModel

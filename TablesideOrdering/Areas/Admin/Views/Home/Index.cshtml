@@ -15,74 +15,34 @@
 </head>
 
 <body>
-
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
          data-sidebar-position="fixed" data-header-position="fixed">
-
         <!--  Sidebar End -->
         <!--  Main wrapper -->
         <div class="body-wrapper">
-            <!--  Header Start -->
-            <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-            <script>
-                window.onload = function () {
-                    var OrderStatistic = new CanvasJS.Chart("OrderStatistic", {
-                        animationEnabled: true,
-                        theme: "light2", // "light1", "light2", "dark1", "dark2"
-                        title: {
-                            text: "@ViewBag.Title1"
-                        },
-                        axisY: {
-                            title: "Revenues (VND)"
-                        },
-                        data: [{
-                            type: "column",
-                            dataPoints: @Html.Raw(ViewBag.OrderPrice)
-                        }]
-                    });
-                    OrderStatistic.render();
-
-                    var FoodStatistic = new CanvasJS.Chart("FoodStatistic", {
-                        theme: "light2", // "light1", "light2", "dark1", "dark2"
-                        animationEnabled: true,
-                        title: {
-                            text: "@ViewBag.Title2"
-                        },
-                        data: [{
-                            type: "pie",
-                            startAngle: 180,
-                            toolTipContent: "<b>{label}</b>: {y}%",
-                            showInLegend: "true",
-                            legendText: "{label}",
-                            indexLabel: "{label} - {y}%",
-                            dataPoints: @Html.Raw(ViewBag.FoodList)
-                        }]
-                    });
-                    FoodStatistic.render();
-                }
-            </script>
-            <!--  Header End -->
             <div class="container-fluid">
                 <!--  Row 1 -->
                 <div class="row">
+                    <form asp-action="Index" class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                        <button type="submit" class="btn btn-info">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                            </svg>
+                        </button>
+                        <div>
+                            <select asp-for="Time" class="form-select">
+                                <option value="Day">Day</option>
+                                <option value="Month">Month</option>
+                                <option value="Year">Year</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="row">
                     <div class="col-lg-8 d-flex align-items-strech">
                         <div class="card w-100">
-                            <div class="card-body">
-                                <form asp-action="Index" class="d-sm-flex d-block align-items-center justify-content-between mb-9">
-                                    <button type="submit" class="btn btn-info">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-                                        </svg>
-                                    </button>
-                                    <div>
-                                        <select asp-for="Time" class="form-select">
-                                            <option value="Day">Day</option>
-                                            <option value="Month">Month</option>
-                                            <option value="Year">Year</option>
-                                        </select>
-                                    </div>
-                                </form>
-                                <div id="OrderStatistic" style="height:90%"></div>
+                            <div class="card-body" style="height:fit-content">
+                                <div id="OrderStatistic" style="height:100%"></div>
                             </div>
                         </div>
                     </div>
@@ -94,9 +54,7 @@
                                     <div class="card-body">
                                         <div class="row alig n-items-start">
                                             <div class="col-12">
-                                                <div class="d-flex justify-content-end">
-                                                    <div id="FoodStatistic" style="width:100%; height:89px"></div>
-                                                </div>
+                                                    <div id="FoodStatistic" style="width:100%; height:140px"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -104,31 +62,15 @@
                             </div>
                             <div class="col-lg-12">
                                 <!-- Monthly Earnings -->
-                                <!-- <div class="card">
+                                <div class="card">
                                     <div class="card-body">
                                         <div class="row alig n-items-start">
-                                            <div class="col-8">
-                                                <h5 class="card-title mb-9 fw-semibold"> Monthly Earnings </h5>
-                                                <h4 class="fw-semibold mb-3">$6,820</h4>
-                                                <div class="d-flex align-items-center pb-1">
-                                                    <span class="me-2 rounded-circle bg-light-danger round-20 d-flex align-items-center justify-content-center">
-                                                        <i class="ti ti-arrow-down-right text-danger"></i>
-                                                    </span>
-                                                    <p class="text-dark me-1 fs-3 mb-0">+9%</p>
-                                                    <p class="fs-3 mb-0">last year</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="d-flex justify-content-end">
-                                                    <div class="text-white bg-secondary rounded-circle p-6 d-flex align-items-center justify-content-center">
-                                                        <i class="ti ti-currency-dollar fs-6"></i>
-                                                    </div>
-                                                </div>
+                                            <div class="col-12">
+                                                <div id="TopFood" style="width:100%; height:140px"></div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="earning"></div>
-                                    </div>-->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -402,3 +344,60 @@
 </body>
 
 </html>
+
+<script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+<script>
+    window.onload = function () {
+        var OrderStatistic = new CanvasJS.Chart("OrderStatistic", {
+            animationEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            title: {
+                text: "@ViewBag.Title1"
+            },
+            axisY: {
+                title: "Revenues (VND)"
+            },
+            data: [{
+                type: "column",
+                dataPoints: @Html.Raw(ViewBag.OrderPrice)
+                            }]
+        });
+        OrderStatistic.render();
+
+        var FoodStatistic = new CanvasJS.Chart("FoodStatistic", {
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            animationEnabled: true,
+            title: {
+                text: "Favorite food category @ViewBag.Title2"
+            },
+            data: [{
+                type: "pie",
+                startAngle: 180,
+                toolTipContent: "<b>{label}</b>: {y}%",
+                showInLegend: "true",
+                legendText: "{label}",
+                indexLabel: "{label} - {y}%",
+                dataPoints: @Html.Raw(ViewBag.FoodList)
+                            }]
+        });
+        FoodStatistic.render();
+
+        var TopFood = new CanvasJS.Chart("TopFood", {
+            theme: "light2",
+            animationEnabled: true,
+            title: {
+                text: "Top 3 Food @ViewBag.Title2"
+            },
+            axisY: {
+                title: "Revenues of Food",
+                gridThickness: 0
+            },
+            data: [{
+                type: "bar",
+                indexLabel: "{y}",
+                dataPoints: @Html.Raw(ViewBag.TopFood)
+                        }]
+        });
+        TopFood.render();
+    }
+</script>
