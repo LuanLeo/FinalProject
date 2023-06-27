@@ -71,6 +71,45 @@ namespace TablesideOrdering.Controllers
             Homedata.Product = productList;
             return View(Homedata);
         }
+        public IActionResult Menu()
+        {
+            List<ProductSizePriceViewModel> productlist = new List<ProductSizePriceViewModel>();
+
+            var productList = (from ProSP in _context.ProductSizePrice
+                               join Pro in _context.Products on ProSP.ProductId equals Pro.ProductId
+                               select new ProductSizePriceViewModel
+                               {
+                                   SizePriceId = ProSP.Id,
+                                   ProductId = Pro.ProductId,
+                                   Name = Pro.Name,
+                                   CategoryId = Pro.CategoryId,
+                                   Description = Pro.Description,
+                                   Pic = Pro.Pic,
+                                   Size = ProSP.Size,
+                                   Price = ProSP.Price
+                               });
+
+            var cat = (from categories in _context.Categories
+                       select new Category
+                       {
+                           CategoryId = categories.CategoryId,
+                           CategoryName = categories.CategoryName,
+                       });
+            var size = (from s in _context.ProductSize
+                       select new ProductSize
+                       {
+                           SizeName = s.SizeName,
+                           SizeId = s.SizeId,
+                       });
+
+            HomeViewModel Homedata = new HomeViewModel();
+            Homedata = NavData();
+            Homedata.Category = cat;
+            Homedata.ProductSizes = size;
+            Homedata.Product = productList;
+            //Homedata.Cart
+            return View(Homedata);
+        }
 
         [HttpPost]
         public IActionResult GetMail(HomeViewModel home)
