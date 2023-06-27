@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using TablesideOrdering.Areas.Admin.Models;
 using TablesideOrdering.Areas.Admin.ViewModels;
 using TablesideOrdering.Data;
+using TablesideOrdering.Migrations;
 using TablesideOrdering.Models;
 using TablesideOrdering.ViewModels;
 using Twilio;
@@ -40,10 +41,9 @@ namespace TablesideOrdering.Controllers
         }
 
         //HOME page
+        [HttpGet]
         public IActionResult Index()
         {
-            List<ProductSizePriceViewModel> productlist = new List<ProductSizePriceViewModel>();
-
             var productList = (from ProSP in _context.ProductSizePrice
                                join Pro in _context.Products on ProSP.ProductId equals Pro.ProductId
                                select new ProductSizePriceViewModel
@@ -69,10 +69,28 @@ namespace TablesideOrdering.Controllers
             Homedata = NavData();
             Homedata.Category = cat;
             Homedata.Product = productList;
-            //Homedata.Cart
             return View(Homedata);
         }
 
+        [HttpPost]
+        public IActionResult GetMail(HomeViewModel home)
+        {
+            CustomerEmail Email = new CustomerEmail();
+            Email.Email = home.CusMail;
+
+            var emailList = _context.CustomerEmails.Select(i => i.Email).ToList();
+            if (emailList.Contains(Email.Email) != true)
+            {
+                _context.CustomerEmails.Add(Email);
+                _context.SaveChanges();
+                _notyfService.Success("Your email is subcribed success", 5);
+            }
+            else
+            {
+                _notyfService.Error("Your email has been subcribed", 5);
+            };
+            return RedirectToAction("Index");
+        }
         //GET take phone number
         [HttpGet]
         public IActionResult PhoneValidation()
@@ -251,12 +269,6 @@ namespace TablesideOrdering.Controllers
             home.Cart = cartlist;
 
             return home;
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

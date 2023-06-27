@@ -277,7 +277,36 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            
+            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.Orders", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<float>("OrderPrice")
+                        .HasColumnType("real");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TableNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
@@ -344,6 +373,23 @@ namespace TablesideOrdering.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductSizePrice");
+                });
+
+            modelBuilder.Entity("TablesideOrdering.Models.CustomerEmail", b =>
+                {
+                    b.Property<int>("EmailId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EmailId"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EmailId");
+
+                    b.ToTable("CustomerEmails");
                 });
 
             modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.ApplicationUser", b =>

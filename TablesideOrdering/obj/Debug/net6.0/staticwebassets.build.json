@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "gH8ZgeO2CYQC2ylCdZZOaQzbk095iISXE1Se8tjZM3A=",
+  "Hash": "BgTluy4exqSKL82v3fT3anMd/jrKZhVPFqQEwJ4Nmqw=",
   "Source": "TablesideOrdering",
   "BasePath": "_content/TablesideOrdering",
   "Mode": "Default",
@@ -12782,23 +12782,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\categories\\cat-5.jpg"
-    },
-    {
-      "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\img\\Coffee_Grain_Cart.jpg",
-      "SourceId": "TablesideOrdering",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\",
-      "BasePath": "_content/TablesideOrdering",
-      "RelativePath": "img/Coffee_Grain_Cart.jpg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\Coffee_Grain_Cart.jpg"
     },
     {
       "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\img\\coffee-beans.avif",
