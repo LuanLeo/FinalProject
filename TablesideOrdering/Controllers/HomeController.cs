@@ -3,10 +3,12 @@ using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Security.Cryptography.Pkcs;
 using System.Text.RegularExpressions;
 using TablesideOrdering.Areas.Admin.Models;
+using TablesideOrdering.Areas.Admin.StatisticModels;
 using TablesideOrdering.Areas.Admin.ViewModels;
 using TablesideOrdering.Data;
 using TablesideOrdering.Migrations;
@@ -125,8 +127,59 @@ namespace TablesideOrdering.Controllers
             Homedata.ProductSizes = size;
             Homedata.Product = productList;
             Homedata.Term = term;
-            //Homedata.Cart
+
             return View(Homedata);
+        }
+
+        public void GetTopFood()
+        {
+            //Take list from database
+            List<OrderDetail> ordersDetails = new List<OrderDetail>();
+            foreach (var detail in _context.OrderDetails)
+            {
+                ordersDetails.Add(detail);
+            }
+
+            //Handle the data
+            List<string> FoodDistinct = new List<string>();
+            var FoodDis = ordersDetails.DistinctBy(i => i.ProductName).Select(i => i.ProductName).ToList();
+            foreach (var f in FoodDis)
+            {
+                FoodDistinct.Add(f);
+            }
+
+            List<FoodStatisticModel> TopFood = new List<FoodStatisticModel>();
+            foreach (var food in FoodDistinct)
+            {
+                float Price = 0;
+                foreach (var item in ordersDetails)
+                {
+                    if (item.ProductName == food)
+                    {
+                        Price += item.Price;
+                    }
+                }
+
+                FoodStatisticModel topFood = new FoodStatisticModel();
+                topFood.FoodName = food;
+                topFood.Value = Price;
+                TopFood.Add(topFood);
+            }
+
+            List<string> FoodId = TopFood.OrderByDescending(i => i.Value).Select(h => h.FoodName).Take(6).ToList();
+
+            //Save to model
+            List<Product> ProductList = new List<Product>();
+            foreach(var pro in _context.Products)
+            {
+                foreach(var id in FoodId)
+                {
+                    if(pro.Name == id)
+                    {
+                        ProductList.Add(pro);
+                    }
+                }
+            }
         }
 
         [HttpPost]
