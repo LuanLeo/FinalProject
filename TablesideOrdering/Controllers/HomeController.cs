@@ -75,6 +75,8 @@ namespace TablesideOrdering.Controllers
         }
         public IActionResult Menu(string term="", string orderBy = "")
         {
+            
+            
             term = string.IsNullOrEmpty(term) ? "" : term.ToLower();
             HomeViewModel Homedata = new HomeViewModel();
             List<ProductSizePriceViewModel> productlist = new List<ProductSizePriceViewModel>();                         
@@ -126,60 +128,58 @@ namespace TablesideOrdering.Controllers
             Homedata.Category = cat;
             Homedata.ProductSizes = size;
             Homedata.Product = productList;
+            Homedata.TopProduct = GetTopFood();
             Homedata.Term = term;
 
             return View(Homedata);
         }
 
-        public void GetTopFood()
+        public List<TopFoodSizePriceDistinct> GetTopFood()
         {
             //Take list from database
-            List<OrderDetail> ordersDetails = new List<OrderDetail>();
+            List<TopFoodSizePrice> toplist = new List<TopFoodSizePrice>();
+
             foreach (var detail in _context.OrderDetails)
             {
-                ordersDetails.Add(detail);
+                TopFoodSizePrice topsp = new TopFoodSizePrice();
+                topsp.Price = detail.Price;
+                topsp.Size = detail.Size;
+                topsp.Name = detail.ProductName;
+                toplist.Add(topsp);
             }
 
             //Handle the data
-            List<string> FoodDistinct = new List<string>();
-            var FoodDis = ordersDetails.DistinctBy(i => i.ProductName).Select(i => i.ProductName).ToList();
+
+            List<TopFoodSizePrice> FoodDistinct = new List<TopFoodSizePrice>();
+            var FoodDis = toplist.Distinct().ToList();
+
             foreach (var f in FoodDis)
             {
                 FoodDistinct.Add(f);
             }
 
-            List<FoodStatisticModel> TopFood = new List<FoodStatisticModel>();
+            List<TopFoodSizePriceDistinct> TopFood = new List<TopFoodSizePriceDistinct>();
             foreach (var food in FoodDistinct)
             {
                 float Price = 0;
-                foreach (var item in ordersDetails)
+                foreach (var item in toplist)
                 {
-                    if (item.ProductName == food)
+                    if (item.Name == food.Name && item.Size == food.Size)
                     {
                         Price += item.Price;
                     }
                 }
 
-                FoodStatisticModel topFood = new FoodStatisticModel();
-                topFood.FoodName = food;
-                topFood.Value = Price;
+                TopFoodSizePriceDistinct topFood = new TopFoodSizePriceDistinct();
+                topFood.Name = food.Name;
+                topFood.Size = food.Size;
+                topFood.Price = food.Price;
+                topFood.TotalPrice = Price;
                 TopFood.Add(topFood);
             }
 
-            List<string> FoodId = TopFood.OrderByDescending(i => i.Value).Select(h => h.FoodName).Take(6).ToList();
-
-            //Save to model
-            List<Product> ProductList = new List<Product>();
-            foreach(var pro in _context.Products)
-            {
-                foreach(var id in FoodId)
-                {
-                    if(pro.Name == id)
-                    {
-                        ProductList.Add(pro);
-                    }
-                }
-            }
+            List<TopFoodSizePriceDistinct> FoodList = TopFood.OrderByDescending(i => i.TotalPrice).Take(6).ToList();
+            return FoodList;
         }
 
         [HttpPost]
