@@ -23,7 +23,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders().AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.Configure<SMSMessage>(builder.Configuration.GetSection("SMSTwilio"));
-builder.Services.Configure<Feedback>(builder.Configuration.GetSection("Feedback"));
 builder.Services.AddNotyf(config => { config.IsDismissable = true; config.DurationInSeconds = 5; config.Position = NotyfPosition.TopRight; });
 
 builder.Services.Configure<IdentityOptions>(options =>

@@ -2670,7 +2670,7 @@ ol {
 	margin-bottom: 30px;
 }
 
-.footer__widget form input, textarea {
+.footer__widget form input {
 	width: 100%;
 	font-size: 16px;
 	padding-left: 20px;
@@ -2686,7 +2686,9 @@ ol {
 .footer__widget form button {
 	position: absolute;
 	right: 0;
+	top: 0;
 	padding: 0 26px;
+	height: 100%;
 }
 
 .footer__widget .footer__widget__social a {
