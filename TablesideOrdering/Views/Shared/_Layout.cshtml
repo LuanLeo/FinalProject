@@ -103,10 +103,10 @@
                             <li><a href="./blog.html">Blog</a></li>
                             <li><a href="./contact.html">Contact</a></li>
                         </ul>
-                    </nav>                    
+                    </nav>
                 </div>
                 @await Html.PartialAsync("_AddToCart")
-            </div>            
+            </div>
             <div class="humberger__open">
                 <i class="fa fa-bars"></i>
             </div>
@@ -158,9 +158,15 @@
                         <h6>Join Our Newsletter Now</h6>
                         <p>Get E-mail updates about our latest shop and special offers.</p>
                         <form asp-action="GetMail" asp-controller="Home" method="post">
-                            <input type="email" asp-for="CusMail" placeholder="Enter your mail">
-                            <span asp-validation-for="CusMail" class="text-danger"></span>
-                            <button type="submit" class="site-btn">Subscribe</button>
+                            <div class="mb-3">
+                                <input type="email" asp-for="Feedback.Sender" placeholder="Enter your mail">
+                                <span asp-validation-for="Feedback.Sender" class="text-danger"></span>
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="" type="text" asp-for="Feedback.FeedBack" placeholder="Enter your feedback"></textarea>
+                                <span asp-validation-for="Feedback.FeedBack" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="site-btn">Send</button>
                         </form>
                         <div class="footer__widget__social">
                             <a href="#"><i class="fa fa-facebook"></i></a>
@@ -191,7 +197,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-   
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

@@ -12,8 +12,6 @@ namespace TablesideOrdering.ViewModels
         public IQueryable<ProductSizePriceViewModel> Product { get; set; }
         public CartList Cart { get; set; }
         public PhoneValidation PhoneValid { get; set; }
-
-        [EmailAddress(ErrorMessage = "Please enter a valid email")]
-        public string CusMail { get; set; }
+        public Feedback Feedback { get; set; }
     }
 }

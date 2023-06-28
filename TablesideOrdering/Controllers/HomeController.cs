@@ -1,9 +1,12 @@
 ﻿using AspNetCore;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Options;
 using Microsoft.Extensions.Options;
+using MimeKit;
 using System.Diagnostics;
+using System.Net.Mail;
 using System.Security.Cryptography.Pkcs;
 using System.Text.RegularExpressions;
 using TablesideOrdering.Areas.Admin.Models;
@@ -16,6 +19,7 @@ using Twilio;
 using Twilio.Clients;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
+using SmtpClient = MailKit.Net.Smtp.SmtpClient;
 
 namespace TablesideOrdering.Controllers
 {
@@ -23,7 +27,10 @@ namespace TablesideOrdering.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+
+
         private readonly IOptions<SMSMessage> _SMSMessage;
+        private readonly IOptions<Feedback> _Feedback;
         public INotyfService _notyfService { get; }
 
         public static List<AddToCart> carts = new List<AddToCart>();
@@ -32,12 +39,13 @@ namespace TablesideOrdering.Controllers
         public static string Message;
         public static string TableNo;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, INotyfService notyfService, IOptions<SMSMessage> SMSMessage)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, INotyfService notyfService, IOptions<SMSMessage> SMSMessage, IOptions<Feedback> Feedback)
         {
             _logger = logger;
             _context = context;
             _notyfService = notyfService;
             _SMSMessage = SMSMessage;
+            _Feedback = Feedback;
         }
 
         //HOME page
@@ -114,22 +122,23 @@ namespace TablesideOrdering.Controllers
         [HttpPost]
         public IActionResult GetMail(HomeViewModel home)
         {
-            CustomerEmail Email = new CustomerEmail();
-            Email.Email = home.CusMail;
-
-            var emailList = _context.CustomerEmails.Select(i => i.Email).ToList();
-            if (emailList.Contains(Email.Email) != true)
-            {
-                _context.CustomerEmails.Add(Email);
-                _context.SaveChanges();
-                _notyfService.Success("Your email is subcribed success", 5);
-            }
-            else
-            {
-                _notyfService.Error("Your email has been subcribed", 5);
-            };
+                var email = new MimeMessage();
+                {
+                    email.From.Add(MailboxAddress.Parse(home.Feedback.Sender));
+                    email.To.Add(MailboxAddress.Parse(_Feedback.Value.Receiver));
+                    email.Subject = "Create Idea Success Notification";
+                    email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = home.Feedback.FeedBack};
+                }
+                using var smtp = new SmtpClient();
+                {
+                    smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                    smtp.Authenticate(emailData.From, emailData.Password);
+                    smtp.Send(email);
+                    smtp.Disconnect(true);
+                }
             return RedirectToAction("Index");
         }
+
         //GET take phone number
         [HttpGet]
         public IActionResult PhoneValidation()
