@@ -2,11 +2,15 @@
 using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.Options;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Data.Common;
 using System.Diagnostics;
 using System.Security.Cryptography.Pkcs;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using TablesideOrdering.Areas.Admin.Models;
 using TablesideOrdering.Areas.Admin.StatisticModels;
 using TablesideOrdering.Areas.Admin.ViewModels;
@@ -17,7 +21,9 @@ using TablesideOrdering.ViewModels;
 using Twilio;
 using Twilio.Clients;
 using Twilio.Rest.Api.V2010.Account;
+using Twilio.TwiML.Voice;
 using Twilio.Types;
+using TopFoodSizePrice = TablesideOrdering.Models.TopFoodSizePrice;
 
 namespace TablesideOrdering.Controllers
 {
@@ -73,17 +79,17 @@ namespace TablesideOrdering.Controllers
             Homedata.Product = productList;
             return View(Homedata);
         }
-        public IActionResult Menu(string term="", string orderBy = "")
+        public IActionResult Menu(string term = "", string orderBy = "")
         {
-            
-            
+
+
             term = string.IsNullOrEmpty(term) ? "" : term.ToLower();
             HomeViewModel Homedata = new HomeViewModel();
-            List<ProductSizePriceViewModel> productlist = new List<ProductSizePriceViewModel>();                         
+            List<ProductSizePriceViewModel> productlist = new List<ProductSizePriceViewModel>();
             var productList = (from ProSP in _context.ProductSizePrice
                                join Pro in _context.Products on ProSP.ProductId equals Pro.ProductId
                                join Cat in _context.Categories on Pro.CategoryId equals Cat.CategoryId
-                               where (term == "" || Pro.Name.Contains(term)||Cat.CategoryName.Contains(term)||ProSP.Size.Contains(term))
+                               where (term == "" || Pro.Name.Contains(term) || Cat.CategoryName.Contains(term) || ProSP.Size.Contains(term))
                                select new ProductSizePriceViewModel
                                {
                                    SizePriceId = ProSP.Id,
@@ -95,7 +101,7 @@ namespace TablesideOrdering.Controllers
                                    Size = ProSP.Size,
                                    Price = ProSP.Price
                                });
-            
+
             var cat = (from categories in _context.Categories
                        select new Category
                        {
@@ -103,11 +109,11 @@ namespace TablesideOrdering.Controllers
                            CategoryName = categories.CategoryName,
                        });
             var size = (from s in _context.ProductSize
-                       select new ProductSize
-                       {
-                           SizeName = s.SizeName,
-                           SizeId = s.SizeId,
-                       });
+                        select new ProductSize
+                        {
+                            SizeName = s.SizeName,
+                            SizeId = s.SizeId,
+                        });
             Homedata.NameSort = string.IsNullOrEmpty(orderBy) ? "NameDesc" : "";
             switch (orderBy)
             {
@@ -134,51 +140,68 @@ namespace TablesideOrdering.Controllers
             return View(Homedata);
         }
 
-        public List<TopFoodSizePriceDistinct> GetTopFood()
+        public List<TopFood> GetTopFood()
         {
-            //Take list from database
+            //Take infor from orders
+            List<Product> products = _context.Products.ToList();
             List<TopFoodSizePrice> toplist = new List<TopFoodSizePrice>();
-
             foreach (var detail in _context.OrderDetails)
             {
                 TopFoodSizePrice topsp = new TopFoodSizePrice();
                 topsp.Price = detail.Price;
                 topsp.Size = detail.Size;
                 topsp.Name = detail.ProductName;
+
                 toplist.Add(topsp);
             }
 
-            //Handle the data
+            //Join Table product and Product Size Price
+            var FoodDis = toplist.GroupBy(i => new { i.Name, i.Size, i.Price }).Select(i => i.FirstOrDefault()).ToList();
+            var product = (from Pro in _context.ProductSizePrice
+                           join Prod in _context.Products on Pro.ProductId equals Prod.ProductId
+                           join Cat in _context.Categories on Pro.ProductId equals Cat.CategoryId
+                           select new ProductFull
+                           {
+                               ProductId = Prod.ProductId,
+                               Category = Cat.CategoryName,
+                               Name = Prod.Name,
+                               Description = Prod.Description,
+                               Pic = Prod.Pic,
+                               Size = Pro.Size,
+                               Price = Pro.Price
+                           }).ToList();
 
-            List<TopFoodSizePrice> FoodDistinct = new List<TopFoodSizePrice>();
-            var FoodDis = toplist.Distinct().ToList();
-
-            foreach (var f in FoodDis)
+            List<ProductFull> productfull = new List<ProductFull>();
+            foreach (var food in FoodDis)
             {
-                FoodDistinct.Add(f);
+                foreach (var prod in product)
+                {
+                    if(food.Name == prod.Name && food.Price == prod.Price && food.Size == prod.Size)
+                    {
+                        productfull.Add(prod);
+                    }
+                }
             }
 
-            List<TopFoodSizePriceDistinct> TopFood = new List<TopFoodSizePriceDistinct>();
-            foreach (var food in FoodDistinct)
+            List<TopFood> topFood = new List<TopFood>();
+            foreach (var item in productfull)
             {
                 float Price = 0;
-                foreach (var item in toplist)
+                foreach (var food in _context.OrderDetails)
                 {
-                    if (item.Name == food.Name && item.Size == food.Size)
+                    if (item.Name == food.ProductName && item.Size == food.Size)
                     {
                         Price += item.Price;
                     }
                 }
 
-                TopFoodSizePriceDistinct topFood = new TopFoodSizePriceDistinct();
-                topFood.Name = food.Name;
-                topFood.Size = food.Size;
-                topFood.Price = food.Price;
-                topFood.TotalPrice = Price;
-                TopFood.Add(topFood);
+                TopFood top = new TopFood();
+                top.ProductFull = item;
+                top.TotalPrice = Price;
+                topFood.Add(top);
             }
 
-            List<TopFoodSizePriceDistinct> FoodList = TopFood.OrderByDescending(i => i.TotalPrice).Take(6).ToList();
+            List<TopFood> FoodList = topFood.OrderByDescending(i => i.TotalPrice).Take(6).ToList();
             return FoodList;
         }
 

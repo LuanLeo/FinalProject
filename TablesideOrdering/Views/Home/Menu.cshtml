@@ -168,27 +168,24 @@
                         </div>
                         <div class="row">
                             <div class="product__discount__slider owl-carousel">
-                                 @foreach (var toppro in Model.TopProduct)
-                                        {
-                                <div class="col-lg-4">
-                                    <div class="product__discount__item">
-                                       
+                                @foreach (var toppro in Model.TopProduct)
+                                {
+                                    <div class="col-lg-4">
+                                        <div class="product__discount__item">
                                             <div class="product__discount__item__pic set-bg"
-                                             data-setbg="../ProductImage/@toppro.">
+                                                 data-setbg="../ProductImage/@toppro.ProductFull.Pic">
                                                 <ul class="product__item__pic__hover">
                                                     <li><a asp-action="AddToCart" asp-controller="Home" asp-route-id=""><i class="fa fa-shopping-cart"></i></a></li>
                                                 </ul>
                                             </div>
                                             <div class="product__discount__item__text">
-                                                <span>Category</span>
-                                                <h5>@toppro.Name - @toppro.Size</h5>
-                                                <div class="product__item__price">@toppro.Price VND</div>
+                                                <span>@toppro.ProductFull.Category</span>
+                                                <h5>@toppro.ProductFull.Name - @toppro.ProductFull.Size</h5>
+                                                <div class="product__item__price">@toppro.ProductFull.Price VND</div>
                                             </div>
-                                        
+                                        </div>
                                     </div>
-                                </div>
                                 }
-                                
                             </div>
                         </div>
                     </div>

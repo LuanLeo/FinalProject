@@ -10,7 +10,7 @@ namespace TablesideOrdering.ViewModels
         public IQueryable<Category> Category { get; set; }
         public IQueryable<ProductSize> ProductSizes { get; set; }
         public IQueryable<ProductSizePriceViewModel> Product { get; set; }
-        public List<TopFoodSizePriceDistinct> TopProduct { get; set; }       
+        public List<TopFood> TopProduct { get; set; }       
         public CartList Cart { get; set; }
         public PhoneValidation PhoneValid { get; set; }
 
