@@ -78,7 +78,8 @@ namespace TablesideOrdering.Controllers
             List<ProductSizePriceViewModel> productlist = new List<ProductSizePriceViewModel>();                         
             var productList = (from ProSP in _context.ProductSizePrice
                                join Pro in _context.Products on ProSP.ProductId equals Pro.ProductId
-                               where (term == "" || Pro.Name.Contains(term))
+                               join Cat in _context.Categories on Pro.CategoryId equals Cat.CategoryId
+                               where (term == "" || Pro.Name.Contains(term)||Cat.CategoryName.Contains(term)||ProSP.Size.Contains(term))
                                select new ProductSizePriceViewModel
                                {
                                    SizePriceId = ProSP.Id,

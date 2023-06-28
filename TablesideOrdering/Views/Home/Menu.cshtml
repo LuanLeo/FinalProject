@@ -67,7 +67,7 @@
                             <ul>
                                 @foreach (var cat in Model.Category)
                                 {
-                                    <li><a href="#">@cat.CategoryName</a></li>
+                                    <li><a href="/Home/Menu?term=@cat.CategoryName&orderBy=">@cat.CategoryName</a></li>
                                 }
                             </ul>
                         </div>
@@ -77,11 +77,13 @@
                             <h4>Popular Size</h4>
                             @foreach (var size in Model.ProductSizes)
                             {
-                                <div class="sidebar__item__size">
+                                <a href="/Home/Menu?term=@size.SizeName&orderBy=">
+                                <div class="sidebar__item__size" >
                                     <label>
                                         @size.SizeName
                                     </label>
                                 </div>
+                                </a>
                             }
                         </div>
                         <div class="sidebar__item">
@@ -293,15 +295,9 @@
                             </div>
                             <div class="col-lg-4 col-md-4">
                                 <div class="filter__found">
-                                    <h6><span>16</span> Products found</h6>
+                                    <h6><span>@Model.Product.Count()</span> Products found</h6>
                                 </div>
-                            </div>
-                            <div class="col-lg-4 col-md-3">
-                                <div class="filter__option">
-                                    <span class="icon_grid-2x2"></span>
-                                    <span class="icon_ul"></span>
-                                </div>
-                            </div>
+                            </div>                            
                         </div>
                     </div>
                     <div class="row">
