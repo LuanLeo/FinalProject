@@ -1,4 +1,5 @@
 ﻿@using TablesideOrdering.Areas.Admin.Models;
+@using TablesideOrdering.Areas.Staff.ViewModels;
 @model IEnumerable<Orders>
 @{
     ViewData["Title"] = "Application Roles";
@@ -47,6 +48,7 @@
                     <tbody>
                     </tbody>
                 </table>
+                @await Html.PartialAsync("Delete",new OrderViewModel())
                 @await Component.InvokeAsync("Notyf")
             </div>
         </div>

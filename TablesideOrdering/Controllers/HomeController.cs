@@ -159,7 +159,7 @@ namespace TablesideOrdering.Controllers
             var FoodDis = toplist.GroupBy(i => new { i.Name, i.Size, i.Price }).Select(i => i.FirstOrDefault()).ToList();
             var product = (from Pro in _context.ProductSizePrice
                            join Prod in _context.Products on Pro.ProductId equals Prod.ProductId
-                           join Cat in _context.Categories on Pro.ProductId equals Cat.CategoryId
+                           join Cat in _context.Categories on Prod.CategoryId equals Cat.CategoryId
                            select new ProductFull
                            {
                                ProductId = Prod.ProductId,

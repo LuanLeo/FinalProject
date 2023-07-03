@@ -32,6 +32,8 @@ function BindOrdersToGrid(orders) {
         tr.append(`<td>${(order.productQuantity)}</td>`);
         tr.append(`<td>${(order.phoneNumber)}</td>`);
         tr.append(`<td>${(order.tableNo)}</td>`);
+        tr.append(`<td><button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#DeleteOrder-${(order.orderId)}" data-url="/Staff/Order/Delete%${(order.orderId)}">Delete</button></td>`);
         $('#tblOrder').append(tr);
+        $(`#DeleteOrder-${(order.orderId)}`).modal('show');
     });
 }
