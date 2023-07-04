@@ -24,6 +24,27 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             var order = _context.Orders;
             return View(order);
         }
+        public IActionResult Detail(int id)
+        {
+            OrderViewModel OrderData = new OrderViewModel();
+            var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
+            var orderDetailList = (from o in _context.OrderDetails
+                                   where id == o.OrderId
+                                   select new OrderViewModel
+                                   {
+                                       OrderId = o.OrderId,
+                                       OrderDetailId = o.OrderDetailId,
+                                       ProductName = o.ProductName,
+                                       Size = o.Size,
+                                       ProQuantity = o.ProQuantity,
+                                       Price = o.Price,
+                                       SubTotal = o.Price * o.ProQuantity,
+                                   });
+            OrderData.OrderDetail = orderDetailList;
+            OrderData.Order = order;
+            return View(OrderData);
+        }
+
         public async Task<IActionResult> Delete(int id)
         {
 
@@ -53,7 +74,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                                        Price = o.Price,
                                    });
             OrderData.OrderDetail = orderDetailList;
-            OrderData.Order = orderList;
+            OrderData.Order = order;
             return PartialView("Delete", OrderData);
         }
         public Orders GetOrderByID(int id)

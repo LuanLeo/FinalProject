@@ -224,7 +224,8 @@ namespace TablesideOrdering.Areas.Admin.Controllers
 
             List<TopFoodLogicModel> FoodTopList = new List<TopFoodLogicModel>();
             var top = TopFood.OrderByDescending(i => i.Value).Take(3).ToList();
-            foreach (var t in top)
+            foreach (var t in top.OrderBy(i => i.Value)
+)
             {
                 FoodTopList.Add(new TopFoodLogicModel(t.FoodName, t.Value));
             }

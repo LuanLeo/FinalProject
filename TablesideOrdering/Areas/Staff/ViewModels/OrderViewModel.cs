@@ -5,8 +5,7 @@ namespace TablesideOrdering.Areas.Staff.ViewModels
 {
     public class OrderViewModel
     {
-        public IQueryable<Orders> Orders { get; set; }
-        public IQueryable<OrderViewModel> Order{ get; set; }
+        public Orders Order{ get; set; }
         public IQueryable<OrderViewModel> OrderDetail { get; set; }
 
         public int OrderId { get; set; }
@@ -20,5 +19,6 @@ namespace TablesideOrdering.Areas.Staff.ViewModels
         public string Size { get; set; }
         public int ProQuantity { get; set; }
         public float Price { get; set; }
+        public float SubTotal { get; set; }
     }
 }
