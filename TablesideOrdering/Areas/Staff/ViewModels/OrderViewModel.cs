@@ -5,7 +5,7 @@ namespace TablesideOrdering.Areas.Staff.ViewModels
 {
     public class OrderViewModel
     {
-        public Orders Order{ get; set; }
+        public IQueryable<OrderViewModel> Order { get; set; }
         public IQueryable<OrderViewModel> OrderDetail { get; set; }
 
         public int OrderId { get; set; }

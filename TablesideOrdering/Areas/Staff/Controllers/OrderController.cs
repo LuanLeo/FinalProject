@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Notyf;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TablesideOrdering.Areas.Admin.Models;
@@ -28,6 +29,17 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         {
             OrderViewModel OrderData = new OrderViewModel();
             var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
+            var orders = (from o in _context.Orders
+                                   where id == o.OrderId
+                                   select new OrderViewModel
+                                   {
+                                       OrderId = o.OrderId,
+                                       OrderDate = o.OrderDate,
+                                       OrderPrice = o.OrderPrice,
+                                       PhoneNumber = o.PhoneNumber,
+                                       ProductQuantity = o.ProductQuantity,
+                                       TableNo = o.TableNo,                                       
+                                   });
             var orderDetailList = (from o in _context.OrderDetails
                                    where id == o.OrderId
                                    select new OrderViewModel
@@ -41,41 +53,41 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                                        SubTotal = o.Price * o.ProQuantity,
                                    });
             OrderData.OrderDetail = orderDetailList;
-            OrderData.Order = order;
+            OrderData.Order = orders;
             return View(OrderData);
         }
-
+        [HttpGet]
         public async Task<IActionResult> Delete(int id)
+        {            
+            var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
+            return PartialView("Delete", order);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Delete(OrderViewModel model)
         {
-
-            var order = GetOrderByID(id);
-            OrderViewModel OrderData = new OrderViewModel();
-            //List<OrderViewModel> orderList = new List<OrderViewModel>();
-            var orderList = (from o in _context.ProductSizePrice
-                             where id == o.Id
-                             select new OrderViewModel
+            var order = await _context.Orders.FindAsync(model.OrderId);
+            if (order == null)
             {
-                OrderId = order.OrderId,
-                OrderPrice = order.OrderPrice,
-                OrderDate = order.OrderDate,
-                ProductQuantity = order.ProductQuantity,
-                PhoneNumber = order.PhoneNumber,
-                TableNo = order.TableNo,
-            });
-            var orderDetailList = (from o in _context.OrderDetails
-                                   where id == o.OrderId
-                                   select new OrderViewModel
-                                   {
-                                       OrderId = o.OrderId,
-                                       OrderDetailId= o.OrderDetailId,
-                                       ProductName = o.ProductName,
-                                       Size = o.Size,
-                                       ProQuantity = o.ProQuantity,
-                                       Price = o.Price,
-                                   });
-            OrderData.OrderDetail = orderDetailList;
-            OrderData.Order = order;
-            return PartialView("Delete", OrderData);
+                return NotFound();
+            }
+            List<OrderDetail> orderDetailsList= new List<OrderDetail>();
+            foreach(var od in _context.OrderDetails)
+            {
+                if(od.OrderId== model.OrderId)
+                {
+                    orderDetailsList.Add(od);
+                }
+            }
+            foreach (var item in orderDetailsList)
+            {
+                _context.OrderDetails.Remove(item);
+            }
+            _context.Orders.Remove(order);
+            _context.SaveChanges();
+            //notyfService.Success("The user is deleted", 5);
+            return RedirectToAction(nameof(Index));
         }
         public Orders GetOrderByID(int id)
         {

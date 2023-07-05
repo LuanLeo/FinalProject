@@ -149,12 +149,13 @@
                             <h4>Order</h4>
                             <div class="checkout__order__products">Customer detail</div>
                             <ul>
+                                @foreach (var item in Model.Order)
+                                {
 
-
-                                <li>Phone number: <span>@Html.DisplayFor(model => Model.Order.PhoneNumber)</span></li>
-                                <li>Table number: <span>@Html.DisplayFor(model => Model.Order.TableNo)</span></li>
-                                <li>Date:  <span>@Html.DisplayFor(model => Model.Order.OrderDate)</span></li>
-
+                                    <li>Phone number: <span>@Html.DisplayFor(model => item.PhoneNumber)</span></li>
+                                    <li>Table number: <span>@Html.DisplayFor(model => item.TableNo)</span></li>
+                                    <li>Date:  <span>@Html.DisplayFor(model => item.OrderDate)</span></li>
+                                }
                             </ul>
                             <div class="checkout__order__products">Products <span>Total</span></div>
                             <ul>
@@ -164,13 +165,18 @@
                                 }
 
                             </ul>
-                            <div class="checkout__order__total">Total <span>@Html.DisplayFor(model => Model.Order.OrderPrice) VND</span></div>
-                            <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="" data-url="">
-                                Delete Order
-                            </button>
-                            <button type="button" class="btn btn-success m-1" data-toggle="modal" data-target="" data-url="">
-                                Mark as Done
-                            </button>
+                            @foreach (var item in Model.Order)
+                            {
+                                <div class="checkout__order__total">Total <span>@Html.DisplayFor(model => item.OrderPrice) VND</span></div>
+                                <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteOrder-" + item.OrderId)" data-url="@Url.Action($"Delete/{item.OrderId}")">
+                                    Delete Order
+                                </button>
+
+                                @await Html.PartialAsync("Delete", item)
+                                <button type="button" class="btn btn-success m-1" data-toggle="modal" data-target="" data-url="">
+                                    Mark as Done
+                                </button>
+                            }
                         </div>
                     </div>
                 </div>
