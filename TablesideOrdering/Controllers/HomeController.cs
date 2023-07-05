@@ -66,26 +66,15 @@ namespace TablesideOrdering.Controllers
                                    Price = ProSP.Price
                                });
 
-            var cat = (from categories in _context.Categories
-                       select new Category
-                       {
-                           CategoryId = categories.CategoryId,
-                           CategoryName = categories.CategoryName,
-                       });
-
             HomeViewModel Homedata = new HomeViewModel();
             Homedata = NavData();
-            Homedata.Category = cat;
+            Homedata.Category = _context.Categories.ToList();
             Homedata.Product = productList;
             return View(Homedata);
         }
         public IActionResult Menu(string term = "", string orderBy = "")
         {
-
-
             term = string.IsNullOrEmpty(term) ? "" : term.ToLower();
-            HomeViewModel Homedata = new HomeViewModel();
-            List<ProductSizePriceViewModel> productlist = new List<ProductSizePriceViewModel>();
             var productList = (from ProSP in _context.ProductSizePrice
                                join Pro in _context.Products on ProSP.ProductId equals Pro.ProductId
                                join Cat in _context.Categories on Pro.CategoryId equals Cat.CategoryId
@@ -102,18 +91,7 @@ namespace TablesideOrdering.Controllers
                                    Price = ProSP.Price
                                });
 
-            var cat = (from categories in _context.Categories
-                       select new Category
-                       {
-                           CategoryId = categories.CategoryId,
-                           CategoryName = categories.CategoryName,
-                       });
-            var size = (from s in _context.ProductSize
-                        select new ProductSize
-                        {
-                            SizeName = s.SizeName,
-                            SizeId = s.SizeId,
-                        });
+            HomeViewModel Homedata = new HomeViewModel();
             Homedata.NameSort = string.IsNullOrEmpty(orderBy) ? "NameDesc" : "";
             switch (orderBy)
             {
@@ -131,8 +109,8 @@ namespace TablesideOrdering.Controllers
                     break;
             }
             Homedata = NavData();
-            Homedata.Category = cat;
-            Homedata.ProductSizes = size;
+            Homedata.Category = _context.Categories.ToList();
+            Homedata.ProductSizes = _context.ProductSize.ToList();
             Homedata.Product = productList;
             Homedata.TopProduct = GetTopFood();
             Homedata.Term = term;
@@ -183,8 +161,24 @@ namespace TablesideOrdering.Controllers
                 }
             }
 
+            List<ProductFull> productList = new List<ProductFull>();
+            foreach (var pro in productfull)
+            {
+                foreach(var p in _context.ProductSizePrice)
+                {
+                    if (pro.ProductId == p.ProductId && pro.Size == p.Size)
+                    {
+                        ProductFull prod = new ProductFull();
+                        prod = pro;
+                        prod.ProSizePriceId = p.Id;
+
+                        productList.Add(prod);
+                    }
+                }
+            }
+
             List<TopFood> topFood = new List<TopFood>();
-            foreach (var item in productfull)
+            foreach (var item in productList)
             {
                 float Price = 0;
                 foreach (var food in _context.OrderDetails)
@@ -257,8 +251,21 @@ namespace TablesideOrdering.Controllers
             return RedirectToAction("Index");
         }
 
-        //ADD to cart
-        public IActionResult AddToCart(int id)
+        //Add to Cart from Index
+        public IActionResult IndexCart(int id)
+        {
+            AddToCart(id);
+            return RedirectToAction("Index", "Home");
+        }
+
+        //Add to Cart from Menu
+        public IActionResult MenuCart(int id)
+        {
+            AddToCart(id);
+            return RedirectToAction("Menu", "Home");
+        }
+
+        public void AddToCart(int id)
         {
             AddToCart cart = new AddToCart();
             ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
@@ -303,12 +310,7 @@ namespace TablesideOrdering.Controllers
             }
             ViewBag.CartQuantity = carts.Count();
             ViewBag.CartPrice = TotalPrice;
-
-            Message = "Hello";
-
-            //SendSMS();
             NavData();
-            return RedirectToAction("Index", "Home");
         }
 
         //DELETE from cart

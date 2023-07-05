@@ -7,8 +7,8 @@ namespace TablesideOrdering.ViewModels
 {
     public class HomeViewModel
     {
-        public IQueryable<Category> Category { get; set; }
-        public IQueryable<ProductSize> ProductSizes { get; set; }
+        public List<Category> Category { get; set; }
+        public List<ProductSize> ProductSizes { get; set; }
         public IQueryable<ProductSizePriceViewModel> Product { get; set; }
         public List<TopFood> TopProduct { get; set; }       
         public CartList Cart { get; set; }

@@ -18,6 +18,7 @@ namespace TablesideOrdering.Models
         public string Pic { get; set; }
         public string Size { get; set; }
         public float Price { get;set; }
+        public int ProSizePriceId { get; set; }
 
     }
 
