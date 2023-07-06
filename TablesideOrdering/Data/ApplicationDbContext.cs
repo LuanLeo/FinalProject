@@ -12,7 +12,7 @@ namespace TablesideOrdering.Data
         {
         }
 
-        //Databse for Admin
+        //Database for Admin
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }

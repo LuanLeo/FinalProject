@@ -17,11 +17,10 @@ namespace TablesideOrdering.Repositories
         public  List<Orders> GetOrders()
         {
             List<Orders> orders = new List<Orders>();
-            Orders order;
             var data = GetOrderDetailsFromDb();
             foreach(DataRow row in data.Rows)
             {
-                order=new Orders
+                Orders order = new Orders
                 {
                     OrderId = Convert.ToInt32(row["OrderId"]),
                     OrderDate = Convert.ToDateTime(row["OrderDate"]),

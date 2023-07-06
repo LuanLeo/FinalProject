@@ -12,8 +12,6 @@
     <link rel="stylesheet" href="~/assets/css/styles.min.css" />
 </head>
 <body>
-
-
     <!--  Body Wrapper -->
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
          data-sidebar-position="fixed" data-header-position="fixed">
@@ -260,28 +258,21 @@
             </header>
         </div>
         <!--  Header End -->
-
     </div>
-
     <div class="body-wrapper">
 
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
     <footer class="border-top footer text-muted" align="center">
         <div class="container">
             &copy; 2023 - TablesideOrdering - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-
 </body>
-
 </html>
