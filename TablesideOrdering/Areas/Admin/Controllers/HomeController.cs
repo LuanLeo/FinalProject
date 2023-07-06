@@ -77,11 +77,9 @@ namespace TablesideOrdering.Areas.Admin.Controllers
 
             //Handle the data
             List<float> Prices = new List<float>();
-
             foreach (var da in Date)
             {
                 float Price = 0;
-
                 foreach (var order in orders)
                 {
                     if (da == order.OrderDate.ToShortDateString() && (time == null || time == "Day"))

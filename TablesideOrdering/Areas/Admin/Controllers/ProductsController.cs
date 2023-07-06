@@ -38,7 +38,6 @@ namespace TablesideOrdering.Areas.Admin.Controllers
         {
             
             ViewBag.CategoryList = CategoryList();
-            var prodata = new ProductViewModel();
             var products= (from p in _context.Products
                            select new ProductViewModel
                            {
@@ -68,6 +67,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             product.Name = model.Name;
             product.Description = model.Description;
             product.CategoryId = model.CategoryId;
+
             if (model.PicFile == null)
             {
                 ViewBag.NullFile = "Please upload an image!";

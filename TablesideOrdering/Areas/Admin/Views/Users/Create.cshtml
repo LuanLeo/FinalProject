@@ -10,13 +10,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Create New User</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
             </div>
             <form asp-action="Create">
                 <input type="hidden" asp-for="UserID" />
-                <h3>Enter new user information</h3>
+                <h3>Enter New User Info</h3>
                 <div class="form-group">
                     <label asp-for="Register.Firstname">First Name</label>
                     <input asp-for="Register.Firstname" class="form-control" />

@@ -20,15 +20,15 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             _context = context;
 
         }
+
         public IActionResult Index()
         {
             var order = _context.Orders;
             return View(order);
         }
+
         public IActionResult Detail(int id)
         {
-            OrderViewModel OrderData = new OrderViewModel();
-            var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
             var orders = (from o in _context.Orders
                                    where id == o.OrderId
                                    select new OrderViewModel
@@ -40,6 +40,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                                        ProductQuantity = o.ProductQuantity,
                                        TableNo = o.TableNo,                                       
                                    });
+
             var orderDetailList = (from o in _context.OrderDetails
                                    where id == o.OrderId
                                    select new OrderViewModel
@@ -52,16 +53,21 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                                        Price = o.Price,
                                        SubTotal = o.Price * o.ProQuantity,
                                    });
+
+            OrderViewModel OrderData = new OrderViewModel();
             OrderData.OrderDetail = orderDetailList;
             OrderData.Order = orders;
+
             return View(OrderData);
         }
+
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {            
             var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
             return PartialView("Delete", order);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         //[Authorize(Roles = "Admin")]
@@ -72,27 +78,20 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             {
                 return NotFound();
             }
-            List<OrderDetail> orderDetailsList= new List<OrderDetail>();
+
             foreach(var od in _context.OrderDetails)
             {
-                if(od.OrderId== model.OrderId)
+                if(od.OrderId == model.OrderId)
                 {
-                    orderDetailsList.Add(od);
+                    _context.OrderDetails.Remove(od);
                 }
             }
-            foreach (var item in orderDetailsList)
-            {
-                _context.OrderDetails.Remove(item);
-            }
+
             _context.Orders.Remove(order);
             _context.SaveChanges();
-            //notyfService.Success("The user is deleted", 5);
+
+            _notyfService.Success("The user is deleted", 5);
             return RedirectToAction(nameof(Index));
         }
-        public Orders GetOrderByID(int id)
-        {
-            return _context.Orders.FirstOrDefault(x => x.OrderId == id);
-        }
-
     }
 }

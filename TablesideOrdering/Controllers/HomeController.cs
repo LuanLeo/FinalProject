@@ -70,6 +70,7 @@ namespace TablesideOrdering.Controllers
             Homedata = NavData();
             Homedata.Category = _context.Categories.ToList();
             Homedata.Product = productList;
+
             return View(Homedata);
         }
         public IActionResult Menu(string term = "", string orderBy = "")
@@ -108,6 +109,7 @@ namespace TablesideOrdering.Controllers
                     productList = productList.OrderBy(a => a.Name).ThenBy(a => a.Size);
                     break;
             }
+
             Homedata = NavData();
             Homedata.Category = _context.Categories.ToList();
             Homedata.ProductSizes = _context.ProductSize.ToList();
@@ -121,19 +123,15 @@ namespace TablesideOrdering.Controllers
         public List<TopFood> GetTopFood()
         {
             //Take infor from orders
-            List<Product> products = _context.Products.ToList();
-            List<TopFoodSizePrice> toplist = new List<TopFoodSizePrice>();
-            foreach (var detail in _context.OrderDetails)
-            {
-                TopFoodSizePrice topsp = new TopFoodSizePrice();
-                topsp.Price = detail.Price;
-                topsp.Size = detail.Size;
-                topsp.Name = detail.ProductName;
+            List<TopFoodSizePrice> toplist = (from p in _context.OrderDetails
+                                              select new TopFoodSizePrice
+                                              {
+                                                  Price = p.Price,
+                                                  Size = p.Size,
+                                                  Name = p.ProductName,
+                                              }).ToList();
 
-                toplist.Add(topsp);
-            }
-
-            //Join Table product and Product Size Price
+            //Join table Product and Product Size Price
             var FoodDis = toplist.GroupBy(i => new { i.Name, i.Size, i.Price }).Select(i => i.FirstOrDefault()).ToList();
             var product = (from Pro in _context.ProductSizePrice
                            join Prod in _context.Products on Pro.ProductId equals Prod.ProductId
@@ -154,7 +152,7 @@ namespace TablesideOrdering.Controllers
             {
                 foreach (var prod in product)
                 {
-                    if(food.Name == prod.Name && food.Price == prod.Price && food.Size == prod.Size)
+                    if (food.Name == prod.Name && food.Price == prod.Price && food.Size == prod.Size)
                     {
                         productfull.Add(prod);
                     }
@@ -164,7 +162,7 @@ namespace TablesideOrdering.Controllers
             List<ProductFull> productList = new List<ProductFull>();
             foreach (var pro in productfull)
             {
-                foreach(var p in _context.ProductSizePrice)
+                foreach (var p in _context.ProductSizePrice)
                 {
                     if (pro.ProductId == p.ProductId && pro.Size == p.Size)
                     {
@@ -218,6 +216,7 @@ namespace TablesideOrdering.Controllers
             };
             return RedirectToAction("Index");
         }
+
         //GET take phone number
         [HttpGet]
         public IActionResult PhoneValidation()

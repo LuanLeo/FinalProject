@@ -27,8 +27,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
         // GET: Admin/ProductSizePrices
         public async Task<IActionResult> Index()
         {
-            ViewBag.ProductList = ProductList();
-            ViewBag.SizeList = SizeList();
+            ProductSizeList();
             return _context.ProductSizePrice != null ? 
                           View(await _context.ProductSizePrice.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.ProductSizePrice'  is null.");
@@ -60,11 +59,12 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             return View(productSizePrice);
         }
 
+
+
         // GET: Admin/ProductSizePrices/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            ViewBag.ProductList = ProductList();
-            ViewBag.SizeList = SizeList();
+            ProductSizeList();
 
             if (id == null || _context.ProductSizePrice == null)
             {
@@ -164,6 +164,12 @@ namespace TablesideOrdering.Areas.Admin.Controllers
                 list.Add(new SelectListItem() { Value = size.SizeName, Text = size.SizeName });
             }
             return list;
+        }
+
+        public void ProductSizeList()
+        {
+            ViewBag.ProductList = ProductList();
+            ViewBag.SizeList = SizeList();
         }
 
         private bool ProductSizePriceExists(int id)
