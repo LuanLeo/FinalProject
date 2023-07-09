@@ -20,5 +20,6 @@ namespace TablesideOrdering.Areas.Staff.ViewModels
         public int ProQuantity { get; set; }
         public float Price { get; set; }
         public float SubTotal { get; set; }
+        public string Status { get; set; }
     }
 }

@@ -29,8 +29,9 @@ namespace TablesideOrdering.Areas.Staff.Controllers
 
         public IActionResult Detail(int id)
         {
-            var orders = (from o in _context.Orders
-                                   where id == o.OrderId
+            OrderViewModel OrderData = new OrderViewModel();
+            OrderData.Order = (from o in _context.Orders
+                                   where id == o.OrderId && o.Status == "Processing"
                                    select new OrderViewModel
                                    {
                                        OrderId = o.OrderId,
@@ -38,10 +39,11 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                                        OrderPrice = o.OrderPrice,
                                        PhoneNumber = o.PhoneNumber,
                                        ProductQuantity = o.ProductQuantity,
-                                       TableNo = o.TableNo,                                       
+                                       TableNo = o.TableNo, 
+                                       Status = o.Status,
                                    });
 
-            var orderDetailList = (from o in _context.OrderDetails
+            OrderData.OrderDetail = (from o in _context.OrderDetails
                                    where id == o.OrderId
                                    select new OrderViewModel
                                    {
@@ -53,12 +55,17 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                                        Price = o.Price,
                                        SubTotal = o.Price * o.ProQuantity,
                                    });
-
-            OrderViewModel OrderData = new OrderViewModel();
-            OrderData.OrderDetail = orderDetailList;
-            OrderData.Order = orders;
-
             return View(OrderData);
+        }
+
+        [HttpPost]
+        public IActionResult MarkDone(int id)
+        {
+            var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
+            order.Status = "Done";
+
+            _notyfService.Success("The order is marked as done", 5);
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpGet]

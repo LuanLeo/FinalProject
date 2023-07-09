@@ -298,6 +298,10 @@ namespace TablesideOrdering.Migrations
                     b.Property<int>("ProductQuantity")
                         .HasColumnType("int");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("TableNo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

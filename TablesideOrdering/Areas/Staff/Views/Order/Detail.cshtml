@@ -151,7 +151,6 @@
                             <ul>
                                 @foreach (var item in Model.Order)
                                 {
-
                                     <li>Phone number: <span>@Html.DisplayFor(model => item.PhoneNumber)</span></li>
                                     <li>Table number: <span>@Html.DisplayFor(model => item.TableNo)</span></li>
                                     <li>Date:  <span>@Html.DisplayFor(model => item.OrderDate)</span></li>
@@ -171,8 +170,8 @@
                                 <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteOrder-" + item.OrderId)" data-url="@Url.Action($"Delete/{item.OrderId}")">
                                     Delete Order
                                 </button>
-
                                 @await Html.PartialAsync("Delete", item)
+
                                 <button type="button" class="btn btn-success m-1" data-toggle="modal" data-target="" data-url="">
                                     Mark as Done
                                 </button>

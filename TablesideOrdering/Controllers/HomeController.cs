@@ -343,6 +343,7 @@ namespace TablesideOrdering.Controllers
             order.ProductQuantity = carts.Count();
             order.PhoneNumber = PhoneNumber;
             order.TableNo = TableNo;
+            order.Status = "Processing";
 
             _context.Orders.Add(order);
             _context.SaveChanges();

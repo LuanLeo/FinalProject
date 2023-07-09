@@ -11,5 +11,6 @@ namespace TablesideOrdering.Areas.Admin.Models
         public int ProductQuantity { get; set; }
         public string PhoneNumber { get; set; }
         public string TableNo { get; set; }
+        public string Status { get; set; }
     }
 }

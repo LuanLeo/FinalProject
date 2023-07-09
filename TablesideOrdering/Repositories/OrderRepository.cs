@@ -9,34 +9,38 @@ namespace TablesideOrdering.Repositories
     {
         string connectionString;
 
-        public OrderRepository (string connectionString)
+        public OrderRepository(string connectionString)
         {
             this.connectionString = connectionString;
         }
 
-        public  List<Orders> GetOrders()
+        public List<Orders> GetOrders()
         {
             List<Orders> orders = new List<Orders>();
             var data = GetOrderDetailsFromDb();
-            foreach(DataRow row in data.Rows)
+            foreach (DataRow row in data.Rows)
             {
-                Orders order = new Orders
+                if (row["Status"].ToString() == "Processing")
                 {
-                    OrderId = Convert.ToInt32(row["OrderId"]),
-                    OrderDate = Convert.ToDateTime(row["OrderDate"]),
-                    OrderPrice = Convert.ToSingle(row["OrderPrice"]),
-                    ProductQuantity = Convert.ToInt32(row["ProductQuantity"]),
-                    PhoneNumber = row["PhoneNumber"].ToString(),
-                    TableNo = row["TableNo"].ToString()
-                };
-                orders.Add(order);
+                    Orders order = new Orders
+                    {
+                        OrderId = Convert.ToInt32(row["OrderId"]),
+                        OrderDate = Convert.ToDateTime(row["OrderDate"]),
+                        OrderPrice = Convert.ToSingle(row["OrderPrice"]),
+                        ProductQuantity = Convert.ToInt32(row["ProductQuantity"]),
+                        PhoneNumber = row["PhoneNumber"].ToString(),
+                        TableNo = row["TableNo"].ToString(),
+                        Status = row["Status"].ToString()
+                    };
+                    orders.Add(order);
+                }
             }
             return orders;
         }
-        
+
         public DataTable GetOrderDetailsFromDb()
         {
-            var query = "SELECT OrderId, OrderDate, OrderPrice, ProductQuantity, PhoneNumber, TableNo FROM Orders";
+            var query = "SELECT OrderId, OrderDate, OrderPrice, ProductQuantity, PhoneNumber, TableNo, Status FROM Orders";
             DataTable dataTable = new DataTable();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -46,7 +50,7 @@ namespace TablesideOrdering.Repositories
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
-                        { 
+                        {
                             dataTable.Load(reader);
                         }
                     }

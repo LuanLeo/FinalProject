@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "iCKMSMCXpY5Z5iT6CpyWICFeXneFBreD3BWS8QFjuMU=",
+  "Hash": "PFJUejGadxmJLi+4wBXOtb3U5nwREuF5Oxyn/U958u8=",
   "Source": "TablesideOrdering",
   "BasePath": "_content/TablesideOrdering",
   "Mode": "Default",
@@ -13615,23 +13615,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\order.js"
-    },
-    {
-      "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\js\\order1.js",
-      "SourceId": "TablesideOrdering",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\",
-      "BasePath": "_content/TablesideOrdering",
-      "RelativePath": "js/order1.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\order1.js"
     },
     {
       "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\js\\owl.carousel.min.js",
