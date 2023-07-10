@@ -1,4 +1,6 @@
-﻿using TableDependency.SqlClient;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Notyf;
+using TableDependency.SqlClient;
 using TablesideOrdering.Areas.Admin.Models;
 using TablesideOrdering.Hubs;
 
@@ -8,6 +10,7 @@ namespace TablesideOrdering.SubscribeTableDependencies
     {
         SqlTableDependency<Orders> tableDependency;
         OrderHub orderHub;
+        public INotyfService notyfService { get; }
 
         public SubscribeOrderTableDependency(OrderHub orderHub)
         {            

@@ -18,16 +18,14 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         {
             _notyfService = notyfService;
             _context = context;
-
         }
 
         public IActionResult Index()
         {
-            var order = _context.Orders;
-            return View(order);
+            return View();
         }
 
-        public IActionResult Detail(int id)
+        public IActionResult Details(int id)
         {
             OrderViewModel OrderData = new OrderViewModel();
             OrderData.Order = (from o in _context.Orders
@@ -58,18 +56,18 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             return View(OrderData);
         }
 
-        [HttpPost]
         public IActionResult MarkDone(int id)
         {
             var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
             order.Status = "Done";
 
+            _context.SaveChanges();
             _notyfService.Success("The order is marked as done", 5);
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public IActionResult Delete(int id)
         {            
             var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
             return PartialView("Delete", order);
