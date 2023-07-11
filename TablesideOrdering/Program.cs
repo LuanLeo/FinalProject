@@ -9,6 +9,7 @@ using TablesideOrdering.Models;
 using TablesideOrdering.Hubs;
 using TablesideOrdering.MiddlewareExtensions;
 using TablesideOrdering.SubscribeTableDependencies;
+using TablesideOrdering.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders().A
 
 builder.Services.Configure<SMSMessage>(builder.Configuration.GetSection("SMSTwilio"));
 builder.Services.AddNotyf(config => { config.IsDismissable = true; config.DurationInSeconds = 5; config.Position = NotyfPosition.TopRight; });
+
+builder.Services.AddScoped<IVnPayService, VnPayService>();
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
