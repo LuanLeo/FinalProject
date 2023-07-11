@@ -13,6 +13,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _context;
+        public static int Num = 0;
         public INotyfService _notyfService { get; }
         public OrderController(INotyfService notyfService, ApplicationDbContext context)
         {
@@ -22,6 +23,12 @@ namespace TablesideOrdering.Areas.Staff.Controllers
 
         public IActionResult Index()
         {
+            if (Num == 0)
+            {
+                ViewBag.Num = Num;
+                ViewBag.Message = "New order has been updated";
+            }
+            Num = 0;
             return View();
         }
 
@@ -29,30 +36,30 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         {
             OrderViewModel OrderData = new OrderViewModel();
             OrderData.Order = (from o in _context.Orders
-                                   where id == o.OrderId && o.Status == "Processing"
-                                   select new OrderViewModel
-                                   {
-                                       OrderId = o.OrderId,
-                                       OrderDate = o.OrderDate,
-                                       OrderPrice = o.OrderPrice,
-                                       PhoneNumber = o.PhoneNumber,
-                                       ProductQuantity = o.ProductQuantity,
-                                       TableNo = o.TableNo, 
-                                       Status = o.Status,
-                                   });
+                               where id == o.OrderId && o.Status == "Processing"
+                               select new OrderViewModel
+                               {
+                                   OrderId = o.OrderId,
+                                   OrderDate = o.OrderDate,
+                                   OrderPrice = o.OrderPrice,
+                                   PhoneNumber = o.PhoneNumber,
+                                   ProductQuantity = o.ProductQuantity,
+                                   TableNo = o.TableNo,
+                                   Status = o.Status,
+                               });
 
             OrderData.OrderDetail = (from o in _context.OrderDetails
-                                   where id == o.OrderId
-                                   select new OrderViewModel
-                                   {
-                                       OrderId = o.OrderId,
-                                       OrderDetailId = o.OrderDetailId,
-                                       ProductName = o.ProductName,
-                                       Size = o.Size,
-                                       ProQuantity = o.ProQuantity,
-                                       Price = o.Price,
-                                       SubTotal = o.Price * o.ProQuantity,
-                                   });
+                                     where id == o.OrderId
+                                     select new OrderViewModel
+                                     {
+                                         OrderId = o.OrderId,
+                                         OrderDetailId = o.OrderDetailId,
+                                         ProductName = o.ProductName,
+                                         Size = o.Size,
+                                         ProQuantity = o.ProQuantity,
+                                         Price = o.Price,
+                                         SubTotal = o.Price * o.ProQuantity,
+                                     });
             return View(OrderData);
         }
 
@@ -68,8 +75,9 @@ namespace TablesideOrdering.Areas.Staff.Controllers
 
         [HttpGet]
         public IActionResult Delete(int id)
-        {            
+        {
             var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
+            Num++;
             return PartialView("Delete", order);
         }
 
@@ -84,9 +92,9 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                 return NotFound();
             }
 
-            foreach(var od in _context.OrderDetails)
+            foreach (var od in _context.OrderDetails)
             {
-                if(od.OrderId == model.OrderId)
+                if (od.OrderId == model.OrderId)
                 {
                     _context.OrderDetails.Remove(od);
                 }
@@ -95,6 +103,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             _context.Orders.Remove(order);
             _context.SaveChanges();
 
+            Num++;
             _notyfService.Success("The user is deleted", 5);
             return RedirectToAction(nameof(Index));
         }

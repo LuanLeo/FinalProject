@@ -4,7 +4,6 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/orderHub").build()
 
 $(function () {
     connection.start().then(function () {
-        //alert('Connected to orderHub');
         InvokeOrders();
     }).catch(function (err) {
         return console.error(err.toString());
@@ -23,21 +22,7 @@ connection.on("ReceivedOrders", function (orders) {
 function BindOrdersToGrid(orders) {
     $('#tblOrder tbody').empty();
     var tr;
-    var message;
     $.each(orders, function (index, order) {
-
-        let x;
-        let toast = document.getElementById("toast");
-        clearTimeout(x);
-        toast.style.transform = "translateX(0)";
-        x = setTimeout(() => {
-            toast.style.transform = "translateX(400px)"
-        }, 5000);
-
-        function closeToast() {
-            toast.style.transform = "translateX(400px)";
-        }
-
         tr = $('<tr/>');
         tr.append(`<td>${(index + 1)}</td>`);
         tr.append(`<td>${(order.orderDate)}</td>`);
@@ -47,7 +32,17 @@ function BindOrdersToGrid(orders) {
         tr.append(`<td>${(order.tableNo)}</td>`);
         tr.append(`<td><button type="button" class="btn btn-warning m-1" onclick="location.href='../Staff/Order/Details?id=${(order.orderId)}'">Details</button></td>`);
         $('#tblOrder').append(tr);
-    });
 
+        let x;
+        let toast = document.getElementById("toast");
+        clearTimeout(x);
+        toast.style.transform = "translateX(0)";
+        x = setTimeout(() => {
+            toast.style.transform = "translateX(400px)"
+        }, 5000000000000);
+    });
 }
 
+function closeToast() {
+    toast.style.transform = "translateX(400px)";
+}
