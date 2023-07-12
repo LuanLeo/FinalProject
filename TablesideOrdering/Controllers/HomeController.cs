@@ -42,12 +42,13 @@ namespace TablesideOrdering.Controllers
         public static string Message;
         public static string TableNo;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, INotyfService notyfService, IOptions<SMSMessage> SMSMessage)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, INotyfService notyfService, IOptions<SMSMessage> SMSMessage, IVnPayService vnPayService)
         {
             _logger = logger;
             _context = context;
             _notyfService = notyfService;
             _SMSMessage = SMSMessage;
+            _vnPayService = vnPayService;
         }
 
         //HOME page
@@ -394,6 +395,29 @@ namespace TablesideOrdering.Controllers
             return validnum;
         }
 
+        public IActionResult VNPayCheckout()
+        {
+            HomeViewModel home = NavData();
+            return View(home);
+        }
+
+        public IActionResult CreatePaymentUrl(HomeViewModel home)
+        {
+            PaymentInformationModel model = new PaymentInformationModel();
+            model = home.Payment;
+            model.Amount = TotalPrice;
+
+            var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
+            return Redirect(url);
+        }
+
+        public IActionResult PaymentCallback()
+        {
+            var response = _vnPayService.PaymentExecute(Request.Query);
+
+            return Json(response);
+        }
+
         public HomeViewModel NavData()
         {
             CartList cartlist = new CartList();
@@ -405,25 +429,6 @@ namespace TablesideOrdering.Controllers
             home.Cart = cartlist;
 
             return home;
-        }
-        public IActionResult VNPayCheckout(PaymentInformationModel model)
-        {
-            
-            HomeViewModel home = NavData();
-            return View(home);
-        }
-        public IActionResult CreatePaymentUrl(PaymentInformationModel model)
-        {
-            var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
-
-            return Redirect(url);
-        }
-
-        public IActionResult PaymentCallback()
-        {
-            var response = _vnPayService.PaymentExecute(Request.Query);
-
-            return Json(response);
         }
     }
 }

@@ -27,7 +27,7 @@ builder.Services.Configure<SMSMessage>(builder.Configuration.GetSection("SMSTwil
 builder.Services.AddNotyf(config => { config.IsDismissable = true; config.DurationInSeconds = 5; config.Position = NotyfPosition.TopRight; });
 
 builder.Services.AddScoped<IVnPayService, VnPayService>();
-
+builder.Services.AddSession();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Default Password settings.
@@ -50,6 +50,7 @@ app.UseRouting();
 app.UseAuthentication(); ;
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapHub<OrderHub>("/orderHub");
 
