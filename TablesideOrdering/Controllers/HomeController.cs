@@ -17,6 +17,7 @@ using TablesideOrdering.Areas.Admin.ViewModels;
 using TablesideOrdering.Data;
 using TablesideOrdering.Migrations;
 using TablesideOrdering.Models;
+using TablesideOrdering.Services;
 using TablesideOrdering.ViewModels;
 using Twilio;
 using Twilio.Clients;
@@ -32,6 +33,7 @@ namespace TablesideOrdering.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
         private readonly IOptions<SMSMessage> _SMSMessage;
+        private readonly IVnPayService _vnPayService;
         public INotyfService _notyfService { get; }
 
         public static List<AddToCart> carts = new List<AddToCart>();
@@ -373,8 +375,7 @@ namespace TablesideOrdering.Controllers
             carts.Clear();
             _notyfService.Success("Your order has been received");
             return RedirectToAction("Index");
-        }
-
+        }       
         public void SendSMS()
         {
             string number = ConvertToPhoneValid();
@@ -404,6 +405,25 @@ namespace TablesideOrdering.Controllers
             home.Cart = cartlist;
 
             return home;
+        }
+        public IActionResult VNPayCheckout(PaymentInformationModel model)
+        {
+            
+            HomeViewModel home = NavData();
+            return View(home);
+        }
+        public IActionResult CreatePaymentUrl(PaymentInformationModel model)
+        {
+            var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
+
+            return Redirect(url);
+        }
+
+        public IActionResult PaymentCallback()
+        {
+            var response = _vnPayService.PaymentExecute(Request.Query);
+
+            return Json(response);
         }
     }
 }

@@ -123,8 +123,9 @@
                         <ul>
                             <li>Total <span>$@Model.Cart.CartAmount</span></li>
                         </ul>
-                        <a asp-action="PlaceOrder" asp-controller="Home" class="primary-btn" style="width:60%; display: block; margin: auto">PROCEED TO CHECKOUT</a>
+                        <h5>Select a <span style="color: #6064b6">Payment</span> method</h5>                        
                     </div>
+                    <a asp-action="VNPayCheckout" asp-controller="Home" class="primary-btn" style="width:60%; display: block; margin: auto">PROCEED TO CHECKOUT</a>
                 </div>
             </div>
         </div>
