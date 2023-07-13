@@ -376,7 +376,7 @@ namespace TablesideOrdering.Controllers
             carts.Clear();
             _notyfService.Success("Your order has been received");
             return RedirectToAction("Index");
-        }       
+        }
         public void SendSMS()
         {
             string number = ConvertToPhoneValid();
@@ -414,8 +414,48 @@ namespace TablesideOrdering.Controllers
         public IActionResult PaymentCallback()
         {
             var response = _vnPayService.PaymentExecute(Request.Query);
+            if (response.VnPayResponseCode == "00")
+            {
+                //Save order to database
+                Orders order = new Orders();
+                order.OrderDate = DateTime.Now;
+                order.OrderPrice = TotalPrice;
+                order.ProductQuantity = carts.Count();
+                order.PhoneNumber = PhoneNumber;
+                order.TableNo = TableNo;
+                order.Status = "Processing";
 
-            return Json(response);
+                _context.Orders.Add(order);
+                _context.SaveChanges();
+
+                //Save order list to database
+                List<OrderDetail> orderDetailList = new List<OrderDetail>();
+                foreach (var item in carts)
+                {
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.OrderId = order.OrderId;
+                    orderDetail.ProductName = item.Product.Name;
+                    orderDetail.Size = item.Size;
+                    orderDetail.ProQuantity = item.Quantity;
+                    orderDetail.Price = item.Quantity * item.Price;
+
+                    orderDetailList.Add(orderDetail);
+                }
+
+                foreach (var orderDt in orderDetailList)
+                {
+                    _context.OrderDetails.Add(orderDt);
+                }
+                _context.SaveChanges();
+
+                //Renew the cart and notify customer
+                TotalPrice = 0;
+                carts.Clear();
+                _notyfService.Success("Your order has been received");
+                return RedirectToAction("Index");
+            }
+            _notyfService.Error("There is something wrong, Please try again!");
+            return RedirectToAction("Index");
         }
 
         public HomeViewModel NavData()
