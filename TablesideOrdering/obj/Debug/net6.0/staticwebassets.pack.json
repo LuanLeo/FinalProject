@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\Logo\\horizontal logo.png"
     },
     {
+      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\PaymentMethod\\VNPay.png",
+      "PackagePath": "staticwebassets\\PaymentMethod\\VNPay.png"
+    },
+    {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\08a3cb702f3be59.ico",
       "PackagePath": "staticwebassets\\ProductImage\\08a3cb702f3be59.ico"
     },
@@ -2651,6 +2655,10 @@
     {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\css\\owl.carousel.min.css",
       "PackagePath": "staticwebassets\\css\\owl.carousel.min.css"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\css\\paymentselect.css",
+      "PackagePath": "staticwebassets\\css\\paymentselect.css"
     },
     {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\css\\site.css",

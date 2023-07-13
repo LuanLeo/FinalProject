@@ -13,6 +13,7 @@ namespace TablesideOrdering.ViewModels
         public IQueryable<ProductSizePriceViewModel> Product { get; set; }
 
         //Variables for Payment Methods
+        public string PaymentType { get; set; }
         public PaymentInformationModel Payment { get; set; }
 
 

@@ -449,6 +449,33 @@ namespace TablesideOrdering.Controllers
 
 
 
+        //CONTROLLER FOR SELECTING PAYMENT TYPE
+        public IActionResult PaymentMethod(HomeViewModel home)
+        {
+            if (home.PaymentType == null)
+            {
+                _notyfService.Error("You haven't select payment method, please select!");
+                return RedirectToAction("Cart");
+            }
+            else {
+                if (home.PaymentType == "VNPay")
+                {
+                    return RedirectToAction("VNPayCheckout");
+                }
+                if (home.PaymentType == "Momo")
+                {
+                    //return RedirectToAction("VNPayCheckout");
+                }
+                if (home.PaymentType == "Cast")
+                {
+
+                }
+            }
+            _notyfService.Error("Something went wrong, please refresh the page!");
+            return RedirectToAction("Cart");
+        }
+
+
         //CONTROLLER FOR VNPAY PAYMENT METHOD PAGE
         public IActionResult VNPayCheckout()
         {
