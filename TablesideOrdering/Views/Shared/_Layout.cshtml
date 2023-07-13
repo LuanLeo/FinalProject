@@ -117,9 +117,9 @@
                     <div class="footer__widget">
                         <h6>Join Our Newsletter Now</h6>
                         <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <form asp-action="GetMail" asp-controller="Home" method="post">
-                            <input type="email" asp-for="CusMail" placeholder="Enter your mail">
-                            <span asp-validation-for="CusMail" class="text-danger"></span>
+                        <form asp-action="MailPR" asp-controller="Home" method="post">
+                            <input type="email" asp-for="MailPR" placeholder="Enter your mail">
+                            <span asp-validation-for="MailPR" class="text-danger"></span>
                             <button type="submit" class="site-btn">Subscribe</button>
                         </form>
                         <div class="footer__widget__social">

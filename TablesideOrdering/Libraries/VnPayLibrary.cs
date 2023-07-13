@@ -15,7 +15,6 @@ namespace TablesideOrdering.Libraries
         public PaymentResponseModel GetFullResponseData(IQueryCollection collection, string hashSecret)
         {
             var vnPay = new VnPayLibrary();
-
             foreach (var (key, value) in collection)
             {
                 if (!string.IsNullOrEmpty(key) && key.StartsWith("vnp_"))
@@ -27,13 +26,10 @@ namespace TablesideOrdering.Libraries
             var orderId = Convert.ToInt64(vnPay.GetResponseData("vnp_TxnRef"));
             var vnPayTranId = Convert.ToInt64(vnPay.GetResponseData("vnp_TransactionNo"));
             var vnpResponseCode = vnPay.GetResponseData("vnp_ResponseCode");
-            var vnpSecureHash =
-                collection.FirstOrDefault(k => k.Key == "vnp_SecureHash").Value; //hash của dữ liệu trả về
+            var vnpSecureHash = collection.FirstOrDefault(k => k.Key == "vnp_SecureHash").Value; //hash của dữ liệu trả về
             var orderInfo = vnPay.GetResponseData("vnp_OrderInfo");
 
-            var checkSignature =
-                vnPay.ValidateSignature(vnpSecureHash, hashSecret); //check Signature
-
+            var checkSignature = vnPay.ValidateSignature(vnpSecureHash, hashSecret); //check Signature
             if (!checkSignature)
                 return new PaymentResponseModel()
                 {
@@ -58,7 +54,6 @@ namespace TablesideOrdering.Libraries
             try
             {
                 var remoteIpAddress = context.Connection.RemoteIpAddress;
-
                 if (remoteIpAddress != null)
                 {
                     if (remoteIpAddress.AddressFamily == AddressFamily.InterNetworkV6)
@@ -68,7 +63,6 @@ namespace TablesideOrdering.Libraries
                     }
 
                     if (remoteIpAddress != null) ipAddress = remoteIpAddress.ToString();
-
                     return ipAddress;
                 }
             }
@@ -103,14 +97,12 @@ namespace TablesideOrdering.Libraries
         public string CreateRequestUrl(string baseUrl, string vnpHashSecret)
         {
             var data = new StringBuilder();
-
             foreach (var (key, value) in _requestData.Where(kv => !string.IsNullOrEmpty(kv.Value)))
             {
                 data.Append(WebUtility.UrlEncode(key) + "=" + WebUtility.UrlEncode(value) + "&");
             }
 
             var querystring = data.ToString();
-
             baseUrl += "?" + querystring;
             var signData = querystring;
             if (signData.Length > 0)
@@ -120,7 +112,6 @@ namespace TablesideOrdering.Libraries
 
             var vnpSecureHash = HmacSha512(vnpHashSecret, signData);
             baseUrl += "vnp_SecureHash=" + vnpSecureHash;
-
             return baseUrl;
         }
 
@@ -136,6 +127,7 @@ namespace TablesideOrdering.Libraries
             var hash = new StringBuilder();
             var keyBytes = Encoding.UTF8.GetBytes(key);
             var inputBytes = Encoding.UTF8.GetBytes(inputData);
+
             using (var hmac = new HMACSHA512(keyBytes))
             {
                 var hashValue = hmac.ComputeHash(inputBytes);
@@ -144,7 +136,6 @@ namespace TablesideOrdering.Libraries
                     hash.Append(theByte.ToString("x2"));
                 }
             }
-
             return hash.ToString();
         }
 
@@ -171,7 +162,6 @@ namespace TablesideOrdering.Libraries
             {
                 data.Remove(data.Length - 1, 1);
             }
-
             return data.ToString();
         }
     }

@@ -23,11 +23,13 @@ builder.Services.AddSingleton<SubscribeOrderTableDependency>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TablesideOrdering")));
 builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders().AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
+//Call From Appsetting
 builder.Services.Configure<SMSMessage>(builder.Configuration.GetSection("SMSTwilio"));
-builder.Services.AddNotyf(config => { config.IsDismissable = true; config.DurationInSeconds = 5; config.Position = NotyfPosition.TopRight; });
+builder.Services.Configure<EmailReceiptOnline>(builder.Configuration.GetSection("OnlineReceipt"));
 
+//Call Additional Services or Packages
+builder.Services.AddNotyf(config => { config.IsDismissable = true; config.DurationInSeconds = 5; config.Position = NotyfPosition.TopRight; });
 builder.Services.AddScoped<IVnPayService, VnPayService>();
-builder.Services.AddSession();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Default Password settings.
@@ -50,7 +52,6 @@ app.UseRouting();
 app.UseAuthentication(); ;
 
 app.UseAuthorization();
-app.UseSession();
 
 app.MapHub<OrderHub>("/orderHub");
 

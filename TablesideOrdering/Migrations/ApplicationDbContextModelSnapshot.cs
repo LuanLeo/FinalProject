@@ -379,7 +379,7 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("ProductSizePrice");
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Models.CustomerEmail", b =>
+            modelBuilder.Entity("TablesideOrdering.Models.EmailPR", b =>
                 {
                     b.Property<int>("EmailId")
                         .ValueGeneratedOnAdd()
@@ -393,7 +393,7 @@ namespace TablesideOrdering.Migrations
 
                     b.HasKey("EmailId");
 
-                    b.ToTable("CustomerEmails");
+                    b.ToTable("EmailPRs");
                 });
 
             modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.ApplicationUser", b =>

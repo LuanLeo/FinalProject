@@ -22,7 +22,7 @@ namespace TablesideOrdering.Data
         //Database for Customer
         public DbSet<Orders> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
-        public DbSet<CustomerEmail> CustomerEmails { get; set; }
+        public DbSet<EmailPR> EmailPRs { get; set; }
 
     }
 }

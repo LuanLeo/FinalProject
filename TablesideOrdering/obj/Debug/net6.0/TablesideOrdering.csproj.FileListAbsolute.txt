@@ -1711,3 +1711,11 @@ C:\Users\USER\Desktop\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideO
 C:\Users\USER\Desktop\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.genruntimeconfig.cache
 C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\TablesideOrdering.pdb
 C:\Users\USER\Desktop\FinalProject\TablesideOrdering\obj\Debug\net6.0\ref\TablesideOrdering.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\BouncyCastle.Cryptography.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\MailKit.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\MimeKit.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\System.Formats.Asn1.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\System.Text.Encoding.CodePages.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll

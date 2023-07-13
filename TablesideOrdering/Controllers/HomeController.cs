@@ -1,28 +1,16 @@
-﻿using AspNetCore;
-using AspNetCoreHero.ToastNotification.Abstractions;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Diagnostics;
-using System.Security.Cryptography.Pkcs;
-using System.Text.RegularExpressions;
-using System.Xml.Linq;
+using MimeKit;
 using TablesideOrdering.Areas.Admin.Models;
-using TablesideOrdering.Areas.Admin.StatisticModels;
 using TablesideOrdering.Areas.Admin.ViewModels;
 using TablesideOrdering.Data;
-using TablesideOrdering.Migrations;
 using TablesideOrdering.Models;
 using TablesideOrdering.Services;
 using TablesideOrdering.ViewModels;
 using Twilio;
-using Twilio.Clients;
 using Twilio.Rest.Api.V2010.Account;
-using Twilio.TwiML.Voice;
 using Twilio.Types;
 using TopFoodSizePrice = TablesideOrdering.Models.TopFoodSizePrice;
 
@@ -30,32 +18,40 @@ namespace TablesideOrdering.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        //Call Database and Relatives
         private readonly ApplicationDbContext _context;
-        private readonly IOptions<SMSMessage> _SMSMessage;
+        private readonly SMSMessage _SMSMessage;
+        private readonly EmailReceiptOnline _EmailReceiptOnline;
+
+        //Call Additional Services
         private readonly IVnPayService _vnPayService;
         public INotyfService _notyfService { get; }
 
+        //Static variables before saving to database
         public static List<AddToCart> carts = new List<AddToCart>();
         public static float TotalPrice;
         public static string PhoneNumber;
         public static string Message;
         public static string TableNo;
-
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, INotyfService notyfService, IOptions<SMSMessage> SMSMessage, IVnPayService vnPayService)
+        public static string EmailReceiptOnline;
+        public HomeController(ApplicationDbContext context, INotyfService notyfService, IOptions<SMSMessage> SMSMessage, IVnPayService vnPayService, IOptions<EmailReceiptOnline> EmailReceiptOnline)
         {
-            _logger = logger;
             _context = context;
+
+            _SMSMessage = SMSMessage.Value;
+            _EmailReceiptOnline = EmailReceiptOnline.Value;
+
             _notyfService = notyfService;
-            _SMSMessage = SMSMessage;
             _vnPayService = vnPayService;
         }
 
-        //HOME page
+        //CONTROLLER FOR HOME PAGE
         [HttpGet]
         public IActionResult Index()
         {
-            var productList = (from ProSP in _context.ProductSizePrice
+            HomeViewModel Homedata = new HomeViewModel();
+            Homedata = NavData();
+            Homedata.Product = (from ProSP in _context.ProductSizePrice
                                join Pro in _context.Products on ProSP.ProductId equals Pro.ProductId
                                select new ProductSizePriceViewModel
                                {
@@ -68,14 +64,16 @@ namespace TablesideOrdering.Controllers
                                    Size = ProSP.Size,
                                    Price = ProSP.Price
                                });
-
-            HomeViewModel Homedata = new HomeViewModel();
-            Homedata = NavData();
             Homedata.Category = _context.Categories.ToList();
-            Homedata.Product = productList;
-
             return View(Homedata);
         }
+
+
+
+
+
+
+        //CONTROLLER FOR MENU PAGE
         public IActionResult Menu(string term = "", string orderBy = "")
         {
             term = string.IsNullOrEmpty(term) ? "" : term.ToLower();
@@ -112,7 +110,6 @@ namespace TablesideOrdering.Controllers
                     productList = productList.OrderBy(a => a.Name).ThenBy(a => a.Size);
                     break;
             }
-
             Homedata = NavData();
             Homedata.Category = _context.Categories.ToList();
             Homedata.ProductSizes = _context.ProductSize.ToList();
@@ -200,27 +197,45 @@ namespace TablesideOrdering.Controllers
             return FoodList;
         }
 
-        [HttpPost]
-        public IActionResult GetMail(HomeViewModel home)
-        {
-            CustomerEmail Email = new CustomerEmail();
-            Email.Email = home.CusMail;
 
-            var emailList = _context.CustomerEmails.Select(i => i.Email).ToList();
-            if (emailList.Contains(Email.Email) != true)
+
+
+
+        //CONTROLLER FOR RECEIVING ADS MAIL
+        [HttpPost]
+        public IActionResult MailPR(HomeViewModel home)
+        {
+            EmailPR Email = new EmailPR();
+            Email.Email = home.MailPR;
+
+            var emailList = _context.EmailPRs.Select(i => i.Email).ToList();
+            if (emailList != null)
             {
-                _context.CustomerEmails.Add(Email);
-                _context.SaveChanges();
-                _notyfService.Success("Your email is subcribed success", 5);
+                if (emailList.Contains(Email.Email) != true)
+                {
+                    _context.EmailPRs.Add(Email);
+                    _context.SaveChanges();
+                    _notyfService.Success("Your email is subcribed success", 5);
+                }
+                else
+                {
+                    _notyfService.Error("Your email has been subcribed", 5);
+                };
             }
             else
             {
-                _notyfService.Error("Your email has been subcribed", 5);
-            };
+                _context.EmailPRs.Add(Email);
+                _context.SaveChanges();
+                _notyfService.Success("Your email is subcribed success", 5);
+            }
             return RedirectToAction("Index");
         }
 
-        //GET take phone number
+
+
+
+
+        //CONTROLLER FOR INPUTTING PHONE PAGE
         [HttpGet]
         public IActionResult PhoneValidation()
         {
@@ -228,7 +243,6 @@ namespace TablesideOrdering.Controllers
             return View(home);
         }
 
-        //POST take phone number
         [HttpPost]
         public IActionResult PhoneValidation(HomeViewModel home)
         {
@@ -240,8 +254,45 @@ namespace TablesideOrdering.Controllers
             }
             return View();
         }
+        public string ConvertToPhoneValid()
+        {
+            string number = PhoneNumber.Substring(1);
+            string validnum = "+84" + number;
+            return validnum;
+        }
 
-        //CART page
+
+
+
+
+        //CONTROLLER FOR SENDING ONLINE RECEIPT
+        public void SendMail(EmailReceiptOnline data)
+        {
+            data.Email = _EmailReceiptOnline.Email;
+            data.Password = _EmailReceiptOnline.Password;
+
+            data.Body = "";
+            var email = new MimeMessage();
+            {
+                email.From.Add(MailboxAddress.Parse(data.Email));
+                email.To.Add(MailboxAddress.Parse(EmailReceiptOnline));
+                email.Subject = "L&L Coffee Online Receipt";
+                email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = data.Body };
+            }
+            using var smtp = new SmtpClient();
+            {
+                smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                smtp.Authenticate(data.Email, data.Password);
+                smtp.Send(email);
+                smtp.Disconnect(true);
+            }
+        }
+
+
+
+
+
+        //CONTROLLER FOR CART PAGE
         public IActionResult Cart()
         {
             HomeViewModel home = NavData();
@@ -377,24 +428,28 @@ namespace TablesideOrdering.Controllers
             _notyfService.Success("Your order has been received");
             return RedirectToAction("Index");
         }
+
+
+
+
+
+        //CONTROLLER FOR SENDING SMS TO CUSTOMER
         public void SendSMS()
         {
             string number = ConvertToPhoneValid();
-
-            TwilioClient.Init(_SMSMessage.Value.AccountSid, _SMSMessage.Value.AuthToken);
+            TwilioClient.Init(_SMSMessage.AccountSid, _SMSMessage.AuthToken);
             var message = MessageResource.Create(
                 to: new PhoneNumber(number),
-                from: new PhoneNumber(_SMSMessage.Value.PhoneFrom),
+                from: new PhoneNumber(_SMSMessage.PhoneFrom),
                 body: Message);
         }
 
-        public string ConvertToPhoneValid()
-        {
-            string number = PhoneNumber.Substring(1);
-            string validnum = "+84" + number;
-            return validnum;
-        }
 
+
+
+
+
+        //CONTROLLER FOR VNPAY PAYMENT METHOD PAGE
         public IActionResult VNPayCheckout()
         {
             HomeViewModel home = NavData();
@@ -406,6 +461,8 @@ namespace TablesideOrdering.Controllers
             PaymentInformationModel model = new PaymentInformationModel();
             model = home.Payment;
             model.Amount = TotalPrice;
+
+            EmailReceiptOnline = home.Payment.Email;
 
             var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
             return Redirect(url);
@@ -458,6 +515,12 @@ namespace TablesideOrdering.Controllers
             return RedirectToAction("Index");
         }
 
+
+
+
+
+
+        //CONTROLLER FOR NAVIGATION
         public HomeViewModel NavData()
         {
             CartList cartlist = new CartList();
