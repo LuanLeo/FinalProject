@@ -4,29 +4,26 @@
     box-sizing: border-box;
 }
 
-    .paymentcontainer .title {
-        font-size: 20px;
-        font-family: Arial, Helvetica, sans-serif;
-    }
+.paymentcontainer form input {
+    display: none;
+}
 
-    .paymentcontainer form input {
-        display: none;
-    }
+.paymentcontainer form .category {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(4, 100px);
+}
 
-    .paymentcontainer form .category {
-        margin-top: 10px;
-        padding-top: 20px;
-        display: grid;
-        grid-template-columns: repeat(4, 100px);
-    }
+.category{
+    padding-bottom:30px;
+}
 
 .category label {
-    width: 80%;
-    height: 80%;
-    padding: 20px;
-    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    height: 70%;
+    padding: 15px;
+    box-shadow: 0px 0px 0px 1px rgb(0, 0, 0);
     display: flex;
-    /* justify-content: space-between; */
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -34,18 +31,12 @@
     position: relative;
 }
 
-/* label:nth-child(2), label:nth-child(3){
-    margin: 15px 0;
-} */
-
-
 #VNPay:checked ~ .category .VNPayMethod,
 #mastercard:checked ~ .category .mastercardMethod,
 #paypal:checked ~ .category .paypalMethod,
 #AMEX:checked ~ .category .amexMethod {
-    box-shadow: 0px 0px 0px 1px #6064b6;
+    box-shadow: 0px 0px 0px 1px #28a745;
 }
-
 
     #VNPay:checked ~ .category .VNPayMethod .check,
     #mastercard:checked ~ .category .mastercardMethod .check,
@@ -54,10 +45,29 @@
         display: block;
     }
 
+.VNPay img {
+    width: 70px;
+}
+
+.mastercard img {
+    width: 65px;
+}
+
+.paypal img {
+    width: 80px;
+}
+
+.AMEX img {
+    width: 50px;
+}
+
+img {
+    width: 50px;
+    height: auto;
+}
+
 label .imgName {
     display: flex;
-    /* justify-content: space-between;
-     */
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
@@ -66,8 +76,6 @@ label .imgName {
 }
 
 .imgName span {
-    /* margin-left: 20px; */
-    font-family: Arial, Helvetica, sans-serif;
     position: absolute;
     top: 72%;
     transform: translateY(-72%);
@@ -81,28 +89,6 @@ label .imgName {
     position: absolute;
     top: 35%;
     transform: translateY(-35%);
-}
-
-img {
-    width: 50px;
-    height: auto;
-}
-
-.VNPay img {
-    width: 70px;
-    /* margin-left: 5px; */
-}
-
-.mastercard img {
-    width: 65px;
-}
-
-.paypal img {
-    width: 80px;
-}
-
-.AMEX img {
-    width: 50px;
 }
 
 .check {

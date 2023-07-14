@@ -301,7 +301,7 @@ namespace TablesideOrdering.Controllers
                 return View(home);
             }
             _notyfService.Error("The cart hasn't signed yet, please try again");
-            return RedirectToAction("Index");
+            return RedirectToAction("PhoneValidation");
         }
 
         //Add to Cart from Index
