@@ -458,7 +458,7 @@ namespace TablesideOrdering.Controllers
         {
             if (home.PaymentType == null)
             {
-                _notyfService.Error("You haven't select payment method, please select!", 5);
+                _notyfService.Information("Payment method can't be null", 5);
                 return RedirectToAction("Cart");
             }
             else {
@@ -475,7 +475,7 @@ namespace TablesideOrdering.Controllers
                     return RedirectToAction("CashCheckout");
                 }
             }
-            _notyfService.Error("Something went wrong, please refresh the page!", 5);
+            _notyfService.Error("Something went wrong, please try again!", 5);
             return RedirectToAction("Cart");
         }
 
