@@ -466,16 +466,21 @@ namespace TablesideOrdering.Controllers
                 {
                     //return RedirectToAction("VNPayCheckout");
                 }
-                if (home.PaymentType == "Cast")
+                if (home.PaymentType == "Cash")
                 {
-
+                    return RedirectToAction("CashCheckout");
                 }
             }
             _notyfService.Error("Something went wrong, please refresh the page!");
             return RedirectToAction("Cart");
         }
 
-
+        //CONTROLLER FOR CASH PAYMENT METHOD PAGE
+        public IActionResult CashCheckout()
+        {
+            HomeViewModel home = NavData();
+            return View(home);
+        }
         //CONTROLLER FOR VNPAY PAYMENT METHOD PAGE
         public IActionResult VNPayCheckout()
         {

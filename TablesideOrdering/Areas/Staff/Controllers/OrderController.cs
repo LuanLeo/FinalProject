@@ -31,7 +31,13 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             Num = 0;
             return View();
         }
-
+        public IActionResult DoneOrders()
+        {
+            var order = _context.Orders.FirstOrDefault(o => o.Status == "Done");
+            List<Orders> OList = new List<Orders>();
+            OList.Add(order);
+            return View(OList);
+        }
         public IActionResult Details(int id)
         {
             OrderViewModel OrderData = new OrderViewModel();
@@ -59,7 +65,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                                          ProQuantity = o.ProQuantity,
                                          Price = o.Price,
                                          SubTotal = o.Price * o.ProQuantity,
-                                     });
+                                     });          
             return View(OrderData);
         }
 

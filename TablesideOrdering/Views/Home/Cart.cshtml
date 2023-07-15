@@ -133,7 +133,7 @@
                             </ul>
                             <form asp-action="PaymentMethod">
                                 <input asp-for="PaymentType" type="radio" id="VNPay" value="VNPay">
-                                <input asp-for="PaymentType" type="radio" id="mastercard" value="mastercard">
+                                <input asp-for="PaymentType" type="radio" id="Cash" value="Cash">
                                 <input asp-for="PaymentType" type="radio" id="paypal" value="mastercard">
                                 <input asp-for="PaymentType" type="radio" id="AMEX" value="AMEX">
 
@@ -144,10 +144,10 @@
                                         </div>
                                         <span class="check"><i class="fa-solid fa-circle-check" style="color: #28a745"></i></span>
                                     </label>
-                                    <label for="mastercard" class="mastercardMethod">
+                                    <label for="Cash" class="CashMethod">
                                         <div class="imgName">
-                                            <div class="imgContainer mastercard">
-                                                <img src="https://i.ibb.co/vdbBkgT/mastercard.jpg" alt="">
+                                            <div class="imgContainer Cash">
+                                                <img src="/PaymentMethod/istockphoto-1153024228-612x612.jpg" alt="">
                                             </div>
                                         </div>
                                         <span class="check"><i class="fa-solid fa-circle-check" style="color: #28a745"></i></span>
@@ -169,7 +169,7 @@
                                         <span class="check"><i class="fa-solid fa-circle-check" style="color: #28a745"></i></span>
                                     </label>
                                 </div>
-                                <button type="submit" class="primary-btn" style="width:60%; display: block; margin: auto">PROCEED TO CHECKOUT</button>
+                                <input type="submit" onclick="document.getElementById('frmCreateOrder').submit()" class="primary-btn" style="width:100%; display: block; margin: auto ; text-align:center ; border:none" value="PROCEED TO CHECKOUT">
                             </form>
                         </div>
                     </div>
