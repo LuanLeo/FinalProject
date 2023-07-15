@@ -34,7 +34,11 @@ namespace TablesideOrdering.Controllers
         public static string Message;
         public static string TableNo;
         public static string EmailReceiptOnline;
-        public HomeController(ApplicationDbContext context, INotyfService notyfService, IOptions<SMSMessage> SMSMessage, IVnPayService vnPayService, IOptions<EmailReceiptOnline> EmailReceiptOnline)
+        public HomeController(ApplicationDbContext context,
+            INotyfService notyfService,
+            IVnPayService vnPayService,
+            IOptions<SMSMessage> SMSMessage,
+            IOptions<EmailReceiptOnline> EmailReceiptOnline)
         {
             _context = context;
 
@@ -454,7 +458,7 @@ namespace TablesideOrdering.Controllers
         {
             if (home.PaymentType == null)
             {
-                _notyfService.Error("You haven't select payment method, please select!");
+                _notyfService.Error("You haven't select payment method, please select!", 5);
                 return RedirectToAction("Cart");
             }
             else {
@@ -471,7 +475,7 @@ namespace TablesideOrdering.Controllers
                     return RedirectToAction("CashCheckout");
                 }
             }
-            _notyfService.Error("Something went wrong, please refresh the page!");
+            _notyfService.Error("Something went wrong, please refresh the page!", 5);
             return RedirectToAction("Cart");
         }
 

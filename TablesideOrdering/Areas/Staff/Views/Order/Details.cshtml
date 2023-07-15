@@ -102,8 +102,8 @@
                                             <th style="text-align:center; color: black">
                                                 Quantity
                                             </th>
-                                            <th>
-                                                <span style="color: black">Unit Price</span>
+                                            <th style="color: black">
+                                                Price
                                             </th>
 
                                         </tr>
@@ -122,7 +122,7 @@
                                                     @Html.DisplayFor(modelItem => item.ProQuantity)
                                                 </td>
                                                 <td>
-                                                    <span> @Html.DisplayFor(modelItem => item.) VND</span>
+                                                    <span> @Html.DisplayFor(modelItem => item.SubTotal) VND</span>
                                                 </td>
                                             </tr>
                                         }
@@ -141,13 +141,6 @@
                                     <li>Phone number: <span>@Html.DisplayFor(model => item.PhoneNumber)</span></li>
                                     <li>Table number: <span>@Html.DisplayFor(model => item.TableNo)</span></li>
                                     <li>Date:  <span>@Html.DisplayFor(model => item.OrderDate)</span></li>
-                                }
-                            </ul>
-                            <div class="checkout__order__products">Products <span>Total</span></div>
-                            <ul>
-                                @foreach (var item in Model.OrderDetail)
-                                {
-                                    <li>@item.ProductName<span>@item.SubTotal VND</span></li>
                                 }
                             </ul>
                             @foreach (var item in Model.Order)
