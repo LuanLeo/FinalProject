@@ -485,6 +485,7 @@ namespace TablesideOrdering.Controllers
             HomeViewModel home = NavData();
             return View(home);
         }
+
         //CONTROLLER FOR VNPAY PAYMENT METHOD PAGE
         public IActionResult VNPayCheckout()
         {

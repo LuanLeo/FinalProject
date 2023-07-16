@@ -17,12 +17,16 @@
       "PackagePath": "staticwebassets\\Logo\\horizontal logo.png"
     },
     {
-      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\PaymentMethod\\VNPay.png",
-      "PackagePath": "staticwebassets\\PaymentMethod\\VNPay.png"
+      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\PaymentMethod\\Cash.png",
+      "PackagePath": "staticwebassets\\PaymentMethod\\Cash.png"
     },
     {
-      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\PaymentMethod\\istockphoto-1153024228-612x612.jpg",
-      "PackagePath": "staticwebassets\\PaymentMethod\\istockphoto-1153024228-612x612.jpg"
+      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\PaymentMethod\\MoMo.png",
+      "PackagePath": "staticwebassets\\PaymentMethod\\MoMo.png"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\PaymentMethod\\VNPay.png",
+      "PackagePath": "staticwebassets\\PaymentMethod\\VNPay.png"
     },
     {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\08a3cb702f3be59.ico",

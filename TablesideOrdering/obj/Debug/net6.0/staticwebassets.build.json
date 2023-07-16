@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "L9TObvkMfccA4Imc0fwXOmGgfHyr98T2y+RLC0uZSHE=",
+  "Hash": "i3OlkDsLgzkUKUhmlbw6/9a/Ct97rieuv5BhJkZz2b8=",
   "Source": "TablesideOrdering",
   "BasePath": "_content/TablesideOrdering",
   "Mode": "Default",
@@ -14739,12 +14739,12 @@
       "OriginalItemSpec": "wwwroot\\Logo\\Logo.png"
     },
     {
-      "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\PaymentMethod\\istockphoto-1153024228-612x612.jpg",
+      "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\PaymentMethod\\Cash.png",
       "SourceId": "TablesideOrdering",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\",
       "BasePath": "_content/TablesideOrdering",
-      "RelativePath": "PaymentMethod/istockphoto-1153024228-612x612.jpg",
+      "RelativePath": "PaymentMethod/Cash.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -14753,7 +14753,24 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\PaymentMethod\\istockphoto-1153024228-612x612.jpg"
+      "OriginalItemSpec": "wwwroot\\PaymentMethod\\Cash.png"
+    },
+    {
+      "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\PaymentMethod\\MoMo.png",
+      "SourceId": "TablesideOrdering",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\",
+      "BasePath": "_content/TablesideOrdering",
+      "RelativePath": "PaymentMethod/MoMo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\PaymentMethod\\MoMo.png"
     },
     {
       "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\PaymentMethod\\VNPay.png",

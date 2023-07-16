@@ -1,11 +1,5 @@
-﻿* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-.paymentcontainer form input {
-    display: none;
+﻿.category {
+    padding-bottom: 30px;
 }
 
 .paymentcontainer form .category {
@@ -13,62 +7,50 @@
     justify-content: center;
     grid-template-columns: repeat(4, 100px);
 }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+    .paymentcontainer form input {
+        display: none;
+    }
 
-.category{
-    padding-bottom:30px;
+.paymentcontainer form .category {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 140px);
+    justify-items: center;
 }
 
 .category label {
-    width: 90%;
-    height: 70%;
-    padding: 15px;
-    box-shadow: 0px 0px 0px 2px rgb(0, 0, 0);
+    width: 70%;
+    height: 60%; 
+    padding: 20px;
     display: flex;
+    box-shadow: 0px 0px 0px 2px rgb(0, 0, 0);
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 5px;
     position: relative;
 }
 
 #VNPay:checked ~ .category .VNPayMethod,
 #Cash:checked ~ .category .CashMethod,
-#paypal:checked ~ .category .paypalMethod,
-#AMEX:checked ~ .category .amexMethod {
+#Momo:checked ~ .category .MomoMethod {
     box-shadow: 0px 0px 0px 2px #28a745;
 }
 
     #VNPay:checked ~ .category .VNPayMethod .check,
     #Cash:checked ~ .category .CashMethod .check,
-    #paypal:checked ~ .category .paypalMethod .check,
-    #AMEX:checked ~ .category .amexMethod .check {
+    #Momo:checked ~ .category .MomoMethod .check {
         display: block;
     }
 
-.VNPay img {
-    width: 70px;
-}
-
-.Cash img {
-    width: 65px;
-}
-
-.paypal img {
-    width: 80px;
-}
-
-.AMEX img {
-    width: 50px;
-}
-
-img {
-    width: 50px;
-    height: auto;
-}
-
 label .imgName {
     display: flex;
-    justify-content: center;
+    /* justify-content: center*/;
     align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
@@ -76,6 +58,7 @@ label .imgName {
 }
 
 .imgName span {
+    /* margin-left: 20px; */
     position: absolute;
     top: 72%;
     transform: translateY(-72%);
@@ -91,6 +74,18 @@ label .imgName {
     transform: translateY(-35%);
 }
 
+.VNPay img {
+    width: 80px;
+}
+
+.Momo img {
+    width: 65px;
+}
+
+.Cash img {
+    width: 65px;
+}
+
 .check {
     display: none;
     position: absolute;
@@ -101,3 +96,4 @@ label .imgName {
     .check i {
         font-size: 18px;
     }
+

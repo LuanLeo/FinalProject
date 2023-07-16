@@ -14,7 +14,8 @@
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
     <!-- Css Styles -->
     <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
@@ -134,38 +135,34 @@
                             <form asp-action="PaymentMethod">
                                 <input asp-for="PaymentType" type="radio" id="VNPay" value="VNPay">
                                 <input asp-for="PaymentType" type="radio" id="Cash" value="Cash">
-                                <input asp-for="PaymentType" type="radio" id="paypal" value="mastercard">
-                                <input asp-for="PaymentType" type="radio" id="AMEX" value="AMEX">
+                                <input asp-for="PaymentType" type="radio" id="Momo" value="Momo">
 
                                 <div class="category">
                                     <label for="VNPay" class="VNPayMethod">
                                         <div class="imgName">
-                                            <img src="/PaymentMethod/VNPay.png" alt="">
+                                            <div class="imgContainer VNPay">
+                                                <img src="/PaymentMethod/VNPay.png" alt="">
+                                            </div>
+                                         </div>
+                                        <span class="check"><i class="fa-solid fa-circle-check" style="color: #28a745"></i></span>
+                                    </label>
+
+                                    <label for="Momo" class="MomoMethod">
+                                        <div class="imgName">
+                                            <div class="imgContainer Momo">
+                                                <img src="/PaymentMethod/MoMo.png" alt="">
+                                            </div>
                                         </div>
                                         <span class="check"><i class="fa-solid fa-circle-check" style="color: #28a745"></i></span>
                                     </label>
+                                    
                                     <label for="Cash" class="CashMethod">
                                         <div class="imgName">
                                             <div class="imgContainer Cash">
-                                                <img src="/PaymentMethod/istockphoto-1153024228-612x612.jpg" alt="">
+                                                <img src="/PaymentMethod/Cash.png" alt="">
                                             </div>
                                         </div>
-                                        <span class="check"><i class="fa-solid fa-circle-check" style="color: #28a745"></i></span>
-                                    </label>
-                                    <label for="paypal" class="paypalMethod">
-                                        <div class="imgName">
-                                            <div class="imgContainer paypal">
-                                                <img src="https://i.ibb.co/KVF3mr1/paypal.png" alt="">
-                                            </div>
-                                        </div>
-                                        <span class="check"><i class="fa-solid fa-circle-check" style="color: #28a745"></i></span>
-                                    </label>
-                                    <label for="AMEX" class="amexMethod">
-                                        <div class="imgName">
-                                            <div class="imgContainer AMEX">
-                                                <img src="https://i.ibb.co/wQnrX86/American-Express.jpg" alt="">
-                                            </div>
-                                        </div>
+                                        <hr /><hr />
                                         <span class="check"><i class="fa-solid fa-circle-check" style="color: #28a745"></i></span>
                                     </label>
                                 </div>
