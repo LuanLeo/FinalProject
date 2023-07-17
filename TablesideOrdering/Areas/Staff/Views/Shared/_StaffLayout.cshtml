@@ -49,15 +49,23 @@
                         <li class="sidebar-item">
                             <a class="sidebar-link" asp-area="Staff" asp-action="Index" asp-controller="Order" aria-expanded="false">
                                 <span>
-                                    <i class="ti ti-archive"></i>
+                                    <i class="ti ti-receipt-2"></i>
                                 </span>
-                                <span class="hide-menu">All Orders</span>
+                                <span class="hide-menu">Processing Orders</span>
                             </a>
-                        </li>             
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-area="Staff" asp-action="NotPaidOrders" asp-controller="Order" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-zoom-money"></i>
+                                </span>
+                                <span class="hide-menu">Not paid orders</span>
+                            </a>
+                        </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link" asp-area="Staff" asp-action="DoneOrders" asp-controller="Order" aria-expanded="false">
                                 <span>
-                                    <i class="ti ti-archive"></i>
+                                    <i class="ti ti-clipboard-check"></i>
                                 </span>
                                 <span class="hide-menu">Completed orders</span>
                             </a>

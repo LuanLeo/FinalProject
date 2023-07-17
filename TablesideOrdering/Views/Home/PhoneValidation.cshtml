@@ -25,49 +25,56 @@
     <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../css/style.css" type="text/css">
 </head>
-<body>
-    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
-         data-sidebar-position="fixed" data-header-position="fixed">
-        <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
-            <div class="d-flex align-items-center justify-content-center w-100">
-                <div class="row justify-content-center w-100">
-                    <div class="col-md-8 col-lg-6 col-xxl-3">
-                        <div class="card mb-0">
-                            <div class="card-body">
-                                <a class="text-nowrap logo-img text-center d-block py-3 w-100">
-                                    <img src="/Logo/Logo.png" width="180">
-                                </a>
-                                <p class="text-center" style="font-size:20px">Please enter your phone number to get notification when your order done!</p>
-                                <form asp-action="PhoneValidation" asp-controller="Home" enctype="multipart/form-data" method="post">
-                                    <div class="mb-3">
-                                        <label>Phone Number</label>
-                                        <input type="tel" data-val="true" asp-for="PhoneValid.PhoneNumber" class="form-control" aria-required="true" />
-                                        <span asp-validation-for="PhoneValid.PhoneNumber" class="text-danger"></span>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label>Phone Confirm</label>
-                                        <input type="tel" data-val="true" asp-for="PhoneValid.PhoneConfirmed" class="form-control" aria-required="true" />
-                                        <span asp-validation-for="PhoneValid.PhoneConfirmed" class="text-danger"></span>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label>Table Number</label>
-                                        <input type="text" data-val="true" asp-for="PhoneValid.TableNo" class="form-control" aria-required="true" />
-                                        <span asp-validation-for="PhoneValid.TableNo" class="text-danger"></span>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label>Customer Name</label>
-                                        <input type="text" data-val="true" asp-for="PhoneValid.CusName" class="form-control" aria-required="true" />
-                                        <span asp-validation-for="PhoneValid.CusName" class="text-danger"></span>
-                                    </div>
-                                    <input type="submit" value="Enter" style="display: block; margin: auto;" class="btn btn-primary w-50 py-8 fs-4 mb-4 rounded-2">
-                                </form>
+<body style="background-image: url('../img/morning-coffee-wallpaper.jpg') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;">
+    
+        <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+             data-sidebar-position="fixed" data-header-position="fixed">
+            <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+                <div class="d-flex align-items-center justify-content-center w-100">
+                    <div class="row justify-content-center w-100">
+                        <div class="col-md-8 col-lg-6 col-xxl-3">
+                            <div class="card mb-0">
+                                <div class="card-body">
+                                    <a class="text-nowrap logo-img text-center d-block py-3 w-100">
+                                        <img src="/Logo/Logo.png" width="180">
+                                    </a>
+                                <p class="text-center" style="font-size:20px; color: #1A0B11">Please enter your information to get notification when your order done!</p>
+                                    <form asp-action="PhoneValidation" asp-controller="Home" enctype="multipart/form-data" method="post">
+                                        <div class="mb-3">
+                                            <input type="tel" data-val="true" asp-for="PhoneValid.PhoneNumber" class="form-control" aria-required="true" placeholder="Phone Number" />
+                                            <span asp-validation-for="PhoneValid.PhoneNumber" class="text-danger"></span>
+                                        </div>
+                                        <div class="mb-3">
+                                            <input type="tel" data-val="true" asp-for="PhoneValid.PhoneConfirmed" class="form-control" aria-required="true" placeholder="Phone Confirm" />
+                                            <span asp-validation-for="PhoneValid.PhoneConfirmed" class="text-danger"></span>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <input type="text" data-val="true" asp-for="PhoneValid.TableNo" class="form-control" aria-required="true" placeholder="Table Number" />
+                                                    <span asp-validation-for="PhoneValid.TableNo" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="mb-3">
+                                                    <input type="text" data-val="true" asp-for="PhoneValid.CusName" class="form-control" aria-required="true" placeholder="Name" />
+                                                    <span asp-validation-for="PhoneValid.CusName" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="submit" value="Enter" style="display: block; margin: auto;" class="btn btn-primary w-50 py-8 fs-4 mb-4 rounded-2">
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    
     <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
     <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>

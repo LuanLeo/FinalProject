@@ -41,7 +41,7 @@ namespace TablesideOrdering.Repositories
 
         public DataTable GetOrderDetailsFromDb()
         {
-            var query = "SELECT OrderId, OrderDate, OrderPrice, ProductQuantity, PhoneNumber, TableNo, Status FROM Orders";
+            var query = "SELECT OrderId, OrderDate, OrderPrice, ProductQuantity, PhoneNumber, TableNo, Status, CusName FROM Orders";
             DataTable dataTable = new DataTable();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
