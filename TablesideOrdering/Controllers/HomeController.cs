@@ -6,6 +6,7 @@ using MimeKit;
 using TablesideOrdering.Areas.Admin.Models;
 using TablesideOrdering.Areas.Admin.ViewModels;
 using TablesideOrdering.Data;
+using TablesideOrdering.Migrations;
 using TablesideOrdering.Models;
 using TablesideOrdering.Services;
 using TablesideOrdering.ViewModels;
@@ -31,8 +32,9 @@ namespace TablesideOrdering.Controllers
         public static List<AddToCart> carts = new List<AddToCart>();
         public static float TotalPrice;
         public static string PhoneNumber;
-        public static string Message;
         public static string TableNo;
+        public static string CusName;
+        public static string Message;
         public static string EmailReceiptOnline;
         public HomeController(ApplicationDbContext context,
             INotyfService notyfService,
@@ -254,6 +256,7 @@ namespace TablesideOrdering.Controllers
             {
                 PhoneNumber = home.PhoneValid.PhoneNumber;
                 TableNo = home.PhoneValid.TableNo;
+                CusName = home.PhoneValid.CusName;
                 return RedirectToAction("Index", "Home");
             }
             return View();
@@ -392,50 +395,9 @@ namespace TablesideOrdering.Controllers
             return RedirectToAction("Cart", "Home");
         }
 
-        public IActionResult PlaceOrder()
-        {
-            //Save order to database
-            Orders order = new Orders();
-            order.OrderDate = DateTime.Now;
-            order.OrderPrice = TotalPrice;
-            order.ProductQuantity = carts.Count();
-            order.PhoneNumber = PhoneNumber;
-            order.TableNo = TableNo;
-            order.Status = "Not Paid";
 
-            _context.Orders.Add(order);
-            _context.SaveChanges();
 
-            //Save order list to database
-            List<OrderDetail> orderDetailList = new List<OrderDetail>();
-            foreach (var item in carts)
-            {
-                OrderDetail orderDetail = new OrderDetail();
-                orderDetail.OrderId = order.OrderId;
-                orderDetail.ProductName = item.Product.Name;
-                orderDetail.Size = item.Size;
-                orderDetail.ProQuantity = item.Quantity;
-                orderDetail.Price = item.Quantity * item.Price;
 
-                orderDetailList.Add(orderDetail);
-            }
-
-            foreach (var orderDt in orderDetailList)
-            {
-                _context.OrderDetails.Add(orderDt);
-            }
-            _context.SaveChanges();
-
-            //Renew the cart and notify customer
-            TotalPrice = 0;
-            carts.Clear();
-            _notyfService.Success("Your order has been received");
-            return RedirectToAction("ThankYou");
-        }
-        public IActionResult ThankYou()
-        {
-            return View();
-        }
 
         //CONTROLLER FOR SENDING SMS TO CUSTOMER
         public void SendSMS()
@@ -486,6 +448,55 @@ namespace TablesideOrdering.Controllers
             return View(home);
         }
 
+        //CONTROLLER FOR CASH PAYMENT METHOD PAGE
+        public IActionResult PlaceOrder()
+        {
+            //Save order to database
+            Orders order = new Orders();
+            order.OrderDate = DateTime.Now;
+            order.OrderPrice = TotalPrice;
+            order.ProductQuantity = carts.Count();
+            order.PhoneNumber = PhoneNumber;
+            order.TableNo = TableNo;
+            order.CusName = CusName;
+            order.Status = "Not Paid";
+
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+
+            //Save order list to database
+            List<OrderDetail> orderDetailList = new List<OrderDetail>();
+            foreach (var item in carts)
+            {
+                OrderDetail orderDetail = new OrderDetail();
+                orderDetail.OrderId = order.OrderId;
+                orderDetail.ProductName = item.Product.Name;
+                orderDetail.Size = item.Size;
+                orderDetail.ProQuantity = item.Quantity;
+                orderDetail.Price = item.Quantity * item.Price;
+
+                orderDetailList.Add(orderDetail);
+            }
+
+            foreach (var orderDt in orderDetailList)
+            {
+                _context.OrderDetails.Add(orderDt);
+            }
+            _context.SaveChanges();
+
+            //Renew the cart and notify customer
+            TotalPrice = 0;
+            carts.Clear();
+            _notyfService.Success("Your order has been received");
+            return RedirectToAction("ThankYou");
+        }
+
+        //CONTROLLER FOR CASH CHECKOUT PAGE
+        public IActionResult ThankYou()
+        {
+            return View();
+        }
+
         //CONTROLLER FOR VNPAY PAYMENT METHOD PAGE
         public IActionResult VNPayCheckout()
         {
@@ -518,6 +529,7 @@ namespace TablesideOrdering.Controllers
                 order.PhoneNumber = PhoneNumber;
                 order.TableNo = TableNo;
                 order.Status = "Processing";
+                order.CusName = CusName;
 
                 _context.Orders.Add(order);
                 _context.SaveChanges();

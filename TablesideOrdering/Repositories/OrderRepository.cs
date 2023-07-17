@@ -30,7 +30,8 @@ namespace TablesideOrdering.Repositories
                         ProductQuantity = Convert.ToInt32(row["ProductQuantity"]),
                         PhoneNumber = row["PhoneNumber"].ToString(),
                         TableNo = row["TableNo"].ToString(),
-                        Status = row["Status"].ToString()
+                        Status = row["Status"].ToString(),
+                        CusName = row["CusName"].ToString()
                     };
                     orders.Add(order);
                 }

@@ -59,6 +59,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                                    ProductQuantity = o.ProductQuantity,
                                    TableNo = o.TableNo,
                                    Status = o.Status,
+                                   CusName = o.CusName
                                });
 
             OrderData.OrderDetail = (from o in _context.OrderDetails

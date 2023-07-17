@@ -17,5 +17,8 @@ namespace TablesideOrdering.Models
         public string PhoneConfirmed { get; set; }
 
         public string TableNo { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your name")]
+        public string CusName { get; set; }
     }
 }

@@ -22,5 +22,6 @@ namespace TablesideOrdering.Areas.Staff.ViewModels
         public float Price { get; set; }
         public float SubTotal { get; set; }
         public string Status { get; set; }
+        public string CusName { get; set; }
     }
 }
