@@ -6,6 +6,7 @@ namespace TablesideOrdering.Models
     public class CartList
     {
         public string PhoneNumber { get; set; }
+        public string CusName { get; set; }
         public List<AddToCart> CartLists { get; set; }
         public float CartAmount { get; set; }
     }

@@ -56,7 +56,7 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Name<span>*</span></p>
-                                        <input asp-for="@Model.Payment.Name" class="form-control" type="text" />
+                                        <input asp-for="@Model.Payment.Name" value="@Model.Cart.CusName" class="form-control" type="text" />
                                     </div>
                                 </div>
                             </div>
@@ -68,7 +68,7 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Phone<span>*</span></p>
-                                        <input type="text" value="@Model.Cart.PhoneNumber">
+                                        <input value="@Model.Cart.PhoneNumber" type="text">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

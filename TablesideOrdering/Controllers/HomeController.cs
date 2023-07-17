@@ -25,8 +25,8 @@ namespace TablesideOrdering.Controllers
         private readonly EmailReceiptOnline _EmailReceiptOnline;
 
         //Call Additional Services
-        private readonly IVnPayService _vnPayService;
         public INotyfService _notyfService { get; }
+        private readonly IVnPayService _vnPayService;
 
         //Static variables before saving to database
         public static List<AddToCart> carts = new List<AddToCart>();
@@ -36,6 +36,7 @@ namespace TablesideOrdering.Controllers
         public static string CusName;
         public static string Message;
         public static string EmailReceiptOnline;
+
         public HomeController(ApplicationDbContext context,
             INotyfService notyfService,
             IVnPayService vnPayService,
@@ -307,7 +308,6 @@ namespace TablesideOrdering.Controllers
             {
                 return View(home);
             }
-            _notyfService.Error("The cart hasn't signed yet, please try again");
             return RedirectToAction("PhoneValidation");
         }
 
@@ -418,24 +418,33 @@ namespace TablesideOrdering.Controllers
         //CONTROLLER FOR SELECTING PAYMENT TYPE
         public IActionResult PaymentMethod(HomeViewModel home)
         {
-            if (home.PaymentType == null)
+            if (carts.Count != 0)
             {
-                _notyfService.Information("Payment method can't be null", 5);
-                return RedirectToAction("Cart");
+                if (home.PaymentType == null)
+                {
+                    _notyfService.Information("Payment method can't be null", 5);
+                    return RedirectToAction("Cart");
+                }
+                else
+                {
+                    if (home.PaymentType == "VNPay")
+                    {
+                        return RedirectToAction("VNPayCheckout");
+                    }
+                    if (home.PaymentType == "Momo")
+                    {
+                        //return RedirectToAction("VNPayCheckout");
+                    }
+                    if (home.PaymentType == "Cash")
+                    {
+                        return RedirectToAction("CashCheckout");
+                    }
+                }
             }
-            else {
-                if (home.PaymentType == "VNPay")
-                {
-                    return RedirectToAction("VNPayCheckout");
-                }
-                if (home.PaymentType == "Momo")
-                {
-                    //return RedirectToAction("VNPayCheckout");
-                }
-                if (home.PaymentType == "Cash")
-                {
-                    return RedirectToAction("CashCheckout");
-                }
+            else
+            {
+                _notyfService.Warning("The cart is emtpy", 5);
+                return RedirectToAction("Cart");
             }
             _notyfService.Error("Something went wrong, please try again!", 5);
             return RedirectToAction("Cart");
@@ -560,7 +569,7 @@ namespace TablesideOrdering.Controllers
                 _notyfService.Success("Your order has been received");
                 return RedirectToAction("Index");
             }
-            _notyfService.Error("There is something wrong, Please try again!");
+            _notyfService.Error("Something went wrong, please try again!");
             return RedirectToAction("Index");
         }
 
@@ -576,6 +585,7 @@ namespace TablesideOrdering.Controllers
             cartlist.CartLists = carts;
             cartlist.CartAmount = TotalPrice;
             cartlist.PhoneNumber = PhoneNumber;
+            cartlist.CusName = CusName;
 
             HomeViewModel home = new HomeViewModel();
             home.Cart = cartlist;
