@@ -401,7 +401,7 @@ namespace TablesideOrdering.Controllers
             order.ProductQuantity = carts.Count();
             order.PhoneNumber = PhoneNumber;
             order.TableNo = TableNo;
-            order.Status = "Processing";
+            order.Status = "Not Paid";
 
             _context.Orders.Add(order);
             _context.SaveChanges();
@@ -430,12 +430,12 @@ namespace TablesideOrdering.Controllers
             TotalPrice = 0;
             carts.Clear();
             _notyfService.Success("Your order has been received");
-            return RedirectToAction("Index");
+            return RedirectToAction("ThankYou");
         }
-
-
-
-
+        public IActionResult ThankYou()
+        {
+            return View();
+        }
 
         //CONTROLLER FOR SENDING SMS TO CUSTOMER
         public void SendSMS()

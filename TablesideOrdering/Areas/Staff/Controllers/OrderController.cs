@@ -38,6 +38,13 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             OList.Add(order);
             return View(OList);
         }
+        public IActionResult NotPaidOrders()
+        {
+            var order = _context.Orders.FirstOrDefault(o => o.Status == "Not Paid");
+            List<Orders> OList = new List<Orders>();
+            OList.Add(order);
+            return View(OList);
+        }
         public IActionResult Details(int id)
         {
             OrderViewModel OrderData = new OrderViewModel();
