@@ -31,20 +31,84 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             Num = 0;
             return View();
         }
+        //Functions for DONE ORDERS
         public IActionResult DoneOrders()
         {
-            var order = _context.Orders.FirstOrDefault(o => o.Status == "Done");
             List<Orders> OList = new List<Orders>();
-            OList.Add(order);
+            foreach (var orders in _context.Orders)
+            {
+                if (orders.Status == "Done")
+                    OList.Add(orders);
+            }
+            var order = _context.Orders.FirstOrDefault(o => o.Status == "Done");
             return View(OList);
         }
+
+
+        //Functions for NOT PAID ORDERS
         public IActionResult NotPaidOrders()
         {
-            var order = _context.Orders.FirstOrDefault(o => o.Status == "Not Paid");
             List<Orders> OList = new List<Orders>();
-            OList.Add(order);
+            foreach (var orders in _context.Orders)
+            {
+                if (orders.Status == "Not Paid")
+                    OList.Add(orders);
+            }
             return View(OList);
         }
+        [HttpGet]
+        public IActionResult PaidOrder(int id)
+        {
+            var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
+            return PartialView("PaidOrder", order);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult MarkPaid(Orders model)
+        {
+            var order = _context.Orders.FirstOrDefault(o => o.OrderId == model.OrderId);
+            order.Status = "Processing";
+
+            _context.SaveChanges();
+            _notyfService.Success("The order is paid", 5);
+            return RedirectToAction("NotPaidOrder");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteNotPaid(int id)
+        {
+            var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
+            return PartialView("DeleteNotPaid", order);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //[Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteNotPaid(Orders model)
+        {
+            var order = await _context.Orders.FindAsync(model.OrderId);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            foreach (var od in _context.OrderDetails)
+            {
+                if (od.OrderId == model.OrderId)
+                {
+                    _context.OrderDetails.Remove(od);
+                }
+            }
+
+            _context.Orders.Remove(order);
+            _context.SaveChanges();
+
+            _notyfService.Success("The order is deleted", 5);
+            return RedirectToAction("NotPaidOrder");
+        }
+
+
+        //Functions for PROCESSING ORDERS
         public IActionResult Details(int id)
         {
             OrderViewModel OrderData = new OrderViewModel();
@@ -73,7 +137,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                                          ProQuantity = o.ProQuantity,
                                          Price = o.Price,
                                          SubTotal = o.Price * o.ProQuantity,
-                                     });          
+                                     });
             return View(OrderData);
         }
 
@@ -86,7 +150,6 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             _notyfService.Success("The order is marked as done", 5);
             return RedirectToAction("Index");
         }
-
         [HttpGet]
         public IActionResult Delete(int id)
         {
@@ -118,7 +181,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             _context.SaveChanges();
 
             Num++;
-            _notyfService.Success("The user is deleted", 5);
+            _notyfService.Success("The order is deleted", 5);
             return RedirectToAction(nameof(Index));
         }
     }

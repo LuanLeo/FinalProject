@@ -38,7 +38,18 @@
 
   <ItemGroup>
     <None Include="Areas\Staff\Views\Home\Index.cshtml" />
+    <None Include="Areas\Staff\Views\Order\Delete.cshtml" />
+    <None Include="Areas\Staff\Views\Order\Details.cshtml" />
+    <None Include="Areas\Staff\Views\Order\DoneOrders.cshtml" />
     <None Include="Areas\Staff\Views\Order\Index.cshtml" />
+    <None Include="Areas\Staff\Views\Order\NotPaidOrders.cshtml" />
+    <None Include="Areas\Staff\Views\Order\Order\Delete.cshtml" />
+    <None Include="Areas\Staff\Views\Order\Order\DeleteNotPaid.cshtml" />
+    <None Include="Areas\Staff\Views\Order\Order\Details.cshtml" />
+    <None Include="Areas\Staff\Views\Order\Order\DoneOrders.cshtml" />
+    <None Include="Areas\Staff\Views\Order\Order\Index.cshtml" />
+    <None Include="Areas\Staff\Views\Order\Order\NotPaidOrders.cshtml" />
+    <None Include="Areas\Staff\Views\Order\Order\PaidOrder.cshtml" />
     <None Include="Areas\Staff\Views\Shared\Error.cshtml" />
     <None Include="Areas\Staff\Views\Shared\_LoginPartial.cshtml" />
     <None Include="Areas\Staff\Views\Shared\_StaffLayout.cshtml" />

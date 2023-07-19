@@ -300,6 +300,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Admin/OneDrive/Máy tính/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/DeleteNotPaid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcRGVsZXRlTm90UGFpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Admin/OneDrive/Máy tính/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -314,6 +318,38 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Admin/OneDrive/Máy tính/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/NotPaidOrders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcTm90UGFpZE9yZGVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/OneDrive/Máy tính/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/Order/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcT3JkZXJcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/OneDrive/Máy tính/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/Order/DeleteNotPaid.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcT3JkZXJcRGVsZXRlTm90UGFpZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/OneDrive/Máy tính/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/Order/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcT3JkZXJcRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/OneDrive/Máy tính/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/Order/DoneOrders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcT3JkZXJcRG9uZU9yZGVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/OneDrive/Máy tính/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/Order/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcT3JkZXJcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/OneDrive/Máy tính/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/Order/NotPaidOrders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcT3JkZXJcTm90UGFpZE9yZGVycy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/OneDrive/Máy tính/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/Order/PaidOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcT3JkZXJcUGFpZE9yZGVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Admin/OneDrive/Máy tính/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/PaidOrder.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcUGFpZE9yZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Admin/OneDrive/Máy tính/FinalProject/TablesideOrdering/Areas/Staff/Views/Shared/Error.cshtml]

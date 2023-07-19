@@ -33,7 +33,7 @@
                         </div>
                     </div>
                 }
-                <h1>Completed Orders</h1>
+                <h1>Not Paid Orders</h1>
                 @await Component.InvokeAsync("Notyf")
                 <table class="table" id="tblOrder">
                     <thead>
@@ -89,13 +89,14 @@
                                     @Html.DisplayFor(modelItem => item.CusName)
                                 </td>
                                 <td align="center">
-                                    <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="@("#EditUser-" )" data-url="@Url.Action($"Edit/")">
-                                        Edit
+                                    <button type="button" class="btn btn-success m-1" data-toggle="modal" data-target="@("#PaidOrder-" + item.OrderId)" data-url="@Url.Action($"Paid/{item.OrderId}")">
+                                        Paid
                                     </button>
-
-                                    <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteUser-" )" data-url="@Url.Action($"Delete/")">
+                                    @await Html.PartialAsync("PaidOrder", item)
+                                    <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteOrder-" + item.OrderId)" data-url="@Url.Action($"Delete/{item.OrderId}")">
                                         Delete
                                     </button>
+                                    @await Html.PartialAsync("DeleteNotPaid", item)
                                 </td>
                             </tr>
 

@@ -35,9 +35,13 @@
                         @Html.DisplayFor(model => model.PhoneNumber)
                     </div>
                     <div class="form-group">
+                        <label asp-for="PhoneNumber" class="control-label">Customer Name: </label>
+                        @Html.DisplayFor(model => model.CusName)
+                    </div>
+                    <div class="form-group">
                         <label asp-for="TableNo" class="control-label">Table Number: </label>
                         @Html.DisplayFor(model => model.TableNo)
-                    </div>
+                    </div>                    
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-danger">Delete</button>
                         <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
