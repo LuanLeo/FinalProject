@@ -2,8 +2,8 @@
 using AspNetCoreHero.ToastNotification.Notyf;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using TablesideOrdering.Areas.Admin.Models;
-using TablesideOrdering.Areas.Admin.ViewModels;
+using TablesideOrdering.Areas.StoreOwner.Models;
+using TablesideOrdering.Areas.StoreOwner.ViewModels;
 using TablesideOrdering.Areas.Staff.ViewModels;
 using TablesideOrdering.Data;
 

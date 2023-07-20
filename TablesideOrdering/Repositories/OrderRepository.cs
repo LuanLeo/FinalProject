@@ -1,6 +1,6 @@
 ﻿using System.Data.SqlClient;
 using System.Data;
-using TablesideOrdering.Areas.Admin.Models;
+using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Migrations;
 
 namespace TablesideOrdering.Repositories

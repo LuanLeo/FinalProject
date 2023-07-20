@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using TablesideOrdering.Areas.Admin.Models;
-using TablesideOrdering.Areas.Admin.ViewModels;
+using TablesideOrdering.Areas.StoreOwner.Models;
+using TablesideOrdering.Areas.StoreOwner.ViewModels;
 using TablesideOrdering.Models;
 
 namespace TablesideOrdering.ViewModels

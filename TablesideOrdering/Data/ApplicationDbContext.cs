@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TablesideOrdering.Areas.Admin.Models;
+using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Models;
 
 namespace TablesideOrdering.Data

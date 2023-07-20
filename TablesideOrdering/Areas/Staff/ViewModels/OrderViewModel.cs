@@ -1,5 +1,5 @@
 ﻿using System.Security.Cryptography.X509Certificates;
-using TablesideOrdering.Areas.Admin.Models;
+using TablesideOrdering.Areas.StoreOwner.Models;
 
 namespace TablesideOrdering.Areas.Staff.ViewModels
 {

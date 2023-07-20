@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Drawing;
-using TablesideOrdering.Areas.Admin.Models;
+using TablesideOrdering.Areas.StoreOwner.Models;
 
 namespace TablesideOrdering.Models
 {

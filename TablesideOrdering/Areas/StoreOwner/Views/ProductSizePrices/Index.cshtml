@@ -1,0 +1,77 @@
+﻿@using TablesideOrdering.Areas.StoreOwner.Models;
+@model IEnumerable<ProductSizePrice>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/StoreOwner/Views/Shared/_StoreOwnerLayout.cshtml";
+}
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+         data-sidebar-position="fixed" data-header-position="fixed">
+        <div class="body-wrapper">
+            <div class="container-fluid">
+                <h1>All Product's Sizes With Prices</h1>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateSizePrice">
+                    Create
+                </button>
+                @await Html.PartialAsync("Create", new ProductSizePrice())
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Product Id
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Size)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Price)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Size)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Price)
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="@("#EditSizePrice-" + item.Id)" data-url="@Url.Action($"Edit/{item.Id}")">
+                                        Edit
+                                    </button>
+                                    @await Html.PartialAsync("Edit",item)
+                                    <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteSizePrice-" + item.Id)" data-url="@Url.Action($"Delete/{item.Id}")">
+                                        Delete
+                                    </button>
+                                    @await Html.PartialAsync("Delete",item)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
+        <script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/assets/js/sidebarmenu.js"></script>
+        <script src="~/assets/js/app.min.js"></script>
+        <script src="~/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+        <script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
+        <script src="~/assets/js/dashboard.js"></script>
+    </div>
+</body>
+@await Component.InvokeAsync("Notyf")

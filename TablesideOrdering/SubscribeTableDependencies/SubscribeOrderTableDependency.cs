@@ -1,7 +1,7 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using AspNetCoreHero.ToastNotification.Notyf;
 using TableDependency.SqlClient;
-using TablesideOrdering.Areas.Admin.Models;
+using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Hubs;
 
 namespace TablesideOrdering.SubscribeTableDependencies
