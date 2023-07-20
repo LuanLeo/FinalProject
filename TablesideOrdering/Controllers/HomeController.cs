@@ -8,6 +8,7 @@ using TablesideOrdering.Areas.StoreOwner.ViewModels;
 using TablesideOrdering.Data;
 using TablesideOrdering.Migrations;
 using TablesideOrdering.Models;
+using TablesideOrdering.Models.Order;
 using TablesideOrdering.Services;
 using TablesideOrdering.ViewModels;
 using Twilio;
@@ -27,6 +28,7 @@ namespace TablesideOrdering.Controllers
         //Call Additional Services
         public INotyfService _notyfService { get; }
         private readonly IVnPayService _vnPayService;
+        private IMomoService _momoService;
 
         //Static variables before saving to database
         public static List<AddToCart> carts = new List<AddToCart>();
@@ -41,7 +43,8 @@ namespace TablesideOrdering.Controllers
             INotyfService notyfService,
             IVnPayService vnPayService,
             IOptions<SMSMessage> SMSMessage,
-            IOptions<EmailReceiptOnline> EmailReceiptOnline)
+            IOptions<EmailReceiptOnline> EmailReceiptOnline,
+            IMomoService momoService)
         {
             _context = context;
 
@@ -50,6 +53,7 @@ namespace TablesideOrdering.Controllers
 
             _notyfService = notyfService;
             _vnPayService = vnPayService;
+            _momoService = momoService;
         }
 
         //CONTROLLER FOR HOME PAGE
@@ -573,7 +577,30 @@ namespace TablesideOrdering.Controllers
             return RedirectToAction("Index");
         }
 
+        //CONTROLLER FOR Momo PAYMENT METHOD PAGE
+        public IActionResult MomoCheckout()
+        {
+            HomeViewModel home = NavData();
+            return View(home);
+        }
+        [HttpPost]
+        public async Task<RedirectResult> CreateMomoPaymentUrl(HomeViewModel home)
+        {
+            OrderInfoModel model = new OrderInfoModel();
+            model = home.MoMoPay;
+            model.Amount = TotalPrice;
 
+            EmailReceiptOnline = home.Payment.Email;
+            var response = await _momoService.CreatePaymentAsync(model);
+            return Redirect(response.PayUrl);
+        }
+
+        [HttpGet]
+        public IActionResult PaymentMomoCallBack()
+        {
+            var response = _momoService.PaymentExecuteAsync(HttpContext.Request.Query);
+            return RedirectToAction("Thankyou");
+        }
 
 
 

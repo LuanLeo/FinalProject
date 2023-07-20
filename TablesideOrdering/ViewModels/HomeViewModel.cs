@@ -2,6 +2,7 @@
 using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Areas.StoreOwner.ViewModels;
 using TablesideOrdering.Models;
+using TablesideOrdering.Models.Order;
 
 namespace TablesideOrdering.ViewModels
 {
@@ -15,6 +16,7 @@ namespace TablesideOrdering.ViewModels
         //Variables for Payment Methods
         public string PaymentType { get; set; }
         public PaymentInformationModel Payment { get; set; }
+        public OrderInfoModel MoMoPay { get; set; }
 
 
         //Variable for Cart page

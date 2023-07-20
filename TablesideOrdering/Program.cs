@@ -10,6 +10,8 @@ using TablesideOrdering.Hubs;
 using TablesideOrdering.MiddlewareExtensions;
 using TablesideOrdering.SubscribeTableDependencies;
 using TablesideOrdering.Services;
+using TablesideOrdering;
+using TablesideOrdering.Models.Momo;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,6 +32,8 @@ builder.Services.Configure<EmailReceiptOnline>(builder.Configuration.GetSection(
 //Call Additional Services or Packages
 builder.Services.AddNotyf(config => { config.IsDismissable = true; config.DurationInSeconds = 5; config.Position = NotyfPosition.TopRight; });
 builder.Services.AddScoped<IVnPayService, VnPayService>();
+builder.Services.Configure<MomoOptionModel>(builder.Configuration.GetSection("MomoAPI"));
+builder.Services.AddScoped<IMomoService, MomoService>();
 builder.Services.Configure<IdentityOptions>(options =>
 {
     // Default Password settings.
