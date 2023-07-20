@@ -61,11 +61,13 @@ namespace TablesideOrdering.Services
             var amount = collection.First(s => s.Key == "amount").Value;
             var orderInfo = collection.First(s => s.Key == "orderInfo").Value;
             var orderId = collection.First(s => s.Key == "orderId").Value;
+            var errorCode = collection.First(s => s.Key == "errorCode").Value;
             return new MomoExecuteResponseModel()
             {
                 Amount = amount,
                 OrderId = orderId,
-                OrderInfo = orderInfo
+                OrderInfo = orderInfo,
+                ErrorCode = errorCode
             };
         }
 

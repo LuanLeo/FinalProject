@@ -437,7 +437,7 @@ namespace TablesideOrdering.Controllers
                     }
                     if (home.PaymentType == "Momo")
                     {
-                        //return RedirectToAction("VNPayCheckout");
+                        return RedirectToAction("MomoCheckout");
                     }
                     if (home.PaymentType == "Cash")
                     {
@@ -599,6 +599,48 @@ namespace TablesideOrdering.Controllers
         public IActionResult PaymentMomoCallBack()
         {
             var response = _momoService.PaymentExecuteAsync(HttpContext.Request.Query);
+            if (response.ErrorCode == "0")
+            {
+                //Save order to database
+                Orders order = new Orders();
+                order.OrderDate = DateTime.Now;
+                order.OrderPrice = TotalPrice;
+                order.ProductQuantity = carts.Count();
+                order.PhoneNumber = PhoneNumber;
+                order.TableNo = TableNo;
+                order.Status = "Processing";
+                order.CusName = CusName;
+
+                _context.Orders.Add(order);
+                _context.SaveChanges();
+
+                //Save order list to database
+                List<OrderDetail> orderDetailList = new List<OrderDetail>();
+                foreach (var item in carts)
+                {
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.OrderId = order.OrderId;
+                    orderDetail.ProductName = item.Product.Name;
+                    orderDetail.Size = item.Size;
+                    orderDetail.ProQuantity = item.Quantity;
+                    orderDetail.Price = item.Quantity * item.Price;
+
+                    orderDetailList.Add(orderDetail);
+                }
+
+                foreach (var orderDt in orderDetailList)
+                {
+                    _context.OrderDetails.Add(orderDt);
+                }
+                _context.SaveChanges();
+
+                //Renew the cart and notify customer
+                TotalPrice = 0;
+                carts.Clear();
+                _notyfService.Success("Your order has been received");
+                return RedirectToAction("Index");
+            }
+            _notyfService.Error("Something went wrong, please try again!");
             return RedirectToAction("Thankyou");
         }
 
