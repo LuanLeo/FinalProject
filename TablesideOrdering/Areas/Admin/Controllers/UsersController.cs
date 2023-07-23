@@ -42,6 +42,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             _userStore = userStore;
             _logger = logger;
         }
+
         public IActionResult Index()
         {
             DropDownList();

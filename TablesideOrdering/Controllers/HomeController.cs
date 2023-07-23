@@ -9,7 +9,8 @@ using TablesideOrdering.Data;
 using TablesideOrdering.Migrations;
 using TablesideOrdering.Models;
 using TablesideOrdering.Models.Order;
-using TablesideOrdering.Services;
+using TablesideOrdering.PaymentServices.Momo;
+using TablesideOrdering.PaymentServices.VNPay;
 using TablesideOrdering.ViewModels;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
@@ -23,7 +24,7 @@ namespace TablesideOrdering.Controllers
         //Call Database and Relatives
         private readonly ApplicationDbContext _context;
         private readonly SMSMessage _SMSMessage;
-        private readonly EmailReceiptOnline _EmailReceiptOnline;
+        private readonly Email _email;
 
         //Call Additional Services
         public INotyfService _notyfService { get; }
@@ -37,19 +38,19 @@ namespace TablesideOrdering.Controllers
         public static string TableNo;
         public static string CusName;
         public static string Message;
-        public static string EmailReceiptOnline;
+        public static string Email;
 
         public HomeController(ApplicationDbContext context,
             INotyfService notyfService,
             IVnPayService vnPayService,
             IOptions<SMSMessage> SMSMessage,
-            IOptions<EmailReceiptOnline> EmailReceiptOnline,
+            IOptions<Email> email,
             IMomoService momoService)
         {
             _context = context;
 
             _SMSMessage = SMSMessage.Value;
-            _EmailReceiptOnline = EmailReceiptOnline.Value;
+            _email = email.Value;
 
             _notyfService = notyfService;
             _vnPayService = vnPayService;
@@ -127,7 +128,6 @@ namespace TablesideOrdering.Controllers
             Homedata.Product = productList;
             Homedata.TopProduct = GetTopFood();
             Homedata.Term = term;
-
             return View(Homedata);
         }
 
@@ -278,23 +278,23 @@ namespace TablesideOrdering.Controllers
 
 
         //CONTROLLER FOR SENDING ONLINE RECEIPT
-        public void SendMail(EmailReceiptOnline data)
+        public void SendMail(Email data)
         {
-            data.Email = _EmailReceiptOnline.Email;
-            data.Password = _EmailReceiptOnline.Password;
+            data.EmailFrom = _email.EmailFrom;
+            data.Password = _email.Password;
 
             data.Body = "";
             var email = new MimeMessage();
             {
-                email.From.Add(MailboxAddress.Parse(data.Email));
-                email.To.Add(MailboxAddress.Parse(EmailReceiptOnline));
+                email.From.Add(MailboxAddress.Parse(data.EmailFrom));
+                email.To.Add(MailboxAddress.Parse(Email));
                 email.Subject = "L&L Coffee Online Receipt";
                 email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = data.Body };
             }
             using var smtp = new SmtpClient();
             {
                 smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                smtp.Authenticate(data.Email, data.Password);
+                smtp.Authenticate(data.EmailFrom, data.Password);
                 smtp.Send(email);
                 smtp.Disconnect(true);
             }
@@ -523,7 +523,7 @@ namespace TablesideOrdering.Controllers
             model = home.Payment;
             model.Amount = TotalPrice;
 
-            EmailReceiptOnline = home.Payment.Email;
+            Email = home.Payment.Email;
 
             var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
             return Redirect(url);
@@ -590,7 +590,7 @@ namespace TablesideOrdering.Controllers
             model = home.MoMoPay;
             model.Amount = TotalPrice;
 
-            EmailReceiptOnline = home.Payment.Email;
+            Email = home.Payment.Email;
             var response = await _momoService.CreatePaymentAsync(model);
             return Redirect(response.PayUrl);
         }

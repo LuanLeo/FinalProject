@@ -1689,3 +1689,7 @@ C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.pdb
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.genruntimeconfig.cache
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\ref\TablesideOrdering.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\RestSharp.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\System.Text.Json.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll

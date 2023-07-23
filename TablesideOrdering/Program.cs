@@ -6,12 +6,13 @@ using NuGet.Protocol.Core.Types;
 using TablesideOrdering.Data;
 using System.Configuration;
 using TablesideOrdering.Models;
-using TablesideOrdering.Hubs;
-using TablesideOrdering.MiddlewareExtensions;
-using TablesideOrdering.SubscribeTableDependencies;
-using TablesideOrdering.Services;
 using TablesideOrdering;
 using TablesideOrdering.Models.Momo;
+using TablesideOrdering.PaymentServices.VNPay;
+using TablesideOrdering.PaymentServices.Momo;
+using TablesideOrdering.SignalR.SubscribeTableDependencies;
+using TablesideOrdering.SignalR.MiddlewareExtensions;
+using TablesideOrdering.SignalR.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +28,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders().A
 
 //Call From Appsetting
 builder.Services.Configure<SMSMessage>(builder.Configuration.GetSection("SMSTwilio"));
-builder.Services.Configure<EmailReceiptOnline>(builder.Configuration.GetSection("OnlineReceipt"));
+builder.Services.Configure<Email>(builder.Configuration.GetSection("Email"));
 
 //Call Additional Services or Packages
 builder.Services.AddNotyf(config => { config.IsDismissable = true; config.DurationInSeconds = 5; config.Position = NotyfPosition.TopRight; });

@@ -136,22 +136,19 @@ namespace TablesideOrdering.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-                var user = CreateUser();
+            var user = CreateUser();
 
-                user.Firstname = Input.Firstname;
-                user.Lastname = Input.Lastname;
-                user.UserName = Input.Email;
-                user.Email = Input.Email;
+            user.Firstname = Input.Firstname;
+            user.Lastname = Input.Lastname;
+            user.UserName = Input.Email;
+            user.Email = Input.Email;
 
-                var result = await _userManager.CreateAsync(user, Input.Password);
-
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, Input.Role);
-                    return RedirectToAction("Index","Home");
+            var result = await _userManager.CreateAsync(user, Input.Password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, Input.Role);
+                return RedirectToAction("Index", "Home");
             }
-
-            // If we got this far, something failed, redisplay form
             return Page();
         }
 
