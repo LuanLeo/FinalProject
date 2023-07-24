@@ -286,7 +286,7 @@ namespace TablesideOrdering.Controllers
 
 
 
-        //CONTROLLER FOR SENDING ONLINE RECEIPT
+        //CONTROLLER FOR SENDING MAIL
         public void SendMail(Email data)
         {
             data.EmailFrom = _email.EmailFrom;
@@ -308,6 +308,34 @@ namespace TablesideOrdering.Controllers
                 smtp.Send(email);
                 smtp.Disconnect(true);
             }
+        }
+
+        //CONTROLLER FOR SENDING RECEIPT    
+        public void Invoice(Orders order, List<OrderDetail>  orderDetailList, Email data)
+        {
+            StringBuilder subject = new StringBuilder();
+            subject.Append("E-Invoice order ").Append(order.OrderId).Append(" at L&L coffee shop ");
+            StringBuilder invoiceHtml = new StringBuilder();
+            invoiceHtml.Append("<b >E-Invoice at L&L coffee shop ").Append("</b><br />");
+            invoiceHtml.Append("<br /><b>Date : </b>").Append(DateTime.Now.ToShortDateString()).Append("<br />");
+            invoiceHtml.Append("<b>Table : </b>").Append(order.TableNo).Append("<br />");
+            invoiceHtml.Append("<b>Invoice Total :</b> ").Append(order.OrderPrice.ToString()).Append(" VND<br />");
+            invoiceHtml.Append("<br /><b>CUSTOMER CONTACT INFO:</b><br />");
+            invoiceHtml.Append("<b>Name : </b>").Append(order.CusName).Append("<br />");
+            invoiceHtml.Append("<b>Phone : </b>").Append(order.PhoneNumber).Append("<br />");
+            invoiceHtml.Append("<b>Email : </b>").Append(data.EmailTo).Append("<br />");
+
+            invoiceHtml.Append("<br /><b>PRODUCTS:</b><br /><table><tr><th>Product Name  </th><th>Size  </th><th>Quantity  </th><th>Total</th></tr>");
+            // InvoiceItem should be a collection property which contains list of invoice lines
+            foreach (var product in orderDetailList)
+            {
+                invoiceHtml.Append("<tr><td>").Append(product.ProductName).Append("</td><td>").Append(product.Size).Append(@"</td><td style = ""text-align: center;"">").Append(product.ProQuantity.ToString()).Append("</td><td>").Append(product.Price.ToString()).Append(" VND</td></tr>");
+            }
+            invoiceHtml.Append("</table>");
+            invoiceHtml.Append("</div>");
+
+            Subject = subject.ToString();
+            Message = invoiceHtml.ToString();
         }
 
 
@@ -477,6 +505,7 @@ namespace TablesideOrdering.Controllers
             Email = home.Email.EmailTo;
             Email data = new Email();
             data.EmailTo = Email;
+
             //Save order to database
             Orders order = new Orders();
             order.OrderDate = DateTime.Now;
@@ -511,29 +540,7 @@ namespace TablesideOrdering.Controllers
             _context.SaveChanges();
             if (data.EmailTo != null)
             {
-                StringBuilder subject = new StringBuilder();
-                subject.Append("E-Invoice order ").Append(order.OrderId).Append(" at L&L coffee shop ");
-                StringBuilder invoiceHtml = new StringBuilder();
-                invoiceHtml.Append("<b >E-Invoice at L&L coffee shop ").Append("</b><br />");
-                invoiceHtml.Append("<br /><b>Date : </b>").Append(DateTime.Now.ToShortDateString()).Append("<br />");
-                invoiceHtml.Append("<b>Table : </b>").Append(order.TableNo).Append("<br />");
-                invoiceHtml.Append("<b>Invoice Total :</b> ").Append(order.OrderPrice.ToString()).Append(" VND<br />");
-                invoiceHtml.Append("<br /><b>CUSTOMER CONTACT INFO:</b><br />");
-                invoiceHtml.Append("<b>Name : </b>").Append(order.CusName).Append("<br />");
-                invoiceHtml.Append("<b>Phone : </b>").Append(order.PhoneNumber).Append("<br />");
-                invoiceHtml.Append("<b>Email : </b>").Append(data.EmailTo).Append("<br />");
-
-                invoiceHtml.Append("<br /><b>PRODUCTS:</b><br /><table><tr><th>Product Name  </th><th>Size  </th><th>Quantity  </th><th>Total</th></tr>");
-                // InvoiceItem should be a collection property which contains list of invoice lines
-                foreach (var product in orderDetailList)
-                {
-                    invoiceHtml.Append("<tr><td>").Append(product.ProductName).Append("</td><td>").Append(product.Size).Append(@"</td><td style = ""text-align: center;"">").Append(product.ProQuantity.ToString()).Append("</td><td>").Append(product.Price.ToString()).Append(" VND</td></tr>");
-                }
-                invoiceHtml.Append("</table>");
-                invoiceHtml.Append("</div>");
-
-                Subject = subject.ToString();
-                Message = invoiceHtml.ToString();
+                Invoice(order, orderDetailList, data);
                 SendMail(data);
             }
 
