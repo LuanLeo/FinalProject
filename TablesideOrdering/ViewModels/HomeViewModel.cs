@@ -26,6 +26,9 @@ namespace TablesideOrdering.ViewModels
         //Variable for entering phone number
         public PhoneValidation PhoneValid { get; set; }
 
+        //Variable for receiving e-receipt
+        public Email Email { get; set; }
+
 
         //Variable for saving email to PR
         [EmailAddress(ErrorMessage = "Please enter a valid email")]

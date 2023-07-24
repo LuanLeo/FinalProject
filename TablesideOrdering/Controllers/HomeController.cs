@@ -3,6 +3,7 @@ using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MimeKit;
+using Microsoft.AspNetCore.Hosting;
 using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Areas.StoreOwner.ViewModels;
 using TablesideOrdering.Data;
@@ -16,6 +17,8 @@ using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 using TopFoodSizePrice = TablesideOrdering.Models.TopFoodSizePrice;
+using Twilio.Jwt.AccessToken;
+using System.Drawing;
 
 namespace TablesideOrdering.Controllers
 {
@@ -55,6 +58,7 @@ namespace TablesideOrdering.Controllers
             _notyfService = notyfService;
             _vnPayService = vnPayService;
             _momoService = momoService;
+
         }
 
         //CONTROLLER FOR HOME PAGE
@@ -64,18 +68,18 @@ namespace TablesideOrdering.Controllers
             HomeViewModel Homedata = new HomeViewModel();
             Homedata = NavData();
             Homedata.Product = (from ProSP in _context.ProductSizePrice
-                               join Pro in _context.Products on ProSP.ProductId equals Pro.ProductId
-                               select new ProductSizePriceViewModel
-                               {
-                                   SizePriceId = ProSP.Id,
-                                   ProductId = Pro.ProductId,
-                                   Name = Pro.Name,
-                                   CategoryId = Pro.CategoryId,
-                                   Description = Pro.Description,
-                                   Pic = Pro.Pic,
-                                   Size = ProSP.Size,
-                                   Price = ProSP.Price
-                               });
+                                join Pro in _context.Products on ProSP.ProductId equals Pro.ProductId
+                                select new ProductSizePriceViewModel
+                                {
+                                    SizePriceId = ProSP.Id,
+                                    ProductId = Pro.ProductId,
+                                    Name = Pro.Name,
+                                    CategoryId = Pro.CategoryId,
+                                    Description = Pro.Description,
+                                    Pic = Pro.Pic,
+                                    Size = ProSP.Size,
+                                    Price = ProSP.Price
+                                });
             Homedata.Category = _context.Categories.ToList();
             return View(Homedata);
         }
@@ -283,14 +287,17 @@ namespace TablesideOrdering.Controllers
             data.EmailFrom = _email.EmailFrom;
             data.Password = _email.Password;
 
-            data.Body = "";
+            data.Body = Message;
             var email = new MimeMessage();
             {
                 email.From.Add(MailboxAddress.Parse(data.EmailFrom));
-                email.To.Add(MailboxAddress.Parse(Email));
+                email.To.Add(MailboxAddress.Parse(data.EmailTo));
                 email.Subject = "L&L Coffee Online Receipt";
                 email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = data.Body };
+
             }
+            
+
             using var smtp = new SmtpClient();
             {
                 smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
@@ -433,7 +440,7 @@ namespace TablesideOrdering.Controllers
                 {
                     if (home.PaymentType == "VNPay")
                     {
-                        return RedirectToRoute("VNPayCheckout","");
+                        return RedirectToRoute("VNPayCheckout", "");
                     }
                     if (home.PaymentType == "Momo")
                     {
@@ -462,8 +469,11 @@ namespace TablesideOrdering.Controllers
         }
 
         //CONTROLLER FOR CASH PAYMENT METHOD PAGE
-        public IActionResult PlaceOrder()
+        public IActionResult PlaceOrder(HomeViewModel home)
         {
+            Email = home.Email.EmailTo;
+            Email data = new Email();
+            data.EmailTo = Email;
             //Save order to database
             Orders order = new Orders();
             order.OrderDate = DateTime.Now;
@@ -496,6 +506,47 @@ namespace TablesideOrdering.Controllers
                 _context.OrderDetails.Add(orderDt);
             }
             _context.SaveChanges();
+            if (data.EmailTo != null)
+            {
+
+                Message = "Thank for choosing us!" +
+                    "<br/><img src='wwwroot/Logo/Thanks/full-size-thank-you-for-your-order-images.png'/>\r\n" +
+                    "<table>\r\n" +
+                    "<thead>\r\n" +
+                    "<tr>\r\n" +
+                    "<th>Products</th>\r\n" +
+                    "<th>Size</th>\r\n" +
+                    "<th>Price</th>\r\n" +
+                    "<th>Quantity</th>\r\n" +
+                    "<th>Total</th>\r\n" +
+                    "<th></th>\r\n" +
+                    "</tr>\r\n" +
+                    "</thead>\r\n" +
+
+
+                    "<tbody>\r\n" +
+                                        "<tr>\r\n" +
+                                        "<td>\r\n" +
+                                        "<h5></h5>\r\n"
+                                    +
+                                        "</td>\r\n" +
+                                        "<td>\r\n" +
+                                        "<td>\r\n" +
+                                        "@item.Size\r\n" +
+                                        "</td>\r\n" +
+                                        "<td>\r\n" +
+                                        "@item.Price VND\r\n" +
+                                        "</td>\r\n" +
+                                        "<td>\r\n" +
+                                        "@item.Quantity\r\n" +
+                                        "</td>\r\n" +
+                                        "<td>\r\n" +
+                                        "@item.TotalProPrice VND\r\n" +
+                                        "</td>\r\n" +
+                                        "</tbody>\r\n" +
+                "</table>";
+                SendMail(data);
+            }
 
             //Renew the cart and notify customer
             TotalPrice = 0;
