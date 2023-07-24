@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "PRigIZpsGaGQpYpv1eqOLVi3EZygnCc8+o+H+yrroHs=",
+  "Hash": "k3Y/N+n82GDLL+0IQB/RoE2BDGgOaMy5MJAn3F35wC0=",
   "Source": "TablesideOrdering",
   "BasePath": "_content/TablesideOrdering",
   "Mode": "Default",
@@ -13668,12 +13668,12 @@
       "OriginalItemSpec": "wwwroot\\Logo\\Logo.png"
     },
     {
-      "Identity": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\Logo\\Thanks\\full-size-thank-you-for-your-order-images.png",
+      "Identity": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\Logo\\Thanks\\thanks.png",
       "SourceId": "TablesideOrdering",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\",
       "BasePath": "_content/TablesideOrdering",
-      "RelativePath": "Logo/Thanks/full-size-thank-you-for-your-order-images.png",
+      "RelativePath": "Logo/Thanks/thanks.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -13682,7 +13682,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Logo\\Thanks\\full-size-thank-you-for-your-order-images.png"
+      "OriginalItemSpec": "wwwroot\\Logo\\Thanks\\thanks.png"
     },
     {
       "Identity": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\PaymentMethod\\Cash.png",

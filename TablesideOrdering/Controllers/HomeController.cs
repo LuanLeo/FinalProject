@@ -19,6 +19,10 @@ using Twilio.Types;
 using TopFoodSizePrice = TablesideOrdering.Models.TopFoodSizePrice;
 using Twilio.Jwt.AccessToken;
 using System.Drawing;
+using System.Text;
+using System.IO;
+using Twilio.TwiML.Messaging;
+using System.Security.Cryptography.X509Certificates;
 
 namespace TablesideOrdering.Controllers
 {
@@ -41,6 +45,7 @@ namespace TablesideOrdering.Controllers
         public static string TableNo;
         public static string CusName;
         public static string Message;
+        public static string Subject;
         public static string Email;
 
         public HomeController(ApplicationDbContext context,
@@ -286,18 +291,16 @@ namespace TablesideOrdering.Controllers
         {
             data.EmailFrom = _email.EmailFrom;
             data.Password = _email.Password;
-
             data.Body = Message;
+            data.Subject = Subject;
+
             var email = new MimeMessage();
             {
                 email.From.Add(MailboxAddress.Parse(data.EmailFrom));
                 email.To.Add(MailboxAddress.Parse(data.EmailTo));
-                email.Subject = "L&L Coffee Online Receipt";
+                email.Subject = data.Subject;
                 email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = data.Body };
-
-            }
-            
-
+            }            
             using var smtp = new SmtpClient();
             {
                 smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
@@ -508,43 +511,29 @@ namespace TablesideOrdering.Controllers
             _context.SaveChanges();
             if (data.EmailTo != null)
             {
+                StringBuilder subject = new StringBuilder();
+                subject.Append("E-Invoice order ").Append(order.OrderId).Append(" at L&L coffee shop ");
+                StringBuilder invoiceHtml = new StringBuilder();
+                invoiceHtml.Append("<b >E-Invoice at L&L coffee shop ").Append("</b><br />");
+                invoiceHtml.Append("<br /><b>Date : </b>").Append(DateTime.Now.ToShortDateString()).Append("<br />");
+                invoiceHtml.Append("<b>Table : </b>").Append(order.TableNo).Append("<br />");
+                invoiceHtml.Append("<b>Invoice Total :</b> ").Append(order.OrderPrice.ToString()).Append(" VND<br />");
+                invoiceHtml.Append("<br /><b>CUSTOMER CONTACT INFO:</b><br />");
+                invoiceHtml.Append("<b>Name : </b>").Append(order.CusName).Append("<br />");
+                invoiceHtml.Append("<b>Phone : </b>").Append(order.PhoneNumber).Append("<br />");
+                invoiceHtml.Append("<b>Email : </b>").Append(data.EmailTo).Append("<br />");
 
-                Message = "Thank for choosing us!" +
-                    "<br/><img src='wwwroot/Logo/Thanks/full-size-thank-you-for-your-order-images.png'/>\r\n" +
-                    "<table>\r\n" +
-                    "<thead>\r\n" +
-                    "<tr>\r\n" +
-                    "<th>Products</th>\r\n" +
-                    "<th>Size</th>\r\n" +
-                    "<th>Price</th>\r\n" +
-                    "<th>Quantity</th>\r\n" +
-                    "<th>Total</th>\r\n" +
-                    "<th></th>\r\n" +
-                    "</tr>\r\n" +
-                    "</thead>\r\n" +
+                invoiceHtml.Append("<br /><b>PRODUCTS:</b><br /><table><tr><th>Product Name  </th><th>Size  </th><th>Quantity  </th><th>Total</th></tr>");
+                // InvoiceItem should be a collection property which contains list of invoice lines
+                foreach (var product in orderDetailList)
+                {
+                    invoiceHtml.Append("<tr><td>").Append(product.ProductName).Append("</td><td>").Append(product.Size).Append(@"</td><td style = ""text-align: center;"">").Append(product.ProQuantity.ToString()).Append("</td><td>").Append(product.Price.ToString()).Append(" VND</td></tr>");
+                }
+                invoiceHtml.Append("</table>");
+                invoiceHtml.Append("</div>");
 
-
-                    "<tbody>\r\n" +
-                                        "<tr>\r\n" +
-                                        "<td>\r\n" +
-                                        "<h5></h5>\r\n"
-                                    +
-                                        "</td>\r\n" +
-                                        "<td>\r\n" +
-                                        "<td>\r\n" +
-                                        "@item.Size\r\n" +
-                                        "</td>\r\n" +
-                                        "<td>\r\n" +
-                                        "@item.Price VND\r\n" +
-                                        "</td>\r\n" +
-                                        "<td>\r\n" +
-                                        "@item.Quantity\r\n" +
-                                        "</td>\r\n" +
-                                        "<td>\r\n" +
-                                        "@item.TotalProPrice VND\r\n" +
-                                        "</td>\r\n" +
-                                        "</tbody>\r\n" +
-                "</table>";
+                Subject = subject.ToString();
+                Message = invoiceHtml.ToString();
                 SendMail(data);
             }
 
