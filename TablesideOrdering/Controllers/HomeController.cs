@@ -433,7 +433,7 @@ namespace TablesideOrdering.Controllers
                 {
                     if (home.PaymentType == "VNPay")
                     {
-                        return RedirectToAction("VNPayCheckout");
+                        return RedirectToRoute("VNPayCheckout","");
                     }
                     if (home.PaymentType == "Momo")
                     {
