@@ -2,15 +2,33 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@UserManager.GetUserName(User)!</a>
-    </li>
-    <li class="nav-item">
-        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+    <a class="nav-link nav-icon-hover" id="drop2" data-mdb-toggle="dropdown" aria-expanded="false">
+        <img src="~/assets/images/profile/user-1.jpg" alt="" width="35" height="35" class="rounded-circle" />
+    </a>
+    <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
+        <div class="message-body">
+            <a class="d-flex align-items-center gap-2 dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
+                <i class="ti ti-user fs-6"></i>
+                <p class="mb-0 fs-3">My Profile</p>
+            </a>
+            <a class="d-flex align-items-center gap-2 dropdown-item">
+                <i class="ti ti-mail fs-6"></i>
+                <p class="mb-0 fs-3">My Account</p>
+            </a>
+            <a class="d-flex align-items-center gap-2 dropdown-item">
+                <i class="ti ti-list-check fs-6"></i>
+                <p class="mb-0 fs-3">My Task</p>
+            </a>
+
+        </div>
+    </div>
+    <li>
+        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Login", "Identity", new { area = "" })">
+            <button id="logout" type="submit" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</button>
         </form>
     </li>
 }
@@ -20,4 +38,4 @@ else
         <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
 }
-</ul>
+

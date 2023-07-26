@@ -23,13 +23,15 @@ namespace TablesideOrdering.Areas.Identity.Pages.Account
             _logger = logger;
         }
 
-        public async Task<IActionResult> OnPost(string returnUrl = null)
+        public async Task<IActionResult> OnPost()
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            if (returnUrl != null)
+
+            var url = Url.RouteUrl("areas", new { controller = "Account", action = "Login", area = "Identity" });
+            if (url != null)
             {
-                return LocalRedirect(returnUrl);
+                return LocalRedirect(url);
             }
             else
             {
