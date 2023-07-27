@@ -26,18 +26,21 @@ namespace TablesideOrdering.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        private readonly ILogger<LoginModel> _logger;
+
         private readonly Email _email;
 
         private static string LinkURL;
 
         public INotyfService _notyfService { get; }
-        public ForgotPasswordModel(UserManager<IdentityUser> userManager, IEmailSender emailSender, INotyfService notyfService, IOptions<Email> email, SignInManager<IdentityUser> signInManager)
+        public ForgotPasswordModel(UserManager<IdentityUser> userManager, IEmailSender emailSender, INotyfService notyfService, IOptions<Email> email, SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
         {
             _userManager = userManager;
             _emailSender = emailSender;
             _notyfService = notyfService;
             _email = email.Value;
             _signInManager = signInManager;
+            _logger = logger;
         }
 
         /// <summary>
@@ -64,23 +67,42 @@ namespace TablesideOrdering.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.FindByEmailAsync(Input.Email);
-            if (user == null)
+            var signIn = _signInManager.IsSignedIn(User);
+            if (signIn == false)
             {
-                _notyfService.Error("Your email doesn't exist!", 5);
+                var user = await _userManager.FindByEmailAsync(Input.Email);
+                if (user == null)
+                {
+                    _notyfService.Error("Your email doesn't exist!", 5);
+                }
+
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                LinkURL = Url.Page(
+                    "/Account/ResetPassword",
+                    pageHandler: null,
+                    values: new { area = "Identity", code },
+                    protocol: Request.Scheme);
+
+                SendMail();
+                _notyfService.Success("The email has been sent!", 5);
+                return Page();
             }
-
-            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            LinkURL = Url.Page(
-                "/Account/ResetPassword",
-                pageHandler: null,
-                values: new { area = "Identity", code },
-                protocol: Request.Scheme);
-
-            SendMail();
-            _notyfService.Success("The email has been sent!", 5);
-            return Page();
+            else
+            {
+                await _signInManager.SignOutAsync();
+                _logger.LogInformation("User logged out.");
+                _notyfService.Success("The email has been sent!", 5);
+                var url = Url.RouteUrl("areas", new { controller = "Account", action = "Login", area = "Identity" });
+                if (url != null)
+                {
+                    return LocalRedirect(url);
+                }
+                else
+                {
+                    return RedirectToPage();
+                }
+            }
         }
 
         public void SendMail()

@@ -1,31 +1,96 @@
 ﻿@page
+@using System.Security.Claims;
 @model IndexModel
 @{
     ViewData["Title"] = "Profile";
     ViewData["ActivePage"] = ManageNavPages.Index;
     Layout = "~/Areas/Identity/Pages/_NullLayout.cshtml";
 }
+<head>
+    <meta charset="UTF-8">
+    <meta name="description">
+    <meta name="keywords">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>L&L Coffee</title>
 
-<div class="tab-pane fade show active" role="tabpanel" aria-labelledby="account-tab">
-    <h3 class="mb-4">Account Settings</h3>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>First Name</label>
-                <input asp-for="FirstName" class="form-control" disabled />
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>Last Name</label>
-                <input asp-for="LastName" class="form-control" disabled />
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>Email</label>
-                <input asp-for="Email" class="form-control" disabled />
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+</head>
+<script src="/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+
+<body style="background-image: url('/Logo/BackgroundImg/logincoffee.jpg'); background-repeat: no-repeat; background-size: cover; height: 100%;">
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full" data-sidebar-position="fixed" data-header-position="fixed">
+        <div class="position-relative overflow-hidden radial-gradient min-vh-100 d-flex align-items-center justify-content-center">
+            <div class="d-flex align-items-center justify-content-center w-100">
+                <div class="row justify-content-center" style="width:1500px">
+                    <div class="col-md-8 col-lg-6 col-xxl-3">
+                        <div class="card mb-0">
+                            <div class="card-body" style="background-color:#FCF0CF; align-items:center">
+                                <a class="text-nowrap logo-img text-center d-block w-100 py-3 ">
+                                    <img src="/Logo/Logo.png" width="180">
+                                </a>
+                                <h2 class="text-center" style="font-size:20px; color: #1A0B11; padding: 0px 0px 20px 0px">Enter your Email</h2>
+                                <div class="mb-3">
+                                    <label>First Name</label>
+                                    <input asp-for="FirstName" class="form-control" disabled />
+                                </div>
+                                <div class="mb-3">
+                                    <label>Last Name</label>
+                                    <input asp-for="LastName" class="form-control" disabled />
+                                </div>
+                                <div class="mb-3">
+                                    <label>Email</label>
+                                    <input asp-for="Email" class="form-control" disabled />
+                                </div>
+                                <div class="row" style="padding:10px 0px 0px 0px">
+                                    <div class="col-lg-4">
+                                        @if (HttpContext.User.FindFirstValue(ClaimTypes.Role) == "Admin")
+                                        {
+                                            <a type="button" style="display: block; margin: auto; width:fit-content; text-align: center" class="btn btn-danger" asp-area="Admin" asp-controller="Home" asp-action="Index">
+                                                Back to Index
+                                            </a>
+                                        } @if (HttpContext.User.FindFirstValue(ClaimTypes.Role) == "Staff")
+                                        {
+                                            <a type="button" style="display: block; margin: auto; width:fit-content; text-align: center" class="btn btn-danger" asp-area="Staff" asp-controller="Home" asp-action="Index">
+                                                Back to Index
+                                            </a>
+                                        } @if (HttpContext.User.FindFirstValue(ClaimTypes.Role) == "Store Owner")
+                                        {
+                                            <a type="button" style="display: block; margin: auto; width:fit-content; text-align: center" class="btn btn-danger" asp-area="StoreOwner" asp-controller="Home" asp-action="Index">
+                                                Back to Index
+                                            </a>
+                                        }
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <a type="button" style="display: block; margin: auto; width:fit-content; text-align: center" class="btn btn-primary" asp-page="./ChangePassword">
+                                            Change Password
+                                        </a>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <a type="button" style="display: block; margin: auto; width:fit-content; text-align: center" class="btn btn-primary" asp-area="Identity" asp-page="/Account/ForgotPassword">
+                                            Forgot Password
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</body>
