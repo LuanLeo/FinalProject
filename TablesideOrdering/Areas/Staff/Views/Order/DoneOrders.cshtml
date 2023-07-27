@@ -70,7 +70,7 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.OrderId)
                                 </td>
-                                <td>
+                                <td style="width:15%">
                                     @Html.DisplayFor(modelItem => item.OrderDate)
                                 </td>
                                 <td>
@@ -88,12 +88,11 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.CusName)
                                 </td>
-                                <td align="center">
-                                    <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="@("#EditUser-" )" data-url="@Url.Action($"Edit/")">
+                                <td align="center" style="width:20%">
+                                    <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="@("#EditUser-")" data-url="@Url.Action($"Edit/")">
                                         Edit
                                     </button>
-                                    
-                                    <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteUser-" )" data-url="@Url.Action($"Delete/")">
+                                    <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteUser-")" data-url="@Url.Action($"Delete/")">
                                         Delete
                                     </button>
                                 </td>

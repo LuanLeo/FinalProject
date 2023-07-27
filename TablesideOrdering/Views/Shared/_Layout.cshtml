@@ -18,6 +18,9 @@
     <link rel="stylesheet" href="../css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../css/style.css" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="humberger__menu__overlay"></div>
@@ -28,7 +31,7 @@
         <div class="humberger__menu__cart">
             @await Html.PartialAsync("_AddToCart")
         </div>
-        
+
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
                 <li class="active"><a asp-action="Index" asp-controller="Home">Home</a></li>
@@ -50,7 +53,18 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li><a asp-action="Menu" asp-controller="Home">Menu</a></li>                            
+                            <li><a asp-action="Menu" asp-controller="Home">Menu</a></li>
+                            <li>
+                                <a href="#">Pages</a>
+                                <ul class="header__menu__dropdown">
+                                    <li><a href="./shop-details.html">Shop Details</a></li>
+                                    <li><a href="./shoping-cart.html">Shoping Cart</a></li>
+                                    <li><a href="./checkout.html">Check Out</a></li>
+                                    <li><a href="./blog-details.html">Blog Details</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="./blog.html">Blog</a></li>
+                            <li><a href="./contact.html">Contact</a></li>
                         </ul>
                     </nav>                    
                 </div>

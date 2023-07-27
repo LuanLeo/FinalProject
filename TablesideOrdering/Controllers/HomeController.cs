@@ -276,6 +276,7 @@ namespace TablesideOrdering.Controllers
             }
             return View();
         }
+
         public string ConvertToPhoneValid()
         {
             string number = PhoneNumber.Substring(1);
@@ -354,17 +355,11 @@ namespace TablesideOrdering.Controllers
             return RedirectToAction("PhoneValidation");
         }
 
-        //Add to Cart from Index
-        public IActionResult IndexCart(int id)
-        {
-            AddToCart(id);
-            return RedirectToAction("Index", "Home");
-        }
-
         //Add to Cart from Menu
         public IActionResult MenuCart(int id)
         {
             AddToCart(id);
+            _notyfService.Success("Add to cart success", 5);
             return RedirectToAction("Menu", "Home");
         }
 

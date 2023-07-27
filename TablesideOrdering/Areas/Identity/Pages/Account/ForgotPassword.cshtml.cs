@@ -24,19 +24,20 @@ namespace TablesideOrdering.Areas.Identity.Pages.Account
     public class ForgotPasswordModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly Email _email;
 
         private static string LinkURL;
 
         public INotyfService _notyfService { get; }
-        public ForgotPasswordModel(UserManager<IdentityUser> userManager, IEmailSender emailSender, INotyfService notyfService, IOptions<Email> email)
+        public ForgotPasswordModel(UserManager<IdentityUser> userManager, IEmailSender emailSender, INotyfService notyfService, IOptions<Email> email, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _emailSender = emailSender;
             _notyfService = notyfService;
             _email = email.Value;
-
+            _signInManager = signInManager;
         }
 
         /// <summary>

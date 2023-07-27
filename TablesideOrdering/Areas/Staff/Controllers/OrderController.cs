@@ -104,7 +104,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             _context.SaveChanges();
 
             _notyfService.Success("The order is deleted", 5);
-            return RedirectToAction("NotPaidOrders");
+            return RedirectToAction("NotPaidOrder");
         }
 
 

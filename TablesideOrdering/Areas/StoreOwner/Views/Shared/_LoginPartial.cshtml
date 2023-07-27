@@ -2,7 +2,7 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"></script>
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -13,15 +13,15 @@
         <div class="message-body">
             <a class="d-flex align-items-center gap-2 dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">
                 <i class="ti ti-user fs-6"></i>
-                <p class="mb-0 fs-3">My Profile</p>
+                <p class="mb-0 fs-7">My Profile</p>
             </a>
-            <a class="d-flex align-items-center gap-2 dropdown-item">
+            <a class="d-flex align-items-center gap-2 dropdown-item" asp-area="Identity" asp-page="/Account/Manage/ChangePassword">
                 <i class="ti ti-mail fs-6"></i>
-                <p class="mb-0 fs-3">My Account</p>
+                <p class="mb-0 fs-7">Change Password</p>
             </a>
-            <a class="d-flex align-items-center gap-2 dropdown-item">
+            <a class="d-flex align-items-center gap-2 dropdown-item" asp-area="Identity" asp-page="/Account/ForgotPassword">
                 <i class="ti ti-list-check fs-6"></i>
-                <p class="mb-0 fs-3">My Task</p>
+                <p class="mb-0 fs-7">Recovery Password </p>
             </a>
 
         </div>
@@ -38,4 +38,3 @@ else
         <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
 }
-
