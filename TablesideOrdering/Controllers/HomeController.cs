@@ -70,6 +70,7 @@ namespace TablesideOrdering.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            
             HomeViewModel Homedata = new HomeViewModel();
             Homedata = NavData();
             Homedata.Product = (from ProSP in _context.ProductSizePrice
@@ -464,14 +465,14 @@ namespace TablesideOrdering.Controllers
             {
                 if (home.PaymentType == null)
                 {
-                    _notyfService.Information("Payment method can't be null", 5);
+                    _notyfService.Information("Please select one Payment Method!", 5);
                     return RedirectToAction("Cart");
                 }
                 else
                 {
                     if (home.PaymentType == "VNPay")
                     {
-                        return RedirectToRoute("VNPayCheckout", "");
+                        return RedirectToAction("VNPayCheckout");
                     }
                     if (home.PaymentType == "Momo")
                     {
@@ -547,7 +548,6 @@ namespace TablesideOrdering.Controllers
             //Renew the cart and notify customer
             TotalPrice = 0;
             carts.Clear();
-            _notyfService.Success("Your order has been received");
             return RedirectToAction("ThankYou");
         }
 
@@ -570,7 +570,7 @@ namespace TablesideOrdering.Controllers
             model = home.Payment;
             model.Amount = TotalPrice;
 
-            Email = home.Payment.Email;
+            Email = home.Email.EmailTo;
 
             var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
             return Redirect(url);
@@ -614,11 +614,18 @@ namespace TablesideOrdering.Controllers
                 }
                 _context.SaveChanges();
 
+                Email data = new Email();
+                data.EmailTo = Email;
+                if (data.EmailTo != null)
+                {
+                    Invoice(order, orderDetailList, data);
+                    SendMail(data);
+                }
+
                 //Renew the cart and notify customer
                 TotalPrice = 0;
                 carts.Clear();
-                _notyfService.Success("Your order has been received");
-                return RedirectToAction("Index");
+                return RedirectToAction("ThankYou");
             }
             _notyfService.Error("Something went wrong, please try again!");
             return RedirectToAction("Index");
@@ -637,7 +644,7 @@ namespace TablesideOrdering.Controllers
             model = home.MoMoPay;
             model.Amount = TotalPrice;
 
-            Email = home.Payment.Email;
+            Email = home.Email.EmailTo;
             var response = await _momoService.CreatePaymentAsync(model);
             return Redirect(response.PayUrl);
         }
@@ -681,14 +688,21 @@ namespace TablesideOrdering.Controllers
                 }
                 _context.SaveChanges();
 
+                Email data = new Email();
+                data.EmailTo = Email;
+                if (data.EmailTo != null)
+                {
+                    Invoice(order, orderDetailList, data);
+                    SendMail(data);
+                }
+
                 //Renew the cart and notify customer
                 TotalPrice = 0;
-                carts.Clear();
-                _notyfService.Success("Your order has been received");
-                return RedirectToAction("Index");
+                carts.Clear();                
+                return RedirectToAction("ThankYou");
             }
             _notyfService.Error("Something went wrong, please try again!");
-            return RedirectToAction("Thankyou");
+            return RedirectToAction("Index");
         }
 
 
@@ -697,8 +711,10 @@ namespace TablesideOrdering.Controllers
         //CONTROLLER FOR NAVIGATION
         public HomeViewModel NavData()
         {
+             
             CartList cartlist = new CartList();
             cartlist.CartLists = carts;
+          
             cartlist.CartAmount = TotalPrice;
             cartlist.PhoneNumber = PhoneNumber;
             cartlist.CusName = CusName;

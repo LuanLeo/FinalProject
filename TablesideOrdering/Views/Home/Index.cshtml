@@ -43,7 +43,7 @@
                         <ul>
                             @foreach (var item in Model.Category)
                             {
-                                <li><a href="#">@item.CategoryName</a></li>
+                                <li><a href="/Home/Menu?term=@item.CategoryName&orderBy=">@item.CategoryName</a></li>
                             }
                         </ul>
                     </div>
@@ -51,98 +51,24 @@
                 <div class="col-lg-9">
                     <div class="hero__search">
                         <div class="hero__search__form">
-                            <form action="#">
-                                <input type="text" placeholder="What do yo u need?">
+                            <form asp-action="Menu">
+                                <input name="term" class="form-control" placeholder="What would you like?">
                                 <button type="submit" class="site-btn">SEARCH</button>
                             </form>
                         </div>
                     </div>
-                    <div class="hero__item set-bg" data-setbg="../img/360_f_503250032_mkrvsf8opcwcskxizcisdpvzrkdnel3x.jpg">
+                    <div class="hero__item set-bg" data-setbg="../Logo/BackgroundImg/360_f_503250032_mkrvsf8opcwcskxizcisdpvzrkdnel3x.jpg">
                         <div class="hero__text">
                             <h2>Get up early.<br />Stay up late.</h2>
-                            <a href="#" class="primary-btn">ORDER NOW</a>
+                            <a href="/Home/Menu" class="primary-btn">ORDER NOW</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!-- Hero Section End -->
-    <!-- Categories Section Begin -->
-    <section class="categories">
-        <div class="container">
-            <div class="row">
-                <div class="categories__slider owl-carousel">
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="../img/categories/cat-1.jpg">
-                            <h5><a href="#">Fresh Fruit</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="../img/categories/cat-2.jpg">
-                            <h5><a href="#">Dried Fruit</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="../img/categories/cat-3.jpg">
-                            <h5><a href="#">Vegetables</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="../img/categories/cat-4.jpg">
-                            <h5><a href="#">drink fruits</a></h5>
-                        </div>
-                    </div>
-                    <div class="col-lg-3">
-                        <div class="categories__item set-bg" data-setbg="../img/categories/cat-5.jpg">
-                            <h5><a href="#">drink fruits</a></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Categories Section End -->
-    <!-- Featured Section Begin -->
-    <section class="featured spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <h2>Featured Product</h2>
-                    </div>
-                    <div class="featured__controls">
-                        <ul>
-                            <li class="active" data-filter="*">All</li>
-                            @foreach (var cat in Model.Category)
-                            {
-                                <li data-filter="@cat.CategoryId">@cat.CategoryName</li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row featured__filter">
-                @foreach (var pro in Model.Product)
-                {
-                    <div class="col-lg-3 col-md-4 col-sm-6 ">
-                        <div class="featured__item">
-                            <div class="featured__item__pic set-bg" data-setbg="../ProductImage/@pro.Pic">
-                                <ul class="featured__item__pic__hover">
-                                    <li><a asp-action="IndexCart" asp-controller="Home" asp-route-id="@pro.SizePriceId"><i class="fa fa-shopping-cart"></i></a></li>
-                                </ul>
-                            </div>
-                            <div class="featured__item__text">
-                                <h5><a href="#">@pro.Name - @pro.Size</a></h5>
-                                <h5>@pro.Price VND</h5>
-                            </div>
-                        </div>
-                    </div>
-                }                
-            </div>
-        </div>
-    </section>
-    <!-- Featured Section End -->
+    <!-- Hero Section End -->   
+    
     <!-- Js Plugins -->
     <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>

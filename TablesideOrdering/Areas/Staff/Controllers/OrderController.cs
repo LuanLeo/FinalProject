@@ -71,7 +71,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
 
             _context.SaveChanges();
             _notyfService.Success("The order is paid", 5);
-            return RedirectToAction("NotPaidOrder");
+            return RedirectToAction("NotPaidOrders");
         }
 
         [HttpGet]
@@ -104,7 +104,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             _context.SaveChanges();
 
             _notyfService.Success("The order is deleted", 5);
-            return RedirectToAction("NotPaidOrder");
+            return RedirectToAction("NotPaidOrders");
         }
 
 
