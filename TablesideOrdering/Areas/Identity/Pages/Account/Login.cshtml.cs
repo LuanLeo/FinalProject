@@ -143,7 +143,7 @@ namespace TablesideOrdering.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Email and Password are ");
+                    ModelState.AddModelError(string.Empty, "Email or Password is incorrect");
                     return Page();
                 }
             }

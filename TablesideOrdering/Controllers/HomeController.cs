@@ -260,8 +260,7 @@ namespace TablesideOrdering.Controllers
         [HttpGet]
         public IActionResult PhoneValidation()
         {
-            HomeViewModel home = NavData();
-            return View(home);
+            return View();
         }
 
         [HttpPost]
@@ -428,9 +427,8 @@ namespace TablesideOrdering.Controllers
                 TotalPrice += Total;
             }
 
-            NavData();
             _notyfService.Success("The product is deleted", 5);
-            return RedirectToAction("Cart", "Home");
+            return RedirectToAction("Cart","Home");
         }
 
 

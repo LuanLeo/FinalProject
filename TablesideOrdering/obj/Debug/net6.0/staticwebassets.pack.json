@@ -2657,6 +2657,10 @@
       "PackagePath": "staticwebassets\\assets\\scss\\variables\\_variables.scss"
     },
     {
+      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\css\\AccessDeniedPage.css",
+      "PackagePath": "staticwebassets\\css\\AccessDeniedPage.css"
+    },
+    {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\css\\Thanks.css",
       "PackagePath": "staticwebassets\\css\\Thanks.css"
     },

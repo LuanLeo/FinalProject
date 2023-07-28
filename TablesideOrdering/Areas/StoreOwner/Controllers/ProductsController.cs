@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using AspNetCoreHero.ToastNotification.Notyf;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +21,7 @@ using TablesideOrdering.Migrations;
 namespace TablesideOrdering.Areas.StoreOwner.Controllers
 {
     [Area("StoreOwner")]
-
+    [Authorize(Roles = "Store Owner, Admin")]
     public class ProductsController : Controller
     {
         private readonly ApplicationDbContext _context;

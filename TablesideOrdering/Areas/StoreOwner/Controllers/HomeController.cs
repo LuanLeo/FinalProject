@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Collections;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using TablesideOrdering.Areas.StoreOwner.Models;
@@ -14,6 +16,8 @@ using TablesideOrdering.ViewModels;
 namespace TablesideOrdering.Areas.StoreOwner.Controllers
 {
     [Area("StoreOwner")]
+    [Authorize(Roles = "Store Owner, Admin")]
+
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

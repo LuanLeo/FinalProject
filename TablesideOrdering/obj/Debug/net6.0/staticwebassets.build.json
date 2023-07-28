@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "G5CoCe0XnkKEHwyXziGuSHUcoGAE68N8vvHjx7pZd/Q=",
+  "Hash": "mRoDH4i2/LqTYZLh7GR3L0v/TG3qBD9b5RYRGF3cy34=",
   "Source": "TablesideOrdering",
   "BasePath": "_content/TablesideOrdering",
   "Mode": "Default",
@@ -12017,6 +12017,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\assets\\scss\\variables\\_variables.scss"
+    },
+    {
+      "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\css\\AccessDeniedPage.css",
+      "SourceId": "TablesideOrdering",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\",
+      "BasePath": "_content/TablesideOrdering",
+      "RelativePath": "css/AccessDeniedPage.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\AccessDeniedPage.css"
     },
     {
       "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\css\\bootstrap.min.css",

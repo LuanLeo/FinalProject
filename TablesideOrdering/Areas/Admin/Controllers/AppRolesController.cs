@@ -9,7 +9,7 @@ using TablesideOrdering.Data;
 namespace TablesideOrdering.Areas.Admin.Controllers
 {
     [Area("Admin")]
-
+    [Authorize(Roles = "Admin")]
     public class AppRolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;

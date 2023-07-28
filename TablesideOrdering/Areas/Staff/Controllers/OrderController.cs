@@ -6,10 +6,12 @@ using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Areas.StoreOwner.ViewModels;
 using TablesideOrdering.Areas.Staff.ViewModels;
 using TablesideOrdering.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TablesideOrdering.Areas.Staff.Controllers
 {
     [Area("Staff")]
+    [Authorize(Roles ="Staff, Admin")]
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _context;

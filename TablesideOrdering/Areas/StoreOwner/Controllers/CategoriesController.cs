@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using AspNetCoreHero.ToastNotification.Notyf;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using TablesideOrdering.ViewModels;
 namespace TablesideOrdering.Areas.StoreOwner.Controllers
 {
     [Area("StoreOwner")]
+    [Authorize(Roles = "Store Owner, Admin")]
     public class CategoriesController : Controller
     {
     private readonly ApplicationDbContext context;
