@@ -11,6 +11,7 @@ namespace TablesideOrdering.ViewModels
         public List<Category> Category { get; set; }
         public List<TopFood> TopProduct { get; set; }
         public List<ProductSize> ProductSizes { get; set; }
+        public List<Orders> Orders { get; set; }
         public IQueryable<ProductSizePriceViewModel> Product { get; set; }
 
         //Variables for Payment Methods

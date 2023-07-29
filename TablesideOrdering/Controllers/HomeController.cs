@@ -717,5 +717,26 @@ namespace TablesideOrdering.Controllers
 
             return home;
         }
+
+        //History orders of customer
+        public IActionResult History()
+        {
+            HomeViewModel home = NavData();
+            if (home.Cart.PhoneNumber != null)
+            {
+                List<Orders> olist = new List<Orders>();
+                foreach (var o in _context.Orders)
+                {
+                    if (o.PhoneNumber == home.Cart.PhoneNumber)
+                    {
+
+                        olist.Add(o);
+                    }
+                }
+                home.Orders = olist;
+                return View(home);
+            }
+            return RedirectToAction("PhoneValidation");
+        }
     }
 }
