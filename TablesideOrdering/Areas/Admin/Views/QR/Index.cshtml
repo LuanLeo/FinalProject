@@ -1,0 +1,28 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TablesideOrdering.Areas.Admin.Models;
+@model QRCodeModel
+@{
+    ViewData["Title"] = "QR Codes";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<body>
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+         data-sidebar-position="fixed" data-header-position="fixed">
+        <div class="body-wrapper">
+            <div class="container-fluid">
+                <h1>QR Code Create</h1>
+                <form asp-action="QRCreate">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input asp-for="Url" placeholder="URL Link"/>
+                    <span asp-validation-for="Url" class="text-danger"></span>
+                    
+                    <button type="submit"> Generate</button>
+                </form>
+                @if (ViewBag.QRCode != null)
+                {
+                    <img src="@ViewBag.QRCode" width="300" height="300" />
+                }
+            </div>
+        </div>
+    </div>
+</body>

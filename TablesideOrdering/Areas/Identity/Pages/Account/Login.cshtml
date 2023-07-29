@@ -17,6 +17,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
     <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
@@ -42,7 +43,6 @@
                             </a>
                             <h2 class="text-center" style="font-size:20px; color: #1A0B11; padding: 0px 0px 20px 0px">Store Owner & Staff Log In</h2>
                             <form enctype="multipart/form-data" method="post">
-                                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                                 <div class="mb-3">
                                     <input asp-for="Input.Email" class="form-control" aria-required="true" placeholder="Email" />
                                     <span asp-validation-for="Input.Email" class="text-danger"></span>
@@ -50,7 +50,8 @@
                                 <div class="mb-3">
                                     <input asp-for="Input.Password" class="form-control" aria-required="true" placeholder="Password" />
                                     <span asp-validation-for="Input.Password" class="text-danger"></span>
-                                </div class="mb-3">
+                                </div >
+                                <div asp-validation-summary="ModelOnly" class="text-danger" style="text-align:center; padding:0px 0px 5px 0px"></div>
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div style="margin:0px 0px 0px 20px" class="checkbox">

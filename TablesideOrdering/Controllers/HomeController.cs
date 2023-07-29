@@ -266,7 +266,7 @@ namespace TablesideOrdering.Controllers
         [HttpPost]
         public IActionResult PhoneValidation(HomeViewModel home)
         {
-            if (home.PhoneValid.PhoneNumber == home.PhoneValid.PhoneConfirmed && (home.PhoneValid.PhoneNumber != null && home.PhoneValid.PhoneConfirmed != null))
+            if (home.PhoneValid.PhoneNumber == home.PhoneValid.PhoneConfirmed && CheckValid(home) == true)
             {
                 PhoneNumber = home.PhoneValid.PhoneNumber;
                 TableNo = home.PhoneValid.TableNo;
@@ -274,6 +274,15 @@ namespace TablesideOrdering.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return View();
+        }
+
+        public Boolean CheckValid(HomeViewModel home)
+        {
+            if ((home.PhoneValid.PhoneNumber != null && home.PhoneValid.PhoneConfirmed != null && home.PhoneValid.CusName != null && home.PhoneValid.TableNo != null) == true)
+            {
+                return true;
+            };
+            return false;
         }
 
         public string ConvertToPhoneValid()

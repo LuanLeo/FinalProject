@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using System.Security.Claims;
 using System.Data;
 using TablesideOrdering.Areas.Admin.Models;
+using AspNetCoreHero.ToastNotification.Abstractions;
 
 namespace TablesideOrdering.Areas.Identity.Pages.Account
 {
@@ -25,7 +26,6 @@ namespace TablesideOrdering.Areas.Identity.Pages.Account
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<LoginModel> _logger;
-
         public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger,
             UserManager<IdentityUser> userManager)
         {
@@ -143,7 +143,7 @@ namespace TablesideOrdering.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Email or Password is incorrect");
+                    ModelState.AddModelError(string.Empty," The Email or Password is incorrect");
                     return Page();
                 }
             }

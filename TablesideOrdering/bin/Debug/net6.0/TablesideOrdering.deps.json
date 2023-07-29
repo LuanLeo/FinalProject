@@ -15,6 +15,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.20",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.20",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.15",
+          "QRCoder": "1.4.2",
           "RestSharp": "110.2.0",
           "SqlTableDependency": "8.5.8",
           "System.Data.SqlClient": "4.8.5",
@@ -1767,6 +1768,17 @@
           "lib/netstandard2.0/NuGet.Versioning.dll": {
             "assemblyVersion": "6.3.1.1",
             "fileVersion": "6.3.1.1"
+          }
+        }
+      },
+      "QRCoder/1.4.2": {
+        "dependencies": {
+          "System.Drawing.Common": "6.0.0"
+        },
+        "runtime": {
+          "lib/net5.0/QRCoder.dll": {
+            "assemblyVersion": "1.4.2.0",
+            "fileVersion": "1.4.2.0"
           }
         }
       },
@@ -3729,6 +3741,13 @@
       "sha512": "sha512-T/igBDLXCd+pH3YTWgGVNvYSOwbwaT30NyyM9ONjvlHlmaUjKBJpr9kH0AeL+Ado4EJsBhU3qxXVc6lyrpRcMw==",
       "path": "nuget.versioning/6.3.1",
       "hashPath": "nuget.versioning.6.3.1.nupkg.sha512"
+    },
+    "QRCoder/1.4.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-985OiJWb6Fft5r1AQ1NcpGgDDGZVKvWIF9ijV3N2lxJaTKpL2mAHAGvMXgcjRLMGSaldAcBiTFDGHCgDRpCW9A==",
+      "path": "qrcoder/1.4.2",
+      "hashPath": "qrcoder.1.4.2.nupkg.sha512"
     },
     "RestSharp/110.2.0": {
       "type": "package",

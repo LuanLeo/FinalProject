@@ -2307,6 +2307,18 @@
           }
         }
       },
+      "QRCoder/1.4.2": {
+        "type": "package",
+        "dependencies": {
+          "System.Drawing.Common": "4.7.0"
+        },
+        "compile": {
+          "lib/net5.0/QRCoder.dll": {}
+        },
+        "runtime": {
+          "lib/net5.0/QRCoder.dll": {}
+        }
+      },
       "RestSharp/110.2.0": {
         "type": "package",
         "dependencies": {
@@ -7510,6 +7522,25 @@
         "nuget.versioning.nuspec"
       ]
     },
+    "QRCoder/1.4.2": {
+      "sha512": "985OiJWb6Fft5r1AQ1NcpGgDDGZVKvWIF9ijV3N2lxJaTKpL2mAHAGvMXgcjRLMGSaldAcBiTFDGHCgDRpCW9A==",
+      "type": "package",
+      "path": "qrcoder/1.4.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/QRCoder.dll",
+        "lib/net40/QRCoder.dll",
+        "lib/net5.0-windows7.0/QRCoder.dll",
+        "lib/net5.0/QRCoder.dll",
+        "lib/netstandard1.3/QRCoder.dll",
+        "lib/netstandard2.0/QRCoder.dll",
+        "nuget-icon.png",
+        "nuget-readme.md",
+        "qrcoder.1.4.2.nupkg.sha512",
+        "qrcoder.nuspec"
+      ]
+    },
     "RestSharp/110.2.0": {
       "sha512": "FXGw0IMcqY7yO/hzS9QrD3iNswNgb9UxJnxWmfOxmGs4kRlZWqdtBoGPLuhlbgsDzX1RFo4WKui8TGGKXWKalw==",
       "type": "package",
@@ -11922,6 +11953,7 @@
       "Microsoft.EntityFrameworkCore.SqlServer >= 6.0.20",
       "Microsoft.EntityFrameworkCore.Tools >= 6.0.20",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 6.0.15",
+      "QRCoder >= 1.4.2",
       "RestSharp >= 110.2.0",
       "SqlTableDependency >= 8.5.8",
       "System.Data.SqlClient >= 4.8.5",
@@ -11929,19 +11961,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Admin\\.nuget\\packages\\": {}
+    "C:\\Users\\USER\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
+      "projectUniqueName": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
       "projectName": "TablesideOrdering",
-      "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
-      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\obj\\",
+      "projectPath": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
+      "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -11949,6 +11986,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -11997,6 +12035,10 @@
             "target": "Package",
             "version": "[6.0.15, )"
           },
+          "QRCoder": {
+            "target": "Package",
+            "version": "[1.4.2, )"
+          },
           "RestSharp": {
             "target": "Package",
             "version": "[110.2.0, )"
@@ -12033,7 +12075,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
       }
     }
   }
