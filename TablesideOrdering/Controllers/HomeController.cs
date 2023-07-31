@@ -292,6 +292,11 @@ namespace TablesideOrdering.Controllers
             return validnum;
         }
 
+        public IActionResult Return()
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
 
 
 
