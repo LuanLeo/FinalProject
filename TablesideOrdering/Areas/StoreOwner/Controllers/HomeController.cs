@@ -4,14 +4,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Areas.StoreOwner.StatisticModels;
 using TablesideOrdering.Areas.StoreOwner.ViewModels;
 using TablesideOrdering.Data;
 using TablesideOrdering.ViewModels;
+using OrderViewModel = TablesideOrdering.Areas.StoreOwner.ViewModels.OrderViewModel;
 
 namespace TablesideOrdering.Areas.StoreOwner.Controllers
 {
@@ -35,7 +38,43 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             FoodTopPercentage(time);
             return View();
         }
-
+        public IActionResult OrderDetails(int id)
+        {
+            OrderViewModel OrderData = new OrderViewModel();
+            List<Orders> o = new List<Orders>();
+            foreach (var order in context.Orders)
+            {
+                if (order.OrderId==id)
+                {
+                    o.Add(order);
+                }
+            }
+            OrderData.Order = o;
+            List<OrderDetail> od = new List<OrderDetail>();
+            foreach (var order in context.OrderDetails)
+            {
+                if (order.OrderId == id)
+                {
+                    od.Add(order);
+                }
+            }
+            OrderData.OrderDetail = od;           
+            return View(OrderData);
+        }
+        public IActionResult AllOrders(DateTime date)
+        {
+            OrderViewModel OrderData = new OrderViewModel();
+            List<Orders> list = new List<Orders>();
+            foreach(var order in context.Orders)
+            {
+                if (order.OrderDate.ToShortDateString()== date.ToShortDateString()&&order.Status=="Done"||date.ToShortDateString()=="01/01/0001"&&order.Status == "Done")
+                {
+                    list.Add(order);
+                }
+            }
+            OrderData.Order= list;
+            return View(OrderData);
+        }
         public void StatisticOrder(string time)
         {
             //Take list from database

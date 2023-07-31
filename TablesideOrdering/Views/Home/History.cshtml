@@ -29,6 +29,10 @@
     .pointer {
         cursor: pointer;
     }
+
+    .div {
+        display: block;
+    }
 </style>
 <body>
     <div id="preloder">
@@ -40,7 +44,7 @@
             <div class="row">
                 <h2 class="fw-bold mb-1" style="color:#4A2511 ">Your orders</h2>
                 <table class="table align-middle mb-0 bg-white">
-                    <thead class="bg-light" >
+                    <thead class="bg-light">
                         <tr>
                             <th>Phone Number</th>
                             <th>Order Id</th>
@@ -70,7 +74,8 @@
                                     @if (o.Status == "Not Paid")
                                     {
                                         <span class="badge badge-warning rounded-pill d-inline">Not paid</span>
-                                    }else if(o.Status == "Processing")
+                                    }
+                                    else if (o.Status == "Processing")
                                     {
                                         <span class="badge badge-primary rounded-pill d-inline">Processing</span>
                                     }

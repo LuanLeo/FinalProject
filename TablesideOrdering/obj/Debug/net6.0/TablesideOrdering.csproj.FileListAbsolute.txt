@@ -1404,15 +1404,11 @@ C:\Users\USER\Desktop\FinalProject\TablesideOrdering\obj\Debug\net6.0\refint\Tab
 C:\Users\USER\Desktop\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.pdb
 C:\Users\USER\Desktop\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.genruntimeconfig.cache
 C:\Users\USER\Desktop\FinalProject\TablesideOrdering\obj\Debug\net6.0\ref\TablesideOrdering.dll
-C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.csproj.AssemblyReference.cache
-C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.AssemblyInfoInputs.cache
-C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.AssemblyInfo.cs
-C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.csproj.CoreCompileInputs.cache
-C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.RazorAssemblyInfo.cache
-C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.RazorAssemblyInfo.cs
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\RestSharp.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\System.Text.Json.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\QRCoder.dll
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\appsettings.Development.json
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\appsettings.json
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\libman.json
@@ -1487,6 +1483,7 @@ C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\NuGet.ProjectModel.dll
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\NuGet.Protocol.dll
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\NuGet.Versioning.dll
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\QRCoder.dll
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\RestSharp.dll
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\TableDependency.SqlClient.dll
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\System.Composition.AttributedModel.dll
@@ -1669,6 +1666,15 @@ C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Text.Encoding.CodePages.dll
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.csproj.AssemblyReference.cache
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.AssemblyInfoInputs.cache
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.AssemblyInfo.cs
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.csproj.CoreCompileInputs.cache
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.RazorAssemblyInfo.cache
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.RazorAssemblyInfo.cs
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\staticwebassets\msbuild.TablesideOrdering.Microsoft.AspNetCore.StaticWebAssets.props
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\staticwebassets\msbuild.build.TablesideOrdering.props
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.TablesideOrdering.props
@@ -1689,8 +1695,3 @@ C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.pdb
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.genruntimeconfig.cache
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\ref\TablesideOrdering.dll
-C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\RestSharp.dll
-C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\System.Text.Encodings.Web.dll
-C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\System.Text.Json.dll
-C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
-C:\Users\USER\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\QRCoder.dll
