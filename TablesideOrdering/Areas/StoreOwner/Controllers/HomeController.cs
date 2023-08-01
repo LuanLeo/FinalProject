@@ -81,7 +81,10 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             List<Orders> orders = new List<Orders>();
             foreach (var order in context.Orders)
             {
-                orders.Add(order);
+                if (order.Status == "Done")
+                {
+                    orders.Add(order);
+                }
             }
 
             //Take distinct by date (Can't do directly at database)
@@ -161,7 +164,10 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
 
             foreach (var order in context.Orders)
             {
-                orders.Add(order);
+                if (order.Status == "Done")
+                {
+                    orders.Add(order);
+                }
             }
 
             foreach (var detail in context.OrderDetails)
