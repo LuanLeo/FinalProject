@@ -1,0 +1,148 @@
+﻿@using TablesideOrdering.ViewModels;
+@model HomeViewModel
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description">
+    <meta name="keywords">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>L&L Coffee</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/style.css" type="text/css">
+
+</head>
+
+<body>
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+    <!-- Hero Section Begin -->
+    <section class="hero">
+
+        <div class="card-detail" style="background-color:white">
+            <div class="title">Purchase Reciept</div>
+            <div class="info">
+                <div class="row">
+                    @foreach (var item in Model.Order)
+                    {
+                        <div class="col-7">
+                            <span id="heading">Date</span><br>
+                            <span id="details">@item.OrderDate</span>
+                        </div>
+                        <div class="col-5 pull-right">
+                            <span id="heading">Order No.</span><br>
+                            <span id="details">@item.OrderId</span>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="pricing">
+                <div class="row">
+                    <div class="col-6 text-left font-weight-bold" style="color:grey">
+                        <span id="name">Name</span>
+                    </div>
+                    <div class="col-3 text-center font-weight-bold" style="color:grey">
+                        <span id="price">Quantity</span>
+                    </div>
+                    <div class="col-3 text-right font-weight-bold" style="color:grey">
+                        <span id="price">Price</span>
+                    </div>
+
+                </div>
+                @foreach (var item in Model.OrderDetail)
+                {
+                    <div class="row">
+                        <div class="col-6">
+                            <span id="name">@item.ProductName - @item.Size</span>
+                        </div>
+                        <div class="col-3 text-center">
+                            <span id="price">@item.ProQuantity</span>
+                        </div>
+                        <div class="col-3 text-right">
+                            <span id="price">@item.Price VND</span>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="total">
+                @foreach (var item in Model.Order)
+                {
+                    <div class="row">
+                        <div class="col-6">
+                            <span id="name"><big>Total</big></span>
+                        </div>
+
+                        <div class="col-6 text-right">
+                            <span id="price"><big>@item.OrderPrice VND</big></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="text-right"></div>
+                    </div>
+                }
+            </div>
+            <div class="tracking">
+                <div class="title">Tracking Order</div>
+            </div>
+            <div class="progress-track">
+
+                @foreach (var item in Model.Order)
+                {
+                    @if (item.Status == "Not Paid")
+                    {
+                        <ul id="progressbar">
+                            <li class="step0" id="step1">Paid</li>
+                            <li class="step0 text-center" id="step2">Ordered</li>
+                            <li class="step0 text-right" id="step3">Processing</li>
+                            <li class="step0 text-right" id="step4">Done</li>
+                        </ul>
+                    }
+                    else if (item.Status == "Processing")
+                    {
+                        <ul id="progressbar">
+                            <li class="step0 active" id="step1">Paid</li>
+                            <li class="step0 active text-center" id="step2">Ordered</li>
+                            <li class="step0 active text-right" id="step3">Processing</li>
+                            <li class="step0 text-right" id="step4">Done</li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul id="progressbar">
+                            <li class="step0 active" id="step1">Paid</li>
+                            <li class="step0 active text-center" id="step2">Ordered</li>
+                            <li class="step0 active text-right" id="step3">Processing</li>
+                            <li class="step0 active text-right" id="step4">Done</li>
+                        </ul>
+                    }
+                }
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+    <!-- Js Plugins -->
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.nice-select.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/jquery.slicknav.js"></script>
+    <script src="/js/mixitup.min.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/main.js"></script>
+    @await Component.InvokeAsync("Notyf")
+</body>

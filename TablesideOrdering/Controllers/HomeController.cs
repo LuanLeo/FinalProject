@@ -70,7 +70,7 @@ namespace TablesideOrdering.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            
+
             HomeViewModel Homedata = new HomeViewModel();
             Homedata = NavData();
             Homedata.Product = (from ProSP in _context.ProductSizePrice
@@ -315,7 +315,7 @@ namespace TablesideOrdering.Controllers
                 email.To.Add(MailboxAddress.Parse(data.EmailTo));
                 email.Subject = data.Subject;
                 email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = data.Body };
-            }            
+            }
             using var smtp = new SmtpClient();
             {
                 smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
@@ -326,7 +326,7 @@ namespace TablesideOrdering.Controllers
         }
 
         //CONTROLLER FOR SENDING RECEIPT    
-        public void Invoice(Orders order, List<OrderDetail>  orderDetailList, Email data)
+        public void Invoice(Orders order, List<OrderDetail> orderDetailList, Email data)
         {
             StringBuilder subject = new StringBuilder();
             subject.Append("E-Invoice order ").Append(order.OrderId).Append(" at L&L coffee shop ");
@@ -442,7 +442,7 @@ namespace TablesideOrdering.Controllers
             }
 
             _notyfService.Success("The product is deleted", 5);
-            return RedirectToAction("Cart","Home");
+            return RedirectToAction("Cart", "Home");
         }
 
 
@@ -705,7 +705,7 @@ namespace TablesideOrdering.Controllers
 
                 //Renew the cart and notify customer
                 TotalPrice = 0;
-                carts.Clear();                
+                carts.Clear();
                 return RedirectToAction("ThankYou");
             }
             _notyfService.Error("Something went wrong, please try again!");
@@ -718,10 +718,10 @@ namespace TablesideOrdering.Controllers
         //CONTROLLER FOR NAVIGATION
         public HomeViewModel NavData()
         {
-             
+
             CartList cartlist = new CartList();
             cartlist.CartLists = carts;
-          
+
             cartlist.CartAmount = TotalPrice;
             cartlist.PhoneNumber = PhoneNumber;
             cartlist.CusName = CusName;
@@ -749,6 +749,46 @@ namespace TablesideOrdering.Controllers
                 }
                 home.Orders = olist;
                 return View(home);
+            }
+            return RedirectToAction("PhoneValidation");
+        }
+        public IActionResult OrderDetails(int id)
+        {
+            HomeViewModel home = NavData();
+            if (home.Cart.PhoneNumber != null)
+            {
+                var checkorder = _context.Orders.FirstOrDefault(o => o.OrderId == id);
+                if (home.Cart.PhoneNumber == checkorder.PhoneNumber)
+                {
+                    home.Order = (from o in _context.Orders
+                                  where id == o.OrderId
+                                  select new HomeViewModel
+                                  {
+                                      OrderId = o.OrderId,
+                                      OrderDate = o.OrderDate,
+                                      OrderPrice = o.OrderPrice,
+                                      PhoneNumber = o.PhoneNumber,
+                                      ProductQuantity = o.ProductQuantity,
+                                      TableNo = o.TableNo,
+                                      Status = o.Status,
+                                      CusName = o.CusName
+                                  });
+
+                    home.OrderDetail = (from o in _context.OrderDetails
+                                        where id == o.OrderId
+                                        select new HomeViewModel
+                                        {
+                                            OrderId = o.OrderId,
+                                            OrderDetailId = o.OrderDetailId,
+                                            ProductName = o.ProductName,
+                                            Size = o.Size,
+                                            ProQuantity = o.ProQuantity,
+                                            Price = o.Price,
+                                        });
+
+                    return View(home);
+                }
+                return RedirectToAction("Index");
             }
             return RedirectToAction("PhoneValidation");
         }
