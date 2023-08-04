@@ -18,6 +18,7 @@
           "QRCoder": "1.4.2",
           "RestSharp": "110.2.0",
           "SqlTableDependency": "8.5.8",
+          "Syncfusion.Pdf.Net.Core": "22.2.7",
           "System.Data.SqlClient": "4.8.5",
           "Twilio": "6.10.0"
         },
@@ -1884,6 +1885,35 @@
           "lib/netcoreapp2.0/TableDependency.SqlClient.dll": {
             "assemblyVersion": "8.5.8.0",
             "fileVersion": "8.5.8.0"
+          }
+        }
+      },
+      "Syncfusion.Compression.Net.Core/22.2.7": {
+        "runtime": {
+          "lib/net6.0/Syncfusion.Compression.Portable.dll": {
+            "assemblyVersion": "22.2.7.0",
+            "fileVersion": "22.2.7.0"
+          }
+        }
+      },
+      "Syncfusion.Licensing/22.2.7": {
+        "runtime": {
+          "lib/net6.0/Syncfusion.Licensing.dll": {
+            "assemblyVersion": "22.2.7.0",
+            "fileVersion": "22.2.7.0"
+          }
+        }
+      },
+      "Syncfusion.Pdf.Net.Core/22.2.7": {
+        "dependencies": {
+          "Syncfusion.Compression.Net.Core": "22.2.7",
+          "Syncfusion.Licensing": "22.2.7",
+          "System.Text.Encoding.CodePages": "7.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/Syncfusion.Pdf.Portable.dll": {
+            "assemblyVersion": "22.2.7.0",
+            "fileVersion": "22.2.7.0"
           }
         }
       },
@@ -3902,6 +3932,27 @@
       "sha512": "sha512-+XD+4uNnaYRExoeSff4c4l3g+e0cWHgzQIXGcz/n+gq0hfWGhMyd11I4CrFLC3ZIXCQokTCw2S/lzh0X4fvlAQ==",
       "path": "sqltabledependency/8.5.8",
       "hashPath": "sqltabledependency.8.5.8.nupkg.sha512"
+    },
+    "Syncfusion.Compression.Net.Core/22.2.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yzawwL2CnRda8tKNaYyQvvukKXqbOGGxB8faFPSMKM0xGqU9UK8KphWWPVgbdUrA+jcw8AjUC2ZXkc/myJeQtA==",
+      "path": "syncfusion.compression.net.core/22.2.7",
+      "hashPath": "syncfusion.compression.net.core.22.2.7.nupkg.sha512"
+    },
+    "Syncfusion.Licensing/22.2.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fDmwGHJf9YmlYr8+7sNzM3iufylC+VoKJNo0AHRCDAOvOy5WiDDHhMy4zEN938zsAAfAW6kQOJUYU9W1HoD7oA==",
+      "path": "syncfusion.licensing/22.2.7",
+      "hashPath": "syncfusion.licensing.22.2.7.nupkg.sha512"
+    },
+    "Syncfusion.Pdf.Net.Core/22.2.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-7mOxu5TAeAc5zTERBxdi1BSOpSYO28y9bFAkNkDAfuoSlbJcAhlNZ6sWFu2EH6WYj4r+ojizJKjEPhjhMWXyWQ==",
+      "path": "syncfusion.pdf.net.core/22.2.7",
+      "hashPath": "syncfusion.pdf.net.core.22.2.7.nupkg.sha512"
     },
     "System.AppContext/4.3.0": {
       "type": "package",

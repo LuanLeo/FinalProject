@@ -82,6 +82,10 @@
               "target": "Package",
               "version": "[8.5.8, )"
             },
+            "Syncfusion.Pdf.Net.Core": {
+              "target": "Package",
+              "version": "[22.2.7, )"
+            },
             "System.Data.SqlClient": {
               "target": "Package",
               "version": "[4.8.5, )"

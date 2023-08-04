@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "+zxxi6UcDo1HzWSy0CEsiaLkvPTyCkadlySYSm27qLtmWGxiS/XYTfkVc30F0YiLAZtQY5dkKr8Iw59pCYfvfw==",
+  "dgSpecHash": "B+21gPEfrzwu7SObbrcx+IT8Njrf+KfWA+SlTrziwtaryRyycsmhbaHWqhnuiyAWJNsfmfnfooasDtodXwPTgQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
   "expectedPackageFiles": [
@@ -159,6 +159,9 @@
     "C:\\Users\\Admin\\.nuget\\packages\\runtime.win-x64.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x64.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\runtime.win-x86.runtime.native.system.data.sqlclient.sni\\4.4.0\\runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\sqltabledependency\\8.5.8\\sqltabledependency.8.5.8.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\syncfusion.compression.net.core\\22.2.7\\syncfusion.compression.net.core.22.2.7.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\syncfusion.licensing\\22.2.7\\syncfusion.licensing.22.2.7.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\syncfusion.pdf.net.core\\22.2.7\\syncfusion.pdf.net.core.22.2.7.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.buffers\\4.3.0\\system.buffers.4.3.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.collections\\4.3.0\\system.collections.4.3.0.nupkg.sha512",

@@ -18,17 +18,28 @@ using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 using TopFoodSizePrice = TablesideOrdering.Models.TopFoodSizePrice;
 using Twilio.Jwt.AccessToken;
-using System.Drawing;
 using System.Text;
 using System.IO;
 using Twilio.TwiML.Messaging;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Identity.UI.V4.Pages.Account.Internal;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
+using Syncfusion.Pdf;
+using Syncfusion.Pdf.Graphics;
+using Syncfusion.Drawing;
+using System.Net;
+using Org.BouncyCastle.Utilities.Net;
+using Syncfusion.Pdf.Grid;
+using System.Net.Mime;
+using Org.BouncyCastle.Utilities;
+using TablesideOrdering.SignalR.Repositories;
 
 namespace TablesideOrdering.Controllers
 {
     public class HomeController : Controller
     {
         //Call Database and Relatives
+        private readonly IHostingEnvironment _host;
         private readonly ApplicationDbContext _context;
         private readonly SMSMessage _SMSMessage;
         private readonly Email _email;
@@ -47,13 +58,15 @@ namespace TablesideOrdering.Controllers
         public static string Message;
         public static string Subject;
         public static string Email;
+        public static string file;
 
         public HomeController(ApplicationDbContext context,
             INotyfService notyfService,
             IVnPayService vnPayService,
             IOptions<SMSMessage> SMSMessage,
             IOptions<Email> email,
-            IMomoService momoService)
+            IMomoService momoService,
+            IHostingEnvironment host)
         {
             _context = context;
 
@@ -63,6 +76,8 @@ namespace TablesideOrdering.Controllers
             _notyfService = notyfService;
             _vnPayService = vnPayService;
             _momoService = momoService;
+
+            _host = host;
 
         }
 
@@ -297,7 +312,117 @@ namespace TablesideOrdering.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult Test()
+        {
+            return View();
+        }
+        public void PdfGen(Orders order, List<OrderDetail> orderDetailList, Email data)
+        {
+            //add image
+            PdfDocument pdfDocument = new PdfDocument();
+            PdfPage currentPage = pdfDocument.Pages.Add();
+            SizeF clientSize = currentPage.GetClientSize();
+            string logoRootPath = _host.WebRootPath + "/Logo/horizontal logo.png";
+            FileStream imageStream = new FileStream(logoRootPath, FileMode.Open, FileAccess.Read);
+            PdfImage icon = new PdfBitmap(imageStream);
+            SizeF iconSize = new SizeF(200, 40);
+            PointF iconLocation = new PointF(14, 13);
+            PdfGraphics graphics = currentPage.Graphics;
+            graphics.DrawImage(icon, iconLocation, iconSize);
+            PdfFont font = new PdfStandardFont(PdfFontFamily.Helvetica, 20, PdfFontStyle.Bold);
+            var text = new PdfTextElement("Invoice", font, new PdfSolidBrush(Color.FromArgb(1, 53, 67, 168)));
+            text.StringFormat = new PdfStringFormat(PdfTextAlignment.Right);
+            PdfLayoutResult result = text.Draw(currentPage, new PointF(clientSize.Width - 25, iconLocation.Y + 10));
 
+            font = new PdfStandardFont(PdfFontFamily.Helvetica, 10);
+            text = new PdfTextElement("Customer:", font);
+            result = text.Draw(currentPage, new PointF(14, result.Bounds.Bottom + 30));
+            font = new PdfStandardFont(PdfFontFamily.Helvetica, 14, PdfFontStyle.Bold);
+            text = new PdfTextElement($"{order.CusName}", font);
+            result = text.Draw(currentPage, new PointF(14, result.Bounds.Bottom + 3));
+
+            font = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Bold);
+            text = new PdfTextElement($"Invoice No.#{order.OrderId}", font);
+            text.StringFormat = new PdfStringFormat(PdfTextAlignment.Right);
+            text.Draw(currentPage, new PointF(clientSize.Width - 25, result.Bounds.Y - 20));
+            font = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Bold);
+
+
+            PdfGrid grid = new PdfGrid();
+            font = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Regular);
+            grid.Style.Font = font;
+            grid.Columns.Add(4);
+            grid.Columns[1].Width = 70;
+            grid.Columns[2].Width = 70;
+            grid.Columns[3].Width = 70;
+
+            grid.Headers.Add(1);
+            PdfStringFormat stringFormat = new PdfStringFormat(PdfTextAlignment.Right, PdfVerticalAlignment.Middle);
+            PdfGridRow header = grid.Headers[0];
+            header.Cells[0].Value = " Product Name";
+            header.Cells[0].StringFormat.LineAlignment = PdfVerticalAlignment.Middle;
+            header.Cells[1].Value = " Size ";
+            header.Cells[1].StringFormat = stringFormat;
+            header.Cells[2].Value = " Quantity ";
+            header.Cells[2].StringFormat = stringFormat;
+            header.Cells[3].Value = " Price (VCD) ";
+            header.Cells[3].StringFormat = stringFormat;
+            PdfGridRow row;
+            foreach (var item in orderDetailList)
+            {
+                row = grid.Rows.Add();
+                row.Cells[0].Value = $"{item.ProductName}";
+                row.Cells[0].StringFormat.LineAlignment = PdfVerticalAlignment.Middle;
+
+                row.Cells[1].Value = $"{item.Size}";
+                row.Cells[1].StringFormat = stringFormat;
+
+                row.Cells[2].Value = $"{item.ProQuantity}";
+                row.Cells[2].StringFormat = stringFormat;
+
+                row.Cells[3].Value = $"{item.Price}";
+                row.Cells[3].StringFormat = stringFormat;
+            }
+
+
+
+
+            grid.ApplyBuiltinStyle(PdfGridBuiltinStyle.GridTable4Accent5);
+            PdfGridStyle gridStyle = new PdfGridStyle();
+            gridStyle.CellPadding = new PdfPaddings(5, 5, 5, 5);
+            PdfGridLayoutFormat layoutFormat = new PdfGridLayoutFormat();
+            layoutFormat.Layout = PdfLayoutType.Paginate;
+            result = grid.Draw(currentPage, 14, result.Bounds.Bottom + 30, clientSize.Width - 35, layoutFormat);
+            currentPage.Graphics.DrawRectangle(new PdfSolidBrush(Color.FromArgb(255, 239, 242, 255)),
+                new RectangleF(result.Bounds.Right - 100, result.Bounds.Bottom + 20, 100, 25));
+
+            PdfTextElement element = new PdfTextElement("Total", font);
+            element.Draw(currentPage, new RectangleF(result.Bounds.Right - 100, result.Bounds.Bottom + 22, result.Bounds.Width, result.Bounds.Height));
+            var totalPrice = $"{order.OrderPrice}";
+            element = new PdfTextElement(totalPrice, font);
+            element.StringFormat = new PdfStringFormat(PdfTextAlignment.Right);
+            element.Draw(currentPage, new RectangleF(15, result.Bounds.Bottom + 22, result.Bounds.Width, result.Bounds.Height));
+
+
+
+            //Saving the PDF to the MemoryStream/
+            MemoryStream stream = new MemoryStream();
+
+            pdfDocument.Save(stream);
+            pdfDocument.Close(true);
+            stream.Position = 0;
+            file = $"Invoice-{order.OrderId}.pdf";
+            System.IO.File.WriteAllBytes(file, stream.ToArray());
+
+
+            /*//Set the position as '0'.
+            stream.Position = 0;
+
+            //Download the PDF document in the browser.
+            FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/pdf");
+
+            fileStreamResult.FileDownloadName = "Sample.pdf";*/
+        }
 
 
 
@@ -309,13 +434,21 @@ namespace TablesideOrdering.Controllers
             data.Body = Message;
             data.Subject = Subject;
 
+            /*_host.WebRootPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
+            string contentRootPath = _host.WebRootPath + "/Logo/Logo.png";*/
+            var builder = new BodyBuilder();
+            builder.HtmlBody = Message.ToString();
+            builder.Attachments.Add(file);
+
             var email = new MimeMessage();
-            {
-                email.From.Add(MailboxAddress.Parse(data.EmailFrom));
-                email.To.Add(MailboxAddress.Parse(data.EmailTo));
-                email.Subject = data.Subject;
-                email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = data.Body };
-            }
+            email.From.Add(MailboxAddress.Parse(data.EmailFrom));
+            email.To.Add(MailboxAddress.Parse(data.EmailTo));
+            email.Subject = data.Subject;
+            //email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = data.Body };
+            email.Body = builder.ToMessageBody();
+            //email.Attachments = new Attachment(file, "Test.pdf");
+
+
             using var smtp = new SmtpClient();
             {
                 smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
@@ -348,7 +481,6 @@ namespace TablesideOrdering.Controllers
             }
             invoiceHtml.Append("</table>");
             invoiceHtml.Append("</div>");
-
             Subject = subject.ToString();
             Message = invoiceHtml.ToString();
         }
@@ -548,6 +680,7 @@ namespace TablesideOrdering.Controllers
             _context.SaveChanges();
             if (data.EmailTo != null)
             {
+                PdfGen(order, orderDetailList, data);
                 Invoice(order, orderDetailList, data);
                 SendMail(data);
             }
@@ -625,6 +758,7 @@ namespace TablesideOrdering.Controllers
                 data.EmailTo = Email;
                 if (data.EmailTo != null)
                 {
+                    PdfGen(order, orderDetailList, data);
                     Invoice(order, orderDetailList, data);
                     SendMail(data);
                 }
@@ -699,6 +833,7 @@ namespace TablesideOrdering.Controllers
                 data.EmailTo = Email;
                 if (data.EmailTo != null)
                 {
+                    PdfGen(order, orderDetailList, data);
                     Invoice(order, orderDetailList, data);
                     SendMail(data);
                 }

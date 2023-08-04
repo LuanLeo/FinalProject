@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    Layout = null;
+}
+@{
+    Html.BeginForm("PdfGen", "Home", FormMethod.Get);
+    {
+        <div>
+            <input type="submit" value="PdfGen" style="width:200px;height:27px" />
+        </div>
+    }
+    Html.EndForm();
+}

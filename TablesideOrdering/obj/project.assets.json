@@ -2554,6 +2554,46 @@
           "lib/netcoreapp2.0/TableDependency.SqlClient.dll": {}
         }
       },
+      "Syncfusion.Compression.Net.Core/22.2.7": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Syncfusion.Compression.Portable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Syncfusion.Compression.Portable.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Syncfusion.Licensing/22.2.7": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Syncfusion.Licensing.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Syncfusion.Licensing.dll": {}
+        }
+      },
+      "Syncfusion.Pdf.Net.Core/22.2.7": {
+        "type": "package",
+        "dependencies": {
+          "Syncfusion.Compression.Net.Core": "22.2.7",
+          "Syncfusion.Licensing": "22.2.7",
+          "System.Text.Encoding.CodePages": "4.4.0"
+        },
+        "compile": {
+          "lib/net6.0/Syncfusion.Pdf.Portable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Syncfusion.Pdf.Portable.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "System.AppContext/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -7862,6 +7902,69 @@
         "sqltabledependency.nuspec"
       ]
     },
+    "Syncfusion.Compression.Net.Core/22.2.7": {
+      "sha512": "yzawwL2CnRda8tKNaYyQvvukKXqbOGGxB8faFPSMKM0xGqU9UK8KphWWPVgbdUrA+jcw8AjUC2ZXkc/myJeQtA==",
+      "type": "package",
+      "path": "syncfusion.compression.net.core/22.2.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "lib/net6.0/Syncfusion.Compression.Portable.dll",
+        "lib/net6.0/Syncfusion.Compression.Portable.xml",
+        "lib/net7.0/Syncfusion.Compression.Portable.dll",
+        "lib/net7.0/Syncfusion.Compression.Portable.xml",
+        "lib/netstandard2.0/Syncfusion.Compression.Portable.dll",
+        "lib/netstandard2.0/Syncfusion.Compression.Portable.xml",
+        "syncfusion.compression.net.core.22.2.7.nupkg.sha512",
+        "syncfusion.compression.net.core.nuspec",
+        "syncfusion_logo.png"
+      ]
+    },
+    "Syncfusion.Licensing/22.2.7": {
+      "sha512": "fDmwGHJf9YmlYr8+7sNzM3iufylC+VoKJNo0AHRCDAOvOy5WiDDHhMy4zEN938zsAAfAW6kQOJUYU9W1HoD7oA==",
+      "type": "package",
+      "path": "syncfusion.licensing/22.2.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "lib/MonoAndroid90/Syncfusion.Licensing.dll",
+        "lib/Xamarin.Mac/Syncfusion.Licensing.dll",
+        "lib/Xamarin.iOS10/Syncfusion.Licensing.dll",
+        "lib/net40/Syncfusion.Licensing.dll",
+        "lib/net45/Syncfusion.Licensing.dll",
+        "lib/net451/Syncfusion.Licensing.dll",
+        "lib/net46/Syncfusion.Licensing.dll",
+        "lib/net6.0/Syncfusion.Licensing.dll",
+        "lib/net7.0/Syncfusion.Licensing.dll",
+        "lib/netstandard2.0/Syncfusion.Licensing.dll",
+        "lib/uap10.0/Syncfusion.Licensing.dll",
+        "syncfusion.licensing.22.2.7.nupkg.sha512",
+        "syncfusion.licensing.nuspec",
+        "syncfusion_logo.png"
+      ]
+    },
+    "Syncfusion.Pdf.Net.Core/22.2.7": {
+      "sha512": "7mOxu5TAeAc5zTERBxdi1BSOpSYO28y9bFAkNkDAfuoSlbJcAhlNZ6sWFu2EH6WYj4r+ojizJKjEPhjhMWXyWQ==",
+      "type": "package",
+      "path": "syncfusion.pdf.net.core/22.2.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "lib/net6.0/Syncfusion.Pdf.Portable.dll",
+        "lib/net6.0/Syncfusion.Pdf.Portable.xml",
+        "lib/net7.0/Syncfusion.Pdf.Portable.dll",
+        "lib/net7.0/Syncfusion.Pdf.Portable.xml",
+        "lib/netstandard2.0/Syncfusion.Pdf.Portable.dll",
+        "lib/netstandard2.0/Syncfusion.Pdf.Portable.xml",
+        "syncfusion.pdf.net.core.22.2.7.nupkg.sha512",
+        "syncfusion.pdf.net.core.nuspec",
+        "syncfusion_logo.png"
+      ]
+    },
     "System.AppContext/4.3.0": {
       "sha512": "fKC+rmaLfeIzUhagxY17Q9siv/sPrjjKcfNg1Ic8IlQkZLipo8ljcaZQu4VtI4Jqbzjc2VTjzGLF6WmsRXAEgA==",
       "type": "package",
@@ -11956,6 +12059,7 @@
       "QRCoder >= 1.4.2",
       "RestSharp >= 110.2.0",
       "SqlTableDependency >= 8.5.8",
+      "Syncfusion.Pdf.Net.Core >= 22.2.7",
       "System.Data.SqlClient >= 4.8.5",
       "Twilio >= 6.10.0"
     ]
@@ -12040,6 +12144,10 @@
           "SqlTableDependency": {
             "target": "Package",
             "version": "[8.5.8, )"
+          },
+          "Syncfusion.Pdf.Net.Core": {
+            "target": "Package",
+            "version": "[22.2.7, )"
           },
           "System.Data.SqlClient": {
             "target": "Package",
