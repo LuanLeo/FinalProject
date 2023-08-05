@@ -550,6 +550,8 @@ namespace TablesideOrdering.Controllers
             ViewBag.CartQuantity = carts.Count();
             ViewBag.CartPrice = TotalPrice;
             NavData();
+            _notyfService.Success("Add product to cart succeeds!", 5);
+
         }
 
         //DELETE from cart

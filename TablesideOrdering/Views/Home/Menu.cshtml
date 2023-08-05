@@ -26,6 +26,12 @@
     <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../css/style.css" type="text/css">
 </head>
+<style>
+    .pointer {
+        cursor: pointer;
+    }
+
+</style>
 <body>
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="../Logo/BackgroundImg/coffeehouse.jpg">
@@ -102,7 +108,7 @@
                                     <div class="col-lg-4">
                                         <div class="product__discount__item">
                                             <div class="product__discount__item__pic set-bg"
-                                                 data-setbg="../ProductImage/@toppro.ProductFull.Pic">
+                                             data-setbg="../ProductImage/@toppro.ProductFull.Pic">
                                                 <ul class="product__item__pic__hover">
                                                     <li><a asp-action="MenuCart" asp-controller="Home" asp-route-id="@toppro.ProductFull.ProSizePriceId"><i class="fa fa-shopping-cart"></i></a></li>
                                                 </ul>
@@ -146,7 +152,7 @@
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg" data-setbg="../ProductImage/@pro.Pic">
                                         <ul class="product__item__pic__hover">
-                                            <li><a asp-action="MenuCart" asp-controller="Home" asp-route-id="@pro.SizePriceId"><i class="fa fa-shopping-cart"></i></a></li>
+                                            <li><a class="Add-To-Cart pointer" data-id="@pro.SizePriceId"><i class="fa fa-shopping-cart"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="product__item__text">
@@ -156,7 +162,7 @@
                                 </div>
                             </div>
                         }
-                    </div>          
+                    </div>
                 </div>
             </div>
         </div>
@@ -172,4 +178,23 @@
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
     @await Component.InvokeAsync("Notyf")
+    @section Scripts{
+        <script>
+            $(document).ready(function () {
+                $(".Add-To-Cart").click(function () {
+                    $.ajax({
+                        url: "/Home/AddToCart",
+                        data: {
+                            id: $(this).data("id")
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            window.location.reload();
+                        }
+                    })
+                })
+            })
+
+        </script>
+    }
 </body>
