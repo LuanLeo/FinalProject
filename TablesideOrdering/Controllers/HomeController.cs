@@ -451,6 +451,7 @@ namespace TablesideOrdering.Controllers
                 smtp.Send(email);
                 smtp.Disconnect(true);
             }
+            
         }
 
         //CONTROLLER FOR SENDING RECEIPT    
@@ -678,6 +679,7 @@ namespace TablesideOrdering.Controllers
                 PdfGen(order, orderDetailList, data);
                 Invoice(order, orderDetailList, data);
                 SendMail(data);
+                System.IO.File.Delete(file);
             }
 
             //Renew the cart and notify customer
@@ -756,6 +758,7 @@ namespace TablesideOrdering.Controllers
                     PdfGen(order, orderDetailList, data);
                     Invoice(order, orderDetailList, data);
                     SendMail(data);
+                    System.IO.File.Delete(file);
                 }
 
                 //Renew the cart and notify customer
@@ -831,6 +834,7 @@ namespace TablesideOrdering.Controllers
                     PdfGen(order, orderDetailList, data);
                     Invoice(order, orderDetailList, data);
                     SendMail(data);
+                    System.IO.File.Delete(file);
                 }
 
                 //Renew the cart and notify customer
