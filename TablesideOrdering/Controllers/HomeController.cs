@@ -311,11 +311,6 @@ namespace TablesideOrdering.Controllers
         {
             return RedirectToAction("Index", "Home");
         }
-
-        public IActionResult Test()
-        {
-            return View();
-        }
         public void PdfGen(Orders order, List<OrderDetail> orderDetailList, Email data)
         {
             //add image
@@ -365,7 +360,7 @@ namespace TablesideOrdering.Controllers
             header.Cells[1].StringFormat = stringFormat;
             header.Cells[2].Value = " Quantity ";
             header.Cells[2].StringFormat = stringFormat;
-            header.Cells[3].Value = " Price (VCD) ";
+            header.Cells[3].Value = " Price (VND) ";
             header.Cells[3].StringFormat = stringFormat;
             PdfGridRow row;
             foreach (var item in orderDetailList)
@@ -398,7 +393,7 @@ namespace TablesideOrdering.Controllers
 
             PdfTextElement element = new PdfTextElement("Total", font);
             element.Draw(currentPage, new RectangleF(result.Bounds.Right - 100, result.Bounds.Bottom + 22, result.Bounds.Width, result.Bounds.Height));
-            var totalPrice = $"{order.OrderPrice}";
+            var totalPrice = $"{order.OrderPrice} VND";
             element = new PdfTextElement(totalPrice, font);
             element.StringFormat = new PdfStringFormat(PdfTextAlignment.Right);
             element.Draw(currentPage, new RectangleF(15, result.Bounds.Bottom + 22, result.Bounds.Width, result.Bounds.Height));
