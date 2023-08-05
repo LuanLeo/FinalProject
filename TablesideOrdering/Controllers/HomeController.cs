@@ -60,6 +60,7 @@ namespace TablesideOrdering.Controllers
         public static string Email;
         public static string file;
 
+        public static int CheckNotify = 0;
         public HomeController(ApplicationDbContext context,
             INotyfService notyfService,
             IVnPayService vnPayService,
@@ -153,6 +154,12 @@ namespace TablesideOrdering.Controllers
             Homedata.Product = productList;
             Homedata.TopProduct = GetTopFood();
             Homedata.Term = term;
+
+            if(CheckNotify > 0)
+            {
+                _notyfService.Success("Add to cart succeed", 5);
+                CheckNotify = 0;
+            }
             return View(Homedata);
         }
 
@@ -271,13 +278,14 @@ namespace TablesideOrdering.Controllers
 
 
 
-        //CONTROLLER FOR INPUTTING PHONE PAGE
+        //INPUTTING PHONE PAGE FUNCTION
         [HttpGet]
         public IActionResult PhoneValidation()
         {
             return View();
         }
 
+        //CHECK VALIDATION FUNCTION
         [HttpPost]
         public IActionResult PhoneValidation(HomeViewModel home)
         {
@@ -291,6 +299,7 @@ namespace TablesideOrdering.Controllers
             return View();
         }
 
+        //SET VALID CONDITION FUNCTION
         public Boolean CheckValid(HomeViewModel home)
         {
             if ((home.PhoneValid.PhoneNumber != null && home.PhoneValid.PhoneConfirmed != null && home.PhoneValid.CusName != null && home.PhoneValid.TableNo != null) == true)
@@ -300,24 +309,89 @@ namespace TablesideOrdering.Controllers
             return false;
         }
 
+        //MODIFY PHONE NUMBER FUNCTION
         public string ConvertToPhoneValid()
         {
-            string number = PhoneNumber.Substring(1);
-            string validnum = "+84" + number;
+            string validnum = "";
+            if (PhoneNumber.Substring(1) != "0")
+            {
+                string number = PhoneNumber.Substring(1);
+                validnum = "+84" + number;
+            } else
+            {
+                validnum = PhoneNumber;
+            }
             return validnum;
         }
 
-        public IActionResult Return()
+
+
+
+
+        //SENDING MAIL FUCNTION
+        public void SendMail(Email data)
         {
-            return RedirectToAction("Index", "Home");
+            data.EmailFrom = _email.EmailFrom;
+            data.Password = _email.Password;
+            data.Body = Message;
+            data.Subject = Subject;
+
+            var builder = new BodyBuilder();
+            builder.HtmlBody = Message.ToString();
+            builder.Attachments.Add(file);
+
+            var email = new MimeMessage();
+            email.From.Add(MailboxAddress.Parse(data.EmailFrom));
+            email.To.Add(MailboxAddress.Parse(data.EmailTo));
+            email.Subject = data.Subject;
+            email.Body = builder.ToMessageBody();
+
+            using var smtp = new SmtpClient();
+            {
+                smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                smtp.Authenticate(data.EmailFrom, data.Password);
+                smtp.Send(email);
+                smtp.Disconnect(true);
+            }
+            
         }
+
+        //CREATE INVOICE FUCNTION
+        public void Invoice(Orders order, List<OrderDetail> orderDetailList, Email data)
+        {
+            StringBuilder subject = new StringBuilder();
+            subject.Append("E-Invoice order ").Append(order.OrderId).Append(" at L&L coffee shop ");
+            StringBuilder invoiceHtml = new StringBuilder();
+            invoiceHtml.Append("<b >E-Invoice at L&L coffee shop ").Append("</b><br />");
+            invoiceHtml.Append("<br /><b>Date : </b>").Append(DateTime.Now.ToShortDateString()).Append("<br />");
+            invoiceHtml.Append("<b>Table : </b>").Append(order.TableNo).Append("<br />");
+            invoiceHtml.Append("<b>Invoice Total :</b> ").Append(order.OrderPrice.ToString()).Append(" VND<br />");
+            invoiceHtml.Append("<br /><b>CUSTOMER CONTACT INFO:</b><br />");
+            invoiceHtml.Append("<b>Name : </b>").Append(order.CusName).Append("<br />");
+            invoiceHtml.Append("<b>Phone : </b>").Append(order.PhoneNumber).Append("<br />");
+            invoiceHtml.Append("<b>Email : </b>").Append(data.EmailTo).Append("<br />");
+
+            invoiceHtml.Append("<br /><b>PRODUCTS:</b><br /><table><tr><th>Product Name  </th><th>Size  </th><th>Quantity  </th><th>Total</th></tr>");
+            // InvoiceItem should be a collection property which contains list of invoice lines
+            foreach (var product in orderDetailList)
+            {
+                invoiceHtml.Append("<tr><td>").Append(product.ProductName).Append("</td><td>").Append(product.Size).Append(@"</td><td style = ""text-align: center;"">").Append(product.ProQuantity.ToString()).Append("</td><td>").Append(product.Price.ToString()).Append(" VND</td></tr>");
+            }
+            invoiceHtml.Append("</table>");
+            invoiceHtml.Append("</div>");
+            Subject = subject.ToString();
+            Message = invoiceHtml.ToString();
+        }
+
+        //CONVERT INVOICE TO PDF FUNCTION
         public void PdfGen(Orders order, List<OrderDetail> orderDetailList, Email data)
         {
-            //add image
+            //Add image
             PdfDocument pdfDocument = new PdfDocument();
             PdfPage currentPage = pdfDocument.Pages.Add();
             SizeF clientSize = currentPage.GetClientSize();
             string logoRootPath = _host.WebRootPath + "/Logo/horizontal logo.png";
+
             FileStream imageStream = new FileStream(logoRootPath, FileMode.Open, FileAccess.Read);
             PdfImage icon = new PdfBitmap(imageStream);
             SizeF iconSize = new SizeF(200, 40);
@@ -362,6 +436,7 @@ namespace TablesideOrdering.Controllers
             header.Cells[2].StringFormat = stringFormat;
             header.Cells[3].Value = " Price (VND) ";
             header.Cells[3].StringFormat = stringFormat;
+
             PdfGridRow row;
             foreach (var item in orderDetailList)
             {
@@ -378,9 +453,6 @@ namespace TablesideOrdering.Controllers
                 row.Cells[3].Value = $"{item.Price}";
                 row.Cells[3].StringFormat = stringFormat;
             }
-
-
-
 
             grid.ApplyBuiltinStyle(PdfGridBuiltinStyle.GridTable4Accent5);
             PdfGridStyle gridStyle = new PdfGridStyle();
@@ -408,84 +480,13 @@ namespace TablesideOrdering.Controllers
             stream.Position = 0;
             file = $"Invoice-{order.OrderId}.pdf";
             System.IO.File.WriteAllBytes(file, stream.ToArray());
-
-
-            /*//Set the position as '0'.
-            stream.Position = 0;
-
-            //Download the PDF document in the browser.
-            FileStreamResult fileStreamResult = new FileStreamResult(stream, "application/pdf");
-
-            fileStreamResult.FileDownloadName = "Sample.pdf";*/
-        }
-
-
-
-        //CONTROLLER FOR SENDING MAIL
-        public void SendMail(Email data)
-        {
-            data.EmailFrom = _email.EmailFrom;
-            data.Password = _email.Password;
-            data.Body = Message;
-            data.Subject = Subject;
-
-            /*_host.WebRootPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
-            string contentRootPath = _host.WebRootPath + "/Logo/Logo.png";*/
-            var builder = new BodyBuilder();
-            builder.HtmlBody = Message.ToString();
-            builder.Attachments.Add(file);
-
-            var email = new MimeMessage();
-            email.From.Add(MailboxAddress.Parse(data.EmailFrom));
-            email.To.Add(MailboxAddress.Parse(data.EmailTo));
-            email.Subject = data.Subject;
-            //email.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = data.Body };
-            email.Body = builder.ToMessageBody();
-            //email.Attachments = new Attachment(file, "Test.pdf");
-
-
-            using var smtp = new SmtpClient();
-            {
-                smtp.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                smtp.Authenticate(data.EmailFrom, data.Password);
-                smtp.Send(email);
-                smtp.Disconnect(true);
-            }
-            
-        }
-
-        //CONTROLLER FOR SENDING RECEIPT    
-        public void Invoice(Orders order, List<OrderDetail> orderDetailList, Email data)
-        {
-            StringBuilder subject = new StringBuilder();
-            subject.Append("E-Invoice order ").Append(order.OrderId).Append(" at L&L coffee shop ");
-            StringBuilder invoiceHtml = new StringBuilder();
-            invoiceHtml.Append("<b >E-Invoice at L&L coffee shop ").Append("</b><br />");
-            invoiceHtml.Append("<br /><b>Date : </b>").Append(DateTime.Now.ToShortDateString()).Append("<br />");
-            invoiceHtml.Append("<b>Table : </b>").Append(order.TableNo).Append("<br />");
-            invoiceHtml.Append("<b>Invoice Total :</b> ").Append(order.OrderPrice.ToString()).Append(" VND<br />");
-            invoiceHtml.Append("<br /><b>CUSTOMER CONTACT INFO:</b><br />");
-            invoiceHtml.Append("<b>Name : </b>").Append(order.CusName).Append("<br />");
-            invoiceHtml.Append("<b>Phone : </b>").Append(order.PhoneNumber).Append("<br />");
-            invoiceHtml.Append("<b>Email : </b>").Append(data.EmailTo).Append("<br />");
-
-            invoiceHtml.Append("<br /><b>PRODUCTS:</b><br /><table><tr><th>Product Name  </th><th>Size  </th><th>Quantity  </th><th>Total</th></tr>");
-            // InvoiceItem should be a collection property which contains list of invoice lines
-            foreach (var product in orderDetailList)
-            {
-                invoiceHtml.Append("<tr><td>").Append(product.ProductName).Append("</td><td>").Append(product.Size).Append(@"</td><td style = ""text-align: center;"">").Append(product.ProQuantity.ToString()).Append("</td><td>").Append(product.Price.ToString()).Append(" VND</td></tr>");
-            }
-            invoiceHtml.Append("</table>");
-            invoiceHtml.Append("</div>");
-            Subject = subject.ToString();
-            Message = invoiceHtml.ToString();
         }
 
 
 
 
 
-        //CONTROLLER FOR CART PAGE
+        //CART PAGE FUCNTION
         public IActionResult Cart()
         {
             HomeViewModel home = NavData();
@@ -496,14 +497,7 @@ namespace TablesideOrdering.Controllers
             return RedirectToAction("PhoneValidation");
         }
 
-        //Add to Cart from Menu
-        public IActionResult MenuCart(int id)
-        {
-            AddToCart(id);
-            _notyfService.Success("Add to cart success", 5);
-            return RedirectToAction("Menu", "Home");
-        }
-
+        //ADD TO CART FUCNTION
         public void AddToCart(int id)
         {
             AddToCart cart = new AddToCart();
@@ -541,6 +535,8 @@ namespace TablesideOrdering.Controllers
                 }
             }
 
+            CheckNotify = id;
+
             TotalPrice = 0;
             foreach (var item in carts)
             {
@@ -551,10 +547,9 @@ namespace TablesideOrdering.Controllers
             ViewBag.CartPrice = TotalPrice;
             NavData();
             _notyfService.Success("Add product to cart succeeds!", 5);
-
         }
 
-        //DELETE from cart
+        //DELETE FROM CART FUNCTION
         public IActionResult DeleteFromCart(int id)
         {
             AddToCart cart = new AddToCart();
@@ -579,7 +574,7 @@ namespace TablesideOrdering.Controllers
 
 
 
-        //CONTROLLER FOR SENDING SMS TO CUSTOMER
+        //SENDING SMS TO CUSTOMER FUCNTION
         public void SendSMS()
         {
             string number = ConvertToPhoneValid();
@@ -595,7 +590,7 @@ namespace TablesideOrdering.Controllers
 
 
 
-        //CONTROLLER FOR SELECTING PAYMENT TYPE
+        //SELECTING PAYMENT TYPE FUCNTION
         public IActionResult PaymentMethod(HomeViewModel home)
         {
             if (carts.Count != 0)
@@ -630,14 +625,14 @@ namespace TablesideOrdering.Controllers
             return RedirectToAction("Cart");
         }
 
-        //CONTROLLER FOR CASH PAYMENT METHOD PAGE
+        //CASH PAYMENT METHOD PAGE FUCNTION
         public IActionResult CashCheckout()
         {
             HomeViewModel home = NavData();
             return View(home);
         }
 
-        //CONTROLLER FOR CASH PAYMENT METHOD PAGE
+        //CASH PAYMENT METHOD PAGE FUCNTION
         public IActionResult PlaceOrder(HomeViewModel home)
         {
             Email = home.Email.EmailTo;
@@ -690,19 +685,20 @@ namespace TablesideOrdering.Controllers
             return RedirectToAction("ThankYou");
         }
 
-        //CONTROLLER FOR CASH CHECKOUT PAGE
+        //CASH CHECKOUT PAGE FUCNTION
         public IActionResult ThankYou()
         {
             return View();
         }
 
-        //CONTROLLER FOR VNPAY PAYMENT METHOD PAGE
+        //VNPAY PAYMENT METHOD PAGE FUCNTION
         public IActionResult VNPayCheckout()
         {
             HomeViewModel home = NavData();
             return View(home);
         }
 
+        //VNPAY URL PAYMENT FUNCTION
         public IActionResult CreatePaymentUrl(HomeViewModel home)
         {
             PaymentInformationModel model = new PaymentInformationModel();
@@ -715,6 +711,7 @@ namespace TablesideOrdering.Controllers
             return Redirect(url);
         }
 
+        //VNPAY PAYMENT FUNCTION
         public IActionResult PaymentCallback()
         {
             var response = _vnPayService.PaymentExecute(Request.Query);
@@ -772,7 +769,7 @@ namespace TablesideOrdering.Controllers
             return RedirectToAction("Index");
         }
 
-        //CONTROLLER FOR Momo PAYMENT METHOD PAGE
+        //MOMO PAYMENT METHOD PAGE FUCNTION
         public IActionResult MomoCheckout()
         {
             HomeViewModel home = NavData();
@@ -790,6 +787,8 @@ namespace TablesideOrdering.Controllers
             return Redirect(response.PayUrl);
         }
 
+
+        //MOMO PAYMENT FUNCTION 
         [HttpGet]
         public IActionResult PaymentMomoCallBack()
         {
@@ -851,24 +850,8 @@ namespace TablesideOrdering.Controllers
 
 
 
-        //CONTROLLER FOR NAVIGATION
-        public HomeViewModel NavData()
-        {
 
-            CartList cartlist = new CartList();
-            cartlist.CartLists = carts;
-
-            cartlist.CartAmount = TotalPrice;
-            cartlist.PhoneNumber = PhoneNumber;
-            cartlist.CusName = CusName;
-
-            HomeViewModel home = new HomeViewModel();
-            home.Cart = cartlist;
-
-            return home;
-        }
-
-        //History orders of customer
+        //ORDER HISTORY FUCNTION
         public IActionResult History()
         {
             HomeViewModel home = NavData();
@@ -888,6 +871,8 @@ namespace TablesideOrdering.Controllers
             }
             return RedirectToAction("PhoneValidation");
         }
+
+        //ORDER DETAILS
         public IActionResult OrderDetails(int id)
         {
             HomeViewModel home = NavData();
@@ -927,6 +912,33 @@ namespace TablesideOrdering.Controllers
                 return RedirectToAction("Index");
             }
             return RedirectToAction("PhoneValidation");
+        }
+
+        //RETURN FROM THANK YOU PAGE FUNCTION
+        public IActionResult Return()
+        {
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
+
+
+        //NAVIGATION FUCNTION
+        public HomeViewModel NavData()
+        {
+
+            CartList cartlist = new CartList();
+            cartlist.CartLists = carts;
+
+            cartlist.CartAmount = TotalPrice;
+            cartlist.PhoneNumber = PhoneNumber;
+            cartlist.CusName = CusName;
+
+            HomeViewModel home = new HomeViewModel();
+            home.Cart = cartlist;
+
+            return home;
         }
     }
 }
