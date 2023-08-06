@@ -52,15 +52,19 @@ namespace TablesideOrdering.Controllers
         //Static variables before saving to database
         public static List<AddToCart> carts = new List<AddToCart>();
         public static float TotalPrice;
+
         public static string PhoneNumber;
+        public static string PhoneMessage;
         public static string TableNo;
         public static string CusName;
-        public static string Message;
+
+        public static string EmailMessage;
         public static string Subject;
         public static string Email;
         public static string file;
 
         public static int CheckNotify = 0;
+
         public HomeController(ApplicationDbContext context,
             INotyfService notyfService,
             IVnPayService vnPayService,
@@ -79,14 +83,12 @@ namespace TablesideOrdering.Controllers
             _momoService = momoService;
 
             _host = host;
-
         }
 
         //CONTROLLER FOR HOME PAGE
         [HttpGet]
         public IActionResult Index()
         {
-
             HomeViewModel Homedata = new HomeViewModel();
             Homedata = NavData();
             Homedata.Product = (from ProSP in _context.ProductSizePrice
@@ -105,7 +107,6 @@ namespace TablesideOrdering.Controllers
             Homedata.Category = _context.Categories.ToList();
             return View(Homedata);
         }
-
 
 
 
@@ -148,6 +149,7 @@ namespace TablesideOrdering.Controllers
                     productList = productList.OrderBy(a => a.Name).ThenBy(a => a.Size);
                     break;
             }
+
             Homedata = NavData();
             Homedata.Category = _context.Categories.ToList();
             Homedata.ProductSizes = _context.ProductSize.ToList();
@@ -333,11 +335,11 @@ namespace TablesideOrdering.Controllers
         {
             data.EmailFrom = _email.EmailFrom;
             data.Password = _email.Password;
-            data.Body = Message;
+            data.Body = EmailMessage;
             data.Subject = Subject;
 
             var builder = new BodyBuilder();
-            builder.HtmlBody = Message.ToString();
+            builder.HtmlBody = EmailMessage.ToString();
             builder.Attachments.Add(file);
 
             var email = new MimeMessage();
@@ -361,6 +363,7 @@ namespace TablesideOrdering.Controllers
         {
             StringBuilder subject = new StringBuilder();
             subject.Append("E-Invoice order ").Append(order.OrderId).Append(" at L&L coffee shop ");
+
             StringBuilder invoiceHtml = new StringBuilder();
             invoiceHtml.Append("<b >E-Invoice at L&L coffee shop ").Append("</b><br />");
             invoiceHtml.Append("<br /><b>Date : </b>").Append(DateTime.Now.ToShortDateString()).Append("<br />");
@@ -379,8 +382,9 @@ namespace TablesideOrdering.Controllers
             }
             invoiceHtml.Append("</table>");
             invoiceHtml.Append("</div>");
+
             Subject = subject.ToString();
-            Message = invoiceHtml.ToString();
+            EmailMessage = invoiceHtml.ToString();
         }
 
         //CONVERT INVOICE TO PDF FUNCTION
@@ -415,7 +419,6 @@ namespace TablesideOrdering.Controllers
             text.StringFormat = new PdfStringFormat(PdfTextAlignment.Right);
             text.Draw(currentPage, new PointF(clientSize.Width - 25, result.Bounds.Y - 20));
             font = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Bold);
-
 
             PdfGrid grid = new PdfGrid();
             font = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Regular);
@@ -470,16 +473,14 @@ namespace TablesideOrdering.Controllers
             element.StringFormat = new PdfStringFormat(PdfTextAlignment.Right);
             element.Draw(currentPage, new RectangleF(15, result.Bounds.Bottom + 22, result.Bounds.Width, result.Bounds.Height));
 
-
-
             //Saving the PDF to the MemoryStream/
             MemoryStream stream = new MemoryStream();
-
             pdfDocument.Save(stream);
             pdfDocument.Close(true);
             stream.Position = 0;
             file = $"Invoice-{order.OrderId}.pdf";
             System.IO.File.WriteAllBytes(file, stream.ToArray());
+
         }
 
 
@@ -500,6 +501,8 @@ namespace TablesideOrdering.Controllers
         //ADD TO CART FUCNTION
         public void AddToCart(int id)
         {
+            CheckNotify = id;
+
             AddToCart cart = new AddToCart();
             ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
             ProductSizePriceViewModel model = new ProductSizePriceViewModel();
@@ -535,8 +538,6 @@ namespace TablesideOrdering.Controllers
                 }
             }
 
-            CheckNotify = id;
-
             TotalPrice = 0;
             foreach (var item in carts)
             {
@@ -546,7 +547,6 @@ namespace TablesideOrdering.Controllers
             ViewBag.CartQuantity = carts.Count();
             ViewBag.CartPrice = TotalPrice;
             NavData();
-            _notyfService.Success("Add product to cart succeeds!", 5);
         }
 
         //DELETE FROM CART FUNCTION
@@ -582,7 +582,7 @@ namespace TablesideOrdering.Controllers
             var message = MessageResource.Create(
                 to: new PhoneNumber(number),
                 from: new PhoneNumber(_SMSMessage.PhoneFrom),
-                body: Message);
+                body: PhoneMessage);
         }
 
 
@@ -704,7 +704,6 @@ namespace TablesideOrdering.Controllers
             PaymentInformationModel model = new PaymentInformationModel();
             model = home.Payment;
             model.Amount = TotalPrice;
-
             Email = home.Email.EmailTo;
 
             var url = _vnPayService.CreatePaymentUrl(model, HttpContext);

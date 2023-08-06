@@ -15,7 +15,7 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+
     <!-- Css Styles -->
     <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
@@ -26,10 +26,9 @@
     <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="../css/style.css" type="text/css">
     <link rel="stylesheet" href="~/css/paymentselect.css" />
-
 </head>
 
-<body>   
+<body>
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="../Logo/BackgroundImg/coffeehouse.jpg">
         <div class="container">
@@ -46,75 +45,84 @@
     <!-- Shoping Cart Section Begin -->
     <section class="shoping-cart spad">
         <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="shoping__cart__table">
-                        @if (Model.Cart.CartLists.Count > 0)
-                        {
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th class="shoping__product">Products</th>
-                                        <th>Size</th>
-                                        <th>Price</th>
-                                        <th>Quantity</th>
-                                        <th>Total</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model.Cart.CartLists)
-                                    {
+            <form asp-action="EditCart" asp-controller="Home">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="shoping__cart__table">
+                            @if (Model.Cart.CartLists.Count > 0)
+                            {
+                                <table>
+                                    <thead>
                                         <tr>
-                                            <td class="shoping__cart__item">
-                                                <img src="../ProductImage/@item.Product.Pic" alt="" height="150px" width="150px">
-                                                <h5>@item.Product.Name</h5>
-                                            </td>
-                                            <td class="shoping__cart__size">
-                                                @item.Size
-                                            </td>
-                                            <td class="shoping__cart__price">
-                                                @item.Price VND
-                                            </td>
-                                            <td class="shoping__cart__quantity">
-                                                @item.Quantity
-                                            </td>
-                                            <td class="shoping__cart__total">
-                                                @item.TotalProPrice VND
-                                            </td>
-                                            <td class="shoping__cart__item__close">
-                                                <a asp-action="DeleteFromCart" asp-controller="Home" asp-route-id="@item.SizePriceId"><span class="icon_close"></span></a>
-                                            </td>
+                                            <th class="shoping__product">Products</th>
+                                            <th>Size</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Total</th>
+                                            <th></th>
                                         </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        }
-                        else
-                        {
-                            <h5>There is nothing here</h5>
-                        }
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model.Cart.CartLists)
+                                        {
+                                            <tr>
+                                                <td class="shoping__cart__item">
+                                                    <img src="../ProductImage/@item.Product.Pic" alt="" height="100" width="100">
+                                                    <h5>@item.Product.Name</h5>
+                                                </td>
+                                                <td class="shoping__cart__size">
+                                                    @item.Size
+                                                </td>
+                                                <td class="shoping__cart__price">
+
+                                                    @item.Price VND
+                                                </td>
+                                                <td class="shoping__cart__quantity">
+                                                    <div class="quantity">
+                                                        <div class="pro-qty">
+                                                            <input type="text" value="@item.Quantity">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="shoping__cart__total">
+                                                    @item.TotalProPrice VND
+                                                </td>
+                                                <td class="shoping__cart__item__close">
+                                                    <a asp-action="DeleteFromCart" asp-controller="Home" asp-route-id="@item.SizePriceId"><span class="icon_close"></span></a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            }
+                            else
+                            {
+                                <h5>There is nothing here</h5>
+                            }
+                        </div>
                     </div>
                 </div>
-            </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="shoping__cart__btns">
+                            <a asp-action="Index" asp-controller="Home" class="primary-btn cart-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+                                </svg>
+                                Continue Shopping
+                            </a>
+                            <a asp-action="Index" asp-controller="Home" class="primary-btn cart-btn cart-btn-right" style="border:none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                                    <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                                </svg>
+                                Upadate Cart
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="shoping__cart__btns">
-                        <a asp-action="Index" asp-controller="Home" class="primary-btn cart-btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
-                            </svg>
-                            Continue Shopping
-                        </a>
-                        <a asp-action="Cart" asp-controller="Home" class="primary-btn cart-btn cart-btn-right">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
-                                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
-                            </svg>
-                            Upadate Cart
-                        </a>
-                    </div>
-                </div>
                 <div class="col-lg-6"></div>
                 <div class="col-lg-6">
                     <div class="shoping__checkout">
@@ -132,17 +140,15 @@
                                 <input asp-for="PaymentType" type="radio" id="VNPay" value="VNPay">
                                 <input asp-for="PaymentType" type="radio" id="Cash" value="Cash">
                                 <input asp-for="PaymentType" type="radio" id="Momo" value="Momo">
-
                                 <div class="category">
                                     <label for="VNPay" class="VNPayMethod">
                                         <div class="imgName">
                                             <div class="imgContainer VNPay">
                                                 <img src="/PaymentMethod/VNPay.png" alt="">
                                             </div>
-                                         </div>
+                                        </div>
                                         <span class="check"><i class="fa-solid fa-circle-check" style="color: #28a745"></i></span>
                                     </label>
-
                                     <label for="Momo" class="MomoMethod">
                                         <div class="imgName">
                                             <div class="imgContainer Momo">
@@ -151,7 +157,6 @@
                                         </div>
                                         <span class="check"><i class="fa-solid fa-circle-check" style="color: #28a745"></i></span>
                                     </label>
-                                    
                                     <label for="Cash" class="CashMethod">
                                         <div class="imgName">
                                             <div class="imgContainer Cash">
