@@ -33,6 +33,7 @@ using Syncfusion.Pdf.Grid;
 using System.Net.Mime;
 using Org.BouncyCastle.Utilities;
 using TablesideOrdering.SignalR.Repositories;
+using Microsoft.CodeAnalysis;
 
 namespace TablesideOrdering.Controllers
 {
@@ -157,7 +158,7 @@ namespace TablesideOrdering.Controllers
             Homedata.TopProduct = GetTopFood();
             Homedata.Term = term;
 
-            if(CheckNotify > 0)
+            if (CheckNotify > 0)
             {
                 _notyfService.Success("Add to cart succeed", 5);
                 CheckNotify = 0;
@@ -319,7 +320,8 @@ namespace TablesideOrdering.Controllers
             {
                 string number = PhoneNumber.Substring(1);
                 validnum = "+84" + number;
-            } else
+            }
+            else
             {
                 validnum = PhoneNumber;
             }
@@ -355,7 +357,7 @@ namespace TablesideOrdering.Controllers
                 smtp.Send(email);
                 smtp.Disconnect(true);
             }
-            
+
         }
 
         //CREATE INVOICE FUCNTION
@@ -390,6 +392,7 @@ namespace TablesideOrdering.Controllers
         //CONVERT INVOICE TO PDF FUNCTION
         public void PdfGen(Orders order, List<OrderDetail> orderDetailList, Email data)
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NGaF1cWGhIfEx1RHxQdld5ZFRHallYTnNWUj0eQnxTdEZjUX9YcH1WTmRYWUJ1Xw==");
             //Add image
             PdfDocument pdfDocument = new PdfDocument();
             PdfPage currentPage = pdfDocument.Pages.Add();
@@ -418,7 +421,6 @@ namespace TablesideOrdering.Controllers
             text = new PdfTextElement($"Invoice No.#{order.OrderId}", font);
             text.StringFormat = new PdfStringFormat(PdfTextAlignment.Right);
             text.Draw(currentPage, new PointF(clientSize.Width - 25, result.Bounds.Y - 20));
-            font = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Bold);
 
             PdfGrid grid = new PdfGrid();
             font = new PdfStandardFont(PdfFontFamily.Helvetica, 10, PdfFontStyle.Regular);
@@ -498,6 +500,50 @@ namespace TablesideOrdering.Controllers
             return RedirectToAction("PhoneValidation");
         }
 
+        //Update CART
+        public void IncQty(int id)
+        {
+            AddToCart cart = new AddToCart();
+            ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
+            if (carts.Find(x => x.SizePriceId == productprice.Id) != null)
+            {
+                cart = carts.Single(x => x.SizePriceId == productprice.Id);
+                cart.Quantity += 1;
+                cart.TotalProPrice = productprice.Price * cart.Quantity;
+            }
+            TotalPrice = 0;
+            foreach (var item in carts)
+            {
+                float Total = item.Quantity * item.Price;
+                TotalPrice += Total;
+            }
+            ViewBag.CartQuantity = carts.Count();
+            ViewBag.CartPrice = TotalPrice;
+        }
+        public void DecQty(int id)
+        {
+            AddToCart cart = new AddToCart();
+            ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
+            if (carts.Find(x => x.SizePriceId == productprice.Id) != null)
+            {
+                cart = carts.Single(x => x.SizePriceId == productprice.Id);
+                cart.Quantity -= 1;
+                cart.TotalProPrice = productprice.Price * cart.Quantity;
+            }
+            TotalPrice = 0;
+            foreach (var item in carts)
+            {
+                float Total = item.Quantity * item.Price;
+                TotalPrice += Total;
+            }
+            
+            ViewBag.CartQuantity = carts.Count();
+            ViewBag.CartPrice = TotalPrice;
+            if (cart.Quantity == 0)
+            {
+                DeleteFromCart(id);
+            }
+        }
         //ADD TO CART FUCNTION
         public void AddToCart(int id)
         {
@@ -865,7 +911,7 @@ namespace TablesideOrdering.Controllers
                         olist.Add(o);
                     }
                 }
-                home.Orders = olist;
+                home.Orders = olist.OrderByDescending(x => x.OrderDate).ToList();
                 return View(home);
             }
             return RedirectToAction("PhoneValidation");

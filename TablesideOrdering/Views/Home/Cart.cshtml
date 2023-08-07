@@ -27,7 +27,12 @@
     <link rel="stylesheet" href="../css/style.css" type="text/css">
     <link rel="stylesheet" href="~/css/paymentselect.css" />
 </head>
+<style>
+    .pointer {
+        cursor: pointer;
+    }
 
+</style>
 <body>
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="../Logo/BackgroundImg/coffeehouse.jpg">
@@ -45,7 +50,8 @@
     <!-- Shoping Cart Section Begin -->
     <section class="shoping-cart spad">
         <div class="container">
-            <form asp-action="EditCart" asp-controller="Home">
+            @using (Html.BeginForm("UpdateCart", "Home", FormMethod.Post))
+            {
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="shoping__cart__table">
@@ -80,7 +86,9 @@
                                                 <td class="shoping__cart__quantity">
                                                     <div class="quantity">
                                                         <div class="pro-qty">
+                                                            <a class="dec qtybtn" data-id="@item.SizePriceId">-</a>
                                                             <input type="text" value="@item.Quantity">
+                                                            <a class="inc qtybtn" data-id="@item.SizePriceId">+</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -97,21 +105,24 @@
                             }
                             else
                             {
-                                <h5>There is nothing here</h5>
+                                <h2>There is nothing here</h2>
                             }
+
+
                         </div>
                     </div>
                 </div>
+
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="shoping__cart__btns">
-                            <a asp-action="Index" asp-controller="Home" class="primary-btn cart-btn">
+                            <a asp-action="Menu" asp-controller="Home" class="primary-btn cart-btn">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
                                 </svg>
                                 Continue Shopping
                             </a>
-                            <a asp-action="Cart" asp-controller="Home" class="primary-btn cart-btn cart-btn-right" style="border:none">
+                            <a class="update-cart primary-btn cart-btn cart-btn-right pointer" style="border:none; color:#ffffff">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
                                     <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
@@ -121,7 +132,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            }
             <div class="row">
                 <div class="col-lg-6"></div>
                 <div class="col-lg-6">
@@ -185,5 +196,60 @@
     <script src="/js/mixitup.min.js"></script>
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
+    @section Scripts{        
+        <script>
+            var proQty = $('.pro-qty');            
+            proQty.on('click', '.qtybtn', function () {
+                var $button = $(this);
+                var oldValue = $button.parent().find('input').val();
+                if ($button.hasClass('inc')) {
+                    var newVal = parseFloat(oldValue) + 1;
+                } else {
+                    // Don't allow decrementing below zero
+                    if (oldValue > 0) {
+                        var newVal = parseFloat(oldValue) - 1;
+                    } else {
+                        newVal = 0;
+                    }
+                }
+                $button.parent().find('input').val(newVal);
+            });
+
+            $(document).ready(function () {
+                $(".inc").click(function () {
+                    $.ajax({
+                        url: "/Home/IncQty",
+                        data: {
+                            id: $(this).data("id")
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            
+                        }
+                    })
+                })
+            })
+            $(document).ready(function () {
+                $(".dec").click(function () {
+                    $.ajax({
+                        url: "/Home/DecQty",
+                        data: {
+                            id: $(this).data("id")
+                        },
+                        success: function (data) {
+                            console.log(data);
+
+                        }
+                    })
+                })
+            })
+
+            $(document).ready(function () {
+                $(".update-cart").click(function () {
+                    location.reload()
+                })
+            })
+        </script>
+    }
 </body>
 @await Component.InvokeAsync("Notyf")
