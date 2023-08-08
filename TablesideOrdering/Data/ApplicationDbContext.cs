@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using TablesideOrdering.Areas.Admin.Models;
+using TablesideOrdering.Areas.Staff.Models;
 using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Models;
 
@@ -19,6 +20,7 @@ namespace TablesideOrdering.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<ProductSize> ProductSize { get; set; }
         public DbSet<ProductSizePrice> ProductSizePrice { get; set; }
+        public DbSet<TableNumber> TableNumbers { get; set; }
 
         //Database for Customer
         public DbSet<Orders> Orders { get; set; }

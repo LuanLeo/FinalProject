@@ -230,7 +230,17 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.Category", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.Staff.Models.TableNumber", b =>
+                {
+                    b.Property<string>("IdTable")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("IdTable");
+
+                    b.ToTable("TableNumbers");
+                });
+
+            modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.Category", b =>
                 {
                     b.Property<int>("CategoryId")
                         .ValueGeneratedOnAdd()
@@ -247,7 +257,7 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.OrderDetail", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.OrderDetail", b =>
                 {
                     b.Property<int>("OrderDetailId")
                         .ValueGeneratedOnAdd()
@@ -277,7 +287,7 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.Orders", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.Orders", b =>
                 {
                     b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
@@ -315,7 +325,7 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.Product", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd()
@@ -343,7 +353,7 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.ProductSize", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.ProductSize", b =>
                 {
                     b.Property<int>("SizeId")
                         .ValueGeneratedOnAdd()
@@ -360,7 +370,7 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("ProductSize");
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.ProductSizePrice", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.ProductSizePrice", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()

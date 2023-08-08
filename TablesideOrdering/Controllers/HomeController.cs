@@ -281,35 +281,21 @@ namespace TablesideOrdering.Controllers
 
 
 
-        //INPUTTING PHONE PAGE FUNCTION
+        //INPUTTING TABLE NUMBER BY LINK FUNCTION
         [HttpGet]
-        public IActionResult PhoneValidation()
+        public IActionResult TableCheck(string id)
         {
-            return View();
-        }
 
-        //CHECK VALIDATION FUNCTION
-        [HttpPost]
-        public IActionResult PhoneValidation(HomeViewModel home)
-        {
-            if (home.PhoneValid.PhoneNumber == home.PhoneValid.PhoneConfirmed && CheckValid(home) == true)
+            if (id != null)
             {
-                PhoneNumber = home.PhoneValid.PhoneNumber;
-                TableNo = home.PhoneValid.TableNo;
-                CusName = home.PhoneValid.CusName;
-                return RedirectToAction("Index", "Home");
+                TableNo = id;
+                NavData();
+                return RedirectToAction("Index");
             }
-            return View();
-        }
-
-        //SET VALID CONDITION FUNCTION
-        public Boolean CheckValid(HomeViewModel home)
-        {
-            if ((home.PhoneValid.PhoneNumber != null && home.PhoneValid.PhoneConfirmed != null && home.PhoneValid.CusName != null && home.PhoneValid.TableNo != null) == true)
+            else
             {
-                return true;
-            };
-            return false;
+                return RedirectToRoute(new { controller = "Account", action = "AccessDenied", area = "Identity" }); ;
+            }
         }
 
         //MODIFY PHONE NUMBER FUNCTION
@@ -375,15 +361,6 @@ namespace TablesideOrdering.Controllers
             invoiceHtml.Append("<b>Name : </b>").Append(order.CusName).Append("<br />");
             invoiceHtml.Append("<b>Phone : </b>").Append(order.PhoneNumber).Append("<br />");
             invoiceHtml.Append("<b>Email : </b>").Append(data.EmailTo).Append("<br />");
-
-            invoiceHtml.Append("<br /><b>PRODUCTS:</b><br /><table><tr><th>Product Name  </th><th>Size  </th><th>Quantity  </th><th>Total</th></tr>");
-            // InvoiceItem should be a collection property which contains list of invoice lines
-            foreach (var product in orderDetailList)
-            {
-                invoiceHtml.Append("<tr><td>").Append(product.ProductName).Append("</td><td>").Append(product.Size).Append(@"</td><td style = ""text-align: center;"">").Append(product.ProQuantity.ToString()).Append("</td><td>").Append(product.Price.ToString()).Append(" VND</td></tr>");
-            }
-            invoiceHtml.Append("</table>");
-            invoiceHtml.Append("</div>");
 
             Subject = subject.ToString();
             EmailMessage = invoiceHtml.ToString();
@@ -493,14 +470,10 @@ namespace TablesideOrdering.Controllers
         public IActionResult Cart()
         {
             HomeViewModel home = NavData();
-            if (home.Cart.PhoneNumber != null)
-            {
-                return View(home);
-            }
-            return RedirectToAction("PhoneValidation");
+            return View(home);
         }
 
-        //Update CART
+        //Increase Quantity
         public void IncQty(int id)
         {
             AddToCart cart = new AddToCart();
@@ -520,6 +493,8 @@ namespace TablesideOrdering.Controllers
             ViewBag.CartQuantity = carts.Count();
             ViewBag.CartPrice = TotalPrice;
         }
+
+        //Decrease Quantity
         public void DecQty(int id)
         {
             AddToCart cart = new AddToCart();
@@ -536,7 +511,7 @@ namespace TablesideOrdering.Controllers
                 float Total = item.Quantity * item.Price;
                 TotalPrice += Total;
             }
-            
+
             ViewBag.CartQuantity = carts.Count();
             ViewBag.CartPrice = TotalPrice;
             if (cart.Quantity == 0)
@@ -751,7 +726,8 @@ namespace TablesideOrdering.Controllers
             model = home.Payment;
             model.Amount = TotalPrice;
             Email = home.Email.EmailTo;
-
+            PhoneNumber = home.Cart.PhoneNumber;
+            CusName = home.Payment.Name;
             var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
             return Redirect(url);
         }
@@ -826,8 +802,9 @@ namespace TablesideOrdering.Controllers
             OrderInfoModel model = new OrderInfoModel();
             model = home.MoMoPay;
             model.Amount = TotalPrice;
-
             Email = home.Email.EmailTo;
+            PhoneNumber = home.Cart.PhoneNumber;
+            CusName = home.MoMoPay.FullName;
             var response = await _momoService.CreatePaymentAsync(model);
             return Redirect(response.PayUrl);
         }
@@ -972,10 +949,9 @@ namespace TablesideOrdering.Controllers
         //NAVIGATION FUCNTION
         public HomeViewModel NavData()
         {
-
             CartList cartlist = new CartList();
             cartlist.CartLists = carts;
-
+            cartlist.TableNo = TableNo;
             cartlist.CartAmount = TotalPrice;
             cartlist.PhoneNumber = PhoneNumber;
             cartlist.CusName = CusName;

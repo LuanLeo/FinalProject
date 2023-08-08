@@ -71,7 +71,7 @@ app.UseEndpoints(endpoints =>
 app.MapControllerRoute(
 
     name: "default",
-    pattern: "{controller=Home}/{action=PhoneValidation}/{id?}"
+    pattern: "{controller=Home}/{action=TableCheck}/{id?}"
     /*  name: "default",
       pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}"*/
     );
