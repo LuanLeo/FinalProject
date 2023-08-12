@@ -64,7 +64,7 @@ namespace TablesideOrdering.Controllers
         public static string Email;
         public static string file;
 
-        public static string type;
+        public static string OrderType;
 
         public static int CheckNotify = 0;
 
@@ -110,16 +110,16 @@ namespace TablesideOrdering.Controllers
             Homedata.Category = _context.Categories.ToList();
             return View(Homedata);
         }
-       
+
         public IActionResult Type(string term)
         {
-            if(term == "Delivery")
+            if (term == "Delivery")
             {
-                type = "Delivery";
+                OrderType = "Delivery";
             }
             else
             {
-                type = "Carry out";
+                OrderType = "Carry out";
             }
             return RedirectToAction("Menu");
         }
@@ -298,7 +298,6 @@ namespace TablesideOrdering.Controllers
         [HttpGet]
         public IActionResult TableCheck(string id)
         {
-
             if (id != null)
             {
                 TableNo = id;
@@ -482,8 +481,13 @@ namespace TablesideOrdering.Controllers
         //CART PAGE FUCNTION
         public IActionResult Cart()
         {
-            HomeViewModel home = NavData();
-            return View(home);
+            if (OrderType != null)
+            {
+                HomeViewModel home = NavData();
+                return View(home);
+            }
+            else return RedirectToAction("Index");
+
         }
 
         //Increase Quantity
@@ -681,6 +685,7 @@ namespace TablesideOrdering.Controllers
             order.PhoneNumber = PhoneNumber;
             order.TableNo = TableNo;
             order.CusName = CusName;
+            order.OrderType = OrderType;
             order.Status = "Not Paid";
 
             _context.Orders.Add(order);
@@ -760,6 +765,7 @@ namespace TablesideOrdering.Controllers
                 order.TableNo = TableNo;
                 order.Status = "Processing";
                 order.CusName = CusName;
+                order.OrderType = OrderType;
 
                 _context.Orders.Add(order);
                 _context.SaveChanges();
@@ -839,6 +845,7 @@ namespace TablesideOrdering.Controllers
                 order.TableNo = TableNo;
                 order.Status = "Processing";
                 order.CusName = CusName;
+                order.OrderType = OrderType;
 
                 _context.Orders.Add(order);
                 _context.SaveChanges();
@@ -927,7 +934,9 @@ namespace TablesideOrdering.Controllers
                                       ProductQuantity = o.ProductQuantity,
                                       TableNo = o.TableNo,
                                       Status = o.Status,
-                                      CusName = o.CusName
+                                      CusName = o.CusName,
+                                      OrderType = o.OrderType
+
                                   });
 
                     home.OrderDetail = (from o in _context.OrderDetails

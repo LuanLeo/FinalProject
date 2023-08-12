@@ -230,14 +230,18 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Areas.Staff.Models.TableNumber", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.Staff.Models.Table", b =>
                 {
                     b.Property<string>("IdTable")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("IdTable");
 
-                    b.ToTable("TableNumbers");
+                    b.ToTable("Tables");
                 });
 
             modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.Category", b =>

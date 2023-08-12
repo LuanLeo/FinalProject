@@ -105,7 +105,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             _context.SaveChanges();
 
             _notyfService.Success("The order is deleted", 5);
-            return RedirectToAction("NotPaidOrder");
+            return RedirectToAction("NotPaidOrders");
         }
 
 
@@ -151,6 +151,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             _notyfService.Success("The order is marked as done", 5);
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public IActionResult Delete(int id)
         {

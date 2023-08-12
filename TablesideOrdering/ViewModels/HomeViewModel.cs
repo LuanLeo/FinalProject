@@ -58,6 +58,7 @@ namespace TablesideOrdering.ViewModels
         public float SubTotal { get; set; }
         public string Status { get; set; }
         public string CusName { get; set; }
-        public string Type { get; set; }
+        public string OrderType { get; set; }
+
     }
 }

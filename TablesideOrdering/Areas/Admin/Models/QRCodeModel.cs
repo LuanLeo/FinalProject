@@ -3,5 +3,7 @@
     public class QRCodeModel
     {
         public string Url { get; set; }
+
+        public string TableNo { get; set; }
     }
 }

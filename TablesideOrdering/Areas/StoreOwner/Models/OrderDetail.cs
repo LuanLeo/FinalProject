@@ -8,5 +8,6 @@
         public string Size { get; set; }
         public int ProQuantity { get; set; }
         public float Price { get; set; }
+
     }
 }
