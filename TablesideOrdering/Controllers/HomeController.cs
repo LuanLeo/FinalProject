@@ -110,10 +110,17 @@ namespace TablesideOrdering.Controllers
             Homedata.Category = _context.Categories.ToList();
             return View(Homedata);
         }
-
-        public IActionResult Address()
+       
+        public IActionResult Type(string term)
         {
-            type = "Delivery";
+            if(term == "Delivery")
+            {
+                type = "Delivery";
+            }
+            else
+            {
+                type = "Carry out";
+            }
             return RedirectToAction("Menu");
         }
 
