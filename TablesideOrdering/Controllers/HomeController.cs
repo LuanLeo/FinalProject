@@ -64,6 +64,8 @@ namespace TablesideOrdering.Controllers
         public static string Email;
         public static string file;
 
+        public static string type;
+
         public static int CheckNotify = 0;
 
         public HomeController(ApplicationDbContext context,
@@ -109,7 +111,11 @@ namespace TablesideOrdering.Controllers
             return View(Homedata);
         }
 
-
+        public IActionResult Address()
+        {
+            type = "Delivery";
+            return RedirectToAction("Menu");
+        }
 
 
 

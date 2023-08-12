@@ -305,6 +305,10 @@ namespace TablesideOrdering.Migrations
                     b.Property<float>("OrderPrice")
                         .HasColumnType("real");
 
+                    b.Property<string>("OrderType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

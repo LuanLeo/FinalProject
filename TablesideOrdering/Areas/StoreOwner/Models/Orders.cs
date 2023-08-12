@@ -13,5 +13,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Models
         public string TableNo { get; set; }
         public string Status { get; set; }
         public string CusName { get; set; }
+        public string OrderType { get; set; }
     }
 }
+
