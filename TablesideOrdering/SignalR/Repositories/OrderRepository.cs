@@ -31,7 +31,9 @@ namespace TablesideOrdering.SignalR.Repositories
                         PhoneNumber = row["PhoneNumber"].ToString(),
                         TableNo = row["TableNo"].ToString(),
                         Status = row["Status"].ToString(),
-                        CusName = row["CusName"].ToString()
+                        CusName = row["CusName"].ToString(),
+                        OrderType = row["OrderType"].ToString(),
+                        Address = row["Address"].ToString(),
                     };
                     orders.Add(order);
                 }
@@ -41,7 +43,7 @@ namespace TablesideOrdering.SignalR.Repositories
 
         public DataTable GetOrderDetailsFromDb()
         {
-            var query = "SELECT OrderId, OrderDate, OrderPrice, ProductQuantity, PhoneNumber, TableNo, Status, CusName FROM Orders";
+            var query = "SELECT OrderId, OrderDate, OrderPrice, ProductQuantity, PhoneNumber, TableNo, Status, CusName,OrderType, Address FROM Orders";
             DataTable dataTable = new DataTable();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

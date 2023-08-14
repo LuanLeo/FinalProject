@@ -111,17 +111,16 @@ namespace TablesideOrdering.Controllers
             return View(Homedata);
         }
 
-        public IActionResult Type(string term)
+        public void Type (string term)
         {
             if (term == "Delivery")
             {
-                OrderType = term;
+                OrderType = "Delivery";
             }
             else
             {
-                OrderType = term;
-            }
-            return RedirectToAction("Menu");
+                OrderType = "Carry out";
+            }            
         }
 
 
@@ -486,7 +485,13 @@ namespace TablesideOrdering.Controllers
                 HomeViewModel home = NavData();
                 return View(home);
             }
-            else return RedirectToAction("Index");
+            else
+            {
+                _notyfService.Error("Please select select delivery method!!!");
+                return RedirectToAction("Index");
+            }
+
+
         }
 
         //Increase Quantity
@@ -666,6 +671,7 @@ namespace TablesideOrdering.Controllers
         public IActionResult CashCheckout()
         {
             HomeViewModel home = NavData();
+            home.OrderType = OrderType;
             return View(home);
         }
 
@@ -681,12 +687,13 @@ namespace TablesideOrdering.Controllers
             order.OrderDate = DateTime.Now;
             order.OrderPrice = TotalPrice;
             order.ProductQuantity = carts.Count();
-            order.PhoneNumber = PhoneNumber;
+            order.PhoneNumber = home.Cart.PhoneNumber;
             order.TableNo = TableNo;
-            order.CusName = CusName;
+            order.CusName = home.Payment.Name;
             order.OrderType = OrderType;
             order.Status = "Not Paid";
-            
+            order.Address = home.Address;
+
             _context.Orders.Add(order);
             _context.SaveChanges();
 
@@ -733,6 +740,7 @@ namespace TablesideOrdering.Controllers
         public IActionResult VNPayCheckout()
         {
             HomeViewModel home = NavData();
+            home.OrderType = OrderType;
             return View(home);
         }
 
@@ -745,6 +753,7 @@ namespace TablesideOrdering.Controllers
             Email = home.Email.EmailTo;
             PhoneNumber = home.Cart.PhoneNumber;
             CusName = home.Payment.Name;
+            Address = home.Address;
             var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
             return Redirect(url);
         }
@@ -765,6 +774,7 @@ namespace TablesideOrdering.Controllers
                 order.Status = "Processing";
                 order.CusName = CusName;
                 order.OrderType = OrderType;
+                order.Address= Address;
 
                 _context.Orders.Add(order);
                 _context.SaveChanges();
@@ -812,6 +822,7 @@ namespace TablesideOrdering.Controllers
         public IActionResult MomoCheckout()
         {
             HomeViewModel home = NavData();
+            home.OrderType = OrderType;
             return View(home);
         }
         [HttpPost]
@@ -823,6 +834,7 @@ namespace TablesideOrdering.Controllers
             Email = home.Email.EmailTo;
             PhoneNumber = home.Cart.PhoneNumber;
             CusName = home.MoMoPay.FullName;
+            Address = home.Address;
             var response = await _momoService.CreatePaymentAsync(model);
             return Redirect(response.PayUrl);
         }
@@ -845,6 +857,7 @@ namespace TablesideOrdering.Controllers
                 order.Status = "Processing";
                 order.CusName = CusName;
                 order.OrderType = OrderType;
+                order.Address = Address;
 
                 _context.Orders.Add(order);
                 _context.SaveChanges();
@@ -962,8 +975,6 @@ namespace TablesideOrdering.Controllers
         {
             return RedirectToAction("Index", "Home");
         }
-
-
 
 
 

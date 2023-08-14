@@ -24,9 +24,6 @@ namespace TablesideOrdering.ViewModels
         public CartList Cart { get; set; }
 
 
-        //Variable for entering phone number
-        public PhoneValidation PhoneValid { get; set; }
-
         //Variable for receiving e-receipt
         public Email Email { get; set; }
 
@@ -59,6 +56,7 @@ namespace TablesideOrdering.ViewModels
         public string Status { get; set; }
         public string CusName { get; set; }
         public string OrderType { get; set; }
+        public string Address { get; set; }
 
     }
 }

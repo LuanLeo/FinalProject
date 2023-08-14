@@ -55,16 +55,26 @@
                                         <input asp-for="@Model.MoMoPay.FullName" value="@Model.Cart.CusName" class="form-control" type="text" />
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <b>Phone<span>*</span></b>
+                                        <input type="text" value="@Model.Cart.PhoneNumber">
+                                    </div>
+                                </div>
                             </div>
                             <div class="checkout__input">
-                                <b>Checkout description<span>*</span></b>
-                                <input asp-for="@Model.MoMoPay.OrderInfo" value="Checkout at L&L coffee" class="form-control" />
+                                <b>Checkout description </b>
+                                <input asp-for="@Model.MoMoPay.OrderInfo" value="Checkout at L&L coffee" disabled/>
+                            </div>
+                            <div class="checkout__input">
+                                <b>Address<span>*</span></b>
+                                <input asp-for="@Model.Address" class="form-control" />
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
-                                        <b>Phone<span>*</span></b>
-                                        <input asp-for="@Model.Cart.PhoneNumber" value="@Model.Cart.PhoneNumber" type="text">
+                                        <b>Delivery method</b>
+                                        <input type="text" value="@Model.OrderType" disabled />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
