@@ -65,7 +65,7 @@ namespace TablesideOrdering.Controllers
         public static string file;
 
         public static string OrderType;
-
+        public static string Address;
         public static int CheckNotify = 0;
 
         public HomeController(ApplicationDbContext context,
@@ -115,11 +115,11 @@ namespace TablesideOrdering.Controllers
         {
             if (term == "Delivery")
             {
-                OrderType = "Delivery";
+                OrderType = term;
             }
             else
             {
-                OrderType = "Carry out";
+                OrderType = term;
             }
             return RedirectToAction("Menu");
         }
@@ -487,7 +487,6 @@ namespace TablesideOrdering.Controllers
                 return View(home);
             }
             else return RedirectToAction("Index");
-
         }
 
         //Increase Quantity
@@ -687,7 +686,7 @@ namespace TablesideOrdering.Controllers
             order.CusName = CusName;
             order.OrderType = OrderType;
             order.Status = "Not Paid";
-
+            
             _context.Orders.Add(order);
             _context.SaveChanges();
 

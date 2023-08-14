@@ -230,7 +230,7 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Areas.Staff.Models.Table", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.Table", b =>
                 {
                     b.Property<string>("IdTable")
                         .HasColumnType("nvarchar(450)");
