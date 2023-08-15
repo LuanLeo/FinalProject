@@ -45,7 +45,8 @@ namespace TablesideOrdering.ViewModels
         public DateTime OrderDate { get; set; }
         public string TableNo { get; set; }
         public float OrderPrice { get; set; }
-        public string PhoneNumber { get; set; }
+
+
         public int ProductQuantity { get; set; }
         public int OrderDetailId { get; set; }
         public string ProductName { get; set; }
@@ -54,9 +55,15 @@ namespace TablesideOrdering.ViewModels
         public float Price { get; set; }
         public float SubTotal { get; set; }
         public string Status { get; set; }
-        public string CusName { get; set; }
         public string OrderType { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your name")]
+        public string CusName { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your address")]
         public string Address { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your phone number")]
+        public string PhoneNumber { get; set; }
     }
 }

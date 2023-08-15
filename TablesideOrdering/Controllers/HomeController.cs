@@ -64,6 +64,7 @@ namespace TablesideOrdering.Controllers
         public static string Email;
         public static string file;
 
+        public static string PaymentType;
         public static string OrderType;
         public static string Address;
         public static int CheckNotify = 0;
@@ -111,7 +112,7 @@ namespace TablesideOrdering.Controllers
             return View(Homedata);
         }
 
-        public void Type (string term)
+        public void Type(string term)
         {
             if (term == "Delivery")
             {
@@ -120,7 +121,7 @@ namespace TablesideOrdering.Controllers
             else
             {
                 OrderType = "Carry out";
-            }            
+            }
         }
 
 
@@ -300,6 +301,7 @@ namespace TablesideOrdering.Controllers
             if (id != null)
             {
                 TableNo = id;
+                OrderType = "Eat in";
                 NavData();
                 return RedirectToAction("Index");
             }
@@ -646,14 +648,17 @@ namespace TablesideOrdering.Controllers
                 {
                     if (home.PaymentType == "VNPay")
                     {
+                        PaymentType = "VNPay";
                         return RedirectToAction("VNPayCheckout");
                     }
                     if (home.PaymentType == "Momo")
                     {
+                        PaymentType = "Momo";
                         return RedirectToAction("MomoCheckout");
                     }
                     if (home.PaymentType == "Cash")
                     {
+                        PaymentType = "Cash";
                         return RedirectToAction("CashCheckout");
                     }
                 }
@@ -667,6 +672,55 @@ namespace TablesideOrdering.Controllers
             return RedirectToAction("Cart");
         }
 
+        //DELIVERY CHECK METHOD PAGE FUCNTION
+        public Boolean DeliveryCheck(HomeViewModel home)
+        {
+            if (PaymentType == "VNPay")
+            {
+                if (home.Payment.Name != null && home.Address != null && home.Cart.PhoneNumber != null)
+                {
+                    return true;
+                }
+            }
+
+            if (PaymentType == "Momo")
+            {
+                if (home.MoMoPay.FullName != null && home.Address != null && home.Cart.PhoneNumber != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        //CARRY OUT CHECK METHOD PAGE FUCNTION
+        public Boolean CarryoutCheck(HomeViewModel home)
+        {
+            if (home.CusName != null && home.Cart.PhoneNumber != null)
+            {
+                return true;
+            }
+
+            if (PaymentType == "VNPay")
+            {
+                if (home.Payment.Name != null  && home.Cart.PhoneNumber != null)
+                {
+                    return true;
+                }
+            }
+
+            if (PaymentType == "Momo")
+            {
+                if (home.MoMoPay.FullName != null && home.Cart.PhoneNumber != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         //CASH PAYMENT METHOD PAGE FUCNTION
         public IActionResult CashCheckout()
         {
@@ -678,65 +732,73 @@ namespace TablesideOrdering.Controllers
         //CASH PAYMENT METHOD PAGE FUCNTION
         public IActionResult PlaceOrder(HomeViewModel home)
         {
-            Email = home.Email.EmailTo;
-            Email data = new Email();
-            data.EmailTo = Email;
-
-            //Save order to database
-            Orders order = new Orders();
-            order.OrderDate = DateTime.Now;
-            order.OrderPrice = TotalPrice;
-            order.ProductQuantity = carts.Count();
-            order.PhoneNumber = home.Cart.PhoneNumber;
-            order.CusName = home.Payment.Name;
-            order.OrderType = OrderType;
-            order.Status = "Not Paid";
-
-            if (OrderType == "Eat in")
+            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true )|| OrderType == "Eat in")
             {
-                order.Address = "";
+                Email = home.Email.EmailTo;
+                Email data = new Email();
+                data.EmailTo = Email;
+
+                //Save order to database
+                Orders order = new Orders();
+                order.OrderDate = DateTime.Now;
+                order.OrderPrice = TotalPrice;
+                order.ProductQuantity = carts.Count();
+                order.PhoneNumber = home.Cart.PhoneNumber;
+                order.CusName = home.Payment.Name;
+                order.OrderType = OrderType;
+                order.Status = "Not Paid";
+
+                if (OrderType == "Eat in" || OrderType == "Carry out")
+                {
+                    order.Address = "";
+                    order.TableNo = TableNo;
+                }
+                else
+                {
+                    order.Address = home.Address;
+                    order.TableNo = "";
+                }
+
+                _context.Orders.Add(order);
+                _context.SaveChanges();
+
+                //Save order list to database
+                List<OrderDetail> orderDetailList = new List<OrderDetail>();
+                foreach (var item in carts)
+                {
+                    OrderDetail orderDetail = new OrderDetail();
+                    orderDetail.OrderId = order.OrderId;
+                    orderDetail.ProductName = item.Product.Name;
+                    orderDetail.Size = item.Size;
+                    orderDetail.ProQuantity = item.Quantity;
+                    orderDetail.Price = item.Quantity * item.Price;
+
+                    orderDetailList.Add(orderDetail);
+                }
+
+                foreach (var orderDt in orderDetailList)
+                {
+                    _context.OrderDetails.Add(orderDt);
+                }
+                _context.SaveChangesAsync();
+                if (data.EmailTo != null)
+                {
+                    PdfGen(order, orderDetailList, data);
+                    Invoice(order, orderDetailList, data);
+                    SendMail(data);
+                    System.IO.File.Delete(file);
+                }
+
+                //Renew the cart and notify customer
+                TotalPrice = 0;
+                carts.Clear();
+                return RedirectToAction("ThankYou");
             }
-            else order.Address = home.Address;
-            if (OrderType == "Eat in")
+            else
             {
-                order.TableNo = "";
+                _notyfService.Warning("Please fill all needed info", 5);
+                return RedirectToAction("CashCheckout");
             }
-            else order.TableNo = "";
-
-            _context.Orders.Add(order);
-            _context.SaveChanges();
-
-            //Save order list to database
-            List<OrderDetail> orderDetailList = new List<OrderDetail>();
-            foreach (var item in carts)
-            {
-                OrderDetail orderDetail = new OrderDetail();
-                orderDetail.OrderId = order.OrderId;
-                orderDetail.ProductName = item.Product.Name;
-                orderDetail.Size = item.Size;
-                orderDetail.ProQuantity = item.Quantity;
-                orderDetail.Price = item.Quantity * item.Price;
-
-                orderDetailList.Add(orderDetail);
-            }
-
-            foreach (var orderDt in orderDetailList)
-            {
-                _context.OrderDetails.Add(orderDt);
-            }
-            _context.SaveChanges();
-            if (data.EmailTo != null)
-            {
-                PdfGen(order, orderDetailList, data);
-                Invoice(order, orderDetailList, data);
-                SendMail(data);
-                System.IO.File.Delete(file);
-            }
-
-            //Renew the cart and notify customer
-            TotalPrice = 0;
-            carts.Clear();
-            return RedirectToAction("ThankYou");
         }
 
         //CASH CHECKOUT PAGE FUCNTION
@@ -750,21 +812,29 @@ namespace TablesideOrdering.Controllers
         {
             HomeViewModel home = NavData();
             home.OrderType = OrderType;
-            return View(home);
+                return View(home);
         }
 
         //VNPAY URL PAYMENT FUNCTION
         public IActionResult CreatePaymentUrl(HomeViewModel home)
         {
-            PaymentInformationModel model = new PaymentInformationModel();
-            model = home.Payment;
-            model.Amount = TotalPrice;
-            Email = home.Email.EmailTo;
-            PhoneNumber = home.Cart.PhoneNumber;
-            CusName = home.Payment.Name;
-            Address = home.Address;
-            var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
-            return Redirect(url);
+            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in")
+            {
+                PaymentInformationModel model = new PaymentInformationModel();
+                model = home.Payment;
+                model.Amount = TotalPrice;
+                Email = home.Email.EmailTo;
+                PhoneNumber = home.Cart.PhoneNumber;
+                CusName = home.Payment.Name;
+                Address = home.Address;
+                var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
+                return Redirect(url);
+            }
+            else
+            {
+                _notyfService.Warning("Please fill all needed info", 5);
+                return RedirectToAction("VNPayCheckout");
+            }
         }
 
         //VNPAY PAYMENT FUNCTION
@@ -782,16 +852,17 @@ namespace TablesideOrdering.Controllers
                 order.Status = "Processing";
                 order.CusName = CusName;
                 order.OrderType = OrderType;
-                if (OrderType == "Eat in")
+
+                if (OrderType == "Eat in" || OrderType == "Carry out")
                 {
                     order.Address = "";
+                    order.TableNo = TableNo;
                 }
-                else order.Address = Address;
-                if (OrderType == "Eat in")
+                else
                 {
+                    order.Address = Address;
                     order.TableNo = "";
                 }
-                else order.TableNo = "";
                 _context.Orders.Add(order);
                 _context.SaveChanges();
 
@@ -840,19 +911,29 @@ namespace TablesideOrdering.Controllers
             HomeViewModel home = NavData();
             home.OrderType = OrderType;
             return View(home);
+
         }
         [HttpPost]
         public async Task<RedirectResult> CreateMomoPaymentUrl(HomeViewModel home)
         {
-            OrderInfoModel model = new OrderInfoModel();
-            model = home.MoMoPay;
-            model.Amount = TotalPrice;
-            Email = home.Email.EmailTo;
-            PhoneNumber = home.Cart.PhoneNumber;
-            CusName = home.MoMoPay.FullName;
-            Address = home.Address;
-            var response = await _momoService.CreatePaymentAsync(model);
-            return Redirect(response.PayUrl);
+            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in")
+            {
+                OrderInfoModel model = new OrderInfoModel();
+                model = home.MoMoPay;
+                model.Amount = TotalPrice;
+                Email = home.Email.EmailTo;
+                PhoneNumber = home.Cart.PhoneNumber;
+                CusName = home.MoMoPay.FullName;
+                Address = home.Address;
+                var response = await _momoService.CreatePaymentAsync(model);
+                return Redirect(response.PayUrl);
+            }
+            else
+            {
+                _notyfService.Warning("Please fill all needed info", 5);
+                return Redirect("/Home/MomoCheckout");
+            }
+
         }
 
 
@@ -873,16 +954,16 @@ namespace TablesideOrdering.Controllers
                 order.CusName = CusName;
                 order.OrderType = OrderType;
 
-                if (OrderType == "Eat in")
+                if (OrderType == "Eat in" || OrderType == "Carry out")
                 {
                     order.Address = "";
+                    order.TableNo = TableNo;
                 }
-                else order.Address = Address;
-                if (OrderType == "Eat in")
+                else
                 {
+                    order.Address = Address;
                     order.TableNo = "";
                 }
-                else order.TableNo = "";
 
                 _context.Orders.Add(order);
                 _context.SaveChanges();

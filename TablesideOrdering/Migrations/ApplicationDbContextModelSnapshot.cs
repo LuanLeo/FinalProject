@@ -299,6 +299,10 @@ namespace TablesideOrdering.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CusName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
