@@ -66,10 +66,13 @@
                                 <b>Checkout description</b>
                                 <input  value="Checkout at L&L coffee" disabled/>
                             </div>
-                            <div class="checkout__input">
-                                <b>Address<span>*</span></b>
-                                <input asp-for="@Model.Address"  class="form-control" />
-                            </div>
+                            @if (Model.OrderType == "Delivery")
+                            {
+                                <div class="checkout__input">
+                                    <b>Address<span>*</span></b>
+                                    <input asp-for="@Model.Address" class="form-control" />
+                                </div>
+                            }
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
