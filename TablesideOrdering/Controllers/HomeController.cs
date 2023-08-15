@@ -688,11 +688,20 @@ namespace TablesideOrdering.Controllers
             order.OrderPrice = TotalPrice;
             order.ProductQuantity = carts.Count();
             order.PhoneNumber = home.Cart.PhoneNumber;
-            order.TableNo = TableNo;
             order.CusName = home.Payment.Name;
             order.OrderType = OrderType;
             order.Status = "Not Paid";
-            order.Address = home.Address;
+
+            if (OrderType == "Eat in")
+            {
+                order.Address = "";
+            }
+            else order.Address = home.Address;
+            if (OrderType == "Eat in")
+            {
+                order.TableNo = "";
+            }
+            else order.TableNo = "";
 
             _context.Orders.Add(order);
             _context.SaveChanges();
@@ -770,12 +779,19 @@ namespace TablesideOrdering.Controllers
                 order.OrderPrice = TotalPrice;
                 order.ProductQuantity = carts.Count();
                 order.PhoneNumber = PhoneNumber;
-                order.TableNo = TableNo;
                 order.Status = "Processing";
                 order.CusName = CusName;
                 order.OrderType = OrderType;
-                order.Address= Address;
-
+                if (OrderType == "Eat in")
+                {
+                    order.Address = "";
+                }
+                else order.Address = Address;
+                if (OrderType == "Eat in")
+                {
+                    order.TableNo = "";
+                }
+                else order.TableNo = "";
                 _context.Orders.Add(order);
                 _context.SaveChanges();
 
@@ -853,11 +869,20 @@ namespace TablesideOrdering.Controllers
                 order.OrderPrice = TotalPrice;
                 order.ProductQuantity = carts.Count();
                 order.PhoneNumber = PhoneNumber;
-                order.TableNo = TableNo;
                 order.Status = "Processing";
                 order.CusName = CusName;
                 order.OrderType = OrderType;
-                order.Address = Address;
+
+                if (OrderType == "Eat in")
+                {
+                    order.Address = "";
+                }
+                else order.Address = Address;
+                if (OrderType == "Eat in")
+                {
+                    order.TableNo = "";
+                }
+                else order.TableNo = "";
 
                 _context.Orders.Add(order);
                 _context.SaveChanges();

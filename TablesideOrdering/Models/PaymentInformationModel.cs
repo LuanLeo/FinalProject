@@ -11,7 +11,7 @@ namespace TablesideOrdering.Models
         public double Amount { get; set; }
 
         [Required]
-        public string OrderDescription { get; set; }
+        public string OrderDescription { get; set; } = "Checkout at L&L coffee";
 
         [Required]
         public string Name { get; set; }
