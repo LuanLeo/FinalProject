@@ -321,6 +321,9 @@ namespace TablesideOrdering.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<TimeSpan>("PickTime")
+                        .HasColumnType("time");
+
                     b.Property<int>("ProductQuantity")
                         .HasColumnType("int");
 

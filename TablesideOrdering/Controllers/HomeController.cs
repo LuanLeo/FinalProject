@@ -675,6 +675,13 @@ namespace TablesideOrdering.Controllers
         //DELIVERY CHECK METHOD PAGE FUCNTION
         public Boolean DeliveryCheck(HomeViewModel home)
         {
+            if (PaymentType == "Cash")
+            {
+                if (home.Payment.Name != null && home.Address != null && home.Cart.PhoneNumber != null)
+                {
+                    return true;
+                }
+            }
             if (PaymentType == "VNPay")
             {
                 if (home.Payment.Name != null && home.Address != null && home.Cart.PhoneNumber != null)
@@ -697,14 +704,16 @@ namespace TablesideOrdering.Controllers
         //CARRY OUT CHECK METHOD PAGE FUCNTION
         public Boolean CarryoutCheck(HomeViewModel home)
         {
-            if (home.CusName != null && home.Cart.PhoneNumber != null)
+            if (PaymentType == "Cash")
             {
-                return true;
+                if (home.Payment.Name != null && home.Cart.PhoneNumber != null)
+                {
+                    return true;
+                }
             }
-
             if (PaymentType == "VNPay")
             {
-                if (home.Payment.Name != null  && home.Cart.PhoneNumber != null)
+                if (home.Payment.Name != null && home.Cart.PhoneNumber != null)
                 {
                     return true;
                 }
@@ -732,7 +741,7 @@ namespace TablesideOrdering.Controllers
         //CASH PAYMENT METHOD PAGE FUCNTION
         public IActionResult PlaceOrder(HomeViewModel home)
         {
-            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true )|| OrderType == "Eat in")
+            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in")
             {
                 Email = home.Email.EmailTo;
                 Email data = new Email();
@@ -747,16 +756,22 @@ namespace TablesideOrdering.Controllers
                 order.CusName = home.Payment.Name;
                 order.OrderType = OrderType;
                 order.Status = "Not Paid";
-
-                if (OrderType == "Eat in" || OrderType == "Carry out")
+                if (OrderType == "Carry out")
                 {
+                    order.PickTime = home.PickTime;
                     order.Address = "";
-                    order.TableNo = TableNo;
+                    order.TableNo = "";
                 }
-                else
+
+                if (OrderType == "Delivery")
                 {
                     order.Address = home.Address;
                     order.TableNo = "";
+                }
+                if (OrderType == "Eat in")
+                {
+                    order.Address = "";
+                    order.TableNo = TableNo;
                 }
 
                 _context.Orders.Add(order);
@@ -812,7 +827,7 @@ namespace TablesideOrdering.Controllers
         {
             HomeViewModel home = NavData();
             home.OrderType = OrderType;
-                return View(home);
+            return View(home);
         }
 
         //VNPAY URL PAYMENT FUNCTION

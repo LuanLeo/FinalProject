@@ -52,7 +52,7 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <b>Name<span>*</span></b>
-                                        <input asp-for="@Model.Payment.Name"  class="form-control" type="text" />
+                                        <input asp-for="@Model.Payment.Name" class="form-control" type="text" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -64,7 +64,7 @@
                             </div>
                             <div class="checkout__input">
                                 <b>Checkout description</b>
-                                <input  value="Checkout at L&L coffee" disabled/>
+                                <input value="Checkout at L&L coffee" disabled />
                             </div>
                             @if (Model.OrderType == "Delivery")
                             {
@@ -77,26 +77,33 @@
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <b>Delivery method</b>
-                                        <input type="text" value="@Model.OrderType" disabled/>
+                                        <input type="text" value="@Model.OrderType" disabled />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <b>Email (Optional)</b>
-                                        <input asp-for="@Model.Email.EmailTo" type="text" placeholder="Enter email to receive E-Invoice"/>
+                                        <input asp-for="@Model.Email.EmailTo" type="text" placeholder="Enter email to receive E-Invoice" />
                                     </div>
                                 </div>
                             </div>
+                            @if (Model.OrderType == "Carry out")
+                            {
+                                <div class="checkout__input" >
+                                    <b>Time to pick up<span>*</span></b>
+                                    <input asp-for="@Model.PickTime" class="form-control" type="time" style="width:125px"/>
+                                </div>
+                            }
                         </div>
                         <div class="col-lg-4 col-md-6">
                             <div class="checkout__order">
                                 <h4>Your Order</h4>
                                 <div class="checkout__order__products">Products <span>Total</span></div>
                                 <ul>
-                                    @foreach(var item in Model.Cart.CartLists)
+                                    @foreach (var item in Model.Cart.CartLists)
                                     {
                                         <li>@item.Product.Name <span>@item.TotalProPrice VND</span></li>
-                                    } 
+                                    }
                                 </ul>
                                 <div class="checkout__order__total">
                                     Total

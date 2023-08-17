@@ -65,5 +65,7 @@ namespace TablesideOrdering.ViewModels
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your phone number")]
         public string PhoneNumber { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Please choose time to pick up")]
+        public TimeSpan PickTime { get; set; }
     }
 }
