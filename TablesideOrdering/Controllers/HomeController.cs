@@ -1027,26 +1027,23 @@ namespace TablesideOrdering.Controllers
 
 
         //ORDER HISTORY FUCNTION
-        public IActionResult History()
+        public IActionResult History(HomeViewModel model)
         {
-            HomeViewModel home = NavData();
-            if (home.Cart.PhoneNumber != null)
+            HomeViewModel home = NavData();      
+            if (model.OrderId != null && model.PhoneNumber!=null) 
             {
-                List<Orders> olist = new List<Orders>();
-                foreach (var o in _context.Orders)
-                {
-                    if (o.PhoneNumber == home.Cart.PhoneNumber)
-                    {
-
-                        olist.Add(o);
-                    }
-                }
-                home.Orders = olist.OrderByDescending(x => x.OrderDate).ToList();
-                return View(home);
+                OrderTracking(home,model);
             }
-            return RedirectToAction("PhoneValidation");
+            return View(home);
         }
-
+        public void OrderTracking(HomeViewModel home, HomeViewModel model)
+        {
+            List<Orders> olist = new List<Orders>();           
+            Orders order = _context.Orders.Where(o => o.OrderId == model.OrderId && o.PhoneNumber == model.PhoneNumber).FirstOrDefault();
+            // home.Orders = olist.OrderByDescending(x => x.OrderDate).ToList();
+            olist.Add(order);
+            home.Orders = olist;
+        }
         //ORDER DETAILS
         public IActionResult OrderDetails(int id)
         {

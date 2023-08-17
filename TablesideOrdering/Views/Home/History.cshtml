@@ -33,58 +33,134 @@
     .div {
         display: block;
     }
+
+
+
+    .form {
+        position: relative;
+        z-index: 1;
+        background: #FFFFFF;
+        max-width: 360px;
+        margin: 0 auto 30px;
+        padding: 45px;
+        text-align: center;
+        box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+    }
+
+        .form input {
+            font-family: "Roboto", sans-serif;
+            outline: 0;
+            background: #f2f2f2;
+            width: 100%;
+            border: 0;
+            margin: 0 0 15px;
+            padding: 15px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+
+        .form button {
+            font-family: "Roboto", sans-serif;
+            text-transform: uppercase;
+            font-weight: 800;
+            outline: 0;
+            background: #4A2511;
+            width: 100%;
+            border: 0;
+            padding: 15px;
+            color: #FFFFFF;
+            font-size: 14px;
+            -webkit-transition: all 0.3 ease;
+            transition: all 0.3 ease;
+            cursor: pointer;
+        }
+
+            .form button:hover, .form button:active, .form button:focus {
+                background: #4A2511;
+            }
+
+        .form .message {
+            margin: 15px 0 0;
+            color: #b3b3b3;
+            font-size: 12px;
+        }
+
+            .form .message a {
+                color: #4A2511;
+                text-decoration: none;
+            }
+
+        .form .register-form {
+            display: none;
+        }
 </style>
 <body>
     <!-- Hero Section Begin -->
     <section class="hero">
         <div class="container">
             <div class="row">
-                <h2 class="fw-bold mb-1" style="color:#4A2511 ">Your orders</h2>
-                <table class="table align-middle mb-0 bg-white">
-                    <thead class="bg-light">
-                        <tr>
-                            <th>Phone Number</th>
-                            <th>Order Id</th>
-                            <th>Order Date</th>
-                            <th>Total</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var o in Model.Orders)
-                        {
-                            <tr onclick="location.href='../Home/OrderDetails?id=@o.OrderId'" class="pointer">
-                                <td>
-                                    <p class="fw-bold mb-1">@o.PhoneNumber</p>
-                                    <p class="text-muted mb-0">@o.CusName</p>
-                                </td>
-                                <td>
-                                    <p class="fw-normal mb-1">@o.OrderId</p>
-                                </td>
-                                <td>
-                                    <p class="fw-normal mb-1">@o.OrderDate</p>
-                                </td>
-                                <td>
-                                    <p class="fw-normal mb-1">@o.OrderPrice</p>
-                                </td>
-                                <td id="status">
-                                    @if (o.Status == "Not Paid")
-                                    {
-                                        <span class="badge badge-warning rounded-pill d-inline">Not paid</span>
-                                    }
-                                    else if (o.Status == "Processing")
-                                    {
-                                        <span class="badge badge-primary rounded-pill d-inline">Processing</span>
-                                    }
-                                    else
-                                    {
-                                        <span class="badge badge-success rounded-pill d-inline">Done</span>
-                                    }
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                <h2 class="fw-bold mb-1" style="color:#4A2511 ">Your Orders</h2>
+                <div class="login-page">
+                    <div class="form">
+                        <form asp-action="History" asp-controller="Home" class="login-form">
+                            <label><b>Phone Number</b></label>
+                            <input asp-for="@Model.PhoneNumber" type="text" placeholder="Phone number" />
+                            <label><b>Order ID</b></label>
+                            <input asp-for="@Model.OrderId" type="text" placeholder="Order ID" />
+                            <button>Show</button>
+                        </form>
+                    </div>
+                </div>
+                @if (Model.Orders != null)
+                {
+                    @foreach (var o in Model.Orders)
+                    {
+                        <table class="table align-middle mb-0 bg-white">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Phone Number</th>
+                                    <th>Order Id</th>
+                                    <th>Order Date</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr onclick="location.href='../Home/OrderDetails?id=@o.OrderId'" class="pointer">
+                                    <td>
+                                        <p class="fw-bold mb-1">@o.PhoneNumber</p>
+                                        <p class="text-muted mb-0">@o.CusName</p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-normal mb-1">@o.OrderId</p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-normal mb-1">@o.OrderDate</p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-normal mb-1">@o.OrderPrice</p>
+                                    </td>
+                                    <td id="status">
+                                        @if (o.Status == "Not Paid")
+                                        {
+                                            <span class="badge badge-warning rounded-pill d-inline">Not paid</span>
+                                        }
+                                        else if (o.Status == "Processing")
+                                        {
+                                            <span class="badge badge-primary rounded-pill d-inline">Processing</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-success rounded-pill d-inline">Done</span>
+                                        }
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    }
+                }
             </div>
         </div>
     </section>
