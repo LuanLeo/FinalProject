@@ -749,7 +749,7 @@ namespace TablesideOrdering.Controllers
 
                 //Save order to database
                 Orders order = new Orders();
-                order.OrderDate = DateTime.Now;
+                order.OrderDate = DateTime.Now.ToString();
                 order.OrderPrice = TotalPrice;
                 order.ProductQuantity = carts.Count();
                 order.PhoneNumber = home.Cart.PhoneNumber;
@@ -862,7 +862,7 @@ namespace TablesideOrdering.Controllers
             {
                 //Save order to database
                 Orders order = new Orders();
-                order.OrderDate = DateTime.Now;
+                order.OrderDate = DateTime.Now.ToString();
                 order.OrderPrice = TotalPrice;
                 order.ProductQuantity = carts.Count();
                 order.PhoneNumber = PhoneNumber;
@@ -964,7 +964,7 @@ namespace TablesideOrdering.Controllers
             {
                 //Save order to database
                 Orders order = new Orders();
-                order.OrderDate = DateTime.Now;
+                order.OrderDate = DateTime.Now.ToString();
                 order.OrderPrice = TotalPrice;
                 order.ProductQuantity = carts.Count();
                 order.PhoneNumber = PhoneNumber;

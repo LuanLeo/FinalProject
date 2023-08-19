@@ -42,7 +42,7 @@ namespace TablesideOrdering.ViewModels
         public IQueryable<HomeViewModel> Order { get; set; }
         public IQueryable<HomeViewModel> OrderDetail { get; set; }
         public int OrderId { get; set; }
-        public DateTime OrderDate { get; set; }
+        public string OrderDate { get; set; }
         public string TableNo { get; set; }
         public float OrderPrice { get; set; }
 

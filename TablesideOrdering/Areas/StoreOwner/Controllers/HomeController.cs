@@ -67,7 +67,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             List<Orders> list = new List<Orders>();
             foreach(var order in context.Orders)
             {
-                if (order.OrderDate.ToShortDateString()== date.ToShortDateString()&&order.Status=="Done"||date.ToShortDateString()=="01/01/0001"&&order.Status == "Done")
+                if (Convert.ToDateTime(order.OrderDate).ToShortDateString()== date.ToShortDateString()&&order.Status=="Done"||date.ToShortDateString()=="01/01/0001"&&order.Status == "Done")
                 {
                     list.Add(order);
                 }
@@ -95,7 +95,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             {
                 ViewBag.Title1 = "Revenues by Day";
                 List<DateTime> Time = new List<DateTime>();
-                Time = orders.DistinctBy(i => i.OrderDate.Date).Select(h => h.OrderDate.Date).ToList();
+                Time = orders.DistinctBy(i => Convert.ToDateTime(i.OrderDate).Date).Select(h => Convert.ToDateTime(h.OrderDate).Date).ToList();
                 foreach (var da in Time)
                 {
                     Date.Add(da.ToShortDateString());
@@ -107,12 +107,12 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 if (time == "Month")
                 {
                     ViewBag.Title1 = "Revenues by Month";
-                    Time = orders.DistinctBy(i => i.OrderDate.Month).Select(h => h.OrderDate.Month).ToList();
+                    Time = orders.DistinctBy(i => Convert.ToDateTime(i.OrderDate).Month).Select(h => Convert.ToDateTime(h.OrderDate).Month).ToList();
                 }
                 else
                 {
                     ViewBag.Title1 = "Revenues by Year";
-                    Time = orders.DistinctBy(i => i.OrderDate.Year).Select(h => h.OrderDate.Year).ToList();
+                    Time = orders.DistinctBy(i => Convert.ToDateTime(i.OrderDate).Year).Select(h => Convert.ToDateTime(h.OrderDate).Year).ToList();
                 }
                 foreach (var da in Time)
                 {
@@ -127,15 +127,15 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 float Price = 0;
                 foreach (var order in orders)
                 {
-                    if (da == order.OrderDate.ToShortDateString() && (time == null || time == "Day"))
+                    if (da == Convert.ToDateTime(order.OrderDate).ToShortDateString() && (time == null || time == "Day"))
                     {
                         Price += order.OrderPrice;
                     }
-                    else if (da == order.OrderDate.Month.ToString() && (time == null || time == "Month"))
+                    else if (da == Convert.ToDateTime(order.OrderDate).Month.ToString() && (time == null || time == "Month"))
                     {
                         Price += order.OrderPrice;
                     }
-                    else if (da == order.OrderDate.Year.ToString() && (time == null || time == "Year"))
+                    else if (da == Convert.ToDateTime(order.OrderDate).Year.ToString() && (time == null || time == "Year"))
                     {
                         Price += order.OrderPrice;
                     }
@@ -202,15 +202,15 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
 
             foreach (var order in orders)
             {
-                if (order.OrderDate.ToShortDateString() == comparedTime)
+                if (Convert.ToDateTime(order.OrderDate).ToShortDateString() == comparedTime)
                 {
                     orderId.Add(order.OrderId);
                 }
-                else if (order.OrderDate.Month.ToString() == comparedTime)
+                else if (Convert.ToDateTime(order.OrderDate).Month.ToString() == comparedTime)
                 {
                     orderId.Add(order.OrderId);
                 }
-                else if (order.OrderDate.Year.ToString() == comparedTime)
+                else if (Convert.ToDateTime(order.OrderDate).Year.ToString() == comparedTime)
                 {
                     orderId.Add(order.OrderId);
                 }

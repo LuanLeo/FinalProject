@@ -6,7 +6,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Models
     {
         [Key]
         public int OrderId { get; set; }
-        public DateTime OrderDate { get; set; }
+        public string OrderDate { get; set; }
         public float OrderPrice { get; set; }
         public int ProductQuantity { get; set; }
         public string PhoneNumber { get; set; }

@@ -10,7 +10,7 @@ namespace TablesideOrdering.Areas.Staff.ViewModels
         public IQueryable<OrderViewModel> ProductSizePrices{ get; set; }
 
         public int OrderId { get; set; }
-        public DateTime OrderDate { get; set; }
+        public string OrderDate { get; set; }
         public string TableNo { get; set; }
         public float OrderPrice { get; set; }
         public string PhoneNumber { get; set; }
