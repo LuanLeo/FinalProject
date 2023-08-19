@@ -105,35 +105,70 @@
                 <div class="title">Tracking Order</div>
             </div>
             <div class="progress-track">
-
-                @foreach (var item in Model.Order)
-                {                   
-                    if (item.Status == "Processing")
+                @if (Model.OrderType == "Delivery")
+                {
+                    @foreach (var item in Model.Order)
                     {
-                        <ul id="progressbar">
-                            <li class="step0 active" id="step1">Ordered</li>
-                            <li class="step0 active text-center" id="step2">Processing</li>
-                            <li class="step0  text-right" id="step3">Delivering</li>
-                            <li class="step0 text-right" id="step4">Done</li>
-                        </ul>
+                        if (item.Status == "Processing")
+                        {
+                            <ul id="progressbar">
+                                <li class="step0 active" id="step1">Ordered</li>
+                                <li class="step0 active text-center" id="step2">Processing</li>
+                                <li class="step0  text-right" id="step3">Delivering</li>
+                                <li class="step0 text-right" id="step4">Done</li>
+                            </ul>
+                        }
+                        else if (item.Status == "Delivering")
+                        {
+                            <ul id="progressbar">
+                                <li class="step0 active" id="step1">Ordered</li>
+                                <li class="step0 active text-center" id="step2">Processing</li>
+                                <li class="step0 active text-right" id="step3">Delivering</li>
+                                <li class="step0  text-right" id="step4">Done</li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul id="progressbar">
+                                <li class="step0 active" id="step1">Ordered</li>
+                                <li class="step0 active text-center" id="step2">Processing</li>
+                                <li class="step0 active text-right" id="step3">Delivering</li>
+                                <li class="step0 active text-right" id="step4">Done</li>
+                            </ul>
+                        }
                     }
-                    else if (item.Status=="Delivering")
+                }
+                else
+                {
+                    @foreach (var item in Model.Order)
                     {
-                        <ul id="progressbar">
-                            <li class="step0 active" id="step1">Ordered</li>
-                            <li class="step0 active text-center" id="step2">Processing</li>
-                            <li class="step0 active text-right" id="step3">Delivering</li>
-                            <li class="step0  text-right" id="step4">Done</li>
-                        </ul>
-                    }
-                    else
-                    {
-                        <ul id="progressbar">
-                            <li class="step0 active" id="step1">Ordered</li>
-                            <li class="step0 active text-center" id="step2">Processing</li>
-                            <li class="step0 active text-right" id="step3">Delivering</li>
-                            <li class="step0 active text-right" id="step4">Done</li>
-                        </ul>
+                        if (item.Status == "Processing")
+                        {
+                            <ul id="progressbar">
+                                <li class="step0 active" id="step1">Ordered</li>
+                                <li class="step0 active text-center" id="step2">Processing</li>
+                                <li class="step0  text-right" id="step3">Ready to take</li>
+                                <li class="step0 text-right" id="step4">Done</li>
+                            </ul>
+                        }
+                        else if (item.Status == "Ready")
+                        {
+                            <ul id="progressbar">
+                                <li class="step0 active" id="step1">Ordered</li>
+                                <li class="step0 active text-center" id="step2">Processing</li>
+                                <li class="step0 active text-right" id="step3">Ready to take</li>
+                                <li class="step0  text-right" id="step4">Done</li>
+                            </ul>
+                        }
+                        else
+                        {
+                            <ul id="progressbar">
+                                <li class="step0 active" id="step1">Ordered</li>
+                                <li class="step0 active text-center" id="step2">Processing</li>
+                                <li class="step0 active text-right" id="step3">Ready to take</li>
+                                <li class="step0 active text-right" id="step4">Done</li>
+                            </ul>
+                        }
                     }
                 }
             </div>

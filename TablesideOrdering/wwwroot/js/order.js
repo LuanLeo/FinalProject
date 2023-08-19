@@ -20,27 +20,30 @@ connection.on("ReceivedOrders", function (orders) {
     BindOrdersToGrid(orders)
 });
 function BindOrdersToGrid(orders) {
+
     $('#tblOrder tbody').empty();
     var tr;
     $.each(orders, function (index, order) {
-        tr = $('<tr/>');
-        tr.append(`<td>${(index + 1)}</td>`);
-        tr.append(`<td>${(order.orderDate)}</td>`);
-        tr.append(`<td>${(order.orderPrice)}</td>`);
-        tr.append(`<td>${(order.productQuantity)}</td>`);
-        tr.append(`<td>${(order.phoneNumber)}</td>`);
-        tr.append(`<td>${(order.cusName)}</td>`);
-        tr.append(`<td>${(order.tableNo)}</td>`);        
-        tr.append(`<td><button type="button" class="btn btn-warning m-1" onclick="location.href='../Staff/Order/Details?id=${(order.orderId)}'">Details</button></td>`);
-        $('#tblOrder').append(tr);
+        if (orders.orderType == "Eat in") {
+            tr = $('<tr/>');
+            tr.append(`<td>${(index + 1)}</td>`);
+            tr.append(`<td>${(order.orderDate)}</td>`);
+            tr.append(`<td>${(order.orderPrice)}</td>`);
+            tr.append(`<td>${(order.productQuantity)}</td>`);
+            tr.append(`<td>${(order.phoneNumber)}</td>`);
+            tr.append(`<td>${(order.cusName)}</td>`);
+            tr.append(`<td>${(order.tableNo)}</td>`);
+            tr.append(`<td><button type="button" class="btn btn-warning m-1" onclick="location.href='../Staff/Order/Details?id=${(order.orderId)}'">Details</button></td>`);
+            $('#tblOrder').append(tr);
 
-        let x;
-        let toast = document.getElementById("toast");
-        clearTimeout(x);
-        toast.style.transform = "translateX(0)";
-        x = setTimeout(() => {
-            toast.style.transform = "translateX(400px)"
-        }, 5000);
+            let x;
+            let toast = document.getElementById("toast");
+            clearTimeout(x);
+            toast.style.transform = "translateX(0)";
+            x = setTimeout(() => {
+                toast.style.transform = "translateX(400px)"
+            }, 5000);
+        }
     });
 }
 
