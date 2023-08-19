@@ -142,11 +142,7 @@
                                         <p class="fw-normal mb-1">@o.OrderPrice</p>
                                     </td>
                                     <td id="status">
-                                        @if (o.Status == "Not Paid")
-                                        {
-                                            <span class="badge badge-warning rounded-pill d-inline">Not paid</span>
-                                        }
-                                        else if (o.Status == "Processing")
+                                        @if (o.Status == "Processing")
                                         {
                                             <span class="badge badge-primary rounded-pill d-inline">Processing</span>
                                         }

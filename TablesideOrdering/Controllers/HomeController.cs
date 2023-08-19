@@ -797,6 +797,7 @@ namespace TablesideOrdering.Controllers
                     _context.OrderDetails.Add(orderDt);
                 }
                 _context.SaveChanges();
+
                 if (data.EmailTo != null)
                 {
                     PdfGen(order, orderDetailList, data);

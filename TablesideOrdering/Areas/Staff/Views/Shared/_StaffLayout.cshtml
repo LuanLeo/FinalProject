@@ -45,6 +45,7 @@
                                 <span class="hide-menu">Dashboard</span>
                             </a>
                         </li>
+
                         <li class="nav-small-cap">
                             <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
                             <span class="hide-menu">Order Manage</span>
@@ -58,19 +59,33 @@
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link" asp-area="Staff" asp-action="NotPaidOrders" asp-controller="Order" aria-expanded="false">
-                                <span>
-                                    <i class="ti ti-zoom-money"></i>
-                                </span>
-                                <span class="hide-menu">Not paid orders</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
                             <a class="sidebar-link" asp-area="Staff" asp-action="DoneOrders" asp-controller="Order" aria-expanded="false">
                                 <span>
                                     <i class="ti ti-clipboard-check"></i>
                                 </span>
-                                <span class="hide-menu">Completed orders</span>
+                                <span class="hide-menu">Completed Orders</span>
+                            </a>
+                        </li>
+
+
+                        <li class="nav-small-cap">
+                            <i class="ti ti-dots nav-small-cap-icon fs-4"></i>
+                            <span class="hide-menu">Delivery Order Manage</span>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-area="Staff" asp-action="Index" asp-controller="DeliveryOrder" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-receipt-2"></i>
+                                </span>
+                                <span class="hide-menu">Processing Orders</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" asp-area="Staff" asp-action="DoneDeliveryOrders" asp-controller="DeliveryOrder" aria-expanded="false">
+                                <span>
+                                    <i class="ti ti-clipboard-check"></i>
+                                </span>
+                                <span class="hide-menu">Completed Orders</span>
                             </a>
                         </li>
                     </ul>

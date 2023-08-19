@@ -32,6 +32,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             Num = 0;
             return View();
         }
+
         //Functions for DONE ORDERS
         public IActionResult DoneOrders()
         {
@@ -46,23 +47,13 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         }
 
 
-        //Functions for NOT PAID ORDERS
-        public IActionResult NotPaidOrders()
-        {
-            List<Orders> OList = new List<Orders>();
-            foreach (var orders in _context.Orders)
-            {
-                if (orders.Status == "Not Paid")
-                    OList.Add(orders);
-            }
-            return View(OList);
-        }
         [HttpGet]
         public IActionResult PaidOrder(int id)
         {
             var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
             return PartialView("PaidOrder", order);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult MarkPaid(Orders model)
@@ -72,39 +63,6 @@ namespace TablesideOrdering.Areas.Staff.Controllers
 
             _context.SaveChanges();
             _notyfService.Success("The order is paid", 5);
-            return RedirectToAction("NotPaidOrders");
-        }
-
-        [HttpGet]
-        public IActionResult DeleteNotPaid(int id)
-        {
-            var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
-            return PartialView("DeleteNotPaid", order);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        //[Authorize(Roles = "Admin")]
-        public async Task<IActionResult> DeleteNotPaid(Orders model)
-        {
-            var order = await _context.Orders.FindAsync(model.OrderId);
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            foreach (var od in _context.OrderDetails)
-            {
-                if (od.OrderId == model.OrderId)
-                {
-                    _context.OrderDetails.Remove(od);
-                }
-            }
-
-            _context.Orders.Remove(order);
-            _context.SaveChanges();
-
-            _notyfService.Success("The order is deleted", 5);
             return RedirectToAction("NotPaidOrders");
         }
 
