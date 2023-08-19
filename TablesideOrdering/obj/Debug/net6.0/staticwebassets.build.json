@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "jvOszvDwHP08Ti31MZPJVa75rmCQiVsPsHvDMWW2Bg0=",
+  "Hash": "PNwldb+YJNhpBPyUBBl34lXKHNQ0ir4XLAAKg4+J1CY=",
   "Source": "TablesideOrdering",
   "BasePath": "_content/TablesideOrdering",
   "Mode": "Default",
@@ -12444,12 +12444,12 @@
       "OriginalItemSpec": "wwwroot\\js\\bootstrap.min.js"
     },
     {
-      "Identity": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\js\\carryoutorder.js",
+      "Identity": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\js\\carryout.js",
       "SourceId": "TablesideOrdering",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\",
       "BasePath": "_content/TablesideOrdering",
-      "RelativePath": "js/carryoutorder.js",
+      "RelativePath": "js/carryout.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -12458,7 +12458,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\carryoutorder.js"
+      "OriginalItemSpec": "wwwroot\\js\\carryout.js"
     },
     {
       "Identity": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\js\\deliveryorder.js",

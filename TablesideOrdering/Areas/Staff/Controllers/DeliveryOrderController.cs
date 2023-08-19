@@ -20,14 +20,13 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         }
         public IActionResult Index()
         {
-            var processOrder = _context.Orders.Where(i => i.OrderType == "Delivery" && i.Status == "Processing");
             if (Num == 0)
             {
                 ViewBag.Num = Num;
                 ViewBag.Message = "New order has been updated";
             }
             Num = 0;
-            return View(processOrder);
+            return View();
         }
         public void Delivery(int id)
         {

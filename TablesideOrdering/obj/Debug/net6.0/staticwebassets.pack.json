@@ -2757,8 +2757,8 @@
       "PackagePath": "staticwebassets\\js\\bootstrap.min.js"
     },
     {
-      "Id": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\js\\carryoutorder.js",
-      "PackagePath": "staticwebassets\\js\\carryoutorder.js"
+      "Id": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\js\\carryout.js",
+      "PackagePath": "staticwebassets\\js\\carryout.js"
     },
     {
       "Id": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\js\\deliveryorder.js",
