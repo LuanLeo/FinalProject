@@ -15,6 +15,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Models
         public string CusName { get; set; }
         public string OrderType { get; set; }
         public string Address { get; set; }
+        public string PaymentType { get; set; }
         public TimeSpan PickTime { get; set; }
     }
 }

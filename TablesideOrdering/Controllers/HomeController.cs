@@ -755,7 +755,8 @@ namespace TablesideOrdering.Controllers
                 order.PhoneNumber = home.Cart.PhoneNumber;
                 order.CusName = home.Payment.Name;
                 order.OrderType = OrderType;
-                order.Status = "Not Paid";
+                order.PaymentType = PaymentType;
+                order.Status = "Processing";
                 if (OrderType == "Carry out")
                 {
                     order.PickTime = home.PickTime;
@@ -795,7 +796,7 @@ namespace TablesideOrdering.Controllers
                 {
                     _context.OrderDetails.Add(orderDt);
                 }
-                _context.SaveChangesAsync();
+                _context.SaveChanges();
                 if (data.EmailTo != null)
                 {
                     PdfGen(order, orderDetailList, data);
@@ -867,6 +868,7 @@ namespace TablesideOrdering.Controllers
                 order.Status = "Processing";
                 order.CusName = CusName;
                 order.OrderType = OrderType;
+                order.PaymentType = PaymentType;
 
                 if (OrderType == "Eat in" || OrderType == "Carry out")
                 {
@@ -968,6 +970,8 @@ namespace TablesideOrdering.Controllers
                 order.Status = "Processing";
                 order.CusName = CusName;
                 order.OrderType = OrderType;
+                order.PaymentType = PaymentType;
+
 
                 if (OrderType == "Eat in" || OrderType == "Carry out")
                 {
@@ -1047,12 +1051,9 @@ namespace TablesideOrdering.Controllers
         //ORDER DETAILS
         public IActionResult OrderDetails(int id)
         {
-            HomeViewModel home = NavData();
-            if (home.Cart.PhoneNumber != null)
-            {
+            HomeViewModel home = NavData();           
                 var checkorder = _context.Orders.FirstOrDefault(o => o.OrderId == id);
-                if (home.Cart.PhoneNumber == checkorder.PhoneNumber)
-                {
+               
                     home.Order = (from o in _context.Orders
                                   where id == o.OrderId
                                   select new HomeViewModel
@@ -1065,6 +1066,7 @@ namespace TablesideOrdering.Controllers
                                       TableNo = o.TableNo,
                                       Status = o.Status,
                                       CusName = o.CusName,
+                                      PaymentType=o.PaymentType,
                                       OrderType = o.OrderType
 
                                   });
@@ -1082,10 +1084,7 @@ namespace TablesideOrdering.Controllers
                                         });
 
                     return View(home);
-                }
-                return RedirectToAction("Index");
-            }
-            return RedirectToAction("PhoneValidation");
+                      
         }
 
         //RETURN FROM THANK YOU PAGE FUNCTION

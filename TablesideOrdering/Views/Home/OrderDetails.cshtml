@@ -37,13 +37,21 @@
                 <div class="row">
                     @foreach (var item in Model.Order)
                     {
-                        <div class="col-7">
+                        <div class="col-4">
                             <span id="heading">Date</span><br>
                             <span id="details">@item.OrderDate</span>
                         </div>
-                        <div class="col-5 pull-right">
+                        <div class="col-3">
+                            <span id="heading">Delivery method</span><br>
+                            <span id="details">@item.OrderType</span>
+                        </div>
+                        <div class="col-3">
                             <span id="heading">Order No.</span><br>
                             <span id="details">@item.OrderId</span>
+                        </div>
+                        <div class="col-2">
+                            <span id="heading">Payment</span><br>
+                            <span id="details">@item.PaymentType</span>
                         </div>
                     }
                 </div>
@@ -99,31 +107,31 @@
             <div class="progress-track">
 
                 @foreach (var item in Model.Order)
-                {
-                    @if (item.Status == "Not Paid")
+                {                   
+                    if (item.Status == "Processing")
                     {
                         <ul id="progressbar">
-                            <li class="step0" id="step1">Paid</li>
-                            <li class="step0 text-center" id="step2">Ordered</li>
-                            <li class="step0 text-right" id="step3">Processing</li>
+                            <li class="step0 active" id="step1">Ordered</li>
+                            <li class="step0 active text-center" id="step2">Processing</li>
+                            <li class="step0  text-right" id="step3">Delivering</li>
                             <li class="step0 text-right" id="step4">Done</li>
                         </ul>
                     }
-                    else if (item.Status == "Processing")
+                    else if (item.Status=="Delivering")
                     {
                         <ul id="progressbar">
-                            <li class="step0 active" id="step1">Paid</li>
-                            <li class="step0 active text-center" id="step2">Ordered</li>
-                            <li class="step0 active text-right" id="step3">Processing</li>
-                            <li class="step0 text-right" id="step4">Done</li>
+                            <li class="step0 active" id="step1">Ordered</li>
+                            <li class="step0 active text-center" id="step2">Processing</li>
+                            <li class="step0 active text-right" id="step3">Delivering</li>
+                            <li class="step0  text-right" id="step4">Done</li>
                         </ul>
                     }
                     else
                     {
                         <ul id="progressbar">
-                            <li class="step0 active" id="step1">Paid</li>
-                            <li class="step0 active text-center" id="step2">Ordered</li>
-                            <li class="step0 active text-right" id="step3">Processing</li>
+                            <li class="step0 active" id="step1">Ordered</li>
+                            <li class="step0 active text-center" id="step2">Processing</li>
+                            <li class="step0 active text-right" id="step3">Delivering</li>
                             <li class="step0 active text-right" id="step4">Done</li>
                         </ul>
                     }
