@@ -82,7 +82,10 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                                    ProductQuantity = o.ProductQuantity,
                                    TableNo = o.TableNo,
                                    Status = o.Status,
-                                   CusName = o.CusName
+                                   CusName = o.CusName,
+                                   OrderType = o.OrderType,
+                                   Address= o.Address,
+                                   PickTime= o.PickTime
                                });
 
             OrderData.OrderDetail = (from o in _context.OrderDetails
@@ -95,7 +98,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                                          Size = o.Size,
                                          ProQuantity = o.ProQuantity,
                                          Price = o.Price,
-                                         SubTotal = o.Price * o.ProQuantity,
+                                        
                                      });
             return View(OrderData);
         }

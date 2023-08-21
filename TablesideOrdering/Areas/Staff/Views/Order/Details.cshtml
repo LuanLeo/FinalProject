@@ -15,6 +15,7 @@
         padding: 40px;
         padding-top: 30px;
     }
+
         .checkout__order h4 {
             color: #1c1c1c;
             font-weight: 700;
@@ -22,28 +23,34 @@
             padding-bottom: 20px;
             margin-bottom: 20px;
         }
+
         .checkout__order .checkout__order__products {
             font-size: 18px;
             color: #1c1c1c;
             font-weight: 700;
             margin-bottom: 10px;
         }
+
             .checkout__order .checkout__order__products span {
                 float: right;
             }
+
         .checkout__order ul {
             margin-bottom: 12px;
         }
+
             .checkout__order ul li {
                 font-size: 16px;
                 color: #6f6f6f;
                 line-height: 40px;
                 list-style: none;
             }
+
                 .checkout__order ul li span {
                     font-weight: 700;
                     float: right;
                 }
+
         .checkout__order .checkout__order__subtotal {
             font-size: 18px;
             color: #1c1c1c;
@@ -54,12 +61,15 @@
             margin-bottom: 15px;
             padding-top: 15px;
         }
+
             .checkout__order .checkout__order__subtotal span {
                 float: right;
             }
+
         .checkout__order .checkout__input__checkbox label {
             padding-left: 20px;
         }
+
         .checkout__order .checkout__order__total {
             font-size: 18px;
             color: #1c1c1c;
@@ -68,10 +78,12 @@
             padding-bottom: 15px;
             margin-bottom: 25px;
         }
+
             .checkout__order .checkout__order__total span {
                 float: right;
                 color: #dd2222;
             }
+
         .checkout__order button {
             font-size: 18px;
             letter-spacing: 2px;
@@ -122,7 +134,7 @@
                                                     @Html.DisplayFor(modelItem => item.ProQuantity)
                                                 </td>
                                                 <td>
-                                                    <span> @Html.DisplayFor(modelItem => item.SubTotal) VND</span>
+                                                    <span> @Html.DisplayFor(modelItem => item.Price) VND</span>
                                                 </td>
                                             </tr>
                                         }
@@ -139,7 +151,21 @@
                                 @foreach (var item in Model.Order)
                                 {
                                     <li>Phone number: <span>@Html.DisplayFor(model => item.PhoneNumber)</span></li>
-                                    <li>Table number: <span>@Html.DisplayFor(model => item.TableNo)</span></li>
+                                    @if (item.OrderType == "Eat in")
+                                    {
+                                        <li>Table number: <span>@Html.DisplayFor(model => item.TableNo)</span></li>
+
+                                    }
+                                    @if (item.OrderType == "Delivery")
+                                    {
+                                        <li>Address: <span>@Html.DisplayFor(model => item.Address)</span></li>
+
+                                    }
+                                    @if (item.OrderType == "Carry out")
+                                    {
+                                        <li>Delivery time: <span>@Html.DisplayFor(model => item.PickTime)</span></li>
+
+                                    }
                                     <li>Date:  <span>@Html.DisplayFor(model => item.OrderDate)</span></li>
                                 }
                             </ul>
@@ -150,12 +176,30 @@
                                     Delete Order
                                 </button>
                                 @await Html.PartialAsync("Delete", item)
-
-                                <a asp-controller="Order" asp-action="MarkDone" asp-route-id="@item.OrderId" style="color:white">
-                                    <button class="btn btn-success m-1">
-                                        Mark as Done
-                                    </button>
-                                </a>
+                                @if (item.OrderType == "Eat in")
+                                {
+                                    <a asp-controller="Order" asp-action="MarkDone" asp-route-id="@item.OrderId" style="color:white">
+                                        <button class="btn btn-success m-1">
+                                            Mark as Done
+                                        </button>
+                                    </a>
+                                }
+                                 @if (item.OrderType == "Delivery")
+                                {
+                                    <a asp-controller="DeliveryOrder" asp-action="Delivery" asp-route-id="@item.OrderId" style="color:white">
+                                        <button class="btn btn-success m-1">
+                                            Delivery
+                                        </button>
+                                    </a>
+                                }
+                                @if (item.OrderType == "Carry out")
+                                {
+                                    <a asp-controller="CarryOut" asp-action="Ready" asp-route-id="@item.OrderId" style="color:white">
+                                        <button class="btn btn-success m-1">
+                                            Ready to delivery
+                                        </button>
+                                    </a>
+                                }
                             }
                         </div>
                     </div>

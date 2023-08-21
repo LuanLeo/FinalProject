@@ -20,8 +20,10 @@ namespace TablesideOrdering.Areas.Staff.ViewModels
         public string Size { get; set; }
         public int ProQuantity { get; set; }
         public float Price { get; set; }
-        public float SubTotal { get; set; }
         public string Status { get; set; }
         public string CusName { get; set; }
+        public string OrderType { get; set; }
+        public string Address { get; set; }
+        public TimeSpan PickTime { get; set; }
     }
 }
