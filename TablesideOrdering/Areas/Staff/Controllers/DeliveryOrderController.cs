@@ -14,7 +14,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
     {
         private readonly ApplicationDbContext _context;
         public static int Num;
-        public DeliveryOrderController(ApplicationDbContext context) 
+        public DeliveryOrderController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -30,13 +30,20 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         }
         public void Delivery(int id)
         {
-            Orders order = _context.Orders.Where(o=>o.OrderId == id).FirstOrDefault();
+            Orders order = _context.Orders.Where(o => o.OrderId == id).FirstOrDefault();
             order.Status = "Delivering";
-        }        
+            _context.SaveChanges();
+        }
         public IActionResult DoneDeliveryOrders()
         {
             var processOrder = _context.Orders.Where(i => i.OrderType == "Delivery" && i.Status == "Done");
             return View(processOrder);
+        }
+        public IActionResult Delivering()
+        {
+            var delivering = _context.Orders.Where(i => i.OrderType == "Delivery" && i.Status == "delivering");
+            return View(delivering);
+
         }
     }
 }

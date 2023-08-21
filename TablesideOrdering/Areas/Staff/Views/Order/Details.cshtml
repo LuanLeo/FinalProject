@@ -98,7 +98,7 @@
         <div class="body-wrapper">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-8 col-md-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="checkout__order">
                             <h4>Order Details</h4>
                             <div class="checkout__order__products">
@@ -143,7 +143,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6">
+                    <div class="col-lg-6 col-md-6">
                         <div class="checkout__order">
                             <h4>Order</h4>
                             <div class="checkout__order__products">Customer Details</div>
@@ -156,50 +156,77 @@
                                         <li>Table number: <span>@Html.DisplayFor(model => item.TableNo)</span></li>
 
                                     }
-                                    else if (item.OrderType == "Delivery")
+                                    else if (item.OrderType == "Delivery" || item.OrderType == "Delivering")
                                     {
                                         <li>Address: <span>@Html.DisplayFor(model => item.Address)</span></li>
 
                                     }
-                                    else
+                                    else if (item.OrderType == "Carry out")
                                     {
                                         <li>Delivery time: <span>@Html.DisplayFor(model => item.PickTime)</span></li>
-
                                     }
+
                                     <li>Date:  <span>@Html.DisplayFor(model => item.OrderDate)</span></li>
                                 }
                             </ul>
                             @foreach (var item in Model.Order)
                             {
+
                                 <div class="checkout__order__total">Total <span>@Html.DisplayFor(model => item.OrderPrice) VND</span></div>
-                                <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteOrder-" + item.OrderId)" data-url="@Url.Action($"Delete/{item.OrderId}")">
-                                    Delete Order
-                                </button>
-                                @await Html.PartialAsync("Delete", item)
-                                @if (item.OrderType == "Eat in")
-                                {
-                                    <a asp-controller="Order" asp-action="MarkDone" asp-route-id="@item.OrderId" style="color:white">
-                                        <button class="btn btn-success m-1">
-                                            Mark as Done
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteOrder-" + item.OrderId)" data-url="@Url.Action($"Delete/{item.OrderId}")">
+                                            Delete Order
                                         </button>
-                                    </a>
-                                }
-                                else if (item.OrderType == "Delivery")
-                                {
-                                    <a asp-controller="DeliveryOrder" asp-action="Delivery" asp-route-id="@item.OrderId" style="color:white">
-                                        <button class="btn btn-success m-1">
-                                            Delivery
-                                        </button>
-                                    </a>
-                                }
-                                else
-                                {
-                                    <a asp-controller="CarryOut" asp-action="Ready" asp-route-id="@item.OrderId" style="color:white">
-                                        <button class="btn btn-success m-1">
-                                            Ready to delivery
-                                        </button>
-                                    </a>
-                                }
+                                    </div>
+                                    @await Html.PartialAsync("Delete", item)
+                                    <div class="col-lg-6">
+                                        @if (item.OrderType == "Eat in")
+                                        {
+                                            <a asp-controller="Order" asp-action="MarkDone" asp-route-id="@item.OrderId" style="color:white">
+                                                <button class="btn btn-success m-1">
+                                                    Mark as Done
+                                                </button>
+                                            </a>
+                                        }
+                                        else if (item.OrderType == "Delivery" && item.Status == "Processing")
+                                        {
+                                            <a style="color:white">
+                                                <button class="Delivery btn btn-success m-1" data-id="@item.OrderId">
+                                                    Delivery
+                                                </button>
+                                            </a>
+                                        }
+                                        else if (item.OrderType == "Carry out" && item.Status == "Processing")
+                                        {
+                                            <a style="color:white">
+                                                <button class="Ready btn btn-success m-1" data-id="@item.OrderId">
+                                                    Ready
+                                                </button>
+                                            </a>
+                                        }
+                                        @if (item.Status == "Delivering" || item.Status == "Ready")
+                                        {
+                                        <a style="color:white">
+                                            <button class="Done btn btn-success m-1" data-id="@item.OrderId">
+                                                Done
+                                            </button>
+                                        </a>
+                                        }
+                                        else if (item.Status == "Done")
+                                        {
+                                        <a style="color:white">
+                                            <button class="Done btn btn-success m-1" disabled style="font-weight:bold">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                                                </svg>
+                                            </button>
+                                        </a>
+                                        }
+                                    </div>
+                                </div>
+
                             }
                         </div>
                     </div>
@@ -208,3 +235,51 @@
         </div>
     </div>
 </body>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(".Delivery").click(function () {
+                $.ajax({
+                    url: "/Staff/DeliveryOrder/Delivery",
+                    data: {
+                        id: $(this).data("id")
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        window.location.reload();
+                    }
+                })
+            })
+        })
+        $(document).ready(function () {
+            $(".Done").click(function () {
+                $.ajax({
+                    url: "/Staff/Order/MarkDone",
+                    data: {
+                        id: $(this).data("id")
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        window.location.reload();
+                    }
+                })
+            })
+        })
+            
+        $(document).ready(function () {
+            $(".Ready").click(function () {
+                $.ajax({
+                    url: "/Staff/CarryOut/Ready",
+                    data: {
+                        id: $(this).data("id")
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        window.location.reload();
+                    }
+                })
+            })
+        })
+       
+    </script>
+    }

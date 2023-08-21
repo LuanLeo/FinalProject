@@ -1,7 +1,7 @@
 ﻿@using TablesideOrdering.Areas.StoreOwner.Models;
 @model IEnumerable<Orders>
 @{
-    ViewData["Title"] = "Delivery Order List";
+    ViewData["Title"] = "Done Delivery Order List";
     Layout = "~/Areas/Staff/Views/Shared/_StaffLayout.cshtml";
 }
 
@@ -20,61 +20,55 @@
                 <h1>Done Processed Orders List</h1>
                 @await Component.InvokeAsync("Notyf")
                 <table class="table">
-                    @foreach (var item in Model)
-                    {
-                        <thead>
-                            <tr>
-                                <th>
-                                    Order ID
-                                </th>
-                                <th>
-                                    Order Date
-                                </th>
-                                <th>
-                                    Total Price
-                                </th>
-                                <th>
-                                    Product Quantity
-                                </th>
 
-                                <th>
-                                    Customer Name
-                                </th>
-                                <th>
-                                    Phone Number
-                                </th>
-                                <th>
-                                    Address
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <thead>
                         <tr>
                             <th>
-                                @item.OrderId
+                                Order ID
                             </th>
                             <th>
-                                @item.OrderDate
+                                Order Date
                             </th>
                             <th>
-                                @item.OrderPrice
+                                Total Price
                             </th>
                             <th>
-                                @item.ProductQuantity
+                                Product Quantity
                             </th>
 
                             <th>
-                                @item.CusName
-                            </th>
-                            <th>
-                                @item.PhoneNumber
-                            </th>
-                            <th>
-                                @item.Address
+                                Phone Number
                             </th>
                             <th></th>
                         </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @item.OrderId
+                                </td>
+                                <td>
+                                    @item.OrderDate
+                                </td>
+                                <td>
+                                    @item.OrderPrice
+                                </td>
+                                <td>
+                                    @item.ProductQuantity
+                                </td>
+
+                                
+                                <td>
+                                    @item.PhoneNumber
+                                </td>
+                                <td>
+                                    <a asp-action="Details" asp-controller="Order" asp-route-id="@item.OrderId">
+                                        <button type="button" class="btn btn-warning m-1">Details</button>
+                                    </a>
+                                </td>
+                            </tr>
                         </tbody>
                     }
                 </table>

@@ -72,7 +72,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         {
             OrderViewModel OrderData = new OrderViewModel();
             OrderData.Order = (from o in _context.Orders
-                               where id == o.OrderId && o.Status == "Processing"
+                               where id == o.OrderId 
                                select new OrderViewModel
                                {
                                    OrderId = o.OrderId,
@@ -103,14 +103,14 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             return View(OrderData);
         }
 
-        public IActionResult MarkDone(int id)
+        public void MarkDone(int id)
         {
             var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
             order.Status = "Done";
 
             _context.SaveChanges();
             _notyfService.Success("The order is marked as done", 5);
-            return RedirectToAction("Index");
+            
         }
 
         [HttpGet]
