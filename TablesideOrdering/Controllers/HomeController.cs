@@ -368,11 +368,22 @@ namespace TablesideOrdering.Controllers
             StringBuilder invoiceHtml = new StringBuilder();
             invoiceHtml.Append("<b >E-Invoice at L&L coffee shop ").Append("</b><br />");
             invoiceHtml.Append("<br /><b>Date : </b>").Append(DateTime.Now.ToShortDateString()).Append("<br />");
-            invoiceHtml.Append("<b>Table : </b>").Append(order.TableNo).Append("<br />");
+            if(order.OrderType=="Eat in")
+            {
+                invoiceHtml.Append("<b>Table : </b>").Append(order.TableNo).Append("<br />");
+            } else if(order.OrderType == "Carry out")
+            {
+                invoiceHtml.Append("<b>Time to delivery: </b>").Append(order.PickTime).Append("<br />");
+            }
             invoiceHtml.Append("<b>Invoice Total :</b> ").Append(order.OrderPrice.ToString()).Append(" VND<br />");
             invoiceHtml.Append("<br /><b>CUSTOMER CONTACT INFO:</b><br />");
             invoiceHtml.Append("<b>Name : </b>").Append(order.CusName).Append("<br />");
             invoiceHtml.Append("<b>Phone : </b>").Append(order.PhoneNumber).Append("<br />");
+            if (order.OrderType == "Delivery")
+            {
+                invoiceHtml.Append("<b>Address : </b>").Append(order.Address).Append("<br />");
+
+            }
             invoiceHtml.Append("<b>Email : </b>").Append(data.EmailTo).Append("<br />");
 
             Subject = subject.ToString();
