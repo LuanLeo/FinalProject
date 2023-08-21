@@ -156,12 +156,12 @@
                                         <li>Table number: <span>@Html.DisplayFor(model => item.TableNo)</span></li>
 
                                     }
-                                    @if (item.OrderType == "Delivery")
+                                    else if (item.OrderType == "Delivery")
                                     {
                                         <li>Address: <span>@Html.DisplayFor(model => item.Address)</span></li>
 
                                     }
-                                    @if (item.OrderType == "Carry out")
+                                    else
                                     {
                                         <li>Delivery time: <span>@Html.DisplayFor(model => item.PickTime)</span></li>
 
@@ -184,7 +184,7 @@
                                         </button>
                                     </a>
                                 }
-                                 @if (item.OrderType == "Delivery")
+                                else if (item.OrderType == "Delivery")
                                 {
                                     <a asp-controller="DeliveryOrder" asp-action="Delivery" asp-route-id="@item.OrderId" style="color:white">
                                         <button class="btn btn-success m-1">
@@ -192,7 +192,7 @@
                                         </button>
                                     </a>
                                 }
-                                @if (item.OrderType == "Carry out")
+                                else
                                 {
                                     <a asp-controller="CarryOut" asp-action="Ready" asp-route-id="@item.OrderId" style="color:white">
                                         <button class="btn btn-success m-1">

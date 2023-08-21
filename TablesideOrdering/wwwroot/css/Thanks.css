@@ -90,6 +90,7 @@ h1 {
     .content {
         max-width: 1000px;
         margin: 0 auto;
+        padding: 115px;
     }
 
     .wrapper-1 {
