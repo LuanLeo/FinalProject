@@ -7,5 +7,6 @@ namespace TablesideOrdering.Areas.StoreOwner.Models
         [Key]
         public string IdTable { get; set; }
         public string Status { get; set; }
+        public string PeopleCap { get; set; }
     }
 }

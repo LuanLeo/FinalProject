@@ -34,7 +34,6 @@
 
   <ItemGroup>
     <Folder Include="Areas\Staff\Data\" />
-    <Folder Include="Areas\Staff\Models\" />
     <Folder Include="wwwroot\ProductImage\" />
   </ItemGroup>
 
@@ -54,6 +53,15 @@
     <None Include="Areas\Staff\Views\Shared\_LoginPartial.cshtml" />
     <None Include="Areas\Staff\Views\Shared\_StaffLayout.cshtml" />
     <None Include="Areas\Staff\Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\Staff\Views\TableBookings\Create.cshtml" />
+    <None Include="Areas\Staff\Views\TableBookings\Delete.cshtml" />
+    <None Include="Areas\Staff\Views\TableBookings\Details.cshtml" />
+    <None Include="Areas\Staff\Views\TableBookings\Edit.cshtml" />
+    <None Include="Areas\Staff\Views\TableBookings\Index.cshtml" />
+    <None Include="Areas\StoreOwner\Views\Tables\Create.cshtml" />
+    <None Include="Areas\StoreOwner\Views\Tables\Delete.cshtml" />
+    <None Include="Areas\StoreOwner\Views\Tables\Edit.cshtml" />
+    <None Include="Areas\StoreOwner\Views\Tables\Index.cshtml" />
     <None Include="wwwroot\js\site.js" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
     <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />

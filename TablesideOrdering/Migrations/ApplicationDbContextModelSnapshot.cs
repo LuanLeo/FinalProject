@@ -230,18 +230,32 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.Table", b =>
+            modelBuilder.Entity("TablesideOrdering.Areas.Staff.Models.TableBooking", b =>
                 {
-                    b.Property<string>("IdTable")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Property<string>("Status")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("BookDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CusName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdTable");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.ToTable("Tables");
+                    b.Property<string>("Table")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TableBookings");
                 });
 
             modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.Category", b =>
@@ -411,6 +425,24 @@ namespace TablesideOrdering.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProductSizePrice");
+                });
+
+            modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.Table", b =>
+                {
+                    b.Property<string>("IdTable")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PeopleCap")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("IdTable");
+
+                    b.ToTable("Tables");
                 });
 
             modelBuilder.Entity("TablesideOrdering.Models.EmailPR", b =>

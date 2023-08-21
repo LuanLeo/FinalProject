@@ -2,71 +2,64 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Data;
+using Twilio.Rest.Preview.Marketplace.AvailableAddOn;
 
 namespace TablesideOrdering.Areas.StoreOwner.Controllers
 {
-    [Area("Staff")]
+    [Area("StoreOwner")]
+    [Authorize(Roles = "Store Owner, Admin")]
+
     public class TablesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        public INotyfService _notyfService { get; }
 
-        public TablesController(ApplicationDbContext context)
+        public TablesController(ApplicationDbContext context, INotyfService notyfService)
         {
             _context = context;
+            _notyfService = notyfService;
         }
 
-        // GET: Staff/TableNumbers
+        // GET: StoreOwner/Tables
         public async Task<IActionResult> Index()
         {
-            return _context.Tables != null ?
-                        View(await _context.Tables.ToListAsync()) :
-                        Problem("Entity set 'ApplicationDbContext.TableNumbers'  is null.");
+            ViewBag.TableStatus = TableStatus();
+            var TableList = await _context.Tables.ToListAsync();
+            return View(TableList);
         }
 
-        // GET: Staff/TableNumbers/Details/5
-        public async Task<IActionResult> Details(string id)
-        {
-            if (id == null || _context.Tables == null)
-            {
-                return NotFound();
-            }
-
-            var tableNumber = await _context.Tables
-                .FirstOrDefaultAsync(m => m.IdTable == id);
-            if (tableNumber == null)
-            {
-                return NotFound();
-            }
-
-            return View(tableNumber);
-        }
-
-        // GET: Staff/TableNumbers/Create
+        // GET: StoreOwner/Tables/Create
         public IActionResult Create()
         {
-            return View();
+            Table model = new Table();
+            return PartialView("Create", model);
         }
 
-        // POST: Staff/TableNumbers/Create
+        // POST: StoreOwner/Tables/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdTable")] Table tableNumber)
+        public async Task<IActionResult> Create(Table table)
         {
-            if (ModelState.IsValid)
+            var existTable = _context.Tables.Find(table.IdTable);
+            if (existTable == null)
             {
-                _context.Add(tableNumber);
+                _context.Add(table);
                 await _context.SaveChangesAsync();
+                _notyfService.Success("Table is created successfully", 5);
                 return RedirectToAction(nameof(Index));
             }
-            return View(tableNumber);
+            _notyfService.Error("Table has already existed ", 5);
+            return View(table);
         }
 
-        // GET: Staff/TableNumbers/Edit/5
+        // GET: StoreOwner/Tables/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.Tables == null)
@@ -74,87 +67,75 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 return NotFound();
             }
 
-            var tableNumber = await _context.Tables.FindAsync(id);
-            if (tableNumber == null)
+            var table = await _context.Tables.FindAsync(id);
+            Table model = new Table()
             {
-                return NotFound();
-            }
-            return View(tableNumber);
+               IdTable = table.IdTable,
+               Status = table.Status,
+               PeopleCap = table.PeopleCap,
+            };
+            return PartialView("Edit", model);
         }
 
-        // POST: Staff/TableNumbers/Edit/5
+        // POST: StoreOwner/Tables/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("IdTable")] Table tableNumber)
+        public IActionResult Edit(Table table)
         {
-            if (id != tableNumber.IdTable)
-            {
-                return NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(tableNumber);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TableNumberExists(tableNumber.IdTable))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _context.Update(table);
+                _context.SaveChanges();
+
+                _notyfService.Success("The info is edited succeesfully", 5);
+                return RedirectToAction("Index");
             }
-            return View(tableNumber);
+
+            _notyfService.Error("Something went wrong, try again!", 5);
+            return View(table);
         }
 
-        // GET: Staff/TableNumbers/Delete/5
+        // GET: StoreOwner/Tables/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null || _context.Tables == null)
+            if (id == null || _context.ProductSizePrice == null)
             {
                 return NotFound();
             }
 
-            var tableNumber = await _context.Tables
-                .FirstOrDefaultAsync(m => m.IdTable == id);
-            if (tableNumber == null)
+            var model = await _context.Tables.FirstOrDefaultAsync(m => m.IdTable == id);
+            if (model == null)
             {
                 return NotFound();
             }
 
-            return View(tableNumber);
+            return PartialView("Delete", model);
         }
 
-        // POST: Staff/TableNumbers/Delete/5
-        [HttpPost, ActionName("Delete")]
+        // POST: StoreOwner/Tables/Delete/5
+        [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(string id)
+        public IActionResult Delete(Table model)
         {
-            if (_context.Tables == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.TableNumbers'  is null.");
-            }
-            var tableNumber = await _context.Tables.FindAsync(id);
-            if (tableNumber != null)
-            {
-                _context.Tables.Remove(tableNumber);
-            }
+            var table = _context.Tables.Find(model.IdTable);
+                if (table.Status == "Available")
+                {
+                    _context.Tables.Remove(table);
+                    _context.SaveChanges();
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+                    _notyfService.Success("Table is deleted successfully", 5);
+                    return RedirectToAction("Index");
+                }
+                _notyfService.Warning("Table is being used", 5);
+                return View("Index");
         }
 
-        private bool TableNumberExists(string id)
+        public List<SelectListItem> TableStatus()
         {
-            return (_context.Tables?.Any(e => e.IdTable == id)).GetValueOrDefault();
+            var list = new List<SelectListItem>();
+                list.Add(new SelectListItem() { Value = "Available", Text = "Available" });
+                list.Add(new SelectListItem() { Value = "Busy", Text = "Busy" });
+            return list;
         }
     }
 }

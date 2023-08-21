@@ -2,8 +2,8 @@
 @model IEnumerable<Table>
 
 @{
-    ViewData["Title"] = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Table List";
+    Layout = "~/Areas/StoreOwner/Views/Shared/_StoreOwnerLayout.cshtml";
 }
 
 <head>
@@ -17,13 +17,24 @@
          data-sidebar-position="fixed" data-header-position="fixed">
         <div class="body-wrapper">
             <div class="container-fluid">
-                <h1>All Products</h1>
-                <p>
-                    <a asp-action="Create">Create New</a>
-                </p>
+                <h1>All Tables</h1>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#CreateTable">
+                    Create
+                </button>
+                @await Html.PartialAsync("Create", new Table())
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>
+                                Table No
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Status)
+                            </th>
+                            <th>
+                                People Quantity
+                            </th>
                             <th></th>
                         </tr>
                     </thead>
@@ -32,9 +43,24 @@
                         {
                             <tr>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.IdTable">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.IdTable">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.IdTable">Delete</a>
+                                    @Html.DisplayFor(modelItem => item.IdTable)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PeopleCap)
+                                </td>
+                                <td align="center">
+                                    <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="@("#EditTable-" + item.IdTable)" data-url="@Url.Action($"Edit/{item.IdTable}")">
+                                        Edit
+                                    </button>
+                                    @await Html.PartialAsync("Edit",item)
+
+                                    <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteTable-" + item.IdTable)" data-url="@Url.Action($"Delete/{item.IdTable}")">
+                                        Delete
+                                    </button>
+                                    @await Html.PartialAsync("Delete",item)
                                 </td>
                             </tr>
                         }
@@ -42,6 +68,12 @@
                 </table>
             </div>
         </div>
-    </div>
+    </div> <script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/assets/js/sidebarmenu.js"></script>
+<script src="~/assets/js/app.min.js"></script>
+<script src="~/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+<script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
+<script src="~/assets/js/dashboard.js"></script>
 </body>
-
+@await Component.InvokeAsync("Notyf")

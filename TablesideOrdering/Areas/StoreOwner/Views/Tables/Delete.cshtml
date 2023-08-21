@@ -1,24 +1,37 @@
-﻿@using TablesideOrdering.Areas.StoreOwner.Models;
+﻿@using TablesideOrdering.Areas.StoreOwner.Models
 @model Table
 
 @{
-    ViewData["Title"] = "Delete";
-    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
-
+    ViewData["Title"] = "Delete Table";
 }
-
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>TableNumber</h4>
-    <hr />
-    <dl class="row">
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IdTable" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+<div class="modal fade" id="DeleteTable-@Model.IdTable" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete</h5>
+            </div>
+            <div class="container-fluid">
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="IdTable" />
+                    <h3>Are you sure you want to delete this?</h3>
+                    <div class="form-group">
+                        <label class="control-label">Table No:</label>
+                        @Html.DisplayFor(model => model.IdTable)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Status" class="control-label">Status:</label>
+                        @Html.DisplayFor(model => model.Status)
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PeopleCap" class="control-label">People Quantity:</label>
+                        @Html.DisplayFor(model => model.PeopleCap)
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
