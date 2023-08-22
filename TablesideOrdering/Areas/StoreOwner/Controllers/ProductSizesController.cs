@@ -72,7 +72,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             {
                 return NotFound();
             }
-            return PartialView("Edit",productSize);
+            return PartialView("Edit", productSize);
         }
 
         // POST: Admin/ProductSizes/Edit/5
@@ -82,22 +82,9 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(productSize);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductSizeExists(productSize.SizeId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                _context.Update(productSize);
+                await _context.SaveChangesAsync();
+
                 notyfService.Information("The size info has been updated", 5);
                 return RedirectToAction(nameof(Index));
             }
@@ -119,7 +106,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 return NotFound();
             }
 
-            return PartialView("Delete",productSize);
+            return PartialView("Delete", productSize);
         }
 
         // POST: Admin/ProductSizes/Delete/5
@@ -127,18 +114,10 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(ProductSize productSize)
         {
-            if (productSize != null)
-            {
-                _context.ProductSize.Remove(productSize);
-            }
+            _context.ProductSize.Remove(productSize);
             await _context.SaveChangesAsync();
             notyfService.Success("The size is deleted", 5);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ProductSizeExists(int id)
-        {
-          return (_context.ProductSize?.Any(e => e.SizeId == id)).GetValueOrDefault();
         }
     }
 }
