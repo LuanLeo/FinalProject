@@ -1,7 +1,10 @@
-﻿namespace TablesideOrdering.Areas.Staff.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TablesideOrdering.Areas.Staff.Models
 {
     public class Reservation
     {
+        [Key]
         public int Id { get; set; }
         public string CusName { get; set; }
         public DateTime Datetime { get; set; }

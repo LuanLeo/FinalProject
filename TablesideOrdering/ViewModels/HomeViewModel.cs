@@ -8,12 +8,17 @@ namespace TablesideOrdering.ViewModels
 {
     public class HomeViewModel
     {
+        //Variable for Store Owner Management
         public List<Category> Category { get; set; }
         public List<TopFood> TopProduct { get; set; }
         public List<ProductSize> ProductSizes { get; set; }
         public List<Orders> Orders { get; set; }
         public IQueryable<ProductSizePriceViewModel> Product { get; set; }
+
+        
         public ReservationViewModel Reservation { get; set; }
+
+
         //Variables for Payment Methods
         public string PaymentType { get; set; }
         public PaymentInformationModel Payment { get; set; }
@@ -37,6 +42,7 @@ namespace TablesideOrdering.ViewModels
         public string NameSort { get; set; }
         public string Term { get; set; }
         public string OrderBy { get; set; }
+
 
         //Variables for order detail
         public IQueryable<HomeViewModel> Order { get; set; }

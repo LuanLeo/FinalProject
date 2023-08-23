@@ -11,6 +11,5 @@
         public string PhoneNumber { get; set; }
         public string Notes { get; set; }
         public int OrderId { get; set; }
-
     }
 }

@@ -28,7 +28,6 @@ namespace TablesideOrdering.Data
         public DbSet<EmailPR> EmailPRs { get; set; }
 
         //Database for Staff
-        public DbSet<TableBooking> TableBookings { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
     }
 }

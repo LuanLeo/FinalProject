@@ -1044,32 +1044,53 @@ namespace TablesideOrdering.Controllers
             _notyfService.Error("Something went wrong, please try again!");
             return RedirectToAction("Index");
         }
+
+
+
+
+
+        //TABLE RESERVATION FUNCTION
         public IActionResult Reservation()
         {
             HomeViewModel home = NavData();
             return View(home);
         }
+
         public IActionResult ReservationConfirm(HomeViewModel home)
         {
             Reservation book= new Reservation();
-            book.CusName=home.CusName ;
+            book.CusName = home.Reservation.CusName ;
             book.PhoneNumber = home.Reservation.PhoneNumber;
-            book.Email = home.Reservation.Email;
+
+            if (home.Reservation.Email != null)
+            {
+                book.Email = home.Reservation.Email;
+            }
+            else
+            {
+                book.Email = "None";
+            }
+
             DateTime d = home.Reservation.Date;
             DateTime t = home.Reservation.Time;
             DateTime dtCombined = new DateTime(d.Year, d.Month, d.Day, t.Hour, t.Minute, t.Second);
             book.Datetime = dtCombined;
+
             book.People = home.Reservation.People;
-            book.Notes = "None";
             if (home.Reservation.Notes != null)
             {
                 book.Notes = home.Reservation.Notes;
-            }            
+            }
+            else
+            {
+                book.Notes = "None";
+            }        
+
             book.OrderId = 0;
+
             _context.Reservations.Add(book);
             _context.SaveChanges();
             return RedirectToAction("ThankYou");
-
         }
 
 
@@ -1083,6 +1104,7 @@ namespace TablesideOrdering.Controllers
             }
             return View(home);
         }
+
         public void OrderTracking(HomeViewModel home, HomeViewModel model)
         {
             List<Orders> olist = new List<Orders>();           
@@ -1091,6 +1113,7 @@ namespace TablesideOrdering.Controllers
             olist.Add(order);
             home.Orders = olist;
         }
+
         //ORDER DETAILS
         public IActionResult OrderDetails(int id)
         {
