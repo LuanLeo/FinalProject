@@ -25,13 +25,18 @@
     <link rel="stylesheet" href="../css/Reservation.css" type="text/css">
 
 </head>
+<style>
+    label-res {
+        display: inline;
+    }
+</style>
 <body>
     <div class="testbox">
         <form asp-action="ReservationConfirm" asp-controller="home" method="post">
             <div class="banner">
                 <h2>Table Reservation Form</h2>
             </div>
-            <br/>
+            <br />
             <div class="row">
                 <div class="col-lg-4">
                     <div class="checkout__input">
@@ -77,6 +82,18 @@
                 <b>Additional Notes</b>
                 <textarea asp-for="@Model.Reservation.Notes" rows="3" placeholder="Ex: Table near window"></textarea>
             </div>
+            <labelres>
+                <inputres type="radio" name="radio"/>
+                <spanres>HTML</spanres>
+            </labelres>
+            <labelres>
+                <input type="radio" name="radio" />
+                <span>CSS</span>
+            </labelres>
+            <labelres>
+                <input type="radio" name="radio" />
+                <span>Javascript</span>
+            </labelres>
             <div class="btn-block">
                 <button type="submit">Send</button>
             </div>
