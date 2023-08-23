@@ -117,7 +117,7 @@ namespace TablesideOrdering.Controllers
 
         public void Type(string term)
         {
-            if(term == "TableBooking")
+            if (term == "TableBooking")
             {
                 OrderType = "Reservation";
             }
@@ -375,10 +375,11 @@ namespace TablesideOrdering.Controllers
             StringBuilder invoiceHtml = new StringBuilder();
             invoiceHtml.Append("<b >E-Invoice at L&L coffee shop ").Append("</b><br />");
             invoiceHtml.Append("<br /><b>Date : </b>").Append(DateTime.Now.ToShortDateString()).Append("<br />");
-            if(order.OrderType=="Eat in")
+            if (order.OrderType == "Eat in")
             {
                 invoiceHtml.Append("<b>Table : </b>").Append(order.TableNo).Append("<br />");
-            } else if(order.OrderType == "Carry out")
+            }
+            else if (order.OrderType == "Carry out")
             {
                 invoiceHtml.Append("<b>Time to delivery: </b>").Append(order.PickTime).Append("<br />");
             }
@@ -1058,8 +1059,8 @@ namespace TablesideOrdering.Controllers
 
         public IActionResult ReservationConfirm(HomeViewModel home)
         {
-            Reservation book= new Reservation();
-            book.CusName = home.Reservation.CusName ;
+            Reservation book = new Reservation();
+            book.CusName = home.Reservation.CusName;
             book.PhoneNumber = home.Reservation.PhoneNumber;
 
             if (home.Reservation.Email != null)
@@ -1084,30 +1085,37 @@ namespace TablesideOrdering.Controllers
             else
             {
                 book.Notes = "None";
-            }        
+            }
 
             book.OrderId = 0;
+            if (home.Reservation.ReserveType == "ReservationOnly")
+            {
+                _context.Reservations.Add(book);
+                _context.SaveChanges();
+                return RedirectToAction("ThankYou");
+            }
+            else
+            {
+                return RedirectToAction("Menu");
+            }
 
-            _context.Reservations.Add(book);
-            _context.SaveChanges();
-            return RedirectToAction("ThankYou");
         }
 
 
         //ORDER HISTORY FUCNTION
         public IActionResult History(HomeViewModel model)
         {
-            HomeViewModel home = NavData();      
-            if (model.OrderId != null && model.PhoneNumber!=null) 
+            HomeViewModel home = NavData();
+            if (model.OrderId != null && model.PhoneNumber != null)
             {
-                OrderTracking(home,model);
+                OrderTracking(home, model);
             }
             return View(home);
         }
 
         public void OrderTracking(HomeViewModel home, HomeViewModel model)
         {
-            List<Orders> olist = new List<Orders>();           
+            List<Orders> olist = new List<Orders>();
             Orders order = _context.Orders.Where(o => o.OrderId == model.OrderId && o.PhoneNumber == model.PhoneNumber).FirstOrDefault();
             // home.Orders = olist.OrderByDescending(x => x.OrderDate).ToList();
             olist.Add(order);
@@ -1117,40 +1125,40 @@ namespace TablesideOrdering.Controllers
         //ORDER DETAILS
         public IActionResult OrderDetails(int id)
         {
-            HomeViewModel home = NavData();           
-                var checkorder = _context.Orders.FirstOrDefault(o => o.OrderId == id);
-               
-                    home.Order = (from o in _context.Orders
-                                  where id == o.OrderId
-                                  select new HomeViewModel
-                                  {
-                                      OrderId = o.OrderId,
-                                      OrderDate = o.OrderDate,
-                                      OrderPrice = o.OrderPrice,
-                                      PhoneNumber = o.PhoneNumber,
-                                      ProductQuantity = o.ProductQuantity,
-                                      TableNo = o.TableNo,
-                                      Status = o.Status,
-                                      CusName = o.CusName,
-                                      PaymentType=o.PaymentType,
-                                      OrderType = o.OrderType
+            HomeViewModel home = NavData();
+            var checkorder = _context.Orders.FirstOrDefault(o => o.OrderId == id);
 
-                                  });
+            home.Order = (from o in _context.Orders
+                          where id == o.OrderId
+                          select new HomeViewModel
+                          {
+                              OrderId = o.OrderId,
+                              OrderDate = o.OrderDate,
+                              OrderPrice = o.OrderPrice,
+                              PhoneNumber = o.PhoneNumber,
+                              ProductQuantity = o.ProductQuantity,
+                              TableNo = o.TableNo,
+                              Status = o.Status,
+                              CusName = o.CusName,
+                              PaymentType = o.PaymentType,
+                              OrderType = o.OrderType
 
-                    home.OrderDetail = (from o in _context.OrderDetails
-                                        where id == o.OrderId
-                                        select new HomeViewModel
-                                        {
-                                            OrderId = o.OrderId,
-                                            OrderDetailId = o.OrderDetailId,
-                                            ProductName = o.ProductName,
-                                            Size = o.Size,
-                                            ProQuantity = o.ProQuantity,
-                                            Price = o.Price,
-                                        });
+                          });
 
-                    return View(home);
-                      
+            home.OrderDetail = (from o in _context.OrderDetails
+                                where id == o.OrderId
+                                select new HomeViewModel
+                                {
+                                    OrderId = o.OrderId,
+                                    OrderDetailId = o.OrderDetailId,
+                                    ProductName = o.ProductName,
+                                    Size = o.Size,
+                                    ProQuantity = o.ProQuantity,
+                                    Price = o.Price,
+                                });
+
+            return View(home);
+
         }
 
         //RETURN FROM THANK YOU PAGE FUNCTION
