@@ -1,0 +1,70 @@
+﻿@using TablesideOrdering.ViewModels;
+@model HomeViewModel
+@{
+    ViewData["Title"] = "Reservation";
+}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../css/style.css" type="text/css">
+    <link rel="stylesheet" href="../css/Reservation.css" type="text/css">
+
+</head>
+<body>
+    <div class="testbox">
+        <form asp-action="ReservationConfirm" asp-controller="home" method="post">
+            <div class="banner">
+                <h2>Table Reservation Form</h2>
+            </div>
+            <div class="item">
+                <p>Name</p>
+                <div class="name-item">
+                    <input asp-for="@Model.CusName" type="text" placeholder="Your name" required />
+                </div>
+            </div>
+            <div class="item">
+                <p>Email</p>
+                <input asp-for="@Model.Reservation.Email" type="email" placeholder="Ex: L&LCoffee@gmail.com" required />
+            </div>
+            <div class="item">
+                <p>Phone</p>
+                <input asp-for="@Model.Reservation.PhoneNumber" type="number" placeholder="### ### ####" required/>
+            </div>
+            <div class="item">
+                <p>Reservation Date</p>
+                <input asp-for="@Model.Reservation.Date" type="date" required />
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="item">
+                <p>Reservation Time</p>
+                <input asp-for="@Model.Reservation.Time" type="time" required />
+            </div>
+            <div class="item">
+                <p>How many people will you be with?</p>
+                <input asp-for="@Model.Reservation.People" type="text" placeholder="Ex: 1" required />
+            </div>
+            <div class="item">
+                <p>Additional notes</p>
+                <textarea asp-for="@Model.Reservation.Notes" rows="3" placeholder="Ex: Table near window"></textarea>
+            </div>
+            <div class="btn-block">
+                <button type="submit">Send</button>
+            </div>
+        </form>
+    </div>
+</body>

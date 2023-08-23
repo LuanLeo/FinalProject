@@ -29,5 +29,6 @@ namespace TablesideOrdering.Data
 
         //Database for Staff
         public DbSet<TableBooking> TableBookings { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
     }
 }

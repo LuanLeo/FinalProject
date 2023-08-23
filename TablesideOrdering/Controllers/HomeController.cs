@@ -34,6 +34,9 @@ using System.Net.Mime;
 using Org.BouncyCastle.Utilities;
 using TablesideOrdering.SignalR.Repositories;
 using Microsoft.CodeAnalysis;
+using TablesideOrdering.Areas.Staff.Models;
+using Reservation = TablesideOrdering.Areas.Staff.Models.Reservation;
+using System;
 
 namespace TablesideOrdering.Controllers
 {
@@ -114,6 +117,10 @@ namespace TablesideOrdering.Controllers
 
         public void Type(string term)
         {
+            if(term == "TableBooking")
+            {
+                OrderType = "Reservation";
+            }
             if (term == "Delivery")
             {
                 OrderType = "Delivery";
@@ -1037,9 +1044,33 @@ namespace TablesideOrdering.Controllers
             _notyfService.Error("Something went wrong, please try again!");
             return RedirectToAction("Index");
         }
+        public IActionResult Reservation()
+        {
+            HomeViewModel home = NavData();
+            return View(home);
+        }
+        public IActionResult ReservationConfirm(HomeViewModel home)
+        {
+            Reservation book= new Reservation();
+            book.CusName=home.CusName ;
+            book.PhoneNumber = home.Reservation.PhoneNumber;
+            book.Email = home.Reservation.Email;
+            DateTime d = home.Reservation.Date;
+            DateTime t = home.Reservation.Time;
+            DateTime dtCombined = new DateTime(d.Year, d.Month, d.Day, t.Hour, t.Minute, t.Second);
+            book.Datetime = dtCombined;
+            book.People = home.Reservation.People;
+            book.Notes = "None";
+            if (home.Reservation.Notes != null)
+            {
+                book.Notes = home.Reservation.Notes;
+            }            
+            book.OrderId = 0;
+            _context.Reservations.Add(book);
+            _context.SaveChanges();
+            return RedirectToAction("ThankYou");
 
-
-
+        }
 
 
         //ORDER HISTORY FUCNTION
