@@ -1974,6 +1974,7 @@ ol {
     color: #ffffff;
     padding: 14px 30px 12px;
     background: #03c04a;
+    width: fit-content;
 }
 
     .primary-btn.cart-btn span {

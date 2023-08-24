@@ -6,6 +6,7 @@
         public string CusName { get; set; }
         public DateTime Date { get; set; }
         public DateTime Time { get; set; }
+        public DateTime DateTime { get; set; }
         public string Email { get; set; }
         public int People { get; set; }
         public string PhoneNumber { get; set; }

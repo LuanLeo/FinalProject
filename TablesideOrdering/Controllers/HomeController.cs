@@ -71,6 +71,7 @@ namespace TablesideOrdering.Controllers
         public static string OrderType;
         public static string Address;
         public static int CheckNotify = 0;
+        public static Reservation ReserModel = new Reservation();
 
         public HomeController(ApplicationDbContext context,
             INotyfService notyfService,
@@ -121,7 +122,7 @@ namespace TablesideOrdering.Controllers
             {
                 OrderType = "Reservation";
             }
-            if (term == "Delivery")
+            else if (term == "Delivery")
             {
                 OrderType = "Delivery";
             }
@@ -754,13 +755,14 @@ namespace TablesideOrdering.Controllers
         {
             HomeViewModel home = NavData();
             home.OrderType = OrderType;
+            home.Reser = ReserModel;
             return View(home);
         }
 
         //CASH PAYMENT METHOD PAGE FUCNTION
         public IActionResult PlaceOrder(HomeViewModel home)
         {
-            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in")
+            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in" || OrderType == "Reservation")
             {
                 Email = home.Email.EmailTo;
                 Email data = new Email();
@@ -793,10 +795,22 @@ namespace TablesideOrdering.Controllers
                     order.Address = "";
                     order.TableNo = TableNo;
                 }
+                if (OrderType == "Reservation")
+                {
+                    order.Address = "";
+                    order.TableNo = "";
+
+
+                }
 
                 _context.Orders.Add(order);
                 _context.SaveChanges();
-
+                if (OrderType == "Reservation")
+                {
+                    ReserModel.OrderId = order.OrderId;
+                    _context.Reservations.Add(ReserModel);
+                    _context.SaveChanges();
+                }
                 //Save order list to database
                 List<OrderDetail> orderDetailList = new List<OrderDetail>();
                 foreach (var item in carts)
@@ -1059,6 +1073,8 @@ namespace TablesideOrdering.Controllers
 
         public IActionResult ReservationConfirm(HomeViewModel home)
         {
+
+
             Reservation book = new Reservation();
             book.CusName = home.Reservation.CusName;
             book.PhoneNumber = home.Reservation.PhoneNumber;
@@ -1096,6 +1112,7 @@ namespace TablesideOrdering.Controllers
             }
             else
             {
+                ReserModel = book;
                 return RedirectToAction("Menu");
             }
 

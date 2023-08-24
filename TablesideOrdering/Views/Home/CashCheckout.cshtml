@@ -48,20 +48,40 @@
                 <form asp-action="PlaceOrder" asp-controller="Home" id="frmCreateOrder" method="post">
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <b>Name<span>*</span></b>
-                                        <input asp-for="@Model.Payment.Name" class="form-control" type="text" />
+                            @if (Model.OrderType != "Reservation")
+                            {
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="checkout__input">
+                                            <b>Name<span>*</span></b>
+                                            <input asp-for="@Model.Payment.Name" class="form-control" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="checkout__input">
+                                            <b>Phone<span>*</span></b>
+                                            <input type="text" asp-for="@Model.Cart.PhoneNumber">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <b>Phone<span>*</span></b>
-                                        <input type="text" asp-for="@Model.Cart.PhoneNumber">
+                            }
+                            else
+                            {
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="checkout__input">
+                                            <b>Name<span>*</span></b>
+                                            <input asp-for="@Model.Payment.Name" value="@Model.Reser.CusName" class="form-control" type="text" />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="checkout__input">
+                                            <b>Phone<span>*</span></b>
+                                            <input asp-for="@Model.Cart.PhoneNumber" value="@Model.Reser.PhoneNumber" class="form-control" type="text" />
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
                             <div class="checkout__input">
                                 <b>Checkout description</b>
                                 <input value="Checkout at L&L coffee" disabled />
@@ -80,19 +100,49 @@
                                         <input type="text" value="@Model.OrderType" disabled />
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <b>Email (Optional)</b>
-                                        <input asp-for="@Model.Email.EmailTo" type="text" placeholder="Enter email to receive E-Invoice" />
+                                @if (Model.OrderType != "Reservation")
+                                {
+                                    <div class="col-lg-6">
+                                        <div class="checkout__input">
+                                            <b>Email (Optional)</b>
+                                            <input asp-for="@Model.Email.EmailTo" type="text" placeholder="Enter email to receive E-Invoice" />
+                                        </div>
                                     </div>
-                                </div>
+                                }
+                                else
+                                {
+                                    <div class="col-lg-6">
+                                        <div class="checkout__input">
+                                            <b>Email (Optional)</b>
+                                            <input asp-for="@Model.Email.EmailTo" value="@Model.Reser.Email" type="text" placeholder="Enter email to receive E-Invoice" />
+                                        </div>
+                                    </div>
+                                }
                             </div>
+
                             @if (Model.OrderType == "Carry out")
                             {
-                                <div class="checkout__input" >
+                                <div class="checkout__input">
                                     <b>Time to pick up<span>*</span></b>
-                                    <input asp-for="@Model.PickTime" class="form-control" type="time" style="width:125px"/>
+                                    <input asp-for="@Model.PickTime" class="form-control" type="time" style="width:125px" />
                                 </div>
+                            }
+                            @if (Model.OrderType == "Reservation")
+                            {
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="checkout__input">
+                                            <b>Time to pick up<span>*</span></b>
+                                            <input value="@Model.Reser.Datetime" type="datetime" disabled />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="checkout__input">
+                                            <b>Number of Customer<span>*</span></b><br/>
+                                            <input value="@Model.Reser.People" type="text" style="width:125px" disabled />
+                                        </div>
+                                    </div>
+                                </div>                                
                             }
                         </div>
                         <div class="col-lg-4 col-md-6">

@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using TablesideOrdering.Areas.Staff.Models;
 using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Areas.StoreOwner.ViewModels;
 using TablesideOrdering.Models;
@@ -17,7 +18,7 @@ namespace TablesideOrdering.ViewModels
 
         
         public ReservationViewModel Reservation { get; set; }
-
+        public Reservation Reser { get; set; }
 
         //Variables for Payment Methods
         public string PaymentType { get; set; }
