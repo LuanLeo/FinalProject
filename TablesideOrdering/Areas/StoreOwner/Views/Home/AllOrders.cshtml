@@ -47,9 +47,6 @@
                                 Phone Number
                             </th>
                             <th>
-                                Table Number
-                            </th>
-                            <th>
                                 Customer Name
                             </th>
                             <th></th>
@@ -76,19 +73,13 @@
                                     @Html.DisplayFor(modelItem => item.PhoneNumber)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.TableNo)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.CusName)
                                 </td>
-                                <td align="center" style="width:20%">
+                                <td align="center" style="width:25%">
                                     <a type="button" class="btn btn-primary m-1" asp-action="OrderDetails" asp-controller="Home" asp-route-id="@item.OrderId">
                                         Details
                                     </a>
                                     
-                                    <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteUser-")" data-url="@Url.Action($"Delete/")">
-                                        Delete
-                                    </button>
                                 </td>
                             </tr>
                         }

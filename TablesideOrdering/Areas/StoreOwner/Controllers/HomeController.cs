@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -25,11 +27,12 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext context;
-
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext _context)
+        public INotyfService _notyfService { get; set; }
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext _context, INotyfService notyfServic)
         {
             _logger = logger;
             context = _context;
+            _notyfService = notyfServic;
         }
 
         public IActionResult Index(string? time)
@@ -44,7 +47,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             List<Orders> o = new List<Orders>();
             foreach (var order in context.Orders)
             {
-                if (order.OrderId==id)
+                if (order.OrderId == id)
                 {
                     o.Add(order);
                 }
@@ -58,23 +61,24 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                     od.Add(order);
                 }
             }
-            OrderData.OrderDetail = od;           
+            OrderData.OrderDetail = od;
             return View(OrderData);
         }
         public IActionResult AllOrders(DateTime date)
         {
             OrderViewModel OrderData = new OrderViewModel();
             List<Orders> list = new List<Orders>();
-            foreach(var order in context.Orders)
+            foreach (var order in context.Orders)
             {
-                if (Convert.ToDateTime(order.OrderDate).ToShortDateString()== date.ToShortDateString()&&order.Status=="Done"||date.ToShortDateString()=="01/01/0001"&&order.Status == "Done")
+                if (Convert.ToDateTime(order.OrderDate).ToShortDateString() == date.ToShortDateString() && order.Status == "Done" || date.ToShortDateString() == "01/01/0001" && order.Status == "Done")
                 {
                     list.Add(order);
                 }
             }
-            OrderData.Order= list;
+            OrderData.Order = list;
             return View(OrderData);
         }
+
         public void StatisticOrder(string time)
         {
             //Take list from database
@@ -276,12 +280,6 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 FoodTopList.Add(new TopFoodLogicModel(t.FoodName, t.Value));
             }
             ViewBag.TopFood = JsonConvert.SerializeObject(FoodTopList);
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

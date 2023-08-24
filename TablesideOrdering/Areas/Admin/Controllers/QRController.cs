@@ -34,7 +34,7 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             List<SelectListItem> list = new List<SelectListItem>();
             foreach (var t in tableList)
             {
-                list.Add(new SelectListItem{ Text= t.IdTable, Value=t.IdTable});
+                list.Add(new SelectListItem{ Text= t.IdTable.ToString(), Value=t.IdTable.ToString() });
             }
             return list;
         }

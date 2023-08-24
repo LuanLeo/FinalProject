@@ -439,8 +439,14 @@ namespace TablesideOrdering.Migrations
 
             modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.Table", b =>
                 {
-                    b.Property<string>("IdTable")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("IdTable")
+                        .HasColumnType("int");
 
                     b.Property<string>("PeopleCap")
                         .IsRequired()
@@ -450,7 +456,7 @@ namespace TablesideOrdering.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdTable");
+                    b.HasKey("Id");
 
                     b.ToTable("Tables");
                 });

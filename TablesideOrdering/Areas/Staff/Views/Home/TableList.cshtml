@@ -1,0 +1,105 @@
+﻿@using TablesideOrdering.Areas.StoreOwner.Models;
+@model IEnumerable<Table>
+
+@{
+    ViewData["Title"] = "Table List";
+    Layout = "~/Areas/Staff/Views/Shared/_StaffLayout.cshtml";
+}
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<style>
+    .pointer {
+        cursor: pointer;
+    }
+</style>
+<body>
+    <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+         data-sidebar-position="fixed" data-header-position="fixed">
+        <div class="body-wrapper">
+            <div class="container-fluid">
+                <h1>All Tables</h1>
+                <button type="button" class="Available-All pointer btn btn-success m-1">
+                    Available All
+                </button>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Table No
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Status)
+                            </th>
+                            <th>
+                                People Quantity
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.IdTable)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Status)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PeopleCap)
+                                </td>
+                                <td align="center">
+                                    <button type="button" class="Switch-Table-Status pointer btn btn-warning m-1" data-id="@item.IdTable">
+                                        Switch Status
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/sidebarmenu.js"></script>
+    <script src="~/assets/js/app.min.js"></script>
+    <script src="~/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
+    <script src="~/assets/js/dashboard.js"></script>
+    @section Scripts{
+        <script>
+            $(document).ready(function () {
+                $(".Switch-Table-Status").click(function () {
+                    $.ajax({
+                        url: "/Staff/Home/SwitchTableStatus",
+                        data: {
+                            id: $(this).data("id")
+                        },
+                        success: function (data) {
+                            console.log(data);
+                            window.location.reload();
+                        }
+                    })
+                })
+            });``
+            $(document).ready(function () {
+                $(".Available-All").click(function () {
+                    $.ajax({
+                        url: "/Staff/Home/AvailableAll",
+                        success: function (data) {
+                            console.log(data);
+                            window.location.reload();
+                        }
+                    })
+                })
+            })
+        </script>
+    }
+</body>
+@await Component.InvokeAsync("Notyf")

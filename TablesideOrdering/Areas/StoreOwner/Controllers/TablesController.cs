@@ -60,7 +60,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         }
 
         // GET: StoreOwner/Tables/Edit/5
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null || _context.Tables == null)
             {
@@ -96,7 +96,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         }
 
         // GET: StoreOwner/Tables/Delete/5
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null || _context.ProductSizePrice == null)
             {

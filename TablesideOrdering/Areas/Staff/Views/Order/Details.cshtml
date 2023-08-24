@@ -174,12 +174,15 @@
 
                                 <div class="checkout__order__total">Total <span>@Html.DisplayFor(model => item.OrderPrice) VND</span></div>
                                 <div class="row">
-                                    <div class="col-lg-6">
-                                        <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteOrder-" + item.OrderId)" data-url="@Url.Action($"Delete/{item.OrderId}")">
-                                            Delete Order
-                                        </button>
-                                    </div>
-                                    @await Html.PartialAsync("Delete", item)
+                                    @if (item.Status != "Done")
+                                    {
+                                        <div class="col-lg-6">
+                                            <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteOrder-" + item.OrderId)" data-url="@Url.Action($"Delete/{item.OrderId}")">
+                                                Delete Order
+                                            </button>
+                                        </div>
+                                        @await Html.PartialAsync("Delete", item)
+                                    }
                                     <div class="col-lg-6">
                                         @if (item.OrderType == "Eat in")
                                         {

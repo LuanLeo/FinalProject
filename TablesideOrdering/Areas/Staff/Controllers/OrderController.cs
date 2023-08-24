@@ -46,27 +46,6 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             return View(OList);
         }
 
-
-        [HttpGet]
-        public IActionResult PaidOrder(int id)
-        {
-            var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
-            return PartialView("PaidOrder", order);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult MarkPaid(Orders model)
-        {
-            var order = _context.Orders.FirstOrDefault(o => o.OrderId == model.OrderId);
-            order.Status = "Processing";
-
-            _context.SaveChanges();
-            _notyfService.Success("The order is paid", 5);
-            return RedirectToAction("NotPaidOrders");
-        }
-
-
         //Functions for PROCESSING ORDERS
         public IActionResult Details(int id)
         {
