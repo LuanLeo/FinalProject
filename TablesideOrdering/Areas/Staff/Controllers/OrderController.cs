@@ -3,9 +3,9 @@ using AspNetCoreHero.ToastNotification.Notyf;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TablesideOrdering.Areas.StoreOwner.Models;
-using TablesideOrdering.Areas.Staff.ViewModels;
 using TablesideOrdering.Data;
 using Microsoft.AspNetCore.Authorization;
+using TablesideOrdering.Areas.StoreOwner.ViewModels;
 
 namespace TablesideOrdering.Areas.Staff.Controllers
 {
@@ -49,35 +49,16 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         public IActionResult Details(int id)
         {
             OrderViewModel OrderData = new OrderViewModel();
-            OrderData.Order = (from o in _context.Orders
-                               where id == o.OrderId 
-                               select new OrderViewModel
-                               {
-                                   OrderId = o.OrderId,
-                                   OrderDate = o.OrderDate,
-                                   OrderPrice = o.OrderPrice,
-                                   PhoneNumber = o.PhoneNumber,
-                                   ProductQuantity = o.ProductQuantity,
-                                   TableNo = o.TableNo,
-                                   Status = o.Status,
-                                   CusName = o.CusName,
-                                   OrderType = o.OrderType,
-                                   Address= o.Address,
-                                   PickTime= o.PickTime
-                               });
-
-            OrderData.OrderDetail = (from o in _context.OrderDetails
-                                     where id == o.OrderId
-                                     select new OrderViewModel
-                                     {
-                                         OrderId = o.OrderId,
-                                         OrderDetailId = o.OrderDetailId,
-                                         ProductName = o.ProductName,
-                                         Size = o.Size,
-                                         ProQuantity = o.ProQuantity,
-                                         Price = o.Price,
-                                        
-                                     });
+            List<OrderDetail> OList = new List<OrderDetail>();
+            OrderData.Order = _context.Orders.Find(id);
+            foreach(var item in _context.OrderDetails)
+            {
+                if(item.OrderId == id)
+                {
+                    OList.Add(item);
+                }
+            };
+            OrderData.OrderDetail = OList;
             return View(OrderData);
         }
 
@@ -104,7 +85,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(OrderViewModel model)
         {
-            var order = await _context.Orders.FindAsync(model.OrderId);
+            var order = await _context.Orders.FindAsync(model.Order.OrderId);
             if (order == null)
             {
                 return NotFound();
@@ -112,7 +93,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
 
             foreach (var od in _context.OrderDetails)
             {
-                if (od.OrderId == model.OrderId)
+                if (od.OrderId == model.Order.OrderId)
                 {
                     _context.OrderDetails.Remove(od);
                 }

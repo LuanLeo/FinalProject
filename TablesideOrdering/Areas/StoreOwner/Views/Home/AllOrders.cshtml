@@ -53,7 +53,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Order)
+                        @foreach (var item in Model.OrderList)
                         {
 
                             <tr>
@@ -79,7 +79,6 @@
                                     <a type="button" class="btn btn-warning m-1" asp-action="OrderDetails" asp-controller="Home" asp-route-id="@item.OrderId">
                                         Details
                                     </a>
-                                    
                                 </td>
                             </tr>
                         }

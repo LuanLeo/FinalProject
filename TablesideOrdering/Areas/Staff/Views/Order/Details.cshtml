@@ -1,4 +1,4 @@
-﻿@using TablesideOrdering.Areas.Staff.ViewModels;
+﻿@using TablesideOrdering.Areas.StoreOwner.ViewModels;
 @model OrderViewModel
 @{
     ViewData["Title"] = "Details Order";
@@ -148,94 +148,95 @@
                             <h4>Order</h4>
                             <div class="checkout__order__products">Customer Details</div>
                             <ul>
-                                @foreach (var item in Model.Order)
+                                <li>Phone number: <span>@Html.DisplayFor(model => model.Order.PhoneNumber)</span></li>
+                                @if (Model.Order.OrderType == "Eat in")
                                 {
-                                    <li>Phone number: <span>@Html.DisplayFor(model => item.PhoneNumber)</span></li>
-                                    @if (item.OrderType == "Eat in")
-                                    {
-                                        <li>Table number: <span>@Html.DisplayFor(model => item.TableNo)</span></li>
+                                    <li>Table number: <span>@Html.DisplayFor(model => model.Order.TableNo)</span></li>
 
-                                    }
-                                    else if (item.OrderType == "Delivery" || item.OrderType == "Delivering")
-                                    {
-                                        <li>Address: <span>@Html.DisplayFor(model => item.Address)</span></li>
-
-                                    }
-                                    else if (item.OrderType == "Carry out")
-                                    {
-                                        <li>Delivery time: <span>@Html.DisplayFor(model => item.PickTime)</span></li>
-                                    }
-
-                                    <li>Date:  <span>@Html.DisplayFor(model => item.OrderDate)</span></li>
                                 }
-                            </ul>
-                            @foreach (var item in Model.Order)
-                            {
+                                else if (Model.Order.OrderType == "Delivery" || Model.Order.OrderType == "Delivering")
+                                {
+                                    <li>Address: <span>@Html.DisplayFor(model => model.Order.Address)</span></li>
 
-                                <div class="checkout__order__total">Total <span>@Html.DisplayFor(model => item.OrderPrice) VND</span></div>
-                                <div class="row">
-                                    @if (item.Status != "Done")
-                                    {
-                                        <div class="col-lg-6">
-                                            <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteOrder-" + item.OrderId)" data-url="@Url.Action($"Delete/{item.OrderId}")">
-                                                Delete Order
-                                            </button>
-                                        </div>
-                                        @await Html.PartialAsync("Delete", item)
-                                    }
+                                }
+                                else if (Model.Order.OrderType == "Carry out")
+                                {
+                                    <li>Delivery time: <span>@Html.DisplayFor(model => model.Order.PickTime)</span></li>
+                                }
+                                <li>Date:  <span>@Html.DisplayFor(model => Model.Order.OrderDate)</span></li>
+                            </ul>
+
+                            <div class="checkout__order__total">Total <span>@Html.DisplayFor(model => model.Order.OrderPrice) VND</span></div>
+                            <div class="row">
+                                @if (Model.Order.Status != "Done")
+                                {
                                     <div class="col-lg-6">
-                                        @if (item.OrderType == "Eat in")
-                                        {
-                                            <a asp-controller="Order" asp-action="MarkDone" asp-route-id="@item.OrderId" style="color:white">
-                                                <button class="btn btn-success m-1">
-                                                    Mark as Done
-                                                </button>
-                                            </a>
-                                        }
-                                        else if (item.OrderType == "Delivery" && item.Status == "Processing")
-                                        {
-                                            <a style="color:white">
-                                                <button class="Delivery btn btn-success m-1" data-id="@item.OrderId">
-                                                    Delivery
-                                                </button>
-                                            </a>
-                                        }
-                                        else if (item.OrderType == "Carry out" && item.Status == "Processing")
-                                        {
-                                            <a style="color:white">
-                                                <button class="Ready btn btn-success m-1" data-id="@item.OrderId">
-                                                    Ready
-                                                </button>
-                                            </a>
-                                        }
-                                        @if (item.Status == "Delivering" || item.Status == "Ready")
-                                        {
+                                        <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteOrder-" + Model.Order.OrderId)" data-url="@Url.Action($"Delete/{Model.Order.OrderId}")">
+                                            Delete Order
+                                        </button>
+                                    </div>
+                                    @await Html.PartialAsync("Delete", Model)
+                                }
+
+                                @if (Model.Order.OrderType == "Eat in")
+                                {
+                                    <div class="col-lg-6">
+                                        <a asp-controller="Order" asp-action="MarkDone" asp-route-id="@Model.Order.OrderId" style="color:white">
+                                            <button class="btn btn-success m-1">
+                                                Mark as Done
+                                            </button>
+                                        </a>
+                                    </div>
+                                }
+                                else if (Model.Order.OrderType == "Delivery" && Model.Order.Status == "Processing")
+                                {
+                                    <div class="col-lg-6">
                                         <a style="color:white">
-                                            <button class="Done btn btn-success m-1" data-id="@item.OrderId">
+                                            <button class="Delivery btn btn-success m-1" data-id="@Model.Order.OrderId">
+                                                Delivery
+                                            </button>
+                                        </a>
+                                    </div>
+                                }
+                                else if (Model.Order.OrderType == "Carry out" && Model.Order.Status == "Processing")
+                                {
+                                    <div class="col-lg-6">
+                                        <a style="color:white">
+                                            <button class="Ready btn btn-success m-1" data-id="@Model.Order.OrderId">
+                                                Ready
+                                            </button>
+                                        </a>
+                                    </div>
+                                }
+
+                                @if (Model.Order.Status == "Delivering" || Model.Order.Status == "Ready")
+                                {
+                                    <div class="col-lg-6">
+                                        <a style="color:white">
+                                            <button class="Done btn btn-success m-1" data-id="@Model.Order.OrderId">
                                                 Done
                                             </button>
                                         </a>
-                                        }
-                                        else if (item.Status == "Done")
-                                        {
-                                        <a style="color:white">
-                                            <button class="Done btn btn-success m-1" disabled style="font-weight:bold">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
-                                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                                    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
-                                                </svg>
-                                            </button>
-                                        </a>
-                                        }
                                     </div>
-                                </div>
-
-                            }
+                                }
+                                else if (Model.Order.Status == "Done")
+                                {
+                                    <a style="color:white">
+                                        <button class="Done btn btn-success m-1" disabled style="font-weight:bold">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                                <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z" />
+                                            </svg>
+                                        </button>
+                                    </a>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </body>
 @section Scripts{
@@ -268,7 +269,7 @@
                 })
             })
         })
-            
+
         $(document).ready(function () {
             $(".Ready").click(function () {
                 $.ajax({
@@ -283,6 +284,6 @@
                 })
             })
         })
-       
+
     </script>
     }

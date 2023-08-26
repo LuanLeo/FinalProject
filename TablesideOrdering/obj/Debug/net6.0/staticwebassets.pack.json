@@ -53,10 +53,6 @@
       "PackagePath": "staticwebassets\\ProductImage\\08a3cb702f3be59.ico"
     },
     {
-      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\2.PNG",
-      "PackagePath": "staticwebassets\\ProductImage\\2.PNG"
-    },
-    {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\3.PNG",
       "PackagePath": "staticwebassets\\ProductImage\\3.PNG"
     },
@@ -65,12 +61,12 @@
       "PackagePath": "staticwebassets\\ProductImage\\376a26baaf7b29acecd6a77359b62003aa3eb1ad.ico"
     },
     {
-      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\Anonymous.png",
-      "PackagePath": "staticwebassets\\ProductImage\\Anonymous.png"
-    },
-    {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\Iced-Coffee-Thumbnail.jpg",
       "PackagePath": "staticwebassets\\ProductImage\\Iced-Coffee-Thumbnail.jpg"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\table.jpg",
+      "PackagePath": "staticwebassets\\ProductImage\\table.jpg"
     },
     {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\Source\\OwlCarousel2-2.3.4.zip",

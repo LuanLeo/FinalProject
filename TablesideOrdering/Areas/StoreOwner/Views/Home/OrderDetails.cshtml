@@ -137,6 +137,7 @@
                                                     <span> @Html.DisplayFor(modelItem => item.Price) VND</span>
                                                 </td>
                                             </tr>
+
                                         }
                                     </tbody>
                                 </table>
@@ -148,18 +149,17 @@
                             <h4>Order</h4>
                             <div class="checkout__order__products">Customer Details</div>
                             <ul>
-                                @foreach (var item in Model.Order)
-                                {
-                                    <li>Phone number: <span>@Html.DisplayFor(model => item.PhoneNumber)</span></li>
-                                    <li>Table number: <span>@Html.DisplayFor(model => item.TableNo)</span></li>
-                                    <li>Date:  <span>@Html.DisplayFor(model => item.OrderDate)</span></li>
-                                }
+                                <li>Phone number: <span>@Html.DisplayFor(model => model.Order.PhoneNumber)</span></li>
+                                <li>Table number: <span>@Html.DisplayFor(model => model.Order.TableNo)</span></li>
+                                <li>Date:  <span>@Html.DisplayFor(model => model.Order.OrderDate)</span></li>
                             </ul>
-                            @foreach (var item in Model.Order)
-                            {
-                                <div class="checkout__order__total">Total <span>@Html.DisplayFor(model => item.OrderPrice) VND</span></div>
-
-                            }
+                            <div class="checkout__order__total">Total <span>@Html.DisplayFor(model => model.Order.OrderPrice) VND</span></div>
+                            <div class="col-lg-6">
+                                <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteOrder-" + Model.Order.OrderId)" data-url="@Url.Action($"Delete/{Model.Order.OrderId}")">
+                                    Delete Order
+                                </button>
+                            </div>
+                            @await Html.PartialAsync("Delete", Model)
                         </div>
                     </div>
                 </div>

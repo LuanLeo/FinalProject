@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "SAWLwoHWji9pQrH/q2RmlAEHyHgHbTcpsxIG+s5/eIg=",
+  "Hash": "DNQDvgRs08eAhDxT+zHZhdYNxpAM6vI0edyt5Pc4vkQ=",
   "Source": "TablesideOrdering",
   "BasePath": "_content/TablesideOrdering",
   "Mode": "Default",
@@ -13872,23 +13872,6 @@
       "OriginalItemSpec": "wwwroot\\ProductImage\\08a3cb702f3be59.ico"
     },
     {
-      "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\2.PNG",
-      "SourceId": "TablesideOrdering",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\",
-      "BasePath": "_content/TablesideOrdering",
-      "RelativePath": "ProductImage/2.PNG",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\ProductImage\\2.PNG"
-    },
-    {
       "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\3.PNG",
       "SourceId": "TablesideOrdering",
       "SourceType": "Discovered",
@@ -13923,23 +13906,6 @@
       "OriginalItemSpec": "wwwroot\\ProductImage\\376a26baaf7b29acecd6a77359b62003aa3eb1ad.ico"
     },
     {
-      "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\Anonymous.png",
-      "SourceId": "TablesideOrdering",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\",
-      "BasePath": "_content/TablesideOrdering",
-      "RelativePath": "ProductImage/Anonymous.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\ProductImage\\Anonymous.png"
-    },
-    {
       "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\Iced-Coffee-Thumbnail.jpg",
       "SourceId": "TablesideOrdering",
       "SourceType": "Discovered",
@@ -13955,6 +13921,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\ProductImage\\Iced-Coffee-Thumbnail.jpg"
+    },
+    {
+      "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\table.jpg",
+      "SourceId": "TablesideOrdering",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\",
+      "BasePath": "_content/TablesideOrdering",
+      "RelativePath": "ProductImage/table.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\ProductImage\\table.jpg"
     },
     {
       "Identity": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\sass\\_base.scss",

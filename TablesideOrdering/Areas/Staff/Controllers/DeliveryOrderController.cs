@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Data;
-using TablesideOrdering.Areas.Staff.ViewModels;
 using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Data;
 

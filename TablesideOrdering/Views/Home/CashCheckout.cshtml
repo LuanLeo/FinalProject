@@ -86,26 +86,32 @@
                                 <b>Checkout description</b>
                                 <input value="Checkout at L&L coffee" disabled />
                             </div>
-                            @if (Model.OrderType == "Delivery")
-                            {
-                                <div class="checkout__input">
-                                    <b>Address<span>*</span></b>
-                                    <input asp-for="@Model.Address" class="form-control" />
-                                </div>
-                            }
+                            <div id="address" class="address checkout__input" style="display:none;">
+                                <b>Address<span>*</span></b>
+                                <input asp-for="@Model.Address" class="form-control" />
+                            </div>
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="checkout__input">
-                                        <b>Delivery method</b>
-                                        <input type="text" value="@Model.OrderType" disabled />
+                                <div class="col-lg-4">
+                                    <b>Delivery Method</b>
+                                    <div class="col-lg-4">
+                                        <select id="getType" onchange="admSelectCheck();">
+                                            <option id="delivery" value="delivery">Delivery</option>
+                                            <option id="carryout" value="carryout">Carry out</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div id="time" class="checkoutinput" style="display:none;">
+                                        <b>Time to pick up<span>*</span></b>
+                                        <input asp-for="@Model.PickTime" class="form-control" type="time" style="width:125px" />
                                     </div>
                                 </div>
                                 @if (Model.OrderType != "Reservation")
                                 {
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-4">
                                         <div class="checkout__input">
                                             <b>Email (Optional)</b>
-                                            <input asp-for="@Model.Email.EmailTo" type="text" placeholder="Enter email to receive E-Invoice" />
+                                            <input asp-for="@Model.Email.EmailTo" type="text" placeholder="Email to receive E-Invoice" />
                                         </div>
                                     </div>
                                 }
@@ -120,13 +126,6 @@
                                 }
                             </div>
 
-                            @if (Model.OrderType == "Carry out")
-                            {
-                                <div class="checkout__input">
-                                    <b>Time to pick up<span>*</span></b>
-                                    <input asp-for="@Model.PickTime" class="form-control" type="time" style="width:125px" />
-                                </div>
-                            }
                             @if (Model.OrderType == "Reservation")
                             {
                                 <div class="row">
@@ -138,11 +137,11 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="checkout__input">
-                                            <b>Number of Customer<span>*</span></b><br/>
+                                            <b>Number of Customer<span>*</span></b><br />
                                             <input value="@Model.Reser.People" type="text" style="width:125px" disabled />
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
                             }
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -177,6 +176,24 @@
     <script src="/js/mixitup.min.js"></script>
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
+    @section Scripts{
+        <script>
+            function admSelectCheck() {
+                type = document.getElementById("getType").value;
+                if (type == "carryout") {
+
+                    document.getElementById("time").style.display = "block";
+                    document.getElementById("address").style.display = "none";
+                }
+                else if (type == "delivery") {
+
+                    document.getElementById("address").style.display = "block";
+                    document.getElementById("time").style.display = "none";
+                }
+            }
+
+        </script>
+    }
 </body>
 @await Component.InvokeAsync("Notyf")
 

@@ -44,24 +44,16 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         public IActionResult OrderDetails(int id)
         {
             OrderViewModel OrderData = new OrderViewModel();
-            List<Orders> o = new List<Orders>();
-            foreach (var order in context.Orders)
-            {
-                if (order.OrderId == id)
-                {
-                    o.Add(order);
-                }
-            }
-            OrderData.Order = o;
-            List<OrderDetail> od = new List<OrderDetail>();
+            List<OrderDetail> oList = new List<OrderDetail>();
+            OrderData.Order = context.Orders.Find(id);
             foreach (var order in context.OrderDetails)
             {
                 if (order.OrderId == id)
                 {
-                    od.Add(order);
+                    oList.Add(order);
                 }
             }
-            OrderData.OrderDetail = od;
+            OrderData.OrderDetail = oList;
             return View(OrderData);
         }
         public IActionResult AllOrders(DateTime date)
@@ -75,7 +67,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                     list.Add(order);
                 }
             }
-            OrderData.Order = list;
+            OrderData.OrderList = list;
             return View(OrderData);
         }
 
