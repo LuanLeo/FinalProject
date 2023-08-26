@@ -506,7 +506,7 @@ namespace TablesideOrdering.Controllers
         //CART PAGE FUCNTION
         public IActionResult Cart()
         {
-                HomeViewModel home = NavData();
+            HomeViewModel home = NavData();
             return View(home);
         }
 

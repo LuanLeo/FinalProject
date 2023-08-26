@@ -14,6 +14,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.3.0/mdb.min.css" rel="stylesheet" />
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
@@ -25,17 +29,31 @@
                 <!--  Row 1 -->
                 <div class="row">
                     <form asp-action="Index" class="d-sm-flex d-block align-items-center justify-content-between mb-9">
-                        <button type="submit" class="btn btn-info">
+                        <div class="position: relative">
+                            <button style="float: left;" type="submit" class="btn btn-info">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                             </svg>
                         </button>
-                        <div>
+                            <div style="position: absolute">
                             <select asp-for="Time" class="form-select">
                                 <option value="Day">Day</option>
                                 <option value="Month">Month</option>
                                 <option value="Year">Year</option>
                             </select>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="dropdown">
+                                <button type="button" class="form-select" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Export File
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" asp-action="Csv">CSV</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                                </div>
                         </div>
                     </form>
                 </div>
@@ -90,58 +108,61 @@
 </html>
 @await Component.InvokeAsync("Notyf")
 <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
-<script>
-    window.onload = function () {
-        var OrderStatistic = new CanvasJS.Chart("OrderStatistic", {
-            animationEnabled: true,
-            theme: "light2", // "light1", "light2", "dark1", "dark2"
-            title: {
-                text: "@ViewBag.Title1"
-            },
-            axisY: {
-                title: "Revenues (VND)"
-            },
-            data: [{
-                type: "column",
-                dataPoints: @Html.Raw(ViewBag.OrderPrice)
-                                }]
-        });
-        OrderStatistic.render();
+@section Scripts{
 
-        var FoodStatistic = new CanvasJS.Chart("FoodStatistic", {
-            theme: "light2", // "light1", "light2", "dark1", "dark2"
-            animationEnabled: true,
-            title: {
-                text: "Favorite Food Category @ViewBag.Title2"
-            },
-            data: [{
-                type: "pie",
-                startAngle: 180,
-                toolTipContent: "<b>{label}</b>: {y}%",
-                showInLegend: "true",
-                legendText: "{label}",
-                indexLabel: "{label} - {y}%",
-                dataPoints: @Html.Raw(ViewBag.FoodList)
-                                }]
-        });
-        FoodStatistic.render();
+    <script>
+        window.onload = function () {
+            var OrderStatistic = new CanvasJS.Chart("OrderStatistic", {
+                animationEnabled: true,
+                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                title: {
+                    text: "@ViewBag.Title1"
+                },
+                axisY: {
+                    title: "Revenues (VND)"
+                },
+                data: [{
+                    type: "column",
+                    dataPoints: @Html.Raw(ViewBag.OrderPrice)
+                                                }]
+            });
+            OrderStatistic.render();
 
-        var TopFood = new CanvasJS.Chart("TopFood", {
-            theme: "light2",
-            animationEnabled: true,
-            title: {
-                text: "Top 3 Food @ViewBag.Title2"
-            },
-            axisY: {
-                title: "Revenues of Food",
-                gridThickness: 0
-            },
-            data: [{
-                type: "bar",
-                indexLabel: "{y}",
-                dataPoints: @Html.Raw(ViewBag.TopFood)
-                            }]
-        });
-        TopFood.render();
+            var FoodStatistic = new CanvasJS.Chart("FoodStatistic", {
+                theme: "light2", // "light1", "light2", "dark1", "dark2"
+                animationEnabled: true,
+                title: {
+                    text: "Favorite Food Category @ViewBag.Title2"
+                },
+                data: [{
+                    type: "pie",
+                    startAngle: 180,
+                    toolTipContent: "<b>{label}</b>: {y}%",
+                    showInLegend: "true",
+                    legendText: "{label}",
+                    indexLabel: "{label} - {y}%",
+                    dataPoints: @Html.Raw(ViewBag.FoodList)
+                                                }]
+            });
+            FoodStatistic.render();
+
+            var TopFood = new CanvasJS.Chart("TopFood", {
+                theme: "light2",
+                animationEnabled: true,
+                title: {
+                    text: "Top 3 Food @ViewBag.Title2"
+                },
+                axisY: {
+                    title: "Revenues of Food",
+                    gridThickness: 0
+                },
+                data: [{
+                    type: "bar",
+                    indexLabel: "{y}",
+                    dataPoints: @Html.Raw(ViewBag.TopFood)
+                                            }]
+            });
+            TopFood.render();
+        }
+    </script>
     }
-</script>

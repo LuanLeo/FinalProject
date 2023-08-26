@@ -11,6 +11,7 @@ using System.Data;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Areas.StoreOwner.StatisticModels;
 using TablesideOrdering.Areas.StoreOwner.ViewModels;
@@ -69,6 +70,56 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             }
             OrderData.OrderList = list;
             return View(OrderData);
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            OrderViewModel OrderData = new OrderViewModel();
+            List<OrderDetail> oList = new List<OrderDetail>();
+            OrderData.Order = context.Orders.Find(id);
+            foreach (var order in context.OrderDetails)
+            {
+                if(order.OrderId == id)
+                {
+                    oList.Add(order);
+                }
+            }
+            OrderData.OrderDetail = oList;
+            return PartialView("Delete", OrderData);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(OrderViewModel model)
+        {
+            var order = context.Orders.Find(model.Order.OrderId);
+
+            foreach (var od in context.OrderDetails)
+            {
+                if (od.OrderId == model.Order.OrderId)
+                {
+                    context.OrderDetails.Remove(od);
+                }
+            }
+
+            context.Orders.Remove(order);
+            context.SaveChanges();
+
+            _notyfService.Success("The order is deleted", 5);
+            return View("AllOrders");
+        }
+
+        public IActionResult Csv()
+        {
+            var builder = new StringBuilder();
+
+            builder.AppendLine("Order Id, Order Date, Order Type, Status, Phone Number, CusName, Payment Type, Table No, Address, Pick Time, Product Quantity, Order Price\r\n");
+
+            foreach (var user in context.Orders)
+            {
+                builder.AppendLine($"{user.OrderId},{user.OrderDate},{user.OrderType},{user.Status},{user.PhoneNumber},{user.CusName},{user.PaymentType},{user.TableNo},{user.Address},{user.PickTime},{user.ProductQuantity},{user.OrderPrice}");
+            }
+            return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", "orders.csv");
         }
 
         public void StatisticOrder(string time)
@@ -182,9 +233,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 ViewBag.Title2 = "Today";
                 comparedTime = DateTime.Now.ToShortDateString();
             }
-            else
-            {
-                if (time == "Month")
+            else if (time == "Month")
                 {
                     ViewBag.Title2 = "this Month";
                     comparedTime = DateTime.Now.Month.ToString();
@@ -194,7 +243,6 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                     ViewBag.Title2 = "this Year";
                     comparedTime = DateTime.Now.Year.ToString();
                 }
-            }
 
             foreach (var order in orders)
             {
@@ -202,11 +250,11 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 {
                     orderId.Add(order.OrderId);
                 }
-                else if (Convert.ToDateTime(order.OrderDate).Month.ToString() == comparedTime)
+                if (Convert.ToDateTime(order.OrderDate).Month.ToString() == comparedTime)
                 {
                     orderId.Add(order.OrderId);
                 }
-                else if (Convert.ToDateTime(order.OrderDate).Year.ToString() == comparedTime)
+                if (Convert.ToDateTime(order.OrderDate).Year.ToString() == comparedTime)
                 {
                     orderId.Add(order.OrderId);
                 }
