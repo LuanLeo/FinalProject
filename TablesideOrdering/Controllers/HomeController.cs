@@ -118,7 +118,7 @@ namespace TablesideOrdering.Controllers
 
         public void Type(string term)
         {
-            if (term == "TableBooking")
+            if (term == "Reservation")
             {
                 OrderType = "Reservation";
             }
@@ -126,9 +126,13 @@ namespace TablesideOrdering.Controllers
             {
                 OrderType = "Delivery";
             }
-            else
+            else if (term == "Carry out")
             {
                 OrderType = "Carry out";
+            }
+            else
+            {
+                OrderType = "Eat in";
             }
         }
 
@@ -1159,7 +1163,6 @@ namespace TablesideOrdering.Controllers
                               CusName = o.CusName,
                               PaymentType = o.PaymentType,
                               OrderType = o.OrderType
-
                           });
 
             home.OrderDetail = (from o in _context.OrderDetails

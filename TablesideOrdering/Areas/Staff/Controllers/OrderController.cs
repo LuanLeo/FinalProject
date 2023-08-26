@@ -39,7 +39,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             List<Orders> OList = new List<Orders>();
             foreach (var orders in _context.Orders)
             {
-                if (orders.Status == "Done" && orders.OrderType == "Eat-in")
+                if (orders.Status == "Done" && orders.OrderType == "Eat in")
                     OList.Add(orders);
             }
             return View(OList);

@@ -13,19 +13,13 @@ namespace TablesideOrdering.Areas.Staff.Controllers
     public class DeliveryOrderController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public static int Num;
         public DeliveryOrderController(ApplicationDbContext context)
         {
             _context = context;
         }
         public IActionResult Index()
         {
-            if (Num == 0)
-            {
-                ViewBag.Num = Num;
-                ViewBag.Message = "New order has been updated";
-            }
-            Num = 0;
+            ViewBag.Message = "New order has been updated";
             return View();
         }
         public void Delivery(int id)
