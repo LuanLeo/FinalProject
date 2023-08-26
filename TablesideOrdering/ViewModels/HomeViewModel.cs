@@ -3,7 +3,8 @@ using TablesideOrdering.Areas.Staff.Models;
 using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Areas.StoreOwner.ViewModels;
 using TablesideOrdering.Models;
-using TablesideOrdering.Models.Order;
+using TablesideOrdering.Models.Momo;
+using TablesideOrdering.Models.VNPay;
 
 namespace TablesideOrdering.ViewModels
 {

@@ -1,4 +1,4 @@
-﻿using TablesideOrdering.Models;
+﻿using TablesideOrdering.Models.VNPay;
 using TablesideOrdering.PaymentServices.VNPay;
 
 namespace TablesideOrdering.PaymentServices.VNPay

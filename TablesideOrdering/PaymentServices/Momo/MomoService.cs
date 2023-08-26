@@ -5,7 +5,6 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Org.BouncyCastle.Asn1.Crmf;
 using TablesideOrdering.Models.Momo;
-using TablesideOrdering.Models.Order;
 using RestSharp;
 using Method = RestSharp.Method;
 

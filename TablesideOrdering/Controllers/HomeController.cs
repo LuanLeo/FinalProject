@@ -9,7 +9,6 @@ using TablesideOrdering.Areas.StoreOwner.ViewModels;
 using TablesideOrdering.Data;
 using TablesideOrdering.Migrations;
 using TablesideOrdering.Models;
-using TablesideOrdering.Models.Order;
 using TablesideOrdering.PaymentServices.Momo;
 using TablesideOrdering.PaymentServices.VNPay;
 using TablesideOrdering.ViewModels;
@@ -37,6 +36,8 @@ using Microsoft.CodeAnalysis;
 using TablesideOrdering.Areas.Staff.Models;
 using Reservation = TablesideOrdering.Areas.Staff.Models.Reservation;
 using System;
+using TablesideOrdering.Models.Momo;
+using TablesideOrdering.Models.VNPay;
 
 namespace TablesideOrdering.Controllers
 {

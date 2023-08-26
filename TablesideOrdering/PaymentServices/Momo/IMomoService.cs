@@ -1,5 +1,4 @@
-﻿using TablesideOrdering.Models.Order;
-using TablesideOrdering.Models.Momo;
+﻿using TablesideOrdering.Models.Momo;
 
 
 namespace TablesideOrdering.PaymentServices.Momo

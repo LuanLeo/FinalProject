@@ -11,7 +11,6 @@
 
 <link rel="stylesheet" href="~/css/toaststyle.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-@await Component.InvokeAsync("Notyf")
 <body>
     <div class="page-wrapper" id="main-wrapper" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
          data-sidebar-position="fixed" data-header-position="fixed">
@@ -95,3 +94,4 @@
     <script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
     <script src="~/assets/js/dashboard.js"></script>
 </body>
+@await Component.InvokeAsync("Notyf")

@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
-using TablesideOrdering.Models;
+using TablesideOrdering.Models.VNPay;
 
 namespace TablesideOrdering.PaymentServices.VNPay
 {

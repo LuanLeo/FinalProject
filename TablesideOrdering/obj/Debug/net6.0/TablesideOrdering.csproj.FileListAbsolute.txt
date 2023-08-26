@@ -2568,3 +2568,10 @@ C:\Users\USER\Desktop\FinalProject1\TablesideOrdering\obj\Debug\net6.0\refint\Ta
 C:\Users\USER\Desktop\FinalProject1\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.pdb
 C:\Users\USER\Desktop\FinalProject1\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.genruntimeconfig.cache
 C:\Users\USER\Desktop\FinalProject1\TablesideOrdering\obj\Debug\net6.0\ref\TablesideOrdering.dll
+C:\Users\pekoi\Documents\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\ClosedXML.dll
+C:\Users\pekoi\Documents\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\DocumentFormat.OpenXml.dll
+C:\Users\pekoi\Documents\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\ExcelNumberFormat.dll
+C:\Users\pekoi\Documents\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\Irony.dll
+C:\Users\pekoi\Documents\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\SixLabors.Fonts.dll
+C:\Users\pekoi\Documents\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\System.IO.Packaging.dll
+C:\Users\pekoi\Documents\Desktop\FinalProject\TablesideOrdering\bin\Debug\net6.0\XLParser.dll
