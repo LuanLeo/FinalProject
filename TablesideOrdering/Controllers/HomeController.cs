@@ -506,18 +506,8 @@ namespace TablesideOrdering.Controllers
         //CART PAGE FUCNTION
         public IActionResult Cart()
         {
-            if (OrderType != null)
-            {
                 HomeViewModel home = NavData();
-                return View(home);
-            }
-            else
-            {
-                _notyfService.Error("Please select select delivery method!!!");
-                return RedirectToAction("Index");
-            }
-
-
+            return View(home);
         }
 
         //Increase Quantity
