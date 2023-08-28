@@ -1,0 +1,49 @@
+﻿@model TablesideOrdering.Areas.StoreOwner.Models.Discount
+
+@{
+    ViewData["Title"] = "Create Discount";
+}
+
+<div class="modal fade" id="CreateDiscount" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Create New Discount</h5>
+            </div>
+            <div class="container-fluid">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="popup__text">
+                        <label class="control-label">Discount Code</label>
+                        <input asp-for="DisCode" class="form-control" />
+                        <span asp-validation-for="DisCode" class="text-danger"></span>
+                    </div>
+                    <div class="popup__text">
+                        <label class="control-label">Discount Value (x1000 VND or %)</label>
+                        <input asp-for="DisValue" class="form-control" />
+                        <span asp-validation-for="DisValue" class="text-danger"></span>
+                    </div>
+                    <div class="popup__text">
+                        <label class="control-label">Discount Type</label>
+                        <select asp-for="DisType" asp-items="@ViewBag.DisType" class="form-control"></select>
+                        <span asp-validation-for="DisType" class="text-danger"></span>
+                    </div>
+                    <div class="popup__text">
+                        <label class="control-label">Start Day</label>
+                        <input asp-for="DayStart" class="form-control" />
+                        <span asp-validation-for="DayStart" class="text-danger"></span>
+                    </div>
+                    <div class="popup__text">
+                        <label class="control-label">End Day</label>
+                        <input asp-for="DayEnd" class="form-control" />
+                        <span asp-validation-for="DayEnd" class="text-danger"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Create" class="btn btn-success" />
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
