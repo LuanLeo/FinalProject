@@ -12,9 +12,6 @@
             <div class="container-fluid">
                 <h1>QR Code Create</h1>
                 <form asp-action="QRCreate">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input asp-for="Url" placeholder="URL Link" />
-                    <span asp-validation-for="Url" class="text-danger"></span>
 
                     <select asp-for="TableNo" asp-items="@ViewBag.TableList" class="form-select">
                         <option disabled selected>Select Role</option>
@@ -24,7 +21,7 @@
                 </form>
                 @if (ViewBag.QRCode != null)
                 {
-                    <img src="@ViewBag.QRCode" width="300" height="300" />
+                    <img src="@ViewBag.QRCode" width="300" height="300"/>
                 }
             </div>
         </div>

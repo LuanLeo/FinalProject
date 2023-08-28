@@ -52,15 +52,20 @@
                                     @Html.DisplayFor(modelItem => item.PeopleCap)
                                 </td>
                                 <td align="center">
-                                    <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="@("#EditTable-" + item.IdTable)" data-url="@Url.Action($"Edit/{item.IdTable}")">
+                                    <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="@("#EditTable-" + item.Id)" data-url="@Url.Action($"Edit/{item.IdTable}")">
                                         Edit
                                     </button>
                                     @await Html.PartialAsync("Edit",item)
 
-                                    <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteTable-" + item.IdTable)" data-url="@Url.Action($"Delete/{item.IdTable}")">
+                                    <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="@("#DeleteTable-" + item.Id)" data-url="@Url.Action($"Delete/{item.IdTable}")">
                                         Delete
                                     </button>
                                     @await Html.PartialAsync("Delete",item)
+                                    <a asp-action="DownloadQR" asp-controller="Tables" asp-route-id="@item.Id">
+                                    <button type="button" class="btn btn-success m-1">
+                                        QR Code
+                                        </button>
+                                    </a>
                                 </td>
                             </tr>
                         }

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit Table";
 }
 
-<div class="modal fade" id="EditTable-@Model.IdTable" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="EditTable-@Model.Id" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,7 +13,10 @@
             <div class="container-fluid">
                 <form asp-action="Edit" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="IdTable" />
+                    <input type="hidden" asp-for="Id" />
+                        
+                        <input type="hidden" asp-for="IdTable" class="form-control" />
+                        <span asp-validation-for="IdTable" class="text-danger"></span>
                     <div class="form-group">
                         <label class="control-label">Status</label>
                         <input asp-for="Status" class="form-control" />
@@ -24,6 +27,8 @@
                         <input asp-for="PeopleCap" class="form-control" />
                         <span asp-validation-for="PeopleCap" class="text-danger"></span>
                     </div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="QRImg"/>
                     <div class="modal-footer">
                         <input type="submit" value="Save" class="btn btn-success" />
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

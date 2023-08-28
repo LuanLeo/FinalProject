@@ -36,6 +36,7 @@
   <ItemGroup>
     <Folder Include="Areas\Staff\Data\" />
     <Folder Include="Areas\Staff\ViewModels\" />
+    <Folder Include="wwwroot\QR\" />
     <Folder Include="wwwroot\ProductImage\" />
   </ItemGroup>
 

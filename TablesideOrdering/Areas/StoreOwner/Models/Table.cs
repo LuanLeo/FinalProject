@@ -9,5 +9,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Models
         public int IdTable { get; set; }
         public string Status { get; set; }
         public string PeopleCap { get; set; }
+        public string QRImg { get; set; }
+
     }
 }

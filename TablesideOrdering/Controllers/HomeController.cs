@@ -310,18 +310,12 @@ namespace TablesideOrdering.Controllers
         //INPUTTING TABLE NUMBER BY LINK FUNCTION
         [HttpGet]
         public IActionResult TableCheck(string id)
-        {
-            if (id != null)
-            {
+        {           
                 TableNo = id;
                 OrderType = "Eat in";
                 NavData();
                 return RedirectToAction("Index");
-            }
-            else
-            {
-                return RedirectToRoute(new { controller = "Account", action = "AccessDenied", area = "Identity" }); ;
-            }
+            
         }
 
         //MODIFY PHONE NUMBER FUNCTION
