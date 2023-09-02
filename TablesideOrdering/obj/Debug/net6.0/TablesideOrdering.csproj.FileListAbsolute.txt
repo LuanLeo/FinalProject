@@ -2582,3 +2582,9 @@ C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\SixLabors.Fonts.dll
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\System.IO.Packaging.dll
 C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\XLParser.dll
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\Microsoft.AspNet.SignalR.Core.dll
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\Microsoft.AspNet.SignalR.SystemWeb.dll
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\Microsoft.Owin.dll
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\Microsoft.Owin.Security.dll
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\bin\Debug\net6.0\Owin.dll

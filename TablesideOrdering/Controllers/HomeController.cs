@@ -1189,5 +1189,12 @@ namespace TablesideOrdering.Controllers
 
             return home;
         }
+
+        public ActionResult Chat()
+        {
+            HomeViewModel home = NavData();
+
+            return View(home);
+        }
     }
 }

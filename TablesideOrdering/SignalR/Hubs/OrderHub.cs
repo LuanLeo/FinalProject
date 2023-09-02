@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System.Drawing.Drawing2D;
 using TablesideOrdering.SignalR.Repositories;
 
 namespace TablesideOrdering.SignalR.Hubs

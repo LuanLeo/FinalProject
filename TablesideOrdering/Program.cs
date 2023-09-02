@@ -59,6 +59,7 @@ app.UseAuthentication(); ;
 app.UseAuthorization();
 
 app.MapHub<OrderHub>("/orderHub");
+app.MapHub<ChatHub>("/chatHub");
 
 app.MapRazorPages();
 app.UseEndpoints(endpoints =>
