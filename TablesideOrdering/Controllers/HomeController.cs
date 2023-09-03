@@ -715,14 +715,14 @@ namespace TablesideOrdering.Controllers
         {
             if (PaymentType == "Cash")
             {
-                if (home.Payment.Name != null && home.Cart.PhoneNumber != null)
+                if (home.Payment.Name != null && home.Cart.PhoneNumber != null && home.PickTime != null)
                 {
                     return true;
                 }
             }
             if (PaymentType == "VNPay")
             {
-                if (home.Payment.Name != null && home.Cart.PhoneNumber != null)
+                if (home.Payment.Name != null && home.Cart.PhoneNumber != null && home.PickTime != null)
                 {
                     return true;
                 }
@@ -730,7 +730,7 @@ namespace TablesideOrdering.Controllers
 
             if (PaymentType == "Momo")
             {
-                if (home.MoMoPay.FullName != null && home.Cart.PhoneNumber != null)
+                if (home.MoMoPay.FullName != null && home.Cart.PhoneNumber != null && home.PickTime!=null)
                 {
                     return true;
                 }
@@ -851,13 +851,14 @@ namespace TablesideOrdering.Controllers
         {
             HomeViewModel home = NavData();
             home.OrderType = OrderType;
+            home.Reser = ReserModel;
             return View(home);
         }
 
         //VNPAY URL PAYMENT FUNCTION
         public IActionResult CreatePaymentUrl(HomeViewModel home)
         {
-            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in")
+            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in" || OrderType == "Reservation")
             {
                 PaymentInformationModel model = new PaymentInformationModel();
                 model = home.Payment;
@@ -877,7 +878,7 @@ namespace TablesideOrdering.Controllers
         }
 
         //VNPAY PAYMENT FUNCTION
-        public IActionResult PaymentCallback()
+        public IActionResult PaymentCallback(HomeViewModel home)
         {
             var response = _vnPayService.PaymentExecute(Request.Query);
             if (response.VnPayResponseCode == "00")
@@ -892,20 +893,39 @@ namespace TablesideOrdering.Controllers
                 order.CusName = CusName;
                 order.OrderType = OrderType;
                 order.PaymentType = PaymentType;
+                if (OrderType == "Carry out")
+                {
+                    order.PickTime = home.PickTime;
+                    order.Address = "";
+                    order.TableNo = "";
+                }
 
-                if (OrderType == "Eat in" || OrderType == "Carry out")
+                if (OrderType == "Delivery")
+                {
+                    order.Address = home.Address;
+                    order.TableNo = "";
+                }
+                if (OrderType == "Eat in")
                 {
                     order.Address = "";
                     order.TableNo = TableNo;
                 }
-                else
+                if (OrderType == "Reservation")
                 {
-                    order.Address = Address;
+                    order.Address = "";
                     order.TableNo = "";
+
+
                 }
+
                 _context.Orders.Add(order);
                 _context.SaveChanges();
-
+                if (OrderType == "Reservation")
+                {
+                    ReserModel.OrderId = order.OrderId;
+                    _context.Reservations.Add(ReserModel);
+                    _context.SaveChanges();
+                }
                 //Save order list to database
                 List<OrderDetail> orderDetailList = new List<OrderDetail>();
                 foreach (var item in carts)
@@ -950,13 +970,14 @@ namespace TablesideOrdering.Controllers
         {
             HomeViewModel home = NavData();
             home.OrderType = OrderType;
+            home.Reser = ReserModel;
             return View(home);
 
         }
         [HttpPost]
         public async Task<RedirectResult> CreateMomoPaymentUrl(HomeViewModel home)
         {
-            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in")
+            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in" || OrderType == "Reservation")
             {
                 OrderInfoModel model = new OrderInfoModel();
                 model = home.MoMoPay;
@@ -979,7 +1000,7 @@ namespace TablesideOrdering.Controllers
 
         //MOMO PAYMENT FUNCTION 
         [HttpGet]
-        public IActionResult PaymentMomoCallBack()
+        public IActionResult PaymentMomoCallBack(HomeViewModel home)
         {
             var response = _momoService.PaymentExecuteAsync(HttpContext.Request.Query);
             if (response.ErrorCode == "0")
@@ -994,22 +1015,39 @@ namespace TablesideOrdering.Controllers
                 order.CusName = CusName;
                 order.OrderType = OrderType;
                 order.PaymentType = PaymentType;
+                if (OrderType == "Carry out")
+                {
+                    order.PickTime = home.PickTime;
+                    order.Address = "";
+                    order.TableNo = "";
+                }
 
-
-                if (OrderType == "Eat in" || OrderType == "Carry out")
+                if (OrderType == "Delivery")
+                {
+                    order.Address = home.Address;
+                    order.TableNo = "";
+                }
+                if (OrderType == "Eat in")
                 {
                     order.Address = "";
                     order.TableNo = TableNo;
                 }
-                else
+                if (OrderType == "Reservation")
                 {
-                    order.Address = Address;
+                    order.Address = "";
                     order.TableNo = "";
+
+
                 }
 
                 _context.Orders.Add(order);
                 _context.SaveChanges();
-
+                if (OrderType == "Reservation")
+                {
+                    ReserModel.OrderId = order.OrderId;
+                    _context.Reservations.Add(ReserModel);
+                    _context.SaveChanges();
+                }
                 //Save order list to database
                 List<OrderDetail> orderDetailList = new List<OrderDetail>();
                 foreach (var item in carts)
