@@ -26,9 +26,23 @@
     <link rel="stylesheet" href="../css/style.css" type="text/css">
 </head>
 <div class="container">
+    @if (ViewBag.User != null)
+    {
+        <div class="row p-1">
+            <div class="col-1">User</div>
+            <div class="col-5"><input type="text" id="userInput" value="@ViewBag.User" /></div>
+        </div>
+    }
+    else
+    {
+        <div class="row p-1">
+            <div class="col-1">User</div>
+            <div class="col-5"><input type="text" id="userInput" /></div>
+        </div>
+    }
     <div class="row p-1">
-        <div class="col-1">User</div>
-        <div class="col-5"><input type="text" id="userInput" /></div>
+        <div class="col-1">Receiver</div>
+        <div class="col-5"><input disabled type="text" class="w-100" id="receiverInput" value="@ViewBag.User" /></div>
     </div>
     <div class="row p-1">
         <div class="col-1">Message</div>
@@ -39,6 +53,8 @@
             <input type="button" id="sendButton" value="Send Message" />
         </div>
     </div>
+
+
     <div class="row p-1">
         <div class="col-6">
             <hr />

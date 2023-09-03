@@ -1231,7 +1231,10 @@ namespace TablesideOrdering.Controllers
         public ActionResult Chat()
         {
             HomeViewModel home = NavData();
-
+            if (TableNo != null)
+            {
+                ViewBag.User = TableNo;
+            }
             return View(home);
         }
     }

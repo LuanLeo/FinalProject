@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Discount Type</label>
-                        <select asp-for="DisType" asp-items="@ViewBag.DisType" class="form-control"></select>
+                        <select asp-for="DisType" asp-items="@ViewBag.DisType" class="form-control" />
                         <span asp-validation-for="DisType" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -38,6 +38,11 @@
                         <label class="control-label">End Day</label>
                         <input asp-for="DayEnd" class="form-control" />
                         <span asp-validation-for="DayEnd" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Status</label>
+                        <input asp-for="Status" class="form-control" />
+                        <span asp-validation-for="Status" class="text-danger"></span>
                     </div>
                     <div class="modal-footer">
                         <input type="submit" value="Save" class="btn btn-success" />

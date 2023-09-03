@@ -1,4 +1,8 @@
-﻿using AspNetCoreHero.ToastNotification.Abstractions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -117,8 +121,8 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         public List<SelectListItem> DisType()
         {
             var list = new List<SelectListItem>();
-                list.Add(new SelectListItem() { Value = "Money", Text = "Money" });
-                list.Add(new SelectListItem() { Value = "Percent", Text = "Percent" });
+            list.Add(new SelectListItem() { Value = "Money", Text = "Money" });
+            list.Add(new SelectListItem() { Value = "Percent", Text = "Percent" });
             return list;
         }
     }
