@@ -161,6 +161,13 @@
                                     Total
                                     <span class="text-danger">@Model.Cart.CartAmount VND</span>
                                 </div>
+                                <ul>
+                                    <li>Discount <span>@Model.Cart.DicountAmount VND</span></li>
+                                </ul>
+                                <div class="checkout__order__products">
+                                    MustPaid
+                                    <span class="text-danger">@Model.Cart.MustPaid VND</span>
+                                </div>
                                 <button type="submit" class="site-btn">PLACE ORDER</button>
                             </div>
                         </div>

@@ -143,6 +143,15 @@
                         <ul>
                             <li>Total <span>@Model.Cart.CartAmount VND</span></li>
                         </ul>
+                        <div class="shoping__discount">
+                            <ul>
+                                <li>Discount Code <span>@Model.CouponShow</span></li>
+                            </ul>
+                            <form id="Form" action="/Home/CouponApply">
+                                <input type="text" for="CouponCode" id="CouponCode" name="CouponCode" placeholder="Enter your discount code" />
+                                <button type="submit" onclick="submitForm()" class="site-btn">APPLY</button>
+                            </form>
+                        </div>
                         <div class="paymentcontainer">
                             <ul>
                                 <li>Select a Payment method</li>
@@ -196,9 +205,9 @@
     <script src="/js/mixitup.min.js"></script>
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
-    @section Scripts{        
+    @section Scripts{
         <script>
-            var proQty = $('.pro-qty');            
+            var proQty = $('.pro-qty');
             proQty.on('click', '.qtybtn', function () {
                 var $button = $(this);
                 var oldValue = $button.parent().find('input').val();
@@ -224,11 +233,11 @@
                         },
                         success: function (data) {
                             console.log(data);
-                            
                         }
                     })
                 })
             })
+
             $(document).ready(function () {
                 $(".dec").click(function () {
                     $.ajax({
@@ -238,7 +247,6 @@
                         },
                         success: function (data) {
                             console.log(data);
-
                         }
                     })
                 })
@@ -249,6 +257,21 @@
                     location.reload()
                 })
             })
+
+            $("#Form").submit(function (e) {
+                e.preventDefault(); 
+                var form = $(this);
+                var actionUrl = form.attr('action');
+
+                $.ajax({
+                    url: "/Home/CouponApply",
+                    data: form.serialize(),
+                    success: function (data) {
+                        location.reload();
+                    }
+                });
+
+            });
         </script>
     }
 </body>

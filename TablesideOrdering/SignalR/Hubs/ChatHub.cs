@@ -14,11 +14,14 @@ namespace TablesideOrdering.SignalR.Hubs
             //Create chat room from customer
             ChatId = TablesideOrdering.Controllers.HomeController.TableNo;
             List<SelectListItem> SelectList = TablesideOrdering.Areas.Staff.Controllers.HomeController.SelectList;
-            foreach (var list in SelectList)
+            if (SelectList != null)
             {
-                if (ChatId == list.Value)
+                foreach (var list in SelectList)
                 {
-                    Groups.AddToGroupAsync(Context.ConnectionId, list.Value);
+                    if (ChatId == list.Value)
+                    {
+                        Groups.AddToGroupAsync(Context.ConnectionId, list.Value);
+                    }
                 }
             }
 

@@ -55,6 +55,7 @@ namespace TablesideOrdering.ViewModels
         public float OrderPrice { get; set; }
 
 
+        public string CouponShow { get; set; }
         public int ProductQuantity { get; set; }
         public int OrderDetailId { get; set; }
         public string ProductName { get; set; }

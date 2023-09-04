@@ -10,5 +10,8 @@ namespace TablesideOrdering.Models
         public string CusName { get; set; }
         public List<AddToCart> CartLists { get; set; }
         public float CartAmount { get; set; }
+        public float DicountAmount { get; set; }
+        public float MustPaid { get; set; }
+
     }
 }

@@ -38,6 +38,7 @@ using Reservation = TablesideOrdering.Areas.Staff.Models.Reservation;
 using System;
 using TablesideOrdering.Models.Momo;
 using TablesideOrdering.Models.VNPay;
+using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
 
 namespace TablesideOrdering.Controllers
 {
@@ -72,7 +73,12 @@ namespace TablesideOrdering.Controllers
         public static string OrderType;
         public static string Address;
         public static int CheckNotify = 0;
+
         public static Reservation ReserModel = new Reservation();
+
+        public static Discount Coupon = new Discount();
+        public static int NotifCoupon = 0;
+        public static string CouponAlert;
 
         public HomeController(ApplicationDbContext context,
             INotyfService notyfService,
@@ -310,12 +316,12 @@ namespace TablesideOrdering.Controllers
         //INPUTTING TABLE NUMBER BY LINK FUNCTION
         [HttpGet]
         public IActionResult TableCheck(string id)
-        {           
-                TableNo = id;
-                OrderType = "Eat in";
-                NavData();
-                return RedirectToAction("Index");
-            
+        {
+            TableNo = id;
+            OrderType = "Eat in";
+            NavData();
+            return RedirectToAction("Index");
+
         }
 
         //MODIFY PHONE NUMBER FUNCTION
@@ -498,10 +504,74 @@ namespace TablesideOrdering.Controllers
 
 
 
+        //APPLY COUPON FUNCTION
+        public void CouponApply(string CouponCode)
+        {
+            //Check inpput
+            if (CouponCode != null)
+            {
+                var coupon = _context.Discounts.FirstOrDefault(x => x.DisCode == CouponCode);
+                //Check in database
+                if (coupon != null)
+                {
+                    //Check day valid
+                    if (coupon.DayStart <= DateTime.Now && coupon.DayEnd >= DateTime.Now)
+                    {
+                        Coupon = coupon;
+                        if (coupon.DisType == "Money")
+                        {
+                            CouponAlert = $"Your order reduces {coupon.DisValue} VND";
+                        }
+                        else
+                        {
+                            CouponAlert = $"Your order reduces {coupon.DisValue} %";
+                        }
+                        NotifCoupon = 1;
+                    }
+                    else
+                    {
+                        NotifCoupon = 2;
+                    }
+                }
+                else
+                {
+                    NotifCoupon = 3;
+                }
+            }
+            else
+            {
+                NotifCoupon = 4;
+            }
+        }
+
+        public void CouponCondition()
+        {
+            switch (NotifCoupon)
+            {
+                case 1:
+                    _notyfService.Success("Coupon is applies success!", 5);
+                    break;
+                case 2:
+                    _notyfService.Warning("Your coupon code was expired!", 5);
+                    break;
+                case 3:
+                    _notyfService.Error("Coupon is not found!", 5);
+                    break;
+                case 4:
+                    _notyfService.Error("Please enter your coupon!", 5);
+                    break;
+            }
+        }
+
+
+
+
         //CART PAGE FUCNTION
         public IActionResult Cart()
         {
             HomeViewModel home = NavData();
+            home.CouponShow = CouponAlert;
+            CouponCondition();
             return View(home);
         }
 
@@ -668,6 +738,7 @@ namespace TablesideOrdering.Controllers
                     if (home.PaymentType == "Cash")
                     {
                         PaymentType = "Cash";
+
                         return RedirectToAction("CashCheckout");
                     }
                 }
@@ -730,7 +801,7 @@ namespace TablesideOrdering.Controllers
 
             if (PaymentType == "Momo")
             {
-                if (home.MoMoPay.FullName != null && home.Cart.PhoneNumber != null && home.PickTime!=null)
+                if (home.MoMoPay.FullName != null && home.Cart.PhoneNumber != null && home.PickTime != null)
                 {
                     return true;
                 }
@@ -739,10 +810,27 @@ namespace TablesideOrdering.Controllers
             return false;
         }
 
+        //COUPON SHOW FUNCTION
+        public HomeViewModel CouponShow()
+        {
+            HomeViewModel home = NavData();
+            if (Coupon.DisType == "Money")
+            {
+                home.Cart.DicountAmount = Coupon.DisValue;
+            }
+            else if (Coupon.DisType == "Percent")
+            {
+                var total = (TotalPrice * Coupon.DisValue) / 100;
+                home.Cart.DicountAmount = total;
+            };
+            home.Cart.MustPaid = TotalPrice - home.Cart.DicountAmount;
+            return home;
+        }
+
         //CASH PAYMENT METHOD PAGE FUCNTION
         public IActionResult CashCheckout()
         {
-            HomeViewModel home = NavData();
+            HomeViewModel home = CouponShow();
             home.OrderType = OrderType;
             home.Reser = ReserModel;
             return View(home);
@@ -760,12 +848,29 @@ namespace TablesideOrdering.Controllers
                 //Save order to database
                 Orders order = new Orders();
                 order.OrderDate = DateTime.Now.ToString();
-                order.OrderPrice = TotalPrice;
                 order.ProductQuantity = carts.Count();
                 order.PhoneNumber = home.Cart.PhoneNumber;
                 order.CusName = home.Payment.Name;
                 order.OrderType = OrderType;
                 order.PaymentType = PaymentType;
+
+                if (Coupon != null)
+                {
+                    if (Coupon.DisType == "Money")
+                    {
+                        order.OrderPrice = TotalPrice - Coupon.DisValue;
+                    }
+                    else if (Coupon.DisType == "Percent")
+                    {
+                        order.OrderPrice = TotalPrice - (TotalPrice * Coupon.DisValue) / 100;
+                    }
+                }
+                else
+                {
+                    order.OrderPrice = TotalPrice;
+
+                }
+
                 order.Status = "Processing";
                 if (OrderType == "Carry out")
                 {
@@ -849,7 +954,7 @@ namespace TablesideOrdering.Controllers
         //VNPAY PAYMENT METHOD PAGE FUCNTION
         public IActionResult VNPayCheckout()
         {
-            HomeViewModel home = NavData();
+            HomeViewModel home = CouponShow();
             home.OrderType = OrderType;
             home.Reser = ReserModel;
             return View(home);
@@ -886,13 +991,30 @@ namespace TablesideOrdering.Controllers
                 //Save order to database
                 Orders order = new Orders();
                 order.OrderDate = DateTime.Now.ToString();
-                order.OrderPrice = TotalPrice;
                 order.ProductQuantity = carts.Count();
                 order.PhoneNumber = PhoneNumber;
                 order.Status = "Processing";
                 order.CusName = CusName;
                 order.OrderType = OrderType;
                 order.PaymentType = PaymentType;
+
+                if (Coupon != null)
+                {
+                    if (Coupon.DisType == "Money")
+                    {
+                        order.OrderPrice = TotalPrice - Coupon.DisValue;
+                    }
+                    else if (Coupon.DisType == "Percent")
+                    {
+                        order.OrderPrice = TotalPrice - (TotalPrice * Coupon.DisValue) / 100;
+                    }
+                }
+                else
+                {
+                    order.OrderPrice = TotalPrice;
+
+                }
+
                 if (OrderType == "Carry out")
                 {
                     order.PickTime = home.PickTime;
@@ -968,9 +1090,10 @@ namespace TablesideOrdering.Controllers
         //MOMO PAYMENT METHOD PAGE FUCNTION
         public IActionResult MomoCheckout()
         {
-            HomeViewModel home = NavData();
+            HomeViewModel home = CouponShow();
             home.OrderType = OrderType;
             home.Reser = ReserModel;
+
             return View(home);
 
         }
@@ -1008,13 +1131,30 @@ namespace TablesideOrdering.Controllers
                 //Save order to database
                 Orders order = new Orders();
                 order.OrderDate = DateTime.Now.ToString();
-                order.OrderPrice = TotalPrice;
                 order.ProductQuantity = carts.Count();
                 order.PhoneNumber = PhoneNumber;
                 order.Status = "Processing";
                 order.CusName = CusName;
                 order.OrderType = OrderType;
                 order.PaymentType = PaymentType;
+
+                if (Coupon != null)
+                {
+                    if (Coupon.DisType == "Money")
+                    {
+                        order.OrderPrice = TotalPrice - Coupon.DisValue;
+                    }
+                    else if (Coupon.DisType == "Percent")
+                    {
+                        order.OrderPrice = TotalPrice - (TotalPrice * Coupon.DisValue) / 100;
+                    }
+                }
+                else
+                {
+                    order.OrderPrice = TotalPrice;
+
+                }
+
                 if (OrderType == "Carry out")
                 {
                     order.PickTime = home.PickTime;
