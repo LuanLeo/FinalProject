@@ -20,11 +20,16 @@
                     </div>
                     <div class="popup__text">
                         <label class="control-label">Discount Type</label>
-                        <input asp-for="DisType" asp-items="@ViewBag.DisType" class="form-control" />
+                        <select id="getType" onchange="DiscountSelectType();" asp-for="DisType" class="form-control">
+                            <option selected>Select Type</option>
+                            <option value="Money">Money</option>
+                            <option value="Percent">Percent</option>
+                        </select>
                         <span asp-validation-for="DisType" class="text-danger"></span>
                     </div>
-                    <div class="popup__text">
-                        <label class="control-label">Discount Value (x1000 VND or %)</label>
+                    <div id="Form" style="display:none;" class="popup__text">
+                        <label id="Money" style="display:none;" class="control-label">Discount Value (VND)</label>
+                        <label id="Percent" style="display:none;" class="control-label">Discount Percent (%)</label>
                         <input asp-for="DisValue" class="form-control" />
                         <span asp-validation-for="DisValue" class="text-danger"></span>
                     </div>
@@ -37,11 +42,6 @@
                         <label class="control-label">End Day</label>
                         <input asp-for="DayEnd" class="form-control" />
                         <span asp-validation-for="DayEnd" class="text-danger"></span>
-                    </div>
-                    <div class="popup__text">
-                        <label asp-for="Status" class="control-label"></label>
-                        <input asp-for="Status" class="form-control" />
-                        <span asp-validation-for="Status" class="text-danger"></span>
                     </div>
                     <div class="modal-footer">
                         <input type="submit" value="Create" class="btn btn-success" />

@@ -25,7 +25,6 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         // GET: StoreOwner/Discounts
         public IActionResult Index()
         {
-            ViewBag.DisType = DisType();
             var discount = context.Discounts.ToList();
             return View(discount);
         }
@@ -116,14 +115,6 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             await context.SaveChangesAsync();
             notyfService.Success("The discount is deleted", 5);
             return RedirectToAction(nameof(Index));
-        }
-
-        public List<SelectListItem> DisType()
-        {
-            var list = new List<SelectListItem>();
-            list.Add(new SelectListItem() { Value = "Money", Text = "Money" });
-            list.Add(new SelectListItem() { Value = "Percent", Text = "Percent" });
-            return list;
         }
     }
 }

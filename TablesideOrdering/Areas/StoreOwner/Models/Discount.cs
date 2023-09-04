@@ -8,6 +8,5 @@
         public string DisType { get; set; }
         public DateTime DayStart { get; set; }
         public DateTime DayEnd { get; set; }
-        public string Status { get; set; }
     }
 }

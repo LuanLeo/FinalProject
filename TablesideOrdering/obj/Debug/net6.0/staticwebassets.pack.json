@@ -73,6 +73,10 @@
       "PackagePath": "staticwebassets\\QR\\QRCode-Table1.png"
     },
     {
+      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\QR\\QRCode-Table2.png",
+      "PackagePath": "staticwebassets\\QR\\QRCode-Table2.png"
+    },
+    {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\Source\\OwlCarousel2-2.3.4.zip",
       "PackagePath": "staticwebassets\\Source\\OwlCarousel2-2.3.4.zip"
     },

@@ -1,5 +1,5 @@
 ﻿@using TablesideOrdering.Areas.StoreOwner.Models;
-@model IEnumerable<TablesideOrdering.Areas.StoreOwner.Models.Discount>
+@model IEnumerable<Discount>
 @{
     ViewData["Title"] = "Discount List";
     Layout = "~/Areas/StoreOwner/Views/Shared/_StoreOwnerLayout.cshtml";
@@ -38,9 +38,6 @@
                             <th>
                                 Day End
                             </th>
-                            <th>
-                                Status
-                            </th>
                             <th></th>
                         </tr>
                     </thead>
@@ -62,9 +59,6 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.DayEnd)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Status)
                                 </td>
                                 <td align="center">
                                     <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="@("#EditDiscount-" + item.Id)" data-url="@Url.Action($"Edit/{item.Id}")">
@@ -91,3 +85,26 @@
     <script src="~/assets/js/dashboard.js"></script>
 </body>
 @await Component.InvokeAsync("Notyf")
+
+@section Scripts{
+    <script>
+        function DiscountSelectType() {
+            type = document.getElementById("getType").value;
+            if (type == "Money") {
+                document.getElementById("Form").style.display = "block";
+                document.getElementById("Money").style.display = "block";
+                document.getElementById("Percent").style.display = "none";
+            }
+            else if (type == "Percent") {
+                document.getElementById("Form").style.display = "block";
+                document.getElementById("Percent").style.display = "block";
+                document.getElementById("Money").style.display = "none";
+            } else {
+                document.getElementById("Form").style.display = "none";
+                document.getElementById("Percent").style.display = "none";
+                document.getElementById("Money").style.display = "none";
+            }
+        }
+
+    </script>
+}
