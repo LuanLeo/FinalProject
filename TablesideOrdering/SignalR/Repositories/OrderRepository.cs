@@ -35,6 +35,8 @@ namespace TablesideOrdering.SignalR.Repositories
                         OrderType = row["OrderType"].ToString(),
                         Address = row["Address"].ToString(),
                         PickTime = TimeSpan.Parse(row["PickTime"].ToString()),
+                        CouponId = Convert.ToInt32(row["CouponId"]),
+
                     };
                     orders.Add(order);
                 }
@@ -44,7 +46,7 @@ namespace TablesideOrdering.SignalR.Repositories
 
         public DataTable GetOrderDetailsFromDb()
         {
-            var query = "SELECT OrderId, OrderDate, OrderPrice, ProductQuantity, PhoneNumber, TableNo, Status, CusName, OrderType, Address, PickTime FROM Orders";
+            var query = "SELECT OrderId, OrderDate, OrderPrice, ProductQuantity, PhoneNumber, TableNo, Status, CusName, OrderType, Address, PickTime, CouponId FROM Orders";
             DataTable dataTable = new DataTable();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

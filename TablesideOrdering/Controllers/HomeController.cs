@@ -818,15 +818,20 @@ namespace TablesideOrdering.Controllers
         public HomeViewModel CouponShow()
         {
             HomeViewModel home = NavData();
-            if (Coupon.DisType == "Money")
+            if (Coupon.Id != 0)
             {
-                home.Cart.DicountAmount = Coupon.DisValue;
+                if (Coupon.DisType == "Money")
+                {
+                    home.Cart.DicountAmount = Coupon.DisValue;
+                }
+                else if (Coupon.DisType == "Percent")
+                {
+                    home.Cart.DicountAmount = (TotalPrice * Coupon.DisValue) / 100;
+                };
+                home.Cart.MustPaid = TotalPrice - home.Cart.DicountAmount;
             }
-            else if (Coupon.DisType == "Percent")
-            {
-                home.Cart.DicountAmount = (TotalPrice * Coupon.DisValue) / 100;
-            };
-            home.Cart.MustPaid = TotalPrice - home.Cart.DicountAmount;
+            else home.Cart.DicountAmount = TotalPrice;
+
             return home;
         }
 
@@ -1029,7 +1034,7 @@ namespace TablesideOrdering.Controllers
 
                 if (OrderType == "Delivery")
                 {
-                    order.Address = home.Address;
+                    order.Address = Address;
                     order.TableNo = "";
                 }
                 if (OrderType == "Eat in")
@@ -1171,7 +1176,7 @@ namespace TablesideOrdering.Controllers
 
                 if (OrderType == "Delivery")
                 {
-                    order.Address = home.Address;
+                    order.Address = Address;
                     order.TableNo = "";
                 }
                 if (OrderType == "Eat in")
