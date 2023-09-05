@@ -1024,7 +1024,7 @@ namespace TablesideOrdering.Controllers
 
                 if (OrderType == "Delivery")
                 {
-                    order.Address = home.Address;
+                    order.Address = Address;
                     order.TableNo = "";
                 }
                 if (OrderType == "Eat in")
@@ -1164,7 +1164,7 @@ namespace TablesideOrdering.Controllers
 
                 if (OrderType == "Delivery")
                 {
-                    order.Address = home.Address;
+                    order.Address = Address;
                     order.TableNo = "";
                 }
                 if (OrderType == "Eat in")

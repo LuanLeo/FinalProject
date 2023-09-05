@@ -467,33 +467,7 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("ProductSizePrice");
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.Table", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("IdTable")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PeopleCap")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("QRImg")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Tables");
-                });
+          
 
             modelBuilder.Entity("TablesideOrdering.Models.EmailPR", b =>
                 {
