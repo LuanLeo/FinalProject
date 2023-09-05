@@ -318,9 +318,12 @@ namespace TablesideOrdering.Controllers
         public IActionResult TableCheck(string id)
         {
             TableNo = id;
+
             OrderType = "Eat in";
+            ViewBag.OrderType = OrderType;
+
             NavData();
-            return RedirectToAction("Index");
+            return RedirectToAction("Menu");
 
         }
 
@@ -562,6 +565,7 @@ namespace TablesideOrdering.Controllers
                     break;
             }
         }
+
 
 
 
@@ -820,8 +824,7 @@ namespace TablesideOrdering.Controllers
             }
             else if (Coupon.DisType == "Percent")
             {
-                var total = (TotalPrice * Coupon.DisValue) / 100;
-                home.Cart.DicountAmount = total;
+                home.Cart.DicountAmount = (TotalPrice * Coupon.DisValue) / 100;
             };
             home.Cart.MustPaid = TotalPrice - home.Cart.DicountAmount;
             return home;
@@ -854,8 +857,9 @@ namespace TablesideOrdering.Controllers
                 order.OrderType = OrderType;
                 order.PaymentType = PaymentType;
 
-                if (Coupon != null)
+                if (Coupon.Id != 0)
                 {
+                    order.CouponId = Coupon.Id;
                     if (Coupon.DisType == "Money")
                     {
                         order.OrderPrice = TotalPrice - Coupon.DisValue;
@@ -868,7 +872,6 @@ namespace TablesideOrdering.Controllers
                 else
                 {
                     order.OrderPrice = TotalPrice;
-
                 }
 
                 order.Status = "Processing";
@@ -935,6 +938,7 @@ namespace TablesideOrdering.Controllers
 
                 //Renew the cart and notify customer
                 TotalPrice = 0;
+                Coupon = null;
                 carts.Clear();
                 return RedirectToAction("ThankYou");
             }
@@ -998,8 +1002,9 @@ namespace TablesideOrdering.Controllers
                 order.OrderType = OrderType;
                 order.PaymentType = PaymentType;
 
-                if (Coupon != null)
+                if (Coupon.Id != 0)
                 {
+                    order.CouponId = Coupon.Id;
                     if (Coupon.DisType == "Money")
                     {
                         order.OrderPrice = TotalPrice - Coupon.DisValue;
@@ -1024,7 +1029,7 @@ namespace TablesideOrdering.Controllers
 
                 if (OrderType == "Delivery")
                 {
-                    order.Address = Address;
+                    order.Address = home.Address;
                     order.TableNo = "";
                 }
                 if (OrderType == "Eat in")
@@ -1080,6 +1085,7 @@ namespace TablesideOrdering.Controllers
 
                 //Renew the cart and notify customer
                 TotalPrice = 0;
+                Coupon = null;
                 carts.Clear();
                 return RedirectToAction("ThankYou");
             }
@@ -1138,8 +1144,9 @@ namespace TablesideOrdering.Controllers
                 order.OrderType = OrderType;
                 order.PaymentType = PaymentType;
 
-                if (Coupon != null)
+                if (Coupon.Id != 0)
                 {
+                    order.CouponId = Coupon.Id;
                     if (Coupon.DisType == "Money")
                     {
                         order.OrderPrice = TotalPrice - Coupon.DisValue;
@@ -1164,7 +1171,7 @@ namespace TablesideOrdering.Controllers
 
                 if (OrderType == "Delivery")
                 {
-                    order.Address = Address;
+                    order.Address = home.Address;
                     order.TableNo = "";
                 }
                 if (OrderType == "Eat in")
@@ -1176,8 +1183,6 @@ namespace TablesideOrdering.Controllers
                 {
                     order.Address = "";
                     order.TableNo = "";
-
-
                 }
 
                 _context.Orders.Add(order);
@@ -1220,6 +1225,7 @@ namespace TablesideOrdering.Controllers
 
                 //Renew the cart and notify customer
                 TotalPrice = 0;
+                Coupon = null;
                 carts.Clear();
                 return RedirectToAction("ThankYou");
             }
@@ -1347,7 +1353,14 @@ namespace TablesideOrdering.Controllers
         //RETURN FROM THANK YOU PAGE FUNCTION
         public IActionResult Return()
         {
-            return RedirectToAction("Index", "Home");
+            if (TableNo != null)
+            {
+                return RedirectToAction("Menu", "Home");
+            }
+            else
+            {
+                return RedirectToAction("Index", "Home");
+            }
         }
 
 

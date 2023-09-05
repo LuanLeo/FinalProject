@@ -26,7 +26,14 @@
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
         <div class="humberger__menu__logo">
-            <a asp-action="Index" asp-controller="Home"><img src="/Logo/horizontal logo.png" style="width:80%; height:80%" alt=""></a>
+            @if (ViewBag.OrderType == null)
+            {
+                <a asp-action="Index" asp-controller="Home"><img src="/Logo/horizontal logo.png" style="width:80%; height:80%" alt=""></a>
+            }
+            else
+            {
+                <a asp-action="Menu" asp-controller="Home"><img src="/Logo/horizontal logo.png" style="width:80%; height:80%" alt=""></a>
+            }
         </div>
         <div class="humberger__menu__cart">
             @await Html.PartialAsync("_AddToCart")
@@ -34,13 +41,15 @@
 
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a asp-action="Index" asp-controller="Home">Home</a></li>
+                @if (ViewBag.OrderType == null)
+                {
+                    <li class="active"><a asp-action="Index" asp-controller="Home">Home</a></li>
+                }
                 <li><a asp-action="Menu" asp-controller="Home">Menu</a>
                 <li><a asp-action="History" asp-controller="Home">History</a>
-
             </ul>
         </nav>
-        <div id="mobile-menu-wrap"></div>       
+        <div id="mobile-menu-wrap"></div>
     </div>
     <!-- Humberger End -->
     <!-- Header Section Begin -->
@@ -55,15 +64,17 @@
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li><a asp-action="Index" asp-controller="Home">Home</a></li>
+                            @if (ViewBag.OrderType == null)
+                            {
+                                <li><a asp-action="Index" asp-controller="Home">Home</a></li>
+                            }
                             <li><a asp-action="Menu" asp-controller="Home">Menu</a></li>
                             <li><a asp-action="History" asp-controller="Home">Order Tracking</a></li>
-
                         </ul>
-                    </nav>                    
+                    </nav>
                 </div>
                 @await Html.PartialAsync("_AddToCart")
-            </div>            
+            </div>
             <div class="humberger__open">
                 <i class="fa fa-bars"></i>
             </div>
@@ -90,7 +101,6 @@
                 </div>
                 <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
                     <div class="footer__widget">
-                       
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
@@ -101,7 +111,7 @@
                             <input type="email" asp-for="MailPR" placeholder="Enter your mail">
                             <span asp-validation-for="MailPR" class="text-danger"></span>
                             <button type="submit" class="site-btn">Subscribe</button>
-                        </form>                        
+                        </form>
                     </div>
                 </div>
             </div>

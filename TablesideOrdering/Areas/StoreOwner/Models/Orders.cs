@@ -17,6 +17,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Models
         public TimeSpan PickTime { get; set; }
         public int ProductQuantity { get; set; }
         public float OrderPrice { get; set; }
+        public int CouponId { get; set; }
 
     }
 }

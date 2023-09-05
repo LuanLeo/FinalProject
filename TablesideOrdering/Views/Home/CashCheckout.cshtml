@@ -87,6 +87,8 @@
                                 <input value="Checkout at L&L coffee" disabled />
                             </div>
                             <div class="row">
+                                @if (Model.OrderType != "Eat in")
+                                {
                                 <div class="col-lg-6">
                                     <b>Delivery Method</b>
                                     <div class="col-lg-6" style="padding-left:0px">
@@ -97,6 +99,7 @@
                                         </select>
                                     </div>
                                 </div>
+                                }
                                 @if (Model.OrderType != "Reservation")
                                 {
                                     <div class="col-lg-6">
