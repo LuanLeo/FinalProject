@@ -20,7 +20,7 @@ namespace TablesideOrdering.SignalR.Repositories
             var data = GetOrderDetailsFromDb();
             foreach (DataRow row in data.Rows)
             {
-                if (row["Status"].ToString() == "Processing")
+                if(row["Status"].ToString() == "Processing")
                 {
                     Orders order = new Orders
                     {

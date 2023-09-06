@@ -25,7 +25,7 @@ function BindOrdersToGrid(orders) {
     $('#tblOrder tbody').empty();
     var tr;
     $.each(orders, function (index, order) {
-        if (order.orderType =="Delivery") {
+        if (order.orderType = "Delivery") {
             tr = $('<tr/>');
             tr.append(`<td>${(index + 1)}</td>`);
             tr.append(`<td>${(order.orderDate)}</td>`);

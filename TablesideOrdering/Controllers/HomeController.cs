@@ -318,11 +318,9 @@ namespace TablesideOrdering.Controllers
         public IActionResult TableCheck(string id)
         {
             TableNo = id;
-
             OrderType = "Eat in";
             ViewBag.OrderType = OrderType;
 
-            NavData();
             return RedirectToAction("Menu");
 
         }
@@ -673,7 +671,6 @@ namespace TablesideOrdering.Controllers
             }
             ViewBag.CartQuantity = carts.Count();
             ViewBag.CartPrice = TotalPrice;
-            NavData();
         }
 
         //DELETE FROM CART FUNCTION
@@ -830,7 +827,11 @@ namespace TablesideOrdering.Controllers
                 };
                 home.Cart.MustPaid = TotalPrice - home.Cart.DicountAmount;
             }
-            else home.Cart.DicountAmount = TotalPrice;
+            else
+            {
+                home.Cart.DicountAmount = 0;
+                home.Cart.MustPaid = TotalPrice;
+            }
 
             return home;
         }
@@ -1128,7 +1129,6 @@ namespace TablesideOrdering.Controllers
                 _notyfService.Warning("Please fill all needed info", 5);
                 return Redirect("/Home/MomoCheckout");
             }
-
         }
 
 
