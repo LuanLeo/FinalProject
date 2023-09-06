@@ -39,6 +39,7 @@ using System;
 using TablesideOrdering.Models.Momo;
 using TablesideOrdering.Models.VNPay;
 using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
+using DocumentFormat.OpenXml.Drawing.Charts;
 
 namespace TablesideOrdering.Controllers
 {
@@ -815,6 +816,7 @@ namespace TablesideOrdering.Controllers
         public HomeViewModel CouponShow()
         {
             HomeViewModel home = NavData();
+
             if (Coupon.Id != 0)
             {
                 if (Coupon.DisType == "Money")
@@ -977,7 +979,23 @@ namespace TablesideOrdering.Controllers
             {
                 PaymentInformationModel model = new PaymentInformationModel();
                 model = home.Payment;
-                model.Amount = TotalPrice;
+
+                if (Coupon.Id != 0)
+                {
+                    if (Coupon.DisType == "Money")
+                    {
+                        model.Amount = TotalPrice - Coupon.DisValue;
+                    }
+                    else if (Coupon.DisType == "Percent")
+                    {
+                        model.Amount = TotalPrice - (TotalPrice * Coupon.DisValue) / 100;
+                    }
+                }
+                else
+                {
+                    model.Amount = TotalPrice;
+                }
+
                 Email = home.Email.EmailTo;
                 PhoneNumber = home.Cart.PhoneNumber;
                 CusName = home.Payment.Name;
@@ -1116,7 +1134,23 @@ namespace TablesideOrdering.Controllers
             {
                 OrderInfoModel model = new OrderInfoModel();
                 model = home.MoMoPay;
-                model.Amount = TotalPrice;
+
+                if (Coupon.Id != 0)
+                {
+                    if (Coupon.DisType == "Money")
+                    {
+                        model.Amount = TotalPrice - Coupon.DisValue;
+                    }
+                    else if (Coupon.DisType == "Percent")
+                    {
+                        model.Amount = TotalPrice - (TotalPrice * Coupon.DisValue) / 100;
+                    }
+                }
+                else
+                {
+                    model.Amount = TotalPrice;
+                }
+
                 Email = home.Email.EmailTo;
                 PhoneNumber = home.Cart.PhoneNumber;
                 CusName = home.MoMoPay.FullName;
@@ -1164,7 +1198,6 @@ namespace TablesideOrdering.Controllers
                 else
                 {
                     order.OrderPrice = TotalPrice;
-
                 }
 
                 if (OrderType == "Carry out")
