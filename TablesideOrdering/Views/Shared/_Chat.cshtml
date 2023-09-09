@@ -31,7 +31,34 @@
             <input type="hidden" id="userInput" value="@Model.Chat.ChatRoomID" />
             <input type="hidden" id="receiverInput" value="@Model.Chat.ChatRoomID" />
             <input style="width:80%" type="text" id="messageInput" />
-            <input type="button" id="sendButton" value="Send" />
+            <input type="button" id="sendButton" class="button" value="send" />
         </fieldset>
     </div> <!-- end chat -->
 </div> <!-- end live-chat -->
+
+<style>
+
+    .button {
+        background-imange:;
+        width: 45px;
+        height: 45px;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 2.5px;
+        font-weight: 500;
+        color: #000;
+        background-color: #fff;
+        border: none;
+        border-radius: 45px;
+        transition: all 0.3s ease 0s;
+        cursor: pointer;
+        outline: none;
+    }
+
+        .button:hover {
+            background-color: #2EE59D;
+            box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+            color: #fff;
+            transform: translateY(-7px);
+        }
+</style>
