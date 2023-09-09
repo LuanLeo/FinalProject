@@ -9,8 +9,11 @@ namespace TablesideOrdering.SignalR.Hubs
         private readonly ApplicationDbContext _context;
 
         public static string ChatId;
+        public static string StaffName;
         public override Task OnConnectedAsync()
         {
+            CheckRole();
+
             //Create chat room from customer
             ChatId = TablesideOrdering.Controllers.HomeController.TableNo;
             List<SelectListItem> SelectList = TablesideOrdering.Areas.Staff.Controllers.HomeController.SelectList;
@@ -28,10 +31,19 @@ namespace TablesideOrdering.SignalR.Hubs
             //Create chat room from staff
             if (ChatId == null)
             {
-                Groups.AddToGroupAsync(Context.ConnectionId, Context.User.Identity.Name);
+                Groups.AddToGroupAsync(Context.ConnectionId, StaffName);
             }
-
             return base.OnConnectedAsync();
+        }
+
+
+        //Check Role
+        public void CheckRole()
+        {
+            if(Context.User.IsInRole("Staff") == true || Context.User.IsInRole("Admin") == true)
+            {
+                StaffName = Context.User.Identity.Name;
+            };
         }
 
         //Send message to two groups
@@ -50,7 +62,7 @@ namespace TablesideOrdering.SignalR.Hubs
         //Send message to Customer gr
         public Task SendMessageFromStaff(string sender, string message)
         {
-            return Clients.Group("admin@gmail.com").SendAsync("ReceiveMessage", sender, message);
+            return Clients.Group(StaffName).SendAsync("ReceiveMessage", sender, message);
         }
     }
 }

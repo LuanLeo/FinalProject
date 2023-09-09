@@ -54,8 +54,14 @@ namespace TablesideOrdering.ViewModels
         public string TableNo { get; set; }
         public float OrderPrice { get; set; }
 
+        public Chat Chat { get; set; }
 
+        //Lock option in index page
+        public string LockType { get; set; }
+
+        //Show coupon to the page
         public string CouponShow { get; set; }
+
         public int ProductQuantity { get; set; }
         public int OrderDetailId { get; set; }
         public string ProductName { get; set; }

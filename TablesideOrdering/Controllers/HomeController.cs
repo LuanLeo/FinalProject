@@ -81,6 +81,8 @@ namespace TablesideOrdering.Controllers
         public static int NotifCoupon = 0;
         public static string CouponAlert;
 
+        public static Chat Chat = new Chat();  
+
         public HomeController(ApplicationDbContext context,
             INotyfService notyfService,
             IVnPayService vnPayService,
@@ -322,7 +324,7 @@ namespace TablesideOrdering.Controllers
             OrderType = "Eat in";
             ViewBag.OrderType = OrderType;
 
-            return RedirectToAction("Menu");
+            return RedirectToAction("Index");
 
         }
 
@@ -1406,6 +1408,16 @@ namespace TablesideOrdering.Controllers
         //NAVIGATION FUCNTION
         public HomeViewModel NavData()
         {
+            HomeViewModel home = new HomeViewModel();
+            home.Cart = CartList();
+            home.LockType = OrderType;
+            home.Chat = ChatCreate();
+            return home;
+        }
+
+        //Cartlist Create
+        public CartList CartList()
+        {
             CartList cartlist = new CartList();
             cartlist.CartLists = carts;
             cartlist.TableNo = TableNo;
@@ -1413,20 +1425,20 @@ namespace TablesideOrdering.Controllers
             cartlist.PhoneNumber = PhoneNumber;
             cartlist.CusName = CusName;
 
-            HomeViewModel home = new HomeViewModel();
-            home.Cart = cartlist;
-
-            return home;
+            return cartlist;
         }
 
-        public ActionResult Chat()
+        //Create Chat Id
+        public Chat ChatCreate()
         {
-            HomeViewModel home = NavData();
+            Chat chat = new Chat();
             if (TableNo != null)
             {
-                ViewBag.User = TableNo;
+                chat.ChatRoomID = TableNo;
             }
-            return View(home);
+            else chat.ChatRoomID = "";
+
+            return chat;
         }
     }
 }
