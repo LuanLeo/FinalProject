@@ -6,33 +6,22 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 document.getElementById("sendButton").disabled = true;
 
 connection.on("ReceiveMessage", function (user, message) {
-    var doc = $('<div/>');
-    //var datetime = currentdate.getHours() + ":"+ currentdate.getMinutes();
-    doc.append(`<div class="chat-message clearfix">`);
-    doc.append('<img src="/Logo/Avatar/defaultavatar.png" alt="" width="32" height="32">');
-    doc.append('<div class="chat-message-content clearfix">');
-    doc.append(`<span class="chat-time"></span>`);
-    doc.append(`<h5 id="${user}"></h5>`);
-    doc.append(`<p >${message}</p>`);
-    doc.append('</div> <!-- end chat-message-content -->');
-    doc.append('<hr>');
-    $('#chatbox').append(doc);
-   
-    
-    /*tr = $('<tr/>');
-    tr.append(`<td>${(index + 1)}</td>`);
-    tr.append(`<td>${(order.orderDate)}</td>`);
-    tr.append(`<td>${(order.orderPrice)}</td>`);
-    tr.append(`<td>${(order.productQuantity)}</td>`);
-    tr.append(`<td>${(order.phoneNumber)}</td>`);
-    tr.append(`<td>${(order.cusName)}</td>`);
-    tr.append(`<td>${(order.tableNo)}</td>`);
-    tr.append(`<td><button type="button" class="btn btn-warning m-1" onclick="location.href='../Staff/Order/Details?id=${(order.orderId)}'">Details</button></td>`);
-    $('#EatInOrder').append(tr);*/
-    
+    if (message != null) {
+        var currentdate = new Date();
+        var datetime = currentdate.getDay() + "/" + currentdate.getMonth() + "/" + currentdate.getFullYear() + " "
+            + currentdate.getHours() + ":" + currentdate.getMinutes();
 
+        var doc = $('<div class="chat-message clearfix"/>');
+        doc.append('    <img src="/Logo/Avatar/defaultavatar.png" alt="" width="32" height="32">');
+        doc.append('    <div class="chat-message-content clearfix">'
+            + <span class="chat-time">${datetime}</span>
+            + <h5>Table - ${user}</h5>
+            + <p>${message}</p>
+            +</div >);
+        doc.append(<hr>);
+            $('#chatbox').append(doc);
+    }
 });
-
 
 connection.start().then(function () {
     document.getElementById("sendButton").disabled = false;
@@ -46,7 +35,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     var receiver = document.getElementById("receiverInput").value;
     var message = document.getElementById("messageInput").value;
 
-    if (receiver != null) {
+    if (message != null) {
         connection.invoke("SendMessageToGroup", user, receiver, message).catch(function (err) {
             return console.error(err.toString());
         });

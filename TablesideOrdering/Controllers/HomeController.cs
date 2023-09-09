@@ -288,27 +288,26 @@ namespace TablesideOrdering.Controllers
         {
             EmailPR Email = new EmailPR();
             Email.Email = home.MailPR;
-
-            var emailList = _context.EmailPRs.Select(i => i.Email).ToList();
-            if (emailList != null)
-            {
-                if (emailList.Contains(Email.Email) != true)
+                var emailList = _context.EmailPRs.Select(i => i.Email).ToList();
+                if (emailList != null)
                 {
-                    _context.EmailPRs.Add(Email);
-                    _context.SaveChanges();
-                    _notyfService.Success("Your email is subcribed success", 5);
+                    if (emailList.Contains(Email.Email) != true)
+                    {
+                        _context.EmailPRs.Add(Email);
+                        _context.SaveChanges();
+                        _notyfService.Success("Email is subcribed success", 5);
+                    }
+                    else
+                    {
+                        _notyfService.Error("Email has been subcribed", 5);
+                    };
                 }
                 else
                 {
-                    _notyfService.Error("Your email has been subcribed", 5);
-                };
-            }
-            else
-            {
-                _context.EmailPRs.Add(Email);
-                _context.SaveChanges();
-                _notyfService.Success("Your email is subcribed success", 5);
-            }
+                    _context.EmailPRs.Add(Email);
+                    _context.SaveChanges();
+                    _notyfService.Success("Email is subcribed success", 5);
+                }
             return RedirectToAction("Index");
         }
 

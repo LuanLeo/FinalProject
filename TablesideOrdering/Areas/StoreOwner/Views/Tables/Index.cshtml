@@ -52,6 +52,11 @@
                                     @Html.DisplayFor(modelItem => item.PeopleCap)
                                 </td>
                                 <td align="center">
+                                    <a asp-action="DownloadQR" asp-controller="Tables" asp-route-id="@item.Id">
+                                        <button type="button" class="btn btn-success m-1">
+                                            QR Code
+                                        </button>
+                                    </a>
                                     <button type="button" class="btn btn-warning m-1" data-toggle="modal" data-target="@("#EditTable-" + item.Id)" data-url="@Url.Action($"Edit/{item.IdTable}")">
                                         Edit
                                     </button>
@@ -61,11 +66,6 @@
                                         Delete
                                     </button>
                                     @await Html.PartialAsync("Delete",item)
-                                    <a asp-action="DownloadQR" asp-controller="Tables" asp-route-id="@item.Id">
-                                    <button type="button" class="btn btn-success m-1">
-                                        QR Code
-                                        </button>
-                                    </a>
                                 </td>
                             </tr>
                         }
@@ -73,12 +73,13 @@
                 </table>
             </div>
         </div>
-    </div> <script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
-<script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-<script src="~/assets/js/sidebarmenu.js"></script>
-<script src="~/assets/js/app.min.js"></script>
-<script src="~/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
-<script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
-<script src="~/assets/js/dashboard.js"></script>
+    </div>
+    <script src="~/assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets/js/sidebarmenu.js"></script>
+    <script src="~/assets/js/app.min.js"></script>
+    <script src="~/assets/libs/apexcharts/dist/apexcharts.min.js"></script>
+    <script src="~/assets/libs/simplebar/dist/simplebar.js"></script>
+    <script src="~/assets/js/dashboard.js"></script>
 </body>
 @await Component.InvokeAsync("Notyf")
