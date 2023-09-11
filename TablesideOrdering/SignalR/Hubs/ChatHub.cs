@@ -40,7 +40,7 @@ namespace TablesideOrdering.SignalR.Hubs
         //Check Role
         public void CheckRole()
         {
-            if(Context.User.IsInRole("Staff") == true || Context.User.IsInRole("Admin") == true)
+            if (Context.User.IsInRole("Staff") == true || Context.User.IsInRole("Admin") == true)
             {
                 StaffName = Context.User.Identity.Name;
             };
@@ -49,20 +49,42 @@ namespace TablesideOrdering.SignalR.Hubs
         //Send message to two groups
         public void SendMessageToGroup(string sender, string receiver, string message)
         {
-            SendMessageFromStaff(sender, message);
-            SendMessageToCustomer(sender, receiver, message);
+            //Lock spam text if user doesn't have chat id 
+            if (sender != "")
+            {
+                SendMessageToCustomer(sender, receiver, message);
+                SendMessageFromStaff(sender, message);
+            }
         }
 
         //Send message to Staff gr
         public Task SendMessageToCustomer(string sender, string receiver, string message)
         {
-            return Clients.Group(receiver).SendAsync("ReceiveMessage", sender, message);
+            if (message != "" && sender != "")
+            {
+                //Delete first space(s) of the message
+                var messageChanges = message.TrimStart().TrimEnd();
+                return Clients.Group(receiver).SendAsync("ReceiveMessage", sender, messageChanges);
+            }
+            else
+            {
+                return Task.CompletedTask;
+            }
         }
 
         //Send message to Customer gr
         public Task SendMessageFromStaff(string sender, string message)
         {
-            return Clients.Group(StaffName).SendAsync("ReceiveMessage", sender, message);
+            if (message != "")
+            {
+                //Delete first space(s) of the message
+                var messageChanges = message.TrimStart().TrimEnd();
+                return Clients.Group(StaffName).SendAsync("ReceiveMessage", sender, messageChanges);
+            }
+            else
+            {
+                return Task.CompletedTask;
+            }
         }
     }
 }

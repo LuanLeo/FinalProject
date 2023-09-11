@@ -71,7 +71,7 @@ namespace TablesideOrdering.Controllers
         public static string file;
 
         public static string PaymentType;
-        public static string OrderType;
+        public static string OrderType = "";
         public static string Address;
         public static int CheckNotify = 0;
 
@@ -321,8 +321,6 @@ namespace TablesideOrdering.Controllers
         {
             TableNo = id;
             OrderType = "Eat in";
-            ViewBag.OrderType = OrderType;
-
             return RedirectToAction("Index");
 
         }
@@ -1409,7 +1407,7 @@ namespace TablesideOrdering.Controllers
         {
             HomeViewModel home = new HomeViewModel();
             home.Cart = CartList();
-            home.LockType = OrderType;
+            home.LockOrderType = OrderType;
             home.Chat = ChatCreate();
             return home;
         }

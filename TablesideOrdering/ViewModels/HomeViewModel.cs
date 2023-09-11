@@ -57,7 +57,7 @@ namespace TablesideOrdering.ViewModels
         public Chat Chat { get; set; }
 
         //Lock option in index page
-        public string LockType { get; set; }
+        public string LockOrderType { get; set; }
 
         //Show coupon to the page
         public string CouponShow { get; set; }
