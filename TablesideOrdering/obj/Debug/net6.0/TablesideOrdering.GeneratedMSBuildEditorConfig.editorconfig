@@ -9,485 +9,485 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TablesideOrdering
 build_property.RootNamespace = TablesideOrdering
-build_property.ProjectDir = C:\Users\pekoi\Documents\Desktop\FinalProject\TablesideOrdering\
+build_property.ProjectDir = C:\Users\USER\Desktop\FinalProject\TablesideOrdering\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\pekoi\Documents\Desktop\FinalProject\TablesideOrdering
+build_property.MSBuildProjectDirectory = C:\Users\USER\Desktop\FinalProject\TablesideOrdering
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/AppRoles/Create.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/AppRoles/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXBwUm9sZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/AppRoles/Delete.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/AppRoles/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXBwUm9sZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/AppRoles/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/AppRoles/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcQXBwUm9sZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Home/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/QR/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/QR/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcUVJcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Shared/Error.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Shared/_LoginPartial.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Users/Create.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Users/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlcnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Users/Delete.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Users/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlcnNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Users/Edit.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Users/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlcnNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Users/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Users/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlcnNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/_ViewImports.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/_ViewStart.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/AccessDenied.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/ForgotPassword.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxGb3Jnb3RQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Lockout.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Lockout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2Nrb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Login.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Logout.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxMb2dvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcQ2hhbmdlUGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRGVsZXRlUGVyc29uYWxEYXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRGlzYWJsZTJmYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRG93bmxvYWRQZXJzb25hbERhdGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/Email.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/Email.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRW1haWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRW5hYmxlQXV0aGVudGljYXRvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcRXh0ZXJuYWxMb2dpbnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcR2VuZXJhdGVSZWNvdmVyeUNvZGVzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUGVyc29uYWxEYXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcUmVzZXRBdXRoZW50aWNhdG9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcU2V0UGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcU2hvd1JlY292ZXJ5Q29kZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcVHdvRmFjdG9yQXV0aGVudGljYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/_Layout.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX0xheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX01hbmFnZU5hdi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX1N0YXR1c01lc3NhZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxNYW5hZ2VcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Register.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZWdpc3Rlci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/ResetPassword.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZXNldFBhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxSZXNldFBhc3N3b3JkQ29uZmlybWF0aW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/_ViewImports.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Account/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxfVmlld0ltcG9ydHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Error.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/_NullLayout.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/_NullLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX051bGxMYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/_ViewImports.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/_ViewStart.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Identity/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/CarryOut/DoneCarryOutOrders.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/CarryOut/DoneCarryOutOrders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcQ2FycnlPdXRcRG9uZUNhcnJ5T3V0T3JkZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/CarryOut/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/CarryOut/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcQ2FycnlPdXRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/CarryOut/ReadyOrders.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/CarryOut/ReadyOrders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcQ2FycnlPdXRcUmVhZHlPcmRlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/DeliveryOrder/Delivering.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/DeliveryOrder/Delivering.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcRGVsaXZlcnlPcmRlclxEZWxpdmVyaW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/DeliveryOrder/DoneDeliveryOrders.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/DeliveryOrder/DoneDeliveryOrders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcRGVsaXZlcnlPcmRlclxEb25lRGVsaXZlcnlPcmRlcnMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/DeliveryOrder/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/DeliveryOrder/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcRGVsaXZlcnlPcmRlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Home/Chat.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Home/Chat.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcSG9tZVxDaGF0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Home/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Home/TableList.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Home/TableList.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcSG9tZVxUYWJsZUxpc3QuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/Delete.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/Details.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/Details.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/DoneOrders.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/DoneOrders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcRG9uZU9yZGVycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/PaidOrder.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Order/PaidOrder.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcT3JkZXJcUGFpZE9yZGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Shared/Error.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Shared/_LoginPartial.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcU2hhcmVkXF9Mb2dpblBhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/_ViewImports.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/_ViewStart.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Categories/Create.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Categories/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xDYXRlZ29yaWVzXENyZWF0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Categories/Delete.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Categories/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xDYXRlZ29yaWVzXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Categories/Edit.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Categories/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xDYXRlZ29yaWVzXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Categories/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Categories/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xDYXRlZ29yaWVzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Discounts/Create.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Discounts/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xEaXNjb3VudHNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Discounts/Delete.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Discounts/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xEaXNjb3VudHNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Discounts/Edit.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Discounts/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xEaXNjb3VudHNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Discounts/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Discounts/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xEaXNjb3VudHNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Home/AllOrders.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Home/AllOrders.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xIb21lXEFsbE9yZGVycy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Home/Delete.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Home/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xIb21lXERlbGV0ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Home/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xIb21lXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Home/OrderDetails.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Home/OrderDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xIb21lXE9yZGVyRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizePrices/Create.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizePrices/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xQcm9kdWN0U2l6ZVByaWNlc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizePrices/Delete.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizePrices/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xQcm9kdWN0U2l6ZVByaWNlc1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizePrices/Edit.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizePrices/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xQcm9kdWN0U2l6ZVByaWNlc1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizePrices/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizePrices/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xQcm9kdWN0U2l6ZVByaWNlc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizes/Create.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizes/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xQcm9kdWN0U2l6ZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizes/Delete.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizes/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xQcm9kdWN0U2l6ZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizes/Edit.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizes/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xQcm9kdWN0U2l6ZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizes/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/ProductSizes/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xQcm9kdWN0U2l6ZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Products/Create.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Products/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xQcm9kdWN0c1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Products/Delete.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Products/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xQcm9kdWN0c1xEZWxldGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Products/Edit.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Products/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xQcm9kdWN0c1xFZGl0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Products/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Products/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xQcm9kdWN0c1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Shared/Error.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xTaGFyZWRcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Shared/_LoginPartial.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Shared/_LoginPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xTaGFyZWRcX0xvZ2luUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xTaGFyZWRcX1ZhbGlkYXRpb25TY3JpcHRzUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Tables/Create.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Tables/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xUYWJsZXNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Tables/Delete.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Tables/Delete.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xUYWJsZXNcRGVsZXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Tables/Edit.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Tables/Edit.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xUYWJsZXNcRWRpdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Tables/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Tables/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xUYWJsZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/_ViewImports.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxfVmlld0ltcG9ydHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/_ViewStart.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxfVmlld1N0YXJ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Home/Cart.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Home/Cart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYXJ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Home/CashCheckout.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Home/CashCheckout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYXNoQ2hlY2tvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Home/History.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Home/History.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxIaXN0b3J5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Home/Index.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Home/Menu.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Home/Menu.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNZW51LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Home/MomoCheckout.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Home/MomoCheckout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxNb21vQ2hlY2tvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Home/OrderDetails.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Home/OrderDetails.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxPcmRlckRldGFpbHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Home/Reservation.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Home/Reservation.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZXNlcnZhdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Home/ThankYou.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Home/ThankYou.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUaGFua1lvdS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Home/VNPayCheckout.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Home/VNPayCheckout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxWTlBheUNoZWNrb3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Shared/Error.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Shared/_AddToCart.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Shared/_AddToCart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZGRUb0NhcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Shared/_Chat.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Shared/_Chat.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9DaGF0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/_ViewImports.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/_ViewStart.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Shared/_AdminLayout.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Admin/Views/Shared/_AdminLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = b-bae69jwftu
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Shared/_StaffLayout.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/Staff/Views/Shared/_StaffLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RhZmZcVmlld3NcU2hhcmVkXF9TdGFmZkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = b-o5ce8di92h
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Shared/_StoreOwnerLayout.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Areas/StoreOwner/Views/Shared/_StoreOwnerLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcU3RvcmVPd25lclxWaWV3c1xTaGFyZWRcX1N0b3JlT3duZXJMYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-4lck5n31bi
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Shared/_Layout.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-u04ygnizrh
 
-[C:/Users/pekoi/Documents/Desktop/FinalProject/TablesideOrdering/Views/Shared/_Test.cshtml]
+[C:/Users/USER/Desktop/FinalProject/TablesideOrdering/Views/Shared/_Test.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9UZXN0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = b-iiqjac41w1

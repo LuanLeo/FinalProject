@@ -40,6 +40,7 @@ connection.on("ReceiveMessage", function (user, message) {
                 + `</div>`
                 + `</div>`)
             doc.append('<hr>');
+            SoundChat();
             $('#chatbox').append(doc);
         }
         else {
@@ -56,8 +57,16 @@ connection.on("ReceiveMessage", function (user, message) {
                 + `</div>`
                 + `</div>`)
             doc.append('<hr>');
+            SoundChat();
             $('#chatbox').append(doc);
         }
     }
 });
 
+function SoundChat() {
+    var audio = new Audio("/Sound/SoundChat.mp3");
+    audio.addEventListener('ended', function () {
+        vol.innerText = "";
+    });
+    audio.play();
+}

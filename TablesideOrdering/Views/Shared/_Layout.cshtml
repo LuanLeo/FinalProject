@@ -1,6 +1,5 @@
 ﻿@using TablesideOrdering.ViewModels;
 @model HomeViewModel
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,15 +39,15 @@
         <div class="humberger__menu__cart">
             @await Html.PartialAsync("_AddToCart")
         </div>
-
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
                 @if (ViewBag.OrderType == null)
                 {
                     <li class="active"><a asp-action="Index" asp-controller="Home">Home</a></li>
                 }
-                <li><a asp-action="Menu" asp-controller="Home">Menu</a>
-                <li><a asp-action="History" asp-controller="Home">History</a>
+                <li><a asp-action="Menu" asp-controller="Home">Menu</a></li>
+                <li><a asp-action="History" asp-controller="Home">History</a></li>
+
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -88,7 +87,6 @@
         </main>
     </div>
     @await Html.PartialAsync("_Chat")
-
     <footer class="footer spad" style="position:static">
         <div class="container">
             <div class="row">
@@ -134,7 +132,6 @@
             </div>
         </div>
     </footer>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -145,3 +142,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
