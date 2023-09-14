@@ -21,11 +21,11 @@
                 <div class="container">
                     <div class="row p-1">
                         <div class="col-1">User</div>
-                        <div class="col-5"><input type="text" id="userInput" value="@ViewBag.RoleForRoom" /></div>
+                        <div class="col-5"><input type="text" disabled id="userInput" value="@ViewBag.RoleForRoom" /></div>
                     </div>
                     <div class="row p-1">
                         <div class="col-1">Receiver</div>
-                        <input class="w-100" id="receiverInput" asp-items="@Model.ChatRoom.ChatRoomID" />
+                        <input class="w-100" id="receiverInput" disabled value="@Model.ChatRoom.ChatRoomID" />
                     </div>
                     <div class="row p-1">
                         <div class="col-1">Message</div>
@@ -44,9 +44,18 @@
                     <div class="chat-message clearfix">
                         @foreach (var i in Model.ChatHistory)
                         {
-                            if ((i.Sender == User.FindFirstValue(ClaimTypes.Name) && i.Receiver == Model.ChatRoom.ChatRoomID) || (i.Receiver == User.FindFirstValue(ClaimTypes.Name) && i.Sender == Model.ChatRoom.ChatRoomID))
+                            if (i.Sender == Model.ChatRoom.ChatRoomID)
                             {
                                 <img src="/Logo/Avatar/defaultavatar.png" alt="" width="32" height="32">
+                                <div class="chat-message-content clearfix">
+                                    <span class="chat-time">@i.MessageDate</span>
+                                    <h5>@i.Sender</h5>
+                                    <p>@i.Message</p>
+                                </div>
+                            }
+                            else
+                            {
+                                <img src="/Logo/Avatar/user.png" alt="" width="32" height="32">
                                 <div class="chat-message-content clearfix">
                                     <span class="chat-time">@i.MessageDate</span>
                                     <h5>@i.Sender</h5>

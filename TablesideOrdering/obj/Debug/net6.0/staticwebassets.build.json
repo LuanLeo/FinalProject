@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "E3NqcTQcVu6sCdMBfw9wM6dwX6dhaWeZmglNtmRAx1I=",
+  "Hash": "FsV54s1wEsDhlpBTPopK2R8GD875Brga7Qvv58xfx80=",
   "Source": "TablesideOrdering",
   "BasePath": "_content/TablesideOrdering",
   "Mode": "Default",
@@ -14042,23 +14042,6 @@
       "OriginalItemSpec": "wwwroot\\ProductImage\\table.jpg"
     },
     {
-      "Identity": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\QR\\QRCode-Table1.png",
-      "SourceId": "TablesideOrdering",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\",
-      "BasePath": "_content/TablesideOrdering",
-      "RelativePath": "QR/QRCode-Table1.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\QR\\QRCode-Table1.png"
-    },
-    {
       "Identity": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\QR\\QRCode-Table10.png",
       "SourceId": "TablesideOrdering",
       "SourceType": "Discovered",
@@ -14074,23 +14057,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\QR\\QRCode-Table10.png"
-    },
-    {
-      "Identity": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\QR\\QRCode-Table2.png",
-      "SourceId": "TablesideOrdering",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\",
-      "BasePath": "_content/TablesideOrdering",
-      "RelativePath": "QR/QRCode-Table2.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\QR\\QRCode-Table2.png"
     },
     {
       "Identity": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\sass\\_base.scss",

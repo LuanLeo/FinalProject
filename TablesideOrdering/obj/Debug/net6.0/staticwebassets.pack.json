@@ -81,16 +81,8 @@
       "PackagePath": "staticwebassets\\ProductImage\\table.jpg"
     },
     {
-      "Id": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\QR\\QRCode-Table1.png",
-      "PackagePath": "staticwebassets\\QR\\QRCode-Table1.png"
-    },
-    {
       "Id": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\QR\\QRCode-Table10.png",
       "PackagePath": "staticwebassets\\QR\\QRCode-Table10.png"
-    },
-    {
-      "Id": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\QR\\QRCode-Table2.png",
-      "PackagePath": "staticwebassets\\QR\\QRCode-Table2.png"
     },
     {
       "Id": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\Sound\\SoundChat.mp3",

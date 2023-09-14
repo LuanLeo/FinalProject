@@ -24,7 +24,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         }
 
         public static ChatViewModel ChatViewModel = new ChatViewModel();
-
+        public static string StaffRole;
         public IActionResult Index()
         {
             ChatViewModel chat = new ChatViewModel();
@@ -42,7 +42,14 @@ namespace TablesideOrdering.Areas.Staff.Controllers
 
         public async Task<IActionResult> ChatRoom(string id)
         {
-            var userName = User.FindFirstValue(ClaimTypes.Name);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.FindByIdAsync(userId);
+            var role = await _userManager.GetRolesAsync(user);
+            foreach (var r in role)
+            {
+                ViewBag.RoleForRoom = r;
+                StaffRole = r;
+            }
 
             var chatRoom = _context.Chats.FirstOrDefault(x => x.ChatRoomID == id);
             List<ChatHistory> history = new List<ChatHistory>();
@@ -62,6 +69,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             ChatViewModel chat = new ChatViewModel();
             chat.ChatRoom = chatRoom;
             chat.ChatHistory = history;
+
             return View(chat);
         }
     }

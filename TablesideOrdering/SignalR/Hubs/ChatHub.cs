@@ -18,7 +18,7 @@ namespace TablesideOrdering.SignalR.Hubs
             _context = context;
         }
 
-        public static string StaffName;
+        public static string StaffRole;
 
         //Take chat room id
         public List<string> Chat()
@@ -33,7 +33,7 @@ namespace TablesideOrdering.SignalR.Hubs
 
         public override Task OnConnectedAsync()
         {
-            CheckRole();
+            StaffRole = TablesideOrdering.Areas.Staff.Controllers.ChatController.StaffRole;
             //Create chat room from customer
             ChatRoomList = Chat();
 
@@ -47,18 +47,9 @@ namespace TablesideOrdering.SignalR.Hubs
             //Create chat room from staff
             else
             {
-                Groups.AddToGroupAsync(Context.ConnectionId, StaffName);
+                Groups.AddToGroupAsync(Context.ConnectionId, StaffRole);
             }
             return base.OnConnectedAsync();
-        }
-
-        //Check Role
-        public void CheckRole()
-        {
-            if (Context.User.IsInRole("Staff") == true || Context.User.IsInRole("Admin") == true)
-            {
-                StaffName = Context.User.Identity.Name;
-            };
         }
 
         //Send message to two groups
@@ -71,7 +62,7 @@ namespace TablesideOrdering.SignalR.Hubs
                 SendMessageToStaff(sender, message);
 
                 ChatHistory chat = new ChatHistory();
-                if (sender != StaffName)
+                if (sender != StaffRole)
                 {
                     chat.ChatRoomId = sender;
                 }
@@ -81,7 +72,7 @@ namespace TablesideOrdering.SignalR.Hubs
                 }
                 chat.Sender = sender;
                 chat.Message = message;
-                chat.Receiver = StaffName;
+                chat.Receiver = StaffRole;
                 chat.MessageDate = DateTime.Now.ToString();
 
                 history.Add(chat);
@@ -113,7 +104,7 @@ namespace TablesideOrdering.SignalR.Hubs
             {
                 //Delete first space(s) of the message
                 var messageChanges = message.TrimStart().TrimEnd();
-                return Clients.Group(StaffName).SendAsync("ReceiveMessage", sender, messageChanges);
+                return Clients.Group(StaffRole).SendAsync("ReceiveMessage", sender, messageChanges);
             }
             else
             {
