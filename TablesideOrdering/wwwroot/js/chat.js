@@ -23,7 +23,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 });
 
 connection.on("ReceiveMessage", function (user, message) {
-    if (user != "Admin") {
+    if (parseInt(user) == user) {
         var currentdate = new Date();
         var datetime = currentdate.getDay() + "/" + currentdate.getMonth() + "/" + currentdate.getFullYear() + " "
             + currentdate.getHours() + ":" + currentdate.getMinutes();

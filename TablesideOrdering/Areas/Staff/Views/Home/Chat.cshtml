@@ -1,4 +1,6 @@
-﻿@{
+﻿@using TablesideOrdering.Areas.Staff.ViewModels;
+@model ChatViewModel;
+@{
     ViewData["Title"] = "Staff Area";
     Layout = "~/Areas/Staff/Views/Shared/_StaffLayout.cshtml";
 }
@@ -15,6 +17,10 @@
          data-sidebar-position="fixed" data-header-position="fixed">
         <div class="body-wrapper">
             <div class="container-fluid">
+                @foreach (var item in Model.ChatRoomList)
+                {
+                    <a asp-area="Staff" asp-controller="Home" asp-action="Chat">Table - @item.ChatRoomID</a>
+                }
                 @if (User.IsInRole("Admin") == true)
                 {
                     <div class="container">
@@ -39,6 +45,17 @@
                             <div class="col-6">
                                 <hr />
                             </div>
+                        </div>
+                        <div class="chat-message clearfix" >
+                            @foreach(var i in Model.ChatHistory)
+                            {
+                                <img src="/Logo/Avatar/defaultavatar.png" alt="" width="32" height="32">
+                                <div class="chat-message-content clearfix">
+                                    <span class="chat-time">@i.MessageDate</span>
+                                    <h5>@i.Sender</h5>
+                                    <p>@i.Message</p>
+                                </div>
+                            }
                         </div>
                         <div class="chat-message clearfix" id="chatbox">
                         </div>

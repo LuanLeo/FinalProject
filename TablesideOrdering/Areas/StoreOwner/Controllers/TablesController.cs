@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification.Abstractions;
+using DocumentFormat.OpenXml.Drawing;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,8 @@ using TablesideOrdering.Areas.Admin.Models;
 using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Data;
 using Twilio.Rest.Preview.Marketplace.AvailableAddOn;
+using Path = System.IO.Path;
+using Table = TablesideOrdering.Areas.StoreOwner.Models.Table;
 
 namespace TablesideOrdering.Areas.StoreOwner.Controllers
 {
@@ -54,15 +57,21 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         // POST: StoreOwner/Tables/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Table table)
+        public IActionResult Create(Table table)
         {
             var existTable = _context.Tables.FirstOrDefault(x => x.IdTable == table.IdTable);
             if (existTable == null)
             {
-                table.QRImg=QRCreate(table);
-                _context.Add(table);
-                await _context.SaveChangesAsync();
-                
+                table.QRImg = QRCreate(table);
+                _context.Tables.Add(table);
+                _context.SaveChanges();
+
+                Chat chat = new Chat();
+                chat.TableId = table.Id;
+                chat.ChatRoomID = table.IdTable.ToString();
+                _context.Chats.Add(chat);
+                _context.SaveChanges();
+
                 _notyfService.Success("Table is created successfully", 5);
                 return RedirectToAction(nameof(Index));
             }
@@ -91,6 +100,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             return qrfilename;
         }
 
+        public static string TableId;
         public async Task<IActionResult> DownloadQR(int id)
         {
             Table tab = _context.Tables.FirstOrDefault(x=>x.Id == id);
@@ -118,8 +128,11 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 Status = table.Status,
                 PeopleCap = table.PeopleCap,
             };
+
+            TableId = model.IdTable.ToString();
             return PartialView("Edit", model);
         }
+
 
         // POST: StoreOwner/Tables/Edit/5
         [HttpPost]
@@ -128,7 +141,13 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Update(table);
+                _context.Tables.Update(table);
+
+                Chat chat = _context.Chats.FirstOrDefault(x => x.TableId == table.Id);
+                chat.ChatRoomID = table.IdTable.ToString();
+
+                _context.Chats.Update(chat);
+
                 _context.SaveChanges();
 
                 _notyfService.Success("The info is edited succeesfully", 5);
@@ -167,6 +186,10 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 string ExitingFile = Path.Combine(webHostEnvironment.WebRootPath, "QR", table.QRImg);
                 System.IO.File.Delete(ExitingFile);
                 _context.Tables.Remove(table);
+
+                Chat chat = _context.Chats.FirstOrDefault(x => x.TableId == model.Id);
+                _context.Chats.Remove(chat);
+
                 _context.SaveChanges();
 
                 _notyfService.Success("Table is deleted successfully", 5);

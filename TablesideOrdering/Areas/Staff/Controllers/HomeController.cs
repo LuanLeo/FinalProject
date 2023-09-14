@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
+using TablesideOrdering.Areas.Staff.ViewModels;
 using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Data;
 using TablesideOrdering.ViewModels;
@@ -24,11 +25,6 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         public IActionResult Index()
         {
             return View();
-        }
-
-        public IActionResult TableList()
-        {
-            return View(_context.Tables.ToList());
         }
 
         public void SwitchTableStatus(int id)
@@ -57,25 +53,6 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                 _context.Update(tab);
             }
             _context.SaveChanges();
-        }
-
-        public static List<SelectListItem> SelectList;
-        public IActionResult Chat()
-        {
-            ViewBag.ChatTableLists = ChatTablesList();
-            SelectList = ChatTablesList();
-            return View("Chat");
-
-        }
-
-        public List<SelectListItem> ChatTablesList()
-        {
-            List<SelectListItem> list = new List<SelectListItem>();
-            foreach (var tab in _context.Tables)
-            {
-                list.Add(new SelectListItem { Value = tab.IdTable.ToString(), Text = tab.IdTable.ToString() });
-            };
-            return list;
         }
     }
 }

@@ -285,6 +285,26 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.Chat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ChatRoomID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TableId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Chats");
+                });
+
             modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.Discount", b =>
                 {
                     b.Property<int>("Id")
@@ -345,7 +365,63 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("OrderDetails");
                 });
 
-           
+            modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.Orders", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CouponId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CusName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderDate")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<float>("OrderPrice")
+                        .HasColumnType("real");
+
+                    b.Property<string>("OrderType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("PickTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("ProductQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TableNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.Product", b =>
                 {
                     b.Property<int>("ProductId")
