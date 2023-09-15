@@ -3,7 +3,7 @@
 @model ChatViewModel;
 @{
     ViewData["Title"] = "Staff Area";
-    Layout = "~/Areas/Staff/Views/Shared/_StaffLayout.cshtml";
+    Layout = "~/Areas/Staff/Views/Shared/_LayoutMiddleChat.cshtml";
 }
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
@@ -21,7 +21,7 @@
                 <div class="container">
                     <div class="row p-1">
                         <div class="col-1">User</div>
-                        <div class="col-5"><input type="text" disabled id="userInput" value="@ViewBag.RoleForRoom" /></div>
+                        <div class="col-5"><input type="text" hidden disabled id="userInput" value="@ViewBag.RoleForRoom" /></div>
                     </div>
                     <div class="row p-1">
                         <div class="col-1">Receiver</div>

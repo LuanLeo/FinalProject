@@ -27,6 +27,12 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             return View();
         }
 
+        public IActionResult TableList()
+        {
+            var tableList = _context.Tables.ToList();
+            return View(tableList);
+        }
+
         public void SwitchTableStatus(int id)
         {
             var table = _context.Tables.Find(id);

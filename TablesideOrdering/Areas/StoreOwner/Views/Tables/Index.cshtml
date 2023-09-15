@@ -23,6 +23,14 @@
                     Create
                 </button>
                 @await Html.PartialAsync("Create", new Table())
+                @if (Model.Count() >= 2)
+                {
+                    <a asp-action="DownloadAllQR" asp-controller="Tables">
+                        <button type="button" class="btn btn-success">
+                            Download All QR
+                        </button>
+                    </a>
+                }
                 <table class="table">
                     <thead>
                         <tr>

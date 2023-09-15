@@ -33,6 +33,7 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.16" />
     <PackageReference Include="QRCoder" Version="1.4.2" />
     <PackageReference Include="RestSharp" Version="110.2.0" />
+    <PackageReference Include="SharpZipLib" Version="1.4.2" />
     <PackageReference Include="SqlTableDependency" Version="8.5.8" />
     <PackageReference Include="Syncfusion.Pdf.Net.Core" Version="22.2.7" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
@@ -57,7 +58,6 @@
     <None Include="Areas\Staff\Views\DeliveryOrder\Delivering.cshtml" />
     <None Include="Areas\Staff\Views\DeliveryOrder\DoneDeliveryOrders.cshtml" />
     <None Include="Areas\Staff\Views\DeliveryOrder\Index.cshtml" />
-    <None Include="Areas\Staff\Views\Home\Chat.cshtml" />
     <None Include="Areas\Staff\Views\Home\Index.cshtml" />
     <None Include="Areas\Staff\Views\Home\TableList.cshtml" />
     <None Include="Areas\Staff\Views\Order\Delete.cshtml" />

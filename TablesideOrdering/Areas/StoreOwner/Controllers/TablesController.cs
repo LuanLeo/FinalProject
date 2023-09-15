@@ -6,12 +6,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification.Abstractions;
 using DocumentFormat.OpenXml.Drawing;
+using DocumentFormat.OpenXml.InkML;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Crypto;
+using Org.BouncyCastle.Utilities.Zlib;
 using QRCoder;
 using TablesideOrdering.Areas.Admin.Models;
 using TablesideOrdering.Areas.StoreOwner.Models;
@@ -32,6 +36,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
 
         public INotyfService _notyfService { get; }
 
+        public static string TableId;
         public TablesController(ApplicationDbContext context, INotyfService notyfService, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
@@ -42,7 +47,6 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         // GET: StoreOwner/Tables
         public async Task<IActionResult> Index()
         {
-            ViewBag.TableStatus = TableStatus();
             var TableList = await _context.Tables.ToListAsync();
             return View(TableList);
         }
@@ -79,40 +83,6 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             return View(table);
         }
 
-        public string QRCreate(Table table)
-        {
-            string qrfilename = $"QRCode-Table{table.IdTable}.png";
-            using (MemoryStream ms = new MemoryStream())
-            {
-
-                QRCodeGenerator QRCode = new QRCodeGenerator();
-                string URL = $"{this.Request.Scheme}://{this.Request.Host}/Home/TableCheck/{table.IdTable}";
-                QRCodeData data = QRCode.CreateQrCode(URL, QRCodeGenerator.ECCLevel.Q);
-                QRCode code = new QRCode(data);
-                using (Bitmap obit = code.GetGraphic(20))
-                {
-                    obit.Save(ms, ImageFormat.Png);
-                    Image img = Image.FromStream(ms);
-                    string TargetPath = Path.Combine(webHostEnvironment.WebRootPath, "QR", qrfilename);
-                    img.Save(TargetPath, ImageFormat.Png);
-                }
-            }
-            return qrfilename;
-        }
-
-        public static string TableId;
-        public async Task<IActionResult> DownloadQR(int id)
-        {
-            Table tab = _context.Tables.FirstOrDefault(x=>x.Id == id);
-            string TargetPath = Path.Combine(webHostEnvironment.WebRootPath, "QR", tab.QRImg);
-            MemoryStream memory = new MemoryStream();
-            using (FileStream stream = new FileStream(TargetPath, FileMode.Open))
-            {
-                await stream.CopyToAsync(memory);
-            }
-            memory.Position = 0;
-            return File(memory, "image/png", Path.GetFileName(TargetPath));
-        }
         // GET: StoreOwner/Tables/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
@@ -145,11 +115,9 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
 
                 Chat chat = _context.Chats.FirstOrDefault(x => x.TableId == table.Id);
                 chat.ChatRoomID = table.IdTable.ToString();
-
                 _context.Chats.Update(chat);
 
                 _context.SaveChanges();
-
                 _notyfService.Success("The info is edited succeesfully", 5);
                 return RedirectToAction("Index");
             }
@@ -199,12 +167,90 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             return View("Index");
         }
 
-        public List<SelectListItem> TableStatus()
+        public string QRCreate(Table table)
         {
-            var list = new List<SelectListItem>();
-            list.Add(new SelectListItem() { Value = "Available", Text = "Available" });
-            list.Add(new SelectListItem() { Value = "Busy", Text = "Busy" });
-            return list;
+            string qrfilename = $"QRCode-Table{table.IdTable}.png";
+            using (MemoryStream ms = new MemoryStream())
+            {
+
+                QRCodeGenerator QRCode = new QRCodeGenerator();
+                string URL = $"{this.Request.Scheme}://{this.Request.Host}/Home/TableCheck/{table.IdTable}";
+                QRCodeData data = QRCode.CreateQrCode(URL, QRCodeGenerator.ECCLevel.Q);
+                QRCode code = new QRCode(data);
+                using (Bitmap obit = code.GetGraphic(20))
+                {
+                    obit.Save(ms, ImageFormat.Png);
+                    Image img = Image.FromStream(ms);
+                    string TargetPath = Path.Combine(webHostEnvironment.WebRootPath, "QR", qrfilename);
+                    img.Save(TargetPath, ImageFormat.Png);
+                }
+            }
+            return qrfilename;
+        }
+
+        public IActionResult DownloadQR(int id)
+        {
+            Table tab = _context.Tables.FirstOrDefault(x => x.Id == id);
+            string TargetPath = Path.Combine(webHostEnvironment.WebRootPath, "QR", tab.QRImg);
+            MemoryStream memory = new MemoryStream();
+            using (FileStream stream = new FileStream(TargetPath, FileMode.Open))
+            {
+                stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            return File(memory, "image/png", Path.GetFileName(TargetPath));
+        }
+
+        public ActionResult DownloadAllQR()
+        {
+            var webRoot = webHostEnvironment.WebRootPath;
+            var FileList = new List<string>();
+
+            List<Table> tableList = _context.Tables.ToList();
+            foreach (var tab in tableList)
+            {
+                FileList.Add(webRoot + "/QR/" + tab.QRImg);
+            }
+
+            var Name = "QR Code Images";
+            var fileName = $"{Name}.zip";
+            var tempOutput = webRoot + "QR" + fileName;
+
+            using (ZipOutputStream oZipOutputStream = new ZipOutputStream(System.IO.File.Create(tempOutput)))
+            {
+                oZipOutputStream.SetLevel(9);
+                byte[] buffer = new byte[4096];
+                for (int i = 0; i < FileList.Count; i++)
+                {
+                    ZipEntry entry = new ZipEntry(Path.GetFileName(FileList[i]));
+                    entry.DateTime = DateTime.Now;
+                    entry.IsUnicodeText = true;
+                    oZipOutputStream.PutNextEntry(entry);
+                    using (FileStream oFileStream = System.IO.File.OpenRead(FileList[i]))
+                    {
+                        int sourceBytes;
+                        do
+                        {
+                            sourceBytes = oFileStream.Read(buffer, 0, buffer.Length);
+                            oZipOutputStream.Write(buffer, 0, sourceBytes);
+                        } while (sourceBytes > 0);
+                    }
+                }
+                oZipOutputStream.Finish();
+                oZipOutputStream.Flush();
+                oZipOutputStream.Close();
+            }
+
+            byte[] finalResult = System.IO.File.ReadAllBytes(tempOutput);
+            if (System.IO.File.Exists(tempOutput))
+            {
+                System.IO.File.Delete(tempOutput);
+            }
+            if (finalResult == null || !finalResult.Any())
+            {
+                throw new Exception(String.Format("Nothing found"));
+            }
+            return File(finalResult, "application/zip", fileName);
         }
     }
 }

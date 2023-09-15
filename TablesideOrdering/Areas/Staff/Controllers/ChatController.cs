@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
 using TablesideOrdering.Areas.Staff.Models;
 using TablesideOrdering.Areas.Staff.ViewModels;
+using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Data;
 
 namespace TablesideOrdering.Areas.Staff.Controllers
@@ -25,22 +26,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
 
         public static ChatViewModel ChatViewModel = new ChatViewModel();
         public static string StaffRole;
-        public IActionResult Index()
-        {
-            ChatViewModel chat = new ChatViewModel();
-            chat.ChatRoomList = _context.Chats.ToList();
-
-            List<SelectListItem> chatID = new List<SelectListItem>();
-            foreach (var id in chat.ChatRoomList)
-            {
-                chatID.Add(new SelectListItem { Text = id.ChatRoomID, Value = id.ChatRoomID });
-            }
-
-            ViewBag.ChatTableLists = chatID;
-            return View(chat);
-        }
-
-        public async Task<IActionResult> ChatRoom(string id)
+        public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await _userManager.FindByIdAsync(userId);
@@ -50,6 +36,21 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                 ViewBag.RoleForRoom = r;
                 StaffRole = r;
             }
+
+            ChatViewModel chat = new ChatViewModel();
+            chat.ChatRoomList = ChatRoomList();
+            List<SelectListItem> chatID = new List<SelectListItem>();
+            foreach (var id in chat.ChatRoomList)
+            {
+                chatID.Add(new SelectListItem { Text = id.ChatRoomID, Value = id.ChatRoomID });
+            }
+            ViewBag.ChatTableLists = chatID;
+            return View(chat);
+        }
+
+        public IActionResult ChatRoom(string id)
+        {
+            ViewBag.RoleForRoom = StaffRole;
 
             var chatRoom = _context.Chats.FirstOrDefault(x => x.ChatRoomID == id);
             List<ChatHistory> history = new List<ChatHistory>();
@@ -67,10 +68,18 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             }
 
             ChatViewModel chat = new ChatViewModel();
+            chat.ChatRoomList = ChatRoomList();
             chat.ChatRoom = chatRoom;
             chat.ChatHistory = history;
 
             return View(chat);
         }
+
+        public List<Chat> ChatRoomList()
+        {
+            List<Chat> chat = _context.Chats.ToList();
+            return chat;
+        }
+
     }
 }

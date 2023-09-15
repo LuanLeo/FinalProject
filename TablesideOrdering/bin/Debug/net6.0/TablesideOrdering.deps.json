@@ -24,6 +24,7 @@
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.16",
           "QRCoder": "1.4.2",
           "RestSharp": "110.2.0",
+          "SharpZipLib": "1.4.2",
           "SqlTableDependency": "8.5.8",
           "Syncfusion.Pdf.Net.Core": "22.2.7",
           "System.Data.SqlClient": "4.8.5",
@@ -2054,6 +2055,14 @@
             "rid": "win-x86",
             "assetType": "native",
             "fileVersion": "4.6.25512.1"
+          }
+        }
+      },
+      "SharpZipLib/1.4.2": {
+        "runtime": {
+          "lib/net6.0/ICSharpCode.SharpZipLib.dll": {
+            "assemblyVersion": "1.4.2.13",
+            "fileVersion": "1.4.2.13"
           }
         }
       },
@@ -4393,6 +4402,13 @@
       "sha512": "sha512-YhEdSQUsTx+C8m8Bw7ar5/VesXvCFMItyZF7G1AUY+OM0VPZUOeAVpJ4Wl6fydBGUYZxojTDR3I6Bj/+BPkJNA==",
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
+    },
+    "SharpZipLib/1.4.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yjj+3zgz8zgXpiiC3ZdF/iyTBbz2fFvMxZFEBPUcwZjIvXOf37Ylm+K58hqMfIBt5JgU/Z2uoUS67JmTLe973A==",
+      "path": "sharpziplib/1.4.2",
+      "hashPath": "sharpziplib.1.4.2.nupkg.sha512"
     },
     "SixLabors.Fonts/1.0.0": {
       "type": "package",

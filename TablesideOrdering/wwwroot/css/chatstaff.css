@@ -21,7 +21,7 @@ message-area
 
 .chatlist {
     outline: 0;
-    height: 100%;
+    height: 80%;
     overflow: hidden;
     width: 300px;
     float: left;
@@ -37,12 +37,13 @@ message-area
 
 .chat-area .modal-dialog-scrollable {
     height: 100% !important;
+    padding: 15px;
 }
 
 .chatbox {
     width: auto;
     overflow: hidden;
-    height: 100%;
+    height: 80%;
     border-left: 1px solid #ccc;
 }
 
