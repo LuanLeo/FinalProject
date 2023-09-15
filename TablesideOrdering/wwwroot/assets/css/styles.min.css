@@ -19488,7 +19488,8 @@ textarea.form-control-lg {
 }
 
 #main-wrapper[data-layout=vertical][data-header-position=fixed] .body-wrapper > .container-fluid, #main-wrapper[data-layout=vertical][data-header-position=fixed] .body-wrapper > .container-lg, #main-wrapper[data-layout=vertical][data-header-position=fixed] .body-wrapper > .container-md, #main-wrapper[data-layout=vertical][data-header-position=fixed] .body-wrapper > .container-sm, #main-wrapper[data-layout=vertical][data-header-position=fixed] .body-wrapper > .container-xl, #main-wrapper[data-layout=vertical][data-header-position=fixed] .body-wrapper > .container-xxl {
-    padding-top: calc(70px + 15px)
+    padding-top:70px; 
+    padding-bottom:60px;
 }
 
 @media (min-width:1200px) {
