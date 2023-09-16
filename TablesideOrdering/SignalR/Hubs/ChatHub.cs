@@ -58,9 +58,6 @@ namespace TablesideOrdering.SignalR.Hubs
             //Lock spam text if user doesn't have chat id 
             if (sender != "")
             {
-                SendMessageToCustomer(sender, receiver, message);
-                SendMessageToStaff(sender, message);
-
                 ChatHistory chat = new ChatHistory();
                 if (sender != StaffRole)
                 {
@@ -77,6 +74,11 @@ namespace TablesideOrdering.SignalR.Hubs
 
                 history.Add(chat);
                 TablesideOrdering.Areas.Staff.Controllers.ChatController.ChatViewModel.ChatHistory = history;
+
+                SendMessageToCustomer(sender, receiver, message);
+                SendMessageToStaff(sender, message);
+
+
             }
         }
 

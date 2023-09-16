@@ -33,11 +33,11 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             var role = await _userManager.GetRolesAsync(user);
             foreach (var r in role)
             {
-                ViewBag.RoleForRoom = r;
                 StaffRole = r;
             }
 
             ChatViewModel chat = new ChatViewModel();
+            chat.StaffRole = StaffRole;
             chat.ChatRoomList = ChatRoomList();
             List<SelectListItem> chatID = new List<SelectListItem>();
             foreach (var id in chat.ChatRoomList)
@@ -50,8 +50,6 @@ namespace TablesideOrdering.Areas.Staff.Controllers
 
         public IActionResult ChatRoom(string id)
         {
-            ViewBag.RoleForRoom = StaffRole;
-
             var chatRoom = _context.Chats.FirstOrDefault(x => x.ChatRoomID == id);
             List<ChatHistory> history = new List<ChatHistory>();
 
@@ -71,6 +69,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             chat.ChatRoomList = ChatRoomList();
             chat.ChatRoom = chatRoom;
             chat.ChatHistory = history;
+            chat.StaffRole = StaffRole;
 
             return View(chat);
         }
