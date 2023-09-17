@@ -25,7 +25,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 connection.on("ReceiveMessage", function (user, message) {
     if (parseInt(user) == user) {
         var currentdate = new Date();
-        var datetime = currentdate.getDay() + "/" + currentdate.getMonth() + "/" + currentdate.getFullYear() + " "
+        var datetime = currentdate.getDate() + "/" + (currentdate.getMonth()+1) + "/" + currentdate.getFullYear() + " "
             + currentdate.getHours() + ":" + currentdate.getMinutes();
         var doc = $('<div/>');
         doc.append('    <img src="/Logo/Avatar/defaultavatar.png" alt="" width="32" height="32">');
@@ -36,12 +36,13 @@ connection.on("ReceiveMessage", function (user, message) {
             + `</div>`
             + `</div>`)
         doc.append('<hr>');
+        SrollToBottom();
         SoundChat();
         $('#chatbox').append(doc);
     }
     else {
         var currentdate = new Date();
-        var datetime = currentdate.getDay() + "/" + currentdate.getMonth() + "/" + currentdate.getFullYear() + " "
+        var datetime = currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear() + " "
             + currentdate.getHours() + ":" + currentdate.getMinutes();
 
         var doc = $('<div/>');
@@ -53,11 +54,15 @@ connection.on("ReceiveMessage", function (user, message) {
             + `</div>`
             + `</div>`)
         doc.append('<hr>');
+        SrollToBottom();
         SoundChat();
         $('#chatbox').append(doc);
     }
 });
-
+function SrollToBottom() {
+    var element = document.getElementById("scroll");
+    element.scrollTop = element.scrollHeight;
+}
 function SoundChat() {
     var audio = new Audio("/Sound/SoundChat.mp3");
     audio.addEventListener('ended', function () {
