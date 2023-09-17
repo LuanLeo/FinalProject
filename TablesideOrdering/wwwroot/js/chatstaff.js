@@ -48,11 +48,13 @@ connection.on("ReceiveMessage", function (user, message) {
         SoundChat();        
         $('#chatbox').append(doc);
     }
+    updateScroll();
 });
 
-    var element = document.getElementById("chatbox");
+function updateScroll() {
+    var element = document.getElementById("messageBody");
     element.scrollTop = element.scrollHeight;
-
+}
 function SoundChat() {
     var audio = new Audio("/Sound/SoundChat.mp3");
     audio.addEventListener('ended', function () {

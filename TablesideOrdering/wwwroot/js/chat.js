@@ -20,9 +20,10 @@ document.getElementById("sendButton").addEventListener("click", function (event)
             return console.error(err.toString());
         });
     event.preventDefault();
+   
 });
 
-connection.on("ReceiveMessage", function (user, message) {
+connection.on("ReceiveMessage", function (user, message) {    
     if (parseInt(user) == user) {
         var currentdate = new Date();
         var datetime = currentdate.getDate() + "/" + (currentdate.getMonth()+1) + "/" + currentdate.getFullYear() + " "
@@ -36,7 +37,6 @@ connection.on("ReceiveMessage", function (user, message) {
             + `</div>`
             + `</div>`)
         doc.append('<hr>');
-        SrollToBottom();
         SoundChat();
         $('#chatbox').append(doc);
     }
@@ -54,13 +54,14 @@ connection.on("ReceiveMessage", function (user, message) {
             + `</div>`
             + `</div>`)
         doc.append('<hr>');
-        SrollToBottom();
+        
         SoundChat();
         $('#chatbox').append(doc);
     }
+    updateScroll();
 });
-function SrollToBottom() {
-    var element = document.getElementById("scroll");
+function updateScroll() {
+    var element = document.getElementById("messages");
     element.scrollTop = element.scrollHeight;
 }
 function SoundChat() {
