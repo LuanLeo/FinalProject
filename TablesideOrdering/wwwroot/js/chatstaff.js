@@ -32,7 +32,6 @@ connection.on("ReceiveMessage", function (user, message) {
             +`<p> ${message}</p>`
             +`<span class="time">${datetime}</span>`
             +`</li>`)
-        SoundChat();       
         $('#chatbox').append(doc);
     }
     else {
@@ -45,13 +44,13 @@ connection.on("ReceiveMessage", function (user, message) {
             + `<p>${message}</p>`
             + `<span class="time">${datetime}</span>`
             + `</li>`)
-        SoundChat();        
         $('#chatbox').append(doc);
     }
-    updateScroll();
+    SoundChat();        
+    UpdateScroll();
 });
 
-function updateScroll() {
+function UpdateScroll() {
     var element = document.getElementById("messageBody");
     element.scrollTop = element.scrollHeight;
 }
