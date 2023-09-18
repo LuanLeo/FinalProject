@@ -6,21 +6,30 @@ using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Data;
 using Microsoft.AspNetCore.Authorization;
 using TablesideOrdering.Areas.StoreOwner.ViewModels;
+using TablesideOrdering.Models;
+using Microsoft.Extensions.Options;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 
 namespace TablesideOrdering.Areas.Staff.Controllers
 {
     [Area("Staff")]
-    [Authorize(Roles ="Staff, Admin")]
+    [Authorize(Roles = "Staff, Admin")]
     public class OrderController : Controller
     {
         private readonly ApplicationDbContext _context;
-        public static int Num = 0;
+        private readonly SMSMessage _SMSMessage;
         public INotyfService _notyfService { get; }
-        public OrderController(INotyfService notyfService, ApplicationDbContext context)
+
+        public OrderController(INotyfService notyfService, ApplicationDbContext context, IOptions<SMSMessage> SMSMessage)
         {
             _notyfService = notyfService;
             _context = context;
+            _SMSMessage = SMSMessage.Value;
         }
+
+        public static int Num = 0;
 
         public IActionResult Index()
         {
@@ -51,25 +60,15 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             OrderViewModel OrderData = new OrderViewModel();
             List<OrderDetail> OList = new List<OrderDetail>();
             OrderData.Order = _context.Orders.Find(id);
-            foreach(var item in _context.OrderDetails)
+            foreach (var item in _context.OrderDetails)
             {
-                if(item.OrderId == id)
+                if (item.OrderId == id)
                 {
                     OList.Add(item);
                 }
             };
             OrderData.OrderDetail = OList;
             return View(OrderData);
-        }
-
-        public void MarkDone(int id)
-        {
-            var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
-            order.Status = "Done";
-
-            _context.SaveChanges();
-            _notyfService.Success("The order is marked as done", 5);
-            
         }
 
         [HttpGet]
@@ -105,6 +104,14 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             Num++;
             _notyfService.Success("The order is deleted", 5);
             return RedirectToAction(nameof(Index));
+        }
+        public void MarkDone(int id)
+        {
+            var order = _context.Orders.FirstOrDefault(o => o.OrderId == id);
+            order.Status = "Done";
+
+            _context.SaveChanges();
+            _notyfService.Success("The order is marked as done", 5);
         }
     }
 }

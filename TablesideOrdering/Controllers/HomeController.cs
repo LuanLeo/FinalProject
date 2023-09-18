@@ -61,8 +61,8 @@ namespace TablesideOrdering.Controllers
         public static List<AddToCart> carts = new List<AddToCart>();
         public static float TotalPrice;
 
+        public string PhoneMessage;
         public static string PhoneNumber;
-        public static string PhoneMessage;
         public static string TableNo;
         public static string CusName;
 
@@ -686,12 +686,16 @@ namespace TablesideOrdering.Controllers
         //SENDING SMS TO CUSTOMER FUCNTION
         public void SendSMS()
         {
-            string number = ConvertToPhoneValid();
-            TwilioClient.Init(_SMSMessage.AccountSid, _SMSMessage.AuthToken);
-            var message = MessageResource.Create(
-                to: new PhoneNumber(number),
-                from: new PhoneNumber(_SMSMessage.PhoneFrom),
-                body: PhoneMessage);
+            if (PhoneMessage != null)
+            {
+                string number = ConvertToPhoneValid();
+                TwilioClient.Init(_SMSMessage.AccountSid, _SMSMessage.AuthToken);
+                var message = MessageResource.Create(
+                    to: new PhoneNumber(number),
+                    from: new PhoneNumber(_SMSMessage.PhoneFrom),
+                    body: PhoneMessage);
+            }
+            _notyfService.Error("Can't receive phone message", 5);
         }
 
 
@@ -703,10 +707,6 @@ namespace TablesideOrdering.Controllers
             {
                 string number = PhoneNumber.Substring(1);
                 validnum = "+84" + number;
-            }
-            else
-            {
-                validnum = PhoneNumber;
             }
             return validnum;
         }
@@ -946,6 +946,10 @@ namespace TablesideOrdering.Controllers
                     System.IO.File.Delete(file);
                 }
 
+                //Send SMS to customer
+                PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
+                SendSMS();
+
                 //Renew the cart and notify customer
                 TotalPrice = 0;
                 Coupon = null;
@@ -1109,6 +1113,10 @@ namespace TablesideOrdering.Controllers
                     System.IO.File.Delete(file);
                 }
 
+                //Send SMS to customer
+                PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
+                SendSMS();
+
                 //Renew the cart and notify customer
                 TotalPrice = 0;
                 Coupon = null;
@@ -1263,6 +1271,10 @@ namespace TablesideOrdering.Controllers
                     System.IO.File.Delete(file);
                 }
 
+                //Send SMS to customer
+                PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
+                SendSMS();
+
                 //Renew the cart and notify customer
                 TotalPrice = 0;
                 Coupon = null;
@@ -1286,8 +1298,6 @@ namespace TablesideOrdering.Controllers
 
         public IActionResult ReservationConfirm(HomeViewModel home)
         {
-
-
             Reservation book = new Reservation();
             book.CusName = home.Reservation.CusName;
             book.PhoneNumber = home.Reservation.PhoneNumber;
@@ -1328,7 +1338,6 @@ namespace TablesideOrdering.Controllers
                 ReserModel = book;
                 return RedirectToAction("Menu");
             }
-
         }
 
 
@@ -1347,7 +1356,6 @@ namespace TablesideOrdering.Controllers
         {
             List<Orders> olist = new List<Orders>();
             Orders order = _context.Orders.Where(o => o.OrderId == model.OrderId && o.PhoneNumber == model.PhoneNumber).FirstOrDefault();
-            // home.Orders = olist.OrderByDescending(x => x.OrderDate).ToList();
             olist.Add(order);
             home.Orders = olist;
         }
