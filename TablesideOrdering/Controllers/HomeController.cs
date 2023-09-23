@@ -570,43 +570,64 @@ namespace TablesideOrdering.Controllers
         //Increase Quantity
         public void IncQty(int id)
         {
-            AddToCart cart = new AddToCart();
+            var carts = _context.VirtualCarts.FirstOrDefault(x => x.TableId.ToString() == TableNo);
+            List<CartDetails> cartlist = _context.CartDetails.Where(i => i.CartId == carts.TableId).ToList();
+            CartDetails cart = new CartDetails();
             ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
-            if (carts.Find(x => x.SizePriceId == productprice.Id) != null)
+            if (cartlist.Find(x => x.SizePriceId == productprice.Id) != null)
             {
-                cart = carts.Single(x => x.SizePriceId == productprice.Id);
+                cart = cartlist.Single(x => x.SizePriceId == productprice.Id);
                 cart.Quantity += 1;
-                cart.TotalProPrice = productprice.Price * cart.Quantity;
+                _context.CartDetails.Update(cart);
+                _context.SaveChanges();
             }
-            TotalPrice = 0;
-            foreach (var item in carts)
+
+            //Total for Cart
+            List<CartDetails> CartList = _context.CartDetails.Where(i => i.CartId == carts.TableId).ToList();
+            carts.CartAmount = 0;
+            foreach (var item in CartList)
             {
-                float Total = item.Quantity * item.Price;
-                TotalPrice += Total;
+                if (item.CartId == carts.TableId)
+                {
+                    float Total = item.Quantity * productprice.Price;
+                    carts.CartAmount += Total;
+                }
             }
-            ViewBag.CartQuantity = carts.Count();
-            ViewBag.CartPrice = TotalPrice;
+            _context.VirtualCarts.Update(carts);
+            _context.SaveChanges();
         }
 
         //Decrease Quantity
         public void DecQty(int id)
         {
-            AddToCart cart = new AddToCart();
+            var carts = _context.VirtualCarts.FirstOrDefault(x => x.TableId.ToString() == TableNo);
+            List<CartDetails> cartlist = _context.CartDetails.Where(i => i.CartId == carts.TableId).ToList();
+            CartDetails cart = new CartDetails();
             ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
-            if (carts.Find(x => x.SizePriceId == productprice.Id) != null)
+            if (cartlist.Find(x => x.SizePriceId == productprice.Id) != null)
             {
-                cart = carts.Single(x => x.SizePriceId == productprice.Id);
+                cart = cartlist.Single(x => x.SizePriceId == productprice.Id);
                 cart.Quantity -= 1;
-                cart.TotalProPrice = productprice.Price * cart.Quantity;
-            }
-            TotalPrice = 0;
-            foreach (var item in carts)
-            {
-                float Total = item.Quantity * item.Price;
-                TotalPrice += Total;
+                _context.CartDetails.Update(cart);
+                _context.SaveChanges();
             }
 
-            ViewBag.CartQuantity = carts.Count();
+            //Total for Cart
+            List<CartDetails> CartList = _context.CartDetails.Where(i => i.CartId == carts.TableId).ToList();
+            carts.CartAmount = 0;
+            foreach (var item in CartList)
+            {
+                if (item.CartId == carts.TableId)
+                {
+                    float Total = item.Quantity * productprice.Price;
+                    carts.CartAmount += Total;
+                }
+            }
+            _context.VirtualCarts.Update(carts);
+            _context.SaveChanges();
+
+
+            ViewBag.CartQuantity = cartlist.Count();
             ViewBag.CartPrice = TotalPrice;
             if (cart.Quantity == 0)
             {
@@ -622,16 +643,11 @@ namespace TablesideOrdering.Controllers
             ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
             VirtualCart virtualCart = new VirtualCart();
             CartDetails cart = new CartDetails();
-            List<CartDetails> cartlist = new List<CartDetails>();
+            List<CartDetails> cartlist = _context.CartDetails.Where(i => i.CartId == carts.TableId).ToList();
+
 
             //Add to Cart
-            foreach (var i in _context.CartDetails)
-            {
-                if (carts.CartId == i.CartId)
-                {
-                    cartlist.Add(i);
-                }
-            }
+
             if (cartlist.Count() == 0)
             {
                 cart.SizePriceId = productprice.Id;
@@ -658,11 +674,13 @@ namespace TablesideOrdering.Controllers
                     _context.SaveChanges();
                 }
             }
+            List<CartDetails> CartList = _context.CartDetails.Where(i => i.CartId == carts.TableId).ToList();
 
             //Total for Cart
-            foreach (var item in cartlist)
+            carts.CartAmount = 0;
+            foreach (var item in CartList)
             {
-                if (item.CartId == carts.CartId)
+                if (item.CartId == carts.TableId)
                 {
                     float Total = item.Quantity * productprice.Price;
                     carts.CartAmount += Total;
@@ -673,6 +691,7 @@ namespace TablesideOrdering.Controllers
 
             ViewBag.CartQuantity = cartlist.Count();
             ViewBag.CartPrice = carts.CartAmount;
+            
         }
 
         //DELETE FROM CART FUNCTION
@@ -686,11 +705,12 @@ namespace TablesideOrdering.Controllers
             if (cart != null)
             {
                 _context.CartDetails.Remove(cart);
+                _context.SaveChanges();
             }
-
+            carts.CartAmount = 0;
             foreach (var i in _context.CartDetails)
             {
-                if (carts.CartId == i.CartId)
+                if (carts.TableId == i.CartId)
                 {
                     float Total = i.Quantity * productprice.Price;
                     carts.CartAmount += Total;
@@ -1453,6 +1473,7 @@ namespace TablesideOrdering.Controllers
                                    join cd in _context.CartDetails on vc.TableId equals cd.CartId
                                    join psp in _context.ProductSizePrice on cd.SizePriceId equals psp.Id
                                    join pro in _context.Products on psp.ProductId equals pro.ProductId
+                                   where vc.TableId == Convert.ToInt32(TableNo)
                                    select new CartViewModel
                                    {
                                        Quantity = cd.Quantity,
@@ -1461,7 +1482,7 @@ namespace TablesideOrdering.Controllers
                                        Size = psp.Size,
                                        Name = pro.Name,
                                        Pic = pro.Pic,
-                                       TotalProPrice = cd.Quantity * psp.Price
+                                       TotalProPrice = cd.Quantity * psp.Price,
                                    }).ToList();
 
             if (TableNo != null)
