@@ -318,10 +318,14 @@ namespace TablesideOrdering.Controllers
 
         //INPUTTING TABLE NUMBER BY LINK FUNCTION
         [HttpGet]
-        public IActionResult TableCheck(string id)
+        public IActionResult TableCheck(int id)
         {
-            TableNo = id;
+            TableNo = id.ToString();
             OrderType = "Eat in";
+            VirtualCart cart= new VirtualCart();
+            cart.TableId = id;
+            _context.VirtualCarts.Add(cart);
+            _context.SaveChanges();
             return RedirectToAction("Index");
 
         }
@@ -612,50 +616,55 @@ namespace TablesideOrdering.Controllers
         public void AddToCart(int id)
         {
             CheckNotify = id;
-
-            AddToCart cart = new AddToCart();
+            var carts = _context.VirtualCarts.FirstOrDefault(x => x.TableId.ToString() == TableNo);
+            CartDetails cart = new CartDetails();
             ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
             ProductSizePriceViewModel model = new ProductSizePriceViewModel();
-
-            if (carts.Count() == 0)
+            List<CartDetails> cartlist = new List<CartDetails>();
+            foreach(var i in _context.CartDetails)
+            {
+                if (i.CartId == carts.CartId)
+                {
+                    cartlist.Add(i);
+                }
+            }
+            if (cartlist.Count() == 0)
             {
                 cart.SizePriceId = productprice.Id;
-                cart.Product = _context.Products.Find(productprice.ProductId);
+                cart.CartId = carts.TableId;
                 cart.Quantity = 1;
-                cart.Size = productprice.Size;
-                cart.Price = productprice.Price;
-                cart.TotalProPrice = productprice.Price * cart.Quantity;
-                carts.Add(cart);
+                _context.CartDetails.Add(cart);
+                _context.SaveChanges();
             }
             else
             {
-                if (carts.Find(x => x.SizePriceId == productprice.Id) != null)
+                if (cartlist.Find(x => x.SizePriceId == productprice.Id) != null)
                 {
-                    cart = carts.Single(x => x.SizePriceId == productprice.Id);
+                    cart = cartlist.Single(x => x.SizePriceId == productprice.Id);
                     cart.Quantity += 1;
-                    cart.TotalProPrice = productprice.Price * cart.Quantity;
+                    _context.CartDetails.Update(cart);
+                    _context.SaveChanges();
                 }
                 else
                 {
                     cart.SizePriceId = productprice.Id;
-                    cart.Product = _context.Products.Find(productprice.ProductId);
+                    cart.CartId = carts.TableId;
                     cart.Quantity = 1;
-                    cart.Size = productprice.Size;
-                    cart.Price = productprice.Price;
-                    cart.TotalProPrice = productprice.Price * cart.Quantity;
-
-                    carts.Add(cart);
+                    _context.CartDetails.Add(cart);
+                    _context.SaveChanges();
                 }
             }
 
-            TotalPrice = 0;
-            foreach (var item in carts)
+            foreach (var item in cartlist)
             {
-                float Total = item.Quantity * item.Price;
-                TotalPrice += Total;
+                float Total = item.Quantity * productprice.Price;
+                carts.CartAmount += Total;
+
             }
-            ViewBag.CartQuantity = carts.Count();
-            ViewBag.CartPrice = TotalPrice;
+            _context.VirtualCarts.Update(carts);
+            _context.SaveChanges();
+            ViewBag.CartQuantity = cartlist.Count();
+            ViewBag.CartPrice = carts.CartAmount;
         }
 
         //DELETE FROM CART FUNCTION
@@ -757,7 +766,7 @@ namespace TablesideOrdering.Controllers
         }
 
         //DELIVERY CHECK METHOD PAGE FUCNTION
-        public Boolean DeliveryCheck(HomeViewModel home)
+        /*public Boolean DeliveryCheck(HomeViewModel home)
         {
             if (PaymentType == "Cash")
             {
@@ -783,10 +792,10 @@ namespace TablesideOrdering.Controllers
             }
 
             return false;
-        }
+        }*/
 
         //CARRY OUT CHECK METHOD PAGE FUCNTION
-        public Boolean CarryoutCheck(HomeViewModel home)
+       /* public Boolean CarryoutCheck(HomeViewModel home)
         {
             if (PaymentType == "Cash")
             {
@@ -812,10 +821,10 @@ namespace TablesideOrdering.Controllers
             }
 
             return false;
-        }
+        }*/
 
         //COUPON SHOW FUNCTION
-        public HomeViewModel CouponShow()
+     /*   public HomeViewModel CouponShow()
         {
             HomeViewModel home = NavData();
 
@@ -838,21 +847,21 @@ namespace TablesideOrdering.Controllers
             }
 
             return home;
-        }
+        }*/
 
         //CASH PAYMENT METHOD PAGE FUCNTION
-        public IActionResult CashCheckout()
+        /*public IActionResult CashCheckout()
         {
             HomeViewModel home = CouponShow();
             home.OrderType = OrderType;
             home.Reser = ReserModel;
             return View(home);
-        }
+        }*/
 
         //CASH PAYMENT METHOD PAGE FUCNTION
         public IActionResult PlaceOrder(HomeViewModel home)
         {
-            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in" || OrderType == "Reservation")
+            if (/*(*/OrderType == "Delivery" /*&& DeliveryCheck(home) == true)*/ || /*(*/OrderType == "Carry out" /*&& CarryoutCheck(home) == true)*/ || OrderType == "Eat in" || OrderType == "Reservation")
             {
                 Email = home.Email.EmailTo;
                 Email data = new Email();
@@ -862,7 +871,7 @@ namespace TablesideOrdering.Controllers
                 Orders order = new Orders();
                 order.OrderDate = DateTime.Now.ToString();
                 order.ProductQuantity = carts.Count();
-                order.PhoneNumber = home.Cart.PhoneNumber;
+               // order.PhoneNumber = home.Cart.PhoneNumber;
                 order.CusName = home.Payment.Name;
                 order.OrderType = OrderType;
                 order.PaymentType = PaymentType;
@@ -970,18 +979,18 @@ namespace TablesideOrdering.Controllers
         }
 
         //VNPAY PAYMENT METHOD PAGE FUCNTION
-        public IActionResult VNPayCheckout()
+        /*public IActionResult VNPayCheckout()
         {
             HomeViewModel home = CouponShow();
             home.OrderType = OrderType;
             home.Reser = ReserModel;
             return View(home);
-        }
+        }*/
 
         //VNPAY URL PAYMENT FUNCTION
         public IActionResult CreatePaymentUrl(HomeViewModel home)
         {
-            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in" || OrderType == "Reservation")
+            if (/*(*/OrderType == "Delivery" /*&& DeliveryCheck(home) == true)*/ || /*(*/OrderType == "Carry out" /*&& CarryoutCheck(home) == true)*/ || OrderType == "Eat in" || OrderType == "Reservation")
             {
                 PaymentInformationModel model = new PaymentInformationModel();
                 model = home.Payment;
@@ -1003,7 +1012,7 @@ namespace TablesideOrdering.Controllers
                 }
 
                 Email = home.Email.EmailTo;
-                PhoneNumber = home.Cart.PhoneNumber;
+                //PhoneNumber = home.Cart.PhoneNumber;
                 CusName = home.Payment.Name;
                 Address = home.Address;
                 var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
@@ -1128,7 +1137,7 @@ namespace TablesideOrdering.Controllers
         }
 
         //MOMO PAYMENT METHOD PAGE FUCNTION
-        public IActionResult MomoCheckout()
+        /*public IActionResult MomoCheckout()
         {
             HomeViewModel home = CouponShow();
             home.OrderType = OrderType;
@@ -1136,11 +1145,11 @@ namespace TablesideOrdering.Controllers
 
             return View(home);
 
-        }
+        }*/
         [HttpPost]
         public async Task<RedirectResult> CreateMomoPaymentUrl(HomeViewModel home)
         {
-            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in" || OrderType == "Reservation")
+            if (/*(*/OrderType == "Delivery" /*&& DeliveryCheck(home) == true)*/ || /*(*/OrderType == "Carry out" /*&& CarryoutCheck(home) == true)*/ || OrderType == "Eat in" || OrderType == "Reservation")
             {
                 OrderInfoModel model = new OrderInfoModel();
                 model = home.MoMoPay;
@@ -1162,7 +1171,7 @@ namespace TablesideOrdering.Controllers
                 }
 
                 Email = home.Email.EmailTo;
-                PhoneNumber = home.Cart.PhoneNumber;
+                //PhoneNumber = home.Cart.PhoneNumber;
                 CusName = home.MoMoPay.FullName;
                 Address = home.Address;
                 var response = await _momoService.CreatePaymentAsync(model);
@@ -1417,10 +1426,32 @@ namespace TablesideOrdering.Controllers
         public HomeViewModel NavData()
         {
             HomeViewModel home = new HomeViewModel();
-            home.Cart = CartList();
+            home.Cart = CartDetails();
             home.LockOrderType = OrderType;
             home.Chat = ChatCreate();
             return home;
+        }
+        public Cart CartDetails()
+        {
+            Cart cart = new Cart();
+            var product = (from vc in _context.VirtualCarts
+                               join cd in _context.CartDetails on vc.CartId equals cd.CartId
+                               join psp in _context.ProductSizePrice on cd.SizePriceId equals psp.Id
+                               join pro in _context.Products on psp.ProductId equals pro.ProductId
+                           select new CartViewModel
+                               {
+                                   Quantity=cd.Quantity,
+                                   Id = cd.SizePriceId,
+                                   Price = psp.Price,
+                                   Size = psp.Size,
+                                  Name = pro.Name,
+                                   Pic = pro.Pic,
+                                   TotalProPrice = cd.Quantity * psp.Price
+                               }).ToList();
+            cart.cartViewModels = product;
+            var daf = cart.cartViewModels.Count();
+            cart.CartTotal = _context.VirtualCarts.FirstOrDefault(x => x.TableId.ToString() == TableNo).CartAmount;
+            return cart;
         }
 
         //Cartlist Create
@@ -1448,5 +1479,6 @@ namespace TablesideOrdering.Controllers
 
             return chat;
         }
+
     }
 }

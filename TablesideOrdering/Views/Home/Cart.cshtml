@@ -55,7 +55,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="shoping__cart__table">
-                            @if (Model.Cart.CartLists.Count > 0)
+                            @if (Model.Cart.cartViewModels.Count() > 0)
                             {
                                 <table>
                                     <thead>
@@ -69,12 +69,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var item in Model.Cart.CartLists)
+                                        @foreach (var item in Model.Cart.cartViewModels)
                                         {
                                             <tr>
                                                 <td class="shoping__cart__item">
-                                                    <img src="../ProductImage/@item.Product.Pic" alt="" height="100" width="100">
-                                                    <h5>@item.Product.Name</h5>
+                                                    <img src="../ProductImage/@item.Pic" alt="" height="100" width="100">
+                                                    <h5>@item.Name</h5>
                                                 </td>
                                                 <td class="shoping__cart__size">
                                                     @item.Size
@@ -86,9 +86,9 @@
                                                 <td class="shoping__cart__quantity">
                                                     <div class="quantity">
                                                         <div class="pro-qty">
-                                                            <a class="dec qtybtn" data-id="@item.SizePriceId">-</a>
+                                                            <a class="dec qtybtn" data-id="@item.Id">-</a>
                                                             <input type="text" value="@item.Quantity">
-                                                            <a class="inc qtybtn" data-id="@item.SizePriceId">+</a>
+                                                            <a class="inc qtybtn" data-id="@item.Id">+</a>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -96,7 +96,7 @@
                                                     @item.TotalProPrice VND
                                                 </td>
                                                 <td class="shoping__cart__item__close">
-                                                    <a asp-action="DeleteFromCart" asp-controller="Home" asp-route-id="@item.SizePriceId"><span class="icon_close"></span></a>
+                                                    <a asp-action="DeleteFromCart" asp-controller="Home" asp-route-id="@item.Id"><span class="icon_close"></span></a>
                                                 </td>
                                             </tr>
                                         }
@@ -141,7 +141,7 @@
                             Cart Total
                         </h5>
                         <ul>
-                            <li>Total <span>@Model.Cart.CartAmount VND</span></li>
+                            <li>Total <span>@Model.Cart.CartTotal VND</span></li>
                         </ul>
                         <div class="shoping__discount">
                             <ul>

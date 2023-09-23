@@ -155,14 +155,14 @@
                                 <h4>Your Order</h4>
                                 <div class="checkout__order__products">Products <span>Total</span></div>
                                 <ul>
-                                    @foreach (var item in Model.Cart.CartLists)
+                                    @foreach (var item in Model.Cart.cartViewModels)
                                     {
-                                        <li>@item.Product.Name <span>@item.TotalProPrice VND</span></li>
+                                        <li>@item.Name <span>@item.TotalProPrice VND</span></li>
                                     }
                                 </ul>
                                 <div class="checkout__order__total">
                                     Total
-                                    <span class="text-danger">@Model.Cart.CartAmount VND</span>
+                                    <span class="text-danger">@Model.Cart.CartTotal VND</span>
                                 </div>
                                 <ul>
                                     <li>Discount <span>@Model.Cart.DicountAmount VND</span></li>

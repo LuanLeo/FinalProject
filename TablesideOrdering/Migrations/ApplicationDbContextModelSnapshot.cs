@@ -518,6 +518,28 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("Tables");
                 });
 
+            modelBuilder.Entity("TablesideOrdering.Models.CartDetails", b =>
+                {
+                    b.Property<int>("CartDetailsId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartDetailsId"), 1L, 1);
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SizePriceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartDetailsId");
+
+                    b.ToTable("CartDetails");
+                });
+
             modelBuilder.Entity("TablesideOrdering.Models.EmailPR", b =>
                 {
                     b.Property<int>("EmailId")
@@ -533,6 +555,25 @@ namespace TablesideOrdering.Migrations
                     b.HasKey("EmailId");
 
                     b.ToTable("EmailPRs");
+                });
+
+            modelBuilder.Entity("TablesideOrdering.Models.VirtualCart", b =>
+                {
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"), 1L, 1);
+
+                    b.Property<float>("CartAmount")
+                        .HasColumnType("real");
+
+                    b.Property<int>("TableId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartId");
+
+                    b.ToTable("VirtualCarts");
                 });
 
             modelBuilder.Entity("TablesideOrdering.Areas.Admin.Models.ApplicationUser", b =>

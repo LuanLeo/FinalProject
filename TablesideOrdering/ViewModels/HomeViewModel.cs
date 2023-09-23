@@ -28,7 +28,7 @@ namespace TablesideOrdering.ViewModels
 
 
         //Variable for Cart page
-        public CartList Cart { get; set; }
+        public Cart Cart { get; set; }
 
 
         //Variable for receiving e-receipt
