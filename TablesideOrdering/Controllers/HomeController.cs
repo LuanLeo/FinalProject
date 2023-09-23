@@ -82,7 +82,7 @@ namespace TablesideOrdering.Controllers
         public static int NotifCoupon = 0;
         public static string CouponAlert;
 
-        public static Chat Chat = new Chat();  
+        public static Chat Chat = new Chat();
 
         public HomeController(ApplicationDbContext context,
             INotyfService notyfService,
@@ -289,26 +289,26 @@ namespace TablesideOrdering.Controllers
         {
             EmailPR Email = new EmailPR();
             Email.Email = home.MailPR;
-                var emailList = _context.EmailPRs.Select(i => i.Email).ToList();
-                if (emailList != null)
-                {
-                    if (emailList.Contains(Email.Email) != true)
-                    {
-                        _context.EmailPRs.Add(Email);
-                        _context.SaveChanges();
-                        _notyfService.Success("Email is subcribed success", 5);
-                    }
-                    else
-                    {
-                        _notyfService.Error("Email has been subcribed", 5);
-                    };
-                }
-                else
+            var emailList = _context.EmailPRs.Select(i => i.Email).ToList();
+            if (emailList != null)
+            {
+                if (emailList.Contains(Email.Email) != true)
                 {
                     _context.EmailPRs.Add(Email);
                     _context.SaveChanges();
                     _notyfService.Success("Email is subcribed success", 5);
                 }
+                else
+                {
+                    _notyfService.Error("Email has been subcribed", 5);
+                };
+            }
+            else
+            {
+                _context.EmailPRs.Add(Email);
+                _context.SaveChanges();
+                _notyfService.Success("Email is subcribed success", 5);
+            }
             return RedirectToAction("Index");
         }
 
@@ -322,7 +322,8 @@ namespace TablesideOrdering.Controllers
         {
             TableNo = id.ToString();
             OrderType = "Eat in";
-            VirtualCart cart= new VirtualCart();
+
+            VirtualCart cart = new VirtualCart();
             cart.TableId = id;
             _context.VirtualCarts.Add(cart);
             _context.SaveChanges();
@@ -617,13 +618,16 @@ namespace TablesideOrdering.Controllers
         {
             CheckNotify = id;
             var carts = _context.VirtualCarts.FirstOrDefault(x => x.TableId.ToString() == TableNo);
-            CartDetails cart = new CartDetails();
+
             ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
-            ProductSizePriceViewModel model = new ProductSizePriceViewModel();
+            VirtualCart virtualCart = new VirtualCart();
+            CartDetails cart = new CartDetails();
             List<CartDetails> cartlist = new List<CartDetails>();
-            foreach(var i in _context.CartDetails)
+
+            //Add to Cart
+            foreach (var i in _context.CartDetails)
             {
-                if (i.CartId == carts.CartId)
+                if (carts.CartId == i.CartId)
                 {
                     cartlist.Add(i);
                 }
@@ -655,14 +659,18 @@ namespace TablesideOrdering.Controllers
                 }
             }
 
+            //Total for Cart
             foreach (var item in cartlist)
             {
-                float Total = item.Quantity * productprice.Price;
-                carts.CartAmount += Total;
-
+                if (item.CartId == carts.CartId)
+                {
+                    float Total = item.Quantity * productprice.Price;
+                    carts.CartAmount += Total;
+                }
             }
             _context.VirtualCarts.Update(carts);
             _context.SaveChanges();
+
             ViewBag.CartQuantity = cartlist.Count();
             ViewBag.CartPrice = carts.CartAmount;
         }
@@ -670,19 +678,26 @@ namespace TablesideOrdering.Controllers
         //DELETE FROM CART FUNCTION
         public IActionResult DeleteFromCart(int id)
         {
-            AddToCart cart = new AddToCart();
-            cart = carts.Find(x => x.SizePriceId == id);
+            CartDetails cart = _context.CartDetails.FirstOrDefault(x => x.SizePriceId == id && x.CartId.ToString() == TableNo);
+            ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
+
+            var carts = _context.VirtualCarts.FirstOrDefault(x => x.TableId.ToString() == TableNo);
+
             if (cart != null)
             {
-                carts.Remove(cart);
+                _context.CartDetails.Remove(cart);
             }
 
-            TotalPrice = 0;
-            foreach (var item in carts)
+            foreach (var i in _context.CartDetails)
             {
-                float Total = item.Quantity * item.Price;
-                TotalPrice += Total;
+                if (carts.CartId == i.CartId)
+                {
+                    float Total = i.Quantity * productprice.Price;
+                    carts.CartAmount += Total;
+                }
             }
+            _context.VirtualCarts.Update(carts);
+            _context.SaveChanges();
 
             _notyfService.Success("The product is deleted", 5);
             return RedirectToAction("Cart", "Home");
@@ -795,59 +810,59 @@ namespace TablesideOrdering.Controllers
         }*/
 
         //CARRY OUT CHECK METHOD PAGE FUCNTION
-       /* public Boolean CarryoutCheck(HomeViewModel home)
-        {
-            if (PaymentType == "Cash")
-            {
-                if (home.Payment.Name != null && home.Cart.PhoneNumber != null && home.PickTime != null)
-                {
-                    return true;
-                }
-            }
-            if (PaymentType == "VNPay")
-            {
-                if (home.Payment.Name != null && home.Cart.PhoneNumber != null && home.PickTime != null)
-                {
-                    return true;
-                }
-            }
+        /* public Boolean CarryoutCheck(HomeViewModel home)
+         {
+             if (PaymentType == "Cash")
+             {
+                 if (home.Payment.Name != null && home.Cart.PhoneNumber != null && home.PickTime != null)
+                 {
+                     return true;
+                 }
+             }
+             if (PaymentType == "VNPay")
+             {
+                 if (home.Payment.Name != null && home.Cart.PhoneNumber != null && home.PickTime != null)
+                 {
+                     return true;
+                 }
+             }
 
-            if (PaymentType == "Momo")
-            {
-                if (home.MoMoPay.FullName != null && home.Cart.PhoneNumber != null && home.PickTime != null)
-                {
-                    return true;
-                }
-            }
+             if (PaymentType == "Momo")
+             {
+                 if (home.MoMoPay.FullName != null && home.Cart.PhoneNumber != null && home.PickTime != null)
+                 {
+                     return true;
+                 }
+             }
 
-            return false;
-        }*/
+             return false;
+         }*/
 
         //COUPON SHOW FUNCTION
-     /*   public HomeViewModel CouponShow()
-        {
-            HomeViewModel home = NavData();
+        /*   public HomeViewModel CouponShow()
+           {
+               HomeViewModel home = NavData();
 
-            if (Coupon.Id != 0)
-            {
-                if (Coupon.DisType == "Money")
-                {
-                    home.Cart.DicountAmount = Coupon.DisValue;
-                }
-                else if (Coupon.DisType == "Percent")
-                {
-                    home.Cart.DicountAmount = (TotalPrice * Coupon.DisValue) / 100;
-                };
-                home.Cart.MustPaid = TotalPrice - home.Cart.DicountAmount;
-            }
-            else
-            {
-                home.Cart.DicountAmount = 0;
-                home.Cart.MustPaid = TotalPrice;
-            }
+               if (Coupon.Id != 0)
+               {
+                   if (Coupon.DisType == "Money")
+                   {
+                       home.Cart.DicountAmount = Coupon.DisValue;
+                   }
+                   else if (Coupon.DisType == "Percent")
+                   {
+                       home.Cart.DicountAmount = (TotalPrice * Coupon.DisValue) / 100;
+                   };
+                   home.Cart.MustPaid = TotalPrice - home.Cart.DicountAmount;
+               }
+               else
+               {
+                   home.Cart.DicountAmount = 0;
+                   home.Cart.MustPaid = TotalPrice;
+               }
 
-            return home;
-        }*/
+               return home;
+           }*/
 
         //CASH PAYMENT METHOD PAGE FUCNTION
         /*public IActionResult CashCheckout()
@@ -871,7 +886,7 @@ namespace TablesideOrdering.Controllers
                 Orders order = new Orders();
                 order.OrderDate = DateTime.Now.ToString();
                 order.ProductQuantity = carts.Count();
-               // order.PhoneNumber = home.Cart.PhoneNumber;
+                // order.PhoneNumber = home.Cart.PhoneNumber;
                 order.CusName = home.Payment.Name;
                 order.OrderType = OrderType;
                 order.PaymentType = PaymentType;
@@ -1434,23 +1449,34 @@ namespace TablesideOrdering.Controllers
         public Cart CartDetails()
         {
             Cart cart = new Cart();
-            var product = (from vc in _context.VirtualCarts
-                               join cd in _context.CartDetails on vc.CartId equals cd.CartId
-                               join psp in _context.ProductSizePrice on cd.SizePriceId equals psp.Id
-                               join pro in _context.Products on psp.ProductId equals pro.ProductId
-                           select new CartViewModel
-                               {
-                                   Quantity=cd.Quantity,
-                                   Id = cd.SizePriceId,
-                                   Price = psp.Price,
-                                   Size = psp.Size,
-                                  Name = pro.Name,
-                                   Pic = pro.Pic,
-                                   TotalProPrice = cd.Quantity * psp.Price
-                               }).ToList();
-            cart.cartViewModels = product;
-            var daf = cart.cartViewModels.Count();
-            cart.CartTotal = _context.VirtualCarts.FirstOrDefault(x => x.TableId.ToString() == TableNo).CartAmount;
+            cart.cartViewModels = (from vc in _context.VirtualCarts
+                                   join cd in _context.CartDetails on vc.TableId equals cd.CartId
+                                   join psp in _context.ProductSizePrice on cd.SizePriceId equals psp.Id
+                                   join pro in _context.Products on psp.ProductId equals pro.ProductId
+                                   select new CartViewModel
+                                   {
+                                       Quantity = cd.Quantity,
+                                       Id = cd.SizePriceId,
+                                       Price = psp.Price,
+                                       Size = psp.Size,
+                                       Name = pro.Name,
+                                       Pic = pro.Pic,
+                                       TotalProPrice = cd.Quantity * psp.Price
+                                   }).ToList();
+
+            if (TableNo != null)
+            {
+                foreach (var c in cart.cartViewModels)
+                {
+                    float total = c.TotalProPrice;
+                    cart.CartTotal += total;
+                }
+
+            }
+            else
+            {
+                cart.CartTotal = 0;
+            }
             return cart;
         }
 
