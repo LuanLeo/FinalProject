@@ -58,12 +58,11 @@ namespace TablesideOrdering.Controllers
         private IMomoService _momoService;
 
         //Static variables before saving to database
-        public static List<AddToCart> carts = new List<AddToCart>();
         public static float TotalPrice;
+        public static string TableNo;
 
         public string PhoneMessage;
         public static string PhoneNumber;
-        public static string TableNo;
         public static string CusName;
 
         public static string EmailMessage;
@@ -323,10 +322,14 @@ namespace TablesideOrdering.Controllers
             TableNo = id.ToString();
             OrderType = "Eat in";
 
-            VirtualCart cart = new VirtualCart();
-            cart.TableId = id;
-            _context.VirtualCarts.Add(cart);
-            _context.SaveChanges();
+            var cartExist = _context.VirtualCarts.FirstOrDefault(i => i.TableId == id);
+            if (cartExist == null)
+            {
+                VirtualCart cart = new VirtualCart();
+                cart.TableId = id;
+                _context.VirtualCarts.Add(cart);
+                _context.SaveChanges();
+            }
             return RedirectToAction("Index");
 
         }
@@ -628,7 +631,7 @@ namespace TablesideOrdering.Controllers
 
 
             ViewBag.CartQuantity = cartlist.Count();
-            ViewBag.CartPrice = TotalPrice;
+            ViewBag.CartPrice = carts.CartAmount;
             if (cart.Quantity == 0)
             {
                 DeleteFromCart(id);
@@ -691,7 +694,7 @@ namespace TablesideOrdering.Controllers
 
             ViewBag.CartQuantity = cartlist.Count();
             ViewBag.CartPrice = carts.CartAmount;
-            
+
         }
 
         //DELETE FROM CART FUNCTION
@@ -764,7 +767,8 @@ namespace TablesideOrdering.Controllers
         //SELECTING PAYMENT TYPE FUCNTION
         public IActionResult PaymentMethod(HomeViewModel home)
         {
-            if (carts.Count != 0)
+            var carlist = _context.CartDetails.Where(i => i.CartId.ToString() == TableNo);
+            if (carlist.Count() != 0)
             {
                 if (home.PaymentType == null)
                 {
@@ -898,6 +902,22 @@ namespace TablesideOrdering.Controllers
         {
             if (/*(*/OrderType == "Delivery" /*&& DeliveryCheck(home) == true)*/ || /*(*/OrderType == "Carry out" /*&& CarryoutCheck(home) == true)*/ || OrderType == "Eat in" || OrderType == "Reservation")
             {
+                List<CartViewModel> carts = (from vc in _context.VirtualCarts
+                                             join cd in _context.CartDetails on vc.TableId equals cd.CartId
+                                             join psp in _context.ProductSizePrice on cd.SizePriceId equals psp.Id
+                                             join pro in _context.Products on psp.ProductId equals pro.ProductId
+                                             where vc.TableId == Convert.ToInt32(TableNo)
+                                             select new CartViewModel
+                                             {
+                                                 Quantity = cd.Quantity,
+                                                 Id = cd.SizePriceId,
+                                                 Price = psp.Price,
+                                                 Size = psp.Size,
+                                                 Name = pro.Name,
+                                                 Pic = pro.Pic,
+                                                 TotalProPrice = cd.Quantity * psp.Price,
+                                             }).ToList();
+
                 Email = home.Email.EmailTo;
                 Email data = new Email();
                 data.EmailTo = Email;
@@ -968,7 +988,7 @@ namespace TablesideOrdering.Controllers
                 {
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.OrderId = order.OrderId;
-                    orderDetail.ProductName = item.Product.Name;
+                    orderDetail.ProductName = item.Name;
                     orderDetail.Size = item.Size;
                     orderDetail.ProQuantity = item.Quantity;
                     orderDetail.Price = item.Quantity * item.Price;
@@ -1066,6 +1086,22 @@ namespace TablesideOrdering.Controllers
             var response = _vnPayService.PaymentExecute(Request.Query);
             if (response.VnPayResponseCode == "00")
             {
+                List<CartViewModel> carts = (from vc in _context.VirtualCarts
+                                             join cd in _context.CartDetails on vc.TableId equals cd.CartId
+                                             join psp in _context.ProductSizePrice on cd.SizePriceId equals psp.Id
+                                             join pro in _context.Products on psp.ProductId equals pro.ProductId
+                                             where vc.TableId == Convert.ToInt32(TableNo)
+                                             select new CartViewModel
+                                             {
+                                                 Quantity = cd.Quantity,
+                                                 Id = cd.SizePriceId,
+                                                 Price = psp.Price,
+                                                 Size = psp.Size,
+                                                 Name = pro.Name,
+                                                 Pic = pro.Pic,
+                                                 TotalProPrice = cd.Quantity * psp.Price,
+                                             }).ToList();
+
                 //Save order to database
                 Orders order = new Orders();
                 order.OrderDate = DateTime.Now.ToString();
@@ -1133,7 +1169,7 @@ namespace TablesideOrdering.Controllers
                 {
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.OrderId = order.OrderId;
-                    orderDetail.ProductName = item.Product.Name;
+                    orderDetail.ProductName = item.Name;
                     orderDetail.Size = item.Size;
                     orderDetail.ProQuantity = item.Quantity;
                     orderDetail.Price = item.Quantity * item.Price;
@@ -1227,6 +1263,22 @@ namespace TablesideOrdering.Controllers
             var response = _momoService.PaymentExecuteAsync(HttpContext.Request.Query);
             if (response.ErrorCode == "0")
             {
+                List<CartViewModel> carts = (from vc in _context.VirtualCarts
+                                             join cd in _context.CartDetails on vc.TableId equals cd.CartId
+                                             join psp in _context.ProductSizePrice on cd.SizePriceId equals psp.Id
+                                             join pro in _context.Products on psp.ProductId equals pro.ProductId
+                                             where vc.TableId == Convert.ToInt32(TableNo)
+                                             select new CartViewModel
+                                             {
+                                                 Quantity = cd.Quantity,
+                                                 Id = cd.SizePriceId,
+                                                 Price = psp.Price,
+                                                 Size = psp.Size,
+                                                 Name = pro.Name,
+                                                 Pic = pro.Pic,
+                                                 TotalProPrice = cd.Quantity * psp.Price,
+                                             }).ToList();
+
                 //Save order to database
                 Orders order = new Orders();
                 order.OrderDate = DateTime.Now.ToString();
@@ -1291,7 +1343,7 @@ namespace TablesideOrdering.Controllers
                 {
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.OrderId = order.OrderId;
-                    orderDetail.ProductName = item.Product.Name;
+                    orderDetail.ProductName = item.Name;
                     orderDetail.Size = item.Size;
                     orderDetail.ProQuantity = item.Quantity;
                     orderDetail.Price = item.Quantity * item.Price;
@@ -1499,19 +1551,6 @@ namespace TablesideOrdering.Controllers
                 cart.CartTotal = 0;
             }
             return cart;
-        }
-
-        //Cartlist Create
-        public CartList CartList()
-        {
-            CartList cartlist = new CartList();
-            cartlist.CartLists = carts;
-            cartlist.TableNo = TableNo;
-            cartlist.CartAmount = TotalPrice;
-            cartlist.PhoneNumber = PhoneNumber;
-            cartlist.CusName = CusName;
-
-            return cartlist;
         }
 
         //Create Chat Id

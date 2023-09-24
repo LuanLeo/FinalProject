@@ -9,5 +9,7 @@ namespace TablesideOrdering.Models
         public string PhoneNumber { get; set; }
         public float DicountAmount { get; set; }
         public float MustPaid { get; set; }
+        public float CusName { get; set; }
+
     }
 }
