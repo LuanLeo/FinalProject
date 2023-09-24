@@ -9,6 +9,5 @@
         public int Quantity { get; set; }
         public float Price {  get; set; }
         public float TotalProPrice {  get; set; }
-
     }
 }

@@ -10,6 +10,5 @@ namespace TablesideOrdering.Models
         public float DicountAmount { get; set; }
         public float MustPaid { get; set; }
         public float CusName { get; set; }
-
     }
 }

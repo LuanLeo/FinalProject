@@ -1,4 +1,5 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using AspNetCoreHero.ToastNotification.Abstractions;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -41,6 +42,8 @@ using TablesideOrdering.Models.VNPay;
 using static Microsoft.AspNetCore.Razor.Language.TagHelperMetadata;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using Newtonsoft.Json.Linq;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using Color = Syncfusion.Drawing.Color;
 
 namespace TablesideOrdering.Controllers
 {
@@ -60,9 +63,8 @@ namespace TablesideOrdering.Controllers
         //Static variables before saving to database
         public static float TotalPrice;
         public static string TableNo;
-
-        public string PhoneMessage;
         public static string PhoneNumber;
+        public string PhoneMessage;
         public static string CusName;
 
         public static string EmailMessage;
@@ -109,19 +111,6 @@ namespace TablesideOrdering.Controllers
         {
             HomeViewModel Homedata = new HomeViewModel();
             Homedata = NavData();
-            Homedata.Product = (from ProSP in _context.ProductSizePrice
-                                join Pro in _context.Products on ProSP.ProductId equals Pro.ProductId
-                                select new ProductSizePriceViewModel
-                                {
-                                    SizePriceId = ProSP.Id,
-                                    ProductId = Pro.ProductId,
-                                    Name = Pro.Name,
-                                    CategoryId = Pro.CategoryId,
-                                    Description = Pro.Description,
-                                    Pic = Pro.Pic,
-                                    Size = ProSP.Size,
-                                    Price = ProSP.Price
-                                });
             Homedata.Category = _context.Categories.ToList();
             return View(Homedata);
         }
@@ -322,14 +311,7 @@ namespace TablesideOrdering.Controllers
             TableNo = id.ToString();
             OrderType = "Eat in";
 
-            var cartExist = _context.VirtualCarts.FirstOrDefault(i => i.TableId == id);
-            if (cartExist == null)
-            {
-                VirtualCart cart = new VirtualCart();
-                cart.TableId = id;
-                _context.VirtualCarts.Add(cart);
-                _context.SaveChanges();
-            }
+            CreateVirtualCart();
             return RedirectToAction("Index");
 
         }
@@ -491,7 +473,6 @@ namespace TablesideOrdering.Controllers
             stream.Position = 0;
             file = $"Invoice-{order.OrderId}.pdf";
             System.IO.File.WriteAllBytes(file, stream.ToArray());
-
         }
 
 
@@ -749,10 +730,11 @@ namespace TablesideOrdering.Controllers
         //MODIFY PHONE NUMBER FUNCTION
         public string ConvertToPhoneValid()
         {
+            var Cart = CartDetails();
             string validnum = "";
-            if (PhoneNumber.Substring(1) != "0")
+            if (Cart.PhoneNumber.Substring(1) != "0")
             {
-                string number = PhoneNumber.Substring(1);
+                string number = Cart.PhoneNumber.Substring(1);
                 validnum = "+84" + number;
             }
             return validnum;
@@ -805,7 +787,7 @@ namespace TablesideOrdering.Controllers
         }
 
         //DELIVERY CHECK METHOD PAGE FUCNTION
-        /*public Boolean DeliveryCheck(HomeViewModel home)
+        public Boolean DeliveryCheck(HomeViewModel home)
         {
             if (PaymentType == "Cash")
             {
@@ -831,10 +813,10 @@ namespace TablesideOrdering.Controllers
             }
 
             return false;
-        }*/
+        }
 
         //CARRY OUT CHECK METHOD PAGE FUCNTION
-        /* public Boolean CarryoutCheck(HomeViewModel home)
+        public Boolean CarryoutCheck(HomeViewModel home)
          {
              if (PaymentType == "Cash")
              {
@@ -860,10 +842,10 @@ namespace TablesideOrdering.Controllers
              }
 
              return false;
-         }*/
+         }
 
         //COUPON SHOW FUNCTION
-        /*   public HomeViewModel CouponShow()
+        public HomeViewModel CouponShow()
            {
                HomeViewModel home = NavData();
 
@@ -886,21 +868,21 @@ namespace TablesideOrdering.Controllers
                }
 
                return home;
-           }*/
+           }
 
         //CASH PAYMENT METHOD PAGE FUCNTION
-        /*public IActionResult CashCheckout()
+        public IActionResult CashCheckout()
         {
             HomeViewModel home = CouponShow();
             home.OrderType = OrderType;
             home.Reser = ReserModel;
             return View(home);
-        }*/
+        }
 
         //CASH PAYMENT METHOD PAGE FUCNTION
         public IActionResult PlaceOrder(HomeViewModel home)
         {
-            if (/*(*/OrderType == "Delivery" /*&& DeliveryCheck(home) == true)*/ || /*(*/OrderType == "Carry out" /*&& CarryoutCheck(home) == true)*/ || OrderType == "Eat in" || OrderType == "Reservation")
+            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in" || OrderType == "Reservation")
             {
                 List<CartViewModel> carts = (from vc in _context.VirtualCarts
                                              join cd in _context.CartDetails on vc.TableId equals cd.CartId
@@ -926,7 +908,7 @@ namespace TablesideOrdering.Controllers
                 Orders order = new Orders();
                 order.OrderDate = DateTime.Now.ToString();
                 order.ProductQuantity = carts.Count();
-                // order.PhoneNumber = home.Cart.PhoneNumber;
+                order.PhoneNumber = home.Cart.PhoneNumber;
                 order.CusName = home.Payment.Name;
                 order.OrderType = OrderType;
                 order.PaymentType = PaymentType;
@@ -1012,12 +994,24 @@ namespace TablesideOrdering.Controllers
 
                 //Send SMS to customer
                 PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
-                SendSMS();
+                //SendSMS();
 
                 //Renew the cart and notify customer
-                TotalPrice = 0;
                 Coupon = null;
-                carts.Clear();
+                PhoneNumber = null;
+                var cartdelete = _context.VirtualCarts.FirstOrDefault(i => i.TableId.ToString() == TableNo);
+                _context.VirtualCarts.Remove(cartdelete);
+
+                var list = _context.CartDetails.ToList();
+                foreach (var i in list)
+                {
+                    if (i.CartId == cartdelete.TableId)
+                    {
+                        _context.CartDetails.Remove(i);
+                    }
+                }
+                _context.SaveChanges();
+                
                 return RedirectToAction("ThankYou");
             }
             else
@@ -1034,19 +1028,20 @@ namespace TablesideOrdering.Controllers
         }
 
         //VNPAY PAYMENT METHOD PAGE FUCNTION
-        /*public IActionResult VNPayCheckout()
+        public IActionResult VNPayCheckout()
         {
             HomeViewModel home = CouponShow();
             home.OrderType = OrderType;
             home.Reser = ReserModel;
             return View(home);
-        }*/
+        }
 
         //VNPAY URL PAYMENT FUNCTION
         public IActionResult CreatePaymentUrl(HomeViewModel home)
         {
-            if (/*(*/OrderType == "Delivery" /*&& DeliveryCheck(home) == true)*/ || /*(*/OrderType == "Carry out" /*&& CarryoutCheck(home) == true)*/ || OrderType == "Eat in" || OrderType == "Reservation")
+            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in" || OrderType == "Reservation")
             {
+                var Cart = CartDetails();
                 PaymentInformationModel model = new PaymentInformationModel();
                 model = home.Payment;
 
@@ -1067,7 +1062,7 @@ namespace TablesideOrdering.Controllers
                 }
 
                 Email = home.Email.EmailTo;
-                //PhoneNumber = home.Cart.PhoneNumber;
+                PhoneNumber = home.Cart.PhoneNumber;
                 CusName = home.Payment.Name;
                 Address = home.Address;
                 var url = _vnPayService.CreatePaymentUrl(model, HttpContext);
@@ -1086,6 +1081,8 @@ namespace TablesideOrdering.Controllers
             var response = _vnPayService.PaymentExecute(Request.Query);
             if (response.VnPayResponseCode == "00")
             {
+                var Cart = CartDetails();
+
                 List<CartViewModel> carts = (from vc in _context.VirtualCarts
                                              join cd in _context.CartDetails on vc.TableId equals cd.CartId
                                              join psp in _context.ProductSizePrice on cd.SizePriceId equals psp.Id
@@ -1106,7 +1103,7 @@ namespace TablesideOrdering.Controllers
                 Orders order = new Orders();
                 order.OrderDate = DateTime.Now.ToString();
                 order.ProductQuantity = carts.Count();
-                order.PhoneNumber = PhoneNumber;
+                order.PhoneNumber = Cart.PhoneNumber;
                 order.Status = "Processing";
                 order.CusName = CusName;
                 order.OrderType = OrderType;
@@ -1195,12 +1192,23 @@ namespace TablesideOrdering.Controllers
 
                 //Send SMS to customer
                 PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
-                SendSMS();
+                //SendSMS();
 
                 //Renew the cart and notify customer
-                TotalPrice = 0;
                 Coupon = null;
-                carts.Clear();
+                PhoneNumber = null;
+                var cartdelete = _context.VirtualCarts.FirstOrDefault(i => i.TableId.ToString() == TableNo);
+                _context.VirtualCarts.Remove(cartdelete);
+
+                var list = _context.CartDetails.ToList();
+                foreach (var i in list)
+                {
+                    if (i.CartId == cartdelete.TableId)
+                    {
+                        _context.CartDetails.Remove(i);
+                    }
+                }
+                _context.SaveChanges();
                 return RedirectToAction("ThankYou");
             }
             _notyfService.Error("Something went wrong, please try again!");
@@ -1208,7 +1216,7 @@ namespace TablesideOrdering.Controllers
         }
 
         //MOMO PAYMENT METHOD PAGE FUCNTION
-        /*public IActionResult MomoCheckout()
+        public IActionResult MomoCheckout()
         {
             HomeViewModel home = CouponShow();
             home.OrderType = OrderType;
@@ -1216,12 +1224,13 @@ namespace TablesideOrdering.Controllers
 
             return View(home);
 
-        }*/
+        }
         [HttpPost]
         public async Task<RedirectResult> CreateMomoPaymentUrl(HomeViewModel home)
         {
-            if (/*(*/OrderType == "Delivery" /*&& DeliveryCheck(home) == true)*/ || /*(*/OrderType == "Carry out" /*&& CarryoutCheck(home) == true)*/ || OrderType == "Eat in" || OrderType == "Reservation")
+            if ((OrderType == "Delivery" && DeliveryCheck(home) == true) || (OrderType == "Carry out" && CarryoutCheck(home) == true) || OrderType == "Eat in" || OrderType == "Reservation")
             {
+                var Cart = CartDetails();
                 OrderInfoModel model = new OrderInfoModel();
                 model = home.MoMoPay;
 
@@ -1242,7 +1251,7 @@ namespace TablesideOrdering.Controllers
                 }
 
                 Email = home.Email.EmailTo;
-                //PhoneNumber = home.Cart.PhoneNumber;
+                PhoneNumber = home.Cart.PhoneNumber;
                 CusName = home.MoMoPay.FullName;
                 Address = home.Address;
                 var response = await _momoService.CreatePaymentAsync(model);
@@ -1263,6 +1272,7 @@ namespace TablesideOrdering.Controllers
             var response = _momoService.PaymentExecuteAsync(HttpContext.Request.Query);
             if (response.ErrorCode == "0")
             {
+                var Cart = CartDetails();
                 List<CartViewModel> carts = (from vc in _context.VirtualCarts
                                              join cd in _context.CartDetails on vc.TableId equals cd.CartId
                                              join psp in _context.ProductSizePrice on cd.SizePriceId equals psp.Id
@@ -1369,12 +1379,24 @@ namespace TablesideOrdering.Controllers
 
                 //Send SMS to customer
                 PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
-                SendSMS();
+                //SendSMS();
 
                 //Renew the cart and notify customer
-                TotalPrice = 0;
                 Coupon = null;
-                carts.Clear();
+                PhoneNumber = null;
+                var cartdelete = _context.VirtualCarts.FirstOrDefault(i => i.TableId.ToString() == TableNo);
+                _context.VirtualCarts.Remove(cartdelete);
+
+                var list = _context.CartDetails.ToList();
+                foreach(var i in list)
+                { 
+                    if(i.CartId == cartdelete.TableId)
+                    {
+                        _context.CartDetails.Remove(i);
+                    }
+                }
+                _context.SaveChanges();
+
                 return RedirectToAction("ThankYou");
             }
             _notyfService.Error("Something went wrong, please try again!");
@@ -1444,6 +1466,7 @@ namespace TablesideOrdering.Controllers
             if (model.OrderId != null && model.PhoneNumber != null)
             {
                 OrderTracking(home, model);
+                CreateVirtualCart();
             }
             return View(home);
         }
@@ -1455,6 +1478,20 @@ namespace TablesideOrdering.Controllers
             olist.Add(order);
             home.Orders = olist;
         }
+
+
+        public void CreateVirtualCart()
+        {
+            var cartExist = _context.VirtualCarts.FirstOrDefault(i => i.TableId.ToString() == TableNo);
+            if (cartExist == null)
+            {
+                VirtualCart cart = new VirtualCart();
+                cart.TableId = Convert.ToInt32(TableNo);
+                _context.VirtualCarts.Add(cart);
+                _context.SaveChanges();
+            }
+        }
+
 
         //ORDER DETAILS
         public IActionResult OrderDetails(int id)
@@ -1499,6 +1536,7 @@ namespace TablesideOrdering.Controllers
         {
             if (TableNo != null)
             {
+                CreateVirtualCart();
                 return RedirectToAction("Menu", "Home");
             }
             else
@@ -1550,6 +1588,8 @@ namespace TablesideOrdering.Controllers
             {
                 cart.CartTotal = 0;
             }
+            TotalPrice = cart.CartTotal;
+            cart.PhoneNumber = PhoneNumber;
             return cart;
         }
 
