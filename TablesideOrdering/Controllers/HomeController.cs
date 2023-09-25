@@ -44,6 +44,8 @@ using DocumentFormat.OpenXml.Drawing.Charts;
 using Newtonsoft.Json.Linq;
 using DocumentFormat.OpenXml.Office2010.Excel;
 using Color = Syncfusion.Drawing.Color;
+using Microsoft.AspNetCore.Identity;
+using DocumentFormat.OpenXml.Bibliography;
 
 namespace TablesideOrdering.Controllers
 {
@@ -52,6 +54,7 @@ namespace TablesideOrdering.Controllers
         //Call Database and Relatives
         private readonly IHostingEnvironment _host;
         private readonly ApplicationDbContext _context;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly SMSMessage _SMSMessage;
         private readonly Email _email;
 
@@ -64,28 +67,24 @@ namespace TablesideOrdering.Controllers
         public static float TotalPrice;
         public static string TableNo;
         public static string PhoneNumber;
-        public string PhoneMessage;
         public static string CusName;
 
         public static string EmailMessage;
         public static string Subject;
         public static string Email;
         public static string file;
+        public string PhoneMessage;
 
         public static string PaymentType;
-        public static string OrderType = "";
+        public static string OrderType;
         public static string Address;
-        public static int CheckNotify = 0;
-
+        public static Boolean CheckNotify = false;
         public static Reservation ReserModel = new Reservation();
-
         public static Discount Coupon = new Discount();
-        public static int NotifCoupon = 0;
-        public static string CouponAlert;
 
-        public static Chat Chat = new Chat();
 
         public HomeController(ApplicationDbContext context,
+            SignInManager<IdentityUser> signInManager,
             INotyfService notyfService,
             IVnPayService vnPayService,
             IOptions<SMSMessage> SMSMessage,
@@ -94,6 +93,7 @@ namespace TablesideOrdering.Controllers
             IHostingEnvironment host)
         {
             _context = context;
+            _signInManager = signInManager;
 
             _SMSMessage = SMSMessage.Value;
             _email = email.Value;
@@ -109,10 +109,27 @@ namespace TablesideOrdering.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            TakeIP();
+
             HomeViewModel Homedata = new HomeViewModel();
             Homedata = NavData();
             Homedata.Category = _context.Categories.ToList();
             return View(Homedata);
+        }
+
+        public void TakeIP()
+        {
+            string IP = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            var AHcart = _context.VirtualCarts.FirstOrDefault(x => x.TableId == IP);
+            if (AHcart == null)
+            {
+                TableNo = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+
+                VirtualCart vcart = new VirtualCart();
+                vcart.TableId = TableNo;
+                _context.VirtualCarts.Add(vcart);
+                _context.SaveChanges();
+            }
         }
 
         public void Type(string term)
@@ -182,10 +199,10 @@ namespace TablesideOrdering.Controllers
             Homedata.TopProduct = GetTopFood();
             Homedata.Term = term;
 
-            if (CheckNotify > 0)
+            if (CheckNotify == true)
             {
-                _notyfService.Success("Add to cart succeed", 5);
-                CheckNotify = 0;
+                _notyfService.Success("Add to cart successfully", 5);
+                CheckNotify = false;
             }
             return View(Homedata);
         }
@@ -306,11 +323,10 @@ namespace TablesideOrdering.Controllers
 
         //INPUTTING TABLE NUMBER BY LINK FUNCTION
         [HttpGet]
-        public IActionResult TableCheck(int id)
+        public async Task<IActionResult> TableCheck(int id)
         {
             TableNo = id.ToString();
             OrderType = "Eat in";
-
             CreateVirtualCart();
             return RedirectToAction("Index");
 
@@ -329,7 +345,7 @@ namespace TablesideOrdering.Controllers
             data.Subject = Subject;
 
             var builder = new BodyBuilder();
-            builder.HtmlBody = EmailMessage.ToString();
+            builder.HtmlBody = EmailMessage;
             builder.Attachments.Add(file);
 
             var email = new MimeMessage();
@@ -480,11 +496,9 @@ namespace TablesideOrdering.Controllers
 
 
         //APPLY COUPON FUNCTION
-        public void CouponApply(string CouponCode)
+        public string CouponApply(string CouponCode)
         {
-            //Check inpput
-            if (CouponCode != null)
-            {
+            string CouponAlert = null;
                 var coupon = _context.Discounts.FirstOrDefault(x => x.DisCode == CouponCode);
                 //Check in database
                 if (coupon != null)
@@ -501,41 +515,14 @@ namespace TablesideOrdering.Controllers
                         {
                             CouponAlert = $"Your order reduces {coupon.DisValue} %";
                         }
-                        NotifCoupon = 1;
+                        _notyfService.Success("Coupon is applies success!", 5);
                     }
                     else
                     {
-                        NotifCoupon = 2;
+                        _notyfService.Warning("Your coupon code was expired!", 5);
                     }
                 }
-                else
-                {
-                    NotifCoupon = 3;
-                }
-            }
-            else
-            {
-                NotifCoupon = 4;
-            }
-        }
-
-        public void CouponCondition()
-        {
-            switch (NotifCoupon)
-            {
-                case 1:
-                    _notyfService.Success("Coupon is applies success!", 5);
-                    break;
-                case 2:
-                    _notyfService.Warning("Your coupon code was expired!", 5);
-                    break;
-                case 3:
-                    _notyfService.Error("Coupon is not found!", 5);
-                    break;
-                case 4:
-                    _notyfService.Error("Please enter your coupon!", 5);
-                    break;
-            }
+            return CouponAlert;
         }
 
 
@@ -543,11 +530,17 @@ namespace TablesideOrdering.Controllers
 
 
         //CART PAGE FUCNTION
-        public IActionResult Cart()
+        public IActionResult Cart(string CouponCode)
         {
+            string CouponAlert = "";
+
             HomeViewModel home = NavData();
-            home.CouponShow = CouponAlert;
-            CouponCondition();
+            CouponAlert = CouponApply(CouponCode);
+            if (CouponCode != null)
+            {
+                home.CouponShow = CouponAlert;
+            }
+
             return View(home);
         }
 
@@ -621,8 +614,9 @@ namespace TablesideOrdering.Controllers
         //ADD TO CART FUCNTION
         public void AddToCart(int id)
         {
-            CheckNotify = id;
-            var carts = _context.VirtualCarts.FirstOrDefault(x => x.TableId.ToString() == TableNo);
+            CheckNotify = true;
+
+            var carts = _context.VirtualCarts.FirstOrDefault(x => x.TableId == TableNo);
 
             ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
             VirtualCart virtualCart = new VirtualCart();
@@ -681,10 +675,10 @@ namespace TablesideOrdering.Controllers
         //DELETE FROM CART FUNCTION
         public IActionResult DeleteFromCart(int id)
         {
-            CartDetails cart = _context.CartDetails.FirstOrDefault(x => x.SizePriceId == id && x.CartId.ToString() == TableNo);
+            CartDetails cart = _context.CartDetails.FirstOrDefault(x => x.SizePriceId == id && x.CartId == TableNo);
             ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
 
-            var carts = _context.VirtualCarts.FirstOrDefault(x => x.TableId.ToString() == TableNo);
+            var carts = _context.VirtualCarts.FirstOrDefault(x => x.TableId == TableNo);
 
             if (cart != null)
             {
@@ -749,7 +743,7 @@ namespace TablesideOrdering.Controllers
         //SELECTING PAYMENT TYPE FUCNTION
         public IActionResult PaymentMethod(HomeViewModel home)
         {
-            var carlist = _context.CartDetails.Where(i => i.CartId.ToString() == TableNo);
+            var carlist = _context.CartDetails.Where(i => i.CartId == TableNo);
             if (carlist.Count() != 0)
             {
                 if (home.PaymentType == null)
@@ -772,7 +766,6 @@ namespace TablesideOrdering.Controllers
                     if (home.PaymentType == "Cash")
                     {
                         PaymentType = "Cash";
-
                         return RedirectToAction("CashCheckout");
                     }
                 }
@@ -888,7 +881,7 @@ namespace TablesideOrdering.Controllers
                                              join cd in _context.CartDetails on vc.TableId equals cd.CartId
                                              join psp in _context.ProductSizePrice on cd.SizePriceId equals psp.Id
                                              join pro in _context.Products on psp.ProductId equals pro.ProductId
-                                             where vc.TableId == Convert.ToInt32(TableNo)
+                                             where vc.TableId == TableNo
                                              select new CartViewModel
                                              {
                                                  Quantity = cd.Quantity,
@@ -997,9 +990,10 @@ namespace TablesideOrdering.Controllers
                 //SendSMS();
 
                 //Renew the cart and notify customer
+                PaymentType = null;
                 Coupon = null;
                 PhoneNumber = null;
-                var cartdelete = _context.VirtualCarts.FirstOrDefault(i => i.TableId.ToString() == TableNo);
+                var cartdelete = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TableNo);
                 _context.VirtualCarts.Remove(cartdelete);
 
                 var list = _context.CartDetails.ToList();
@@ -1083,27 +1077,12 @@ namespace TablesideOrdering.Controllers
             {
                 var Cart = CartDetails();
 
-                List<CartViewModel> carts = (from vc in _context.VirtualCarts
-                                             join cd in _context.CartDetails on vc.TableId equals cd.CartId
-                                             join psp in _context.ProductSizePrice on cd.SizePriceId equals psp.Id
-                                             join pro in _context.Products on psp.ProductId equals pro.ProductId
-                                             where vc.TableId == Convert.ToInt32(TableNo)
-                                             select new CartViewModel
-                                             {
-                                                 Quantity = cd.Quantity,
-                                                 Id = cd.SizePriceId,
-                                                 Price = psp.Price,
-                                                 Size = psp.Size,
-                                                 Name = pro.Name,
-                                                 Pic = pro.Pic,
-                                                 TotalProPrice = cd.Quantity * psp.Price,
-                                             }).ToList();
 
                 //Save order to database
                 Orders order = new Orders();
                 order.OrderDate = DateTime.Now.ToString();
-                order.ProductQuantity = carts.Count();
-                order.PhoneNumber = Cart.PhoneNumber;
+                order.ProductQuantity = Cart.cartViewModels.Count();
+                order.PhoneNumber = PhoneNumber;
                 order.Status = "Processing";
                 order.CusName = CusName;
                 order.OrderType = OrderType;
@@ -1162,7 +1141,7 @@ namespace TablesideOrdering.Controllers
                 }
                 //Save order list to database
                 List<OrderDetail> orderDetailList = new List<OrderDetail>();
-                foreach (var item in carts)
+                foreach (var item in Cart.cartViewModels)
                 {
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.OrderId = order.OrderId;
@@ -1195,9 +1174,10 @@ namespace TablesideOrdering.Controllers
                 //SendSMS();
 
                 //Renew the cart and notify customer
+                PaymentType = null;
                 Coupon = null;
                 PhoneNumber = null;
-                var cartdelete = _context.VirtualCarts.FirstOrDefault(i => i.TableId.ToString() == TableNo);
+                var cartdelete = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TableNo);
                 _context.VirtualCarts.Remove(cartdelete);
 
                 var list = _context.CartDetails.ToList();
@@ -1273,26 +1253,11 @@ namespace TablesideOrdering.Controllers
             if (response.ErrorCode == "0")
             {
                 var Cart = CartDetails();
-                List<CartViewModel> carts = (from vc in _context.VirtualCarts
-                                             join cd in _context.CartDetails on vc.TableId equals cd.CartId
-                                             join psp in _context.ProductSizePrice on cd.SizePriceId equals psp.Id
-                                             join pro in _context.Products on psp.ProductId equals pro.ProductId
-                                             where vc.TableId == Convert.ToInt32(TableNo)
-                                             select new CartViewModel
-                                             {
-                                                 Quantity = cd.Quantity,
-                                                 Id = cd.SizePriceId,
-                                                 Price = psp.Price,
-                                                 Size = psp.Size,
-                                                 Name = pro.Name,
-                                                 Pic = pro.Pic,
-                                                 TotalProPrice = cd.Quantity * psp.Price,
-                                             }).ToList();
 
                 //Save order to database
                 Orders order = new Orders();
                 order.OrderDate = DateTime.Now.ToString();
-                order.ProductQuantity = carts.Count();
+                order.ProductQuantity = Cart.cartViewModels.Count();
                 order.PhoneNumber = PhoneNumber;
                 order.Status = "Processing";
                 order.CusName = CusName;
@@ -1349,7 +1314,7 @@ namespace TablesideOrdering.Controllers
                 }
                 //Save order list to database
                 List<OrderDetail> orderDetailList = new List<OrderDetail>();
-                foreach (var item in carts)
+                foreach (var item in Cart.cartViewModels)
                 {
                     OrderDetail orderDetail = new OrderDetail();
                     orderDetail.OrderId = order.OrderId;
@@ -1382,9 +1347,10 @@ namespace TablesideOrdering.Controllers
                 //SendSMS();
 
                 //Renew the cart and notify customer
+                PaymentType = null;
                 Coupon = null;
                 PhoneNumber = null;
-                var cartdelete = _context.VirtualCarts.FirstOrDefault(i => i.TableId.ToString() == TableNo);
+                var cartdelete = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TableNo);
                 _context.VirtualCarts.Remove(cartdelete);
 
                 var list = _context.CartDetails.ToList();
@@ -1482,11 +1448,11 @@ namespace TablesideOrdering.Controllers
 
         public void CreateVirtualCart()
         {
-            var cartExist = _context.VirtualCarts.FirstOrDefault(i => i.TableId.ToString() == TableNo);
+            var cartExist = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TableNo);
             if (cartExist == null)
             {
                 VirtualCart cart = new VirtualCart();
-                cart.TableId = Convert.ToInt32(TableNo);
+                cart.TableId = TableNo;
                 _context.VirtualCarts.Add(cart);
                 _context.SaveChanges();
             }
@@ -1563,7 +1529,7 @@ namespace TablesideOrdering.Controllers
                                    join cd in _context.CartDetails on vc.TableId equals cd.CartId
                                    join psp in _context.ProductSizePrice on cd.SizePriceId equals psp.Id
                                    join pro in _context.Products on psp.ProductId equals pro.ProductId
-                                   where vc.TableId == Convert.ToInt32(TableNo)
+                                   where vc.TableId == TableNo
                                    select new CartViewModel
                                    {
                                        Quantity = cd.Quantity,
@@ -1589,7 +1555,6 @@ namespace TablesideOrdering.Controllers
                 cart.CartTotal = 0;
             }
             TotalPrice = cart.CartTotal;
-            cart.PhoneNumber = PhoneNumber;
             return cart;
         }
 
@@ -1597,14 +1562,28 @@ namespace TablesideOrdering.Controllers
         public Chat ChatCreate()
         {
             Chat chat = new Chat();
-            if (TableNo != null)
+            var table = _context.Chats.FirstOrDefault(i=>i.TableId == TableNo);
+            if (table == null)
             {
-                chat.ChatRoomID = TableNo;
+                try
+                {
+                    Convert.ToInt32(TableNo);
+                }
+                catch (Exception ex)
+                {
+                    if (ex != null)
+                    {
+                        chat.ChatRoomID = TableNo;
+                        chat.TableId = TableNo;
+                        _context.Chats.Add(chat);
+                        _context.SaveChanges();
+                    }
+                }
+            } else
+            {
+                chat = table;
             }
-            else chat.ChatRoomID = "";
-
             return chat;
         }
-
     }
 }

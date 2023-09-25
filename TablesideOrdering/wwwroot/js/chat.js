@@ -24,7 +24,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 });
 
 connection.on("ReceiveMessage", function (user, message) {    
-    if (parseInt(user) == user) {
+    if (user == "Admin" || user =="Staff") {
         var currentdate = new Date();
         var datetime = currentdate.getDate() + "/" + (currentdate.getMonth()+1) + "/" + currentdate.getFullYear() + " "
             + currentdate.getHours() + ":" + currentdate.getMinutes();

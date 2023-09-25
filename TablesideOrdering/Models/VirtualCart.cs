@@ -6,7 +6,7 @@ namespace TablesideOrdering.Models
     {
         [Key]
         public int CartId { get; set; }
-        public int TableId { get; set; }
+        public string TableId { get; set; }
         public float CartAmount { get; set; }//cart total
     }
 }

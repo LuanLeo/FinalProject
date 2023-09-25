@@ -6,7 +6,7 @@ namespace TablesideOrdering.Models
     {
         [Key]
         public int CartDetailsId {  get; set; }
-        public int CartId { get; set; }
+        public string CartId { get; set; }
         public int SizePriceId { get; set; }
         public int Quantity { get; set; }
     }

@@ -297,8 +297,9 @@ namespace TablesideOrdering.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TableId")
-                        .HasColumnType("int");
+                    b.Property<string>("TableId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -526,8 +527,9 @@ namespace TablesideOrdering.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartDetailsId"), 1L, 1);
 
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
+                    b.Property<string>("CartId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -568,8 +570,9 @@ namespace TablesideOrdering.Migrations
                     b.Property<float>("CartAmount")
                         .HasColumnType("real");
 
-                    b.Property<int>("TableId")
-                        .HasColumnType("int");
+                    b.Property<string>("TableId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("CartId");
 

@@ -26,7 +26,7 @@ namespace TablesideOrdering.SignalR.Hubs
             List<string> chatIds = new List<string>();
             foreach (var chat in _context.Chats)
             {
-                chatIds.Add(chat.ChatRoomID.ToString());
+                chatIds.Add(chat.ChatRoomID);
             }
             return chatIds;
         }
