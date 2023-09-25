@@ -46,6 +46,7 @@ using DocumentFormat.OpenXml.Office2010.Excel;
 using Color = Syncfusion.Drawing.Color;
 using Microsoft.AspNetCore.Identity;
 using DocumentFormat.OpenXml.Bibliography;
+using System.Linq;
 
 namespace TablesideOrdering.Controllers
 {
@@ -123,12 +124,14 @@ namespace TablesideOrdering.Controllers
             var AHcart = _context.VirtualCarts.FirstOrDefault(x => x.TableId == IP);
             if (AHcart == null)
             {
-                TableNo = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-
                 VirtualCart vcart = new VirtualCart();
-                vcart.TableId = TableNo;
+                vcart.TableId = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
                 _context.VirtualCarts.Add(vcart);
                 _context.SaveChanges();
+            }
+            else
+            {
+                TableNo = IP;
             }
         }
 
@@ -989,23 +992,8 @@ namespace TablesideOrdering.Controllers
                 PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
                 //SendSMS();
 
-                //Renew the cart and notify customer
-                PaymentType = null;
-                Coupon = null;
-                PhoneNumber = null;
-                var cartdelete = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TableNo);
-                _context.VirtualCarts.Remove(cartdelete);
-
-                var list = _context.CartDetails.ToList();
-                foreach (var i in list)
-                {
-                    if (i.CartId == cartdelete.TableId)
-                    {
-                        _context.CartDetails.Remove(i);
-                    }
-                }
-                _context.SaveChanges();
-                
+                //Renew the cart
+                RefreshAll();
                 return RedirectToAction("ThankYou");
             }
             else
@@ -1173,22 +1161,8 @@ namespace TablesideOrdering.Controllers
                 PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
                 //SendSMS();
 
-                //Renew the cart and notify customer
-                PaymentType = null;
-                Coupon = null;
-                PhoneNumber = null;
-                var cartdelete = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TableNo);
-                _context.VirtualCarts.Remove(cartdelete);
-
-                var list = _context.CartDetails.ToList();
-                foreach (var i in list)
-                {
-                    if (i.CartId == cartdelete.TableId)
-                    {
-                        _context.CartDetails.Remove(i);
-                    }
-                }
-                _context.SaveChanges();
+                //Renew the cart
+                RefreshAll();
                 return RedirectToAction("ThankYou");
             }
             _notyfService.Error("Something went wrong, please try again!");
@@ -1346,27 +1320,47 @@ namespace TablesideOrdering.Controllers
                 PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
                 //SendSMS();
 
-                //Renew the cart and notify customer
-                PaymentType = null;
-                Coupon = null;
-                PhoneNumber = null;
-                var cartdelete = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TableNo);
-                _context.VirtualCarts.Remove(cartdelete);
-
-                var list = _context.CartDetails.ToList();
-                foreach(var i in list)
-                { 
-                    if(i.CartId == cartdelete.TableId)
-                    {
-                        _context.CartDetails.Remove(i);
-                    }
-                }
-                _context.SaveChanges();
+                //Renew the cart
+                RefreshAll();
 
                 return RedirectToAction("ThankYou");
             }
             _notyfService.Error("Something went wrong, please try again!");
             return RedirectToAction("Index");
+        }
+        //Refresh Data
+        public void RefreshAll()
+        {
+            PaymentType = null;
+            Coupon = null;
+            PhoneNumber = null;
+
+            var cartdelete = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TableNo);
+            _context.VirtualCarts.Remove(cartdelete);
+
+            var list = _context.CartDetails.ToList();
+            foreach (var i in list)
+            {
+                if (i.CartId == cartdelete.TableId)
+                {
+                    _context.CartDetails.Remove(i);
+                }
+            }
+
+            try
+            {
+                Convert.ToInt32(TableNo);
+            }
+            catch (Exception ex)
+            {
+                if (ex != null)
+                {
+                    var chat = _context.Chats.FirstOrDefault(x=>x.TableId == TableNo);
+                    _context.Chats.Remove(chat);
+                }
+            }
+            
+            _context.SaveChanges();
         }
 
 

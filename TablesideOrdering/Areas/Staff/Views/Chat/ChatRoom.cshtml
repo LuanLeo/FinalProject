@@ -50,7 +50,7 @@
                 <ul>
                     @foreach (var i in Model.ChatHistory)
                     {
-                        if (i.Sender == Model.ChatRoom.ChatRoomID)
+                        if (i.Sender != Model.ChatRoom.ChatRoomID)
                         {
                             <li class="sender">
                                 <p>@i.Message</p>

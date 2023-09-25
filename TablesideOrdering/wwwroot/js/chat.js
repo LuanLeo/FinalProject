@@ -16,17 +16,17 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     var receiver = document.getElementById("receiverInput").value;
     var message = document.getElementById("messageInput").value;
 
-        connection.invoke("SendMessageToGroup", user, receiver, message).catch(function (err) {
-            return console.error(err.toString());
-        });
+    connection.invoke("SendMessageToGroup", user, receiver, message).catch(function (err) {
+        return console.error(err.toString());
+    });
     event.preventDefault();
-   
+
 });
 
-connection.on("ReceiveMessage", function (user, message) {    
-    if (user == "Admin" || user =="Staff") {
+connection.on("ReceiveMessage", function (user, message) {
+    if (user != "Admin") {
         var currentdate = new Date();
-        var datetime = currentdate.getDate() + "/" + (currentdate.getMonth()+1) + "/" + currentdate.getFullYear() + " "
+        var datetime = currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear() + " "
             + currentdate.getHours() + ":" + currentdate.getMinutes();
         var doc = $('<div/>');
         doc.append('    <img src="/Logo/Avatar/defaultavatar.png" alt="" width="32" height="32">');
@@ -40,7 +40,8 @@ connection.on("ReceiveMessage", function (user, message) {
         SoundChat();
         $('#chatbox').append(doc);
     }
-    else {
+    else
+    {
         var currentdate = new Date();
         var datetime = currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear() + " "
             + currentdate.getHours() + ":" + currentdate.getMinutes();
@@ -54,7 +55,7 @@ connection.on("ReceiveMessage", function (user, message) {
             + `</div>`
             + `</div>`)
         doc.append('<hr>');
-        
+
         SoundChat();
         $('#chatbox').append(doc);
     }
