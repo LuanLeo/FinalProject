@@ -17,7 +17,7 @@ namespace TablesideOrdering.SignalR.Repositories
         public List<Chat> GetChats()
         {
             List<Chat> chats = new List<Chat>();
-            var data = GetOrderDetailsFromDb();
+            var data = GetDetailsFromDb();
             foreach (DataRow row in data.Rows)
             {
                 Chat chat = new Chat
@@ -31,7 +31,7 @@ namespace TablesideOrdering.SignalR.Repositories
             return chats;
         }
 
-        public DataTable GetOrderDetailsFromDb()
+        public DataTable GetDetailsFromDb()
         {
             var query = "SELECT Id, TableId, ChatRoomID FROM Chats";
             DataTable dataTable = new DataTable();

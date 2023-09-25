@@ -1,62 +1,36 @@
 ﻿"use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/orderHub").build();
+var connection = new signalR.HubConnectionBuilder().withUrl("/chatlistHub").build();
 
 $(function () {
     connection.start().then(function () {
-        InvokeOrders();
+        InvokeChats();
     }).catch(function (err) {
         return console.error(err.toString());
     });
 });
 
-function InvokeOrders() {
-    connection.invoke("SendOrders").catch(function (err) {
+function InvokeChats() {
+    connection.invoke("SendChats").catch(function (err) {
         return consol.error(err.toString());
     });
 }
 
-connection.on("ReceivedOrders", function (orders) {
-    BindOrdersToGrid(orders)
+connection.on("ReceivedChats", function (chats) {
+    BindChatsToGrid(chats)
 });
-function BindOrdersToGrid(orders) {
-
-    $('#EatInOrder tbody').empty();
+function BindChatsToGrid(chats) {
+    $('#chat').empty();
     var tr;
-    $.each(orders, function (index, order) {
-        if (orders.orderType = "Eat in") {
-            tr = $('<tr/>');
-            tr.append(`<td>${(index + 1)}</td>`);
-            tr.append(`<td>${(order.orderDate)}</td>`);
-            tr.append(`<td>${(order.orderPrice)}</td>`);
-            tr.append(`<td>${(order.productQuantity)}</td>`);
-            tr.append(`<td>${(order.phoneNumber)}</td>`);
-            tr.append(`<td>${(order.cusName)}</td>`);
-            tr.append(`<td>${(order.tableNo)}</td>`);
-            tr.append(`<td><button type="button" class="btn btn-warning m-1" onclick="location.href='../Staff/Order/Details?id=${(order.orderId)}'">Details</button></td>`);
-            $('#EatInOrder').append(tr);
-
-            SoundOrder();
-
-            let x;
-            let toast = document.getElementById("toast");
-            clearTimeout(x);
-            toast.style.transform = "translateX(0)";
-            x = setTimeout(() => {
-                toast.style.transform = "translateX(400px)"
-            }, 5000);
-        }
+    $.each(chats, function (chat) {
+            tr = $('<div/>');
+            tr.append(`<a asp-area="Staff" asp-controller="Chat" asp-action="ChatRoom" asp-route-id="${(chat.ChatRoomID)}" class="d-flex align-items-center">`);
+            tr.append(`     <div class="flex-shrink-0">`);
+            tr.append(`         <img class="img-fluid" src="~/Logo/Avatar/defaultavatar.png" alt="user img" height="45px" width="45px">`);
+            tr.append(`     </div>`);
+            tr.append(`     <div class="flex-grow-1 ms-3">`);
+            tr.append(`        <h3>Table - ${(chat.ChatRoomID)}</h3>`);
+            tr.append(`     </div>`);
+            $('#chat').append(tr);
     });
-}
-
-function closeToast() {
-    toast.style.transform = "translateX(400px)";
-}
-
-function SoundOrder() {
-    var audio = new Audio("/Sound/SoundOrder.mp3");
-    audio.addEventListener('ended', function () {
-        vol.innerText = "";
-    });
-    audio.play();
 }

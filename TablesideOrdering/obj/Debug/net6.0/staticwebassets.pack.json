@@ -2809,6 +2809,10 @@
       "PackagePath": "staticwebassets\\js\\chatbox.js"
     },
     {
+      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\js\\chatlist.js",
+      "PackagePath": "staticwebassets\\js\\chatlist.js"
+    },
+    {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\js\\chatstaff.js",
       "PackagePath": "staticwebassets\\js\\chatstaff.js"
     },

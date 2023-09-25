@@ -49,18 +49,7 @@
                                                 <div class="tab-content" id="myTabContent">
                                                     <div class="tab-pane fade show active" id="Open" role="tabpanel" aria-labelledby="Open-tab">
                                                         <!-- chat-list -->
-                                                        <div class="chat-list">
-                                                            @foreach (var item in Model.ChatRoomList)
-                                                            {
-                                                                <a asp-area="Staff" asp-controller="Chat" asp-action="ChatRoom" asp-route-id="@item.ChatRoomID" class="d-flex align-items-center">
-                                                                    <div class="flex-shrink-0">
-                                                                        <img class="img-fluid" src="~/Logo/Avatar/defaultavatar.png" alt="user img" height="45px" width="45px">
-                                                                    </div>
-                                                                    <div class="flex-grow-1 ms-3">
-                                                                        <h3>Table - @item.ChatRoomID</h3>
-                                                                    </div>
-                                                                </a>
-                                                            }
+                                                        <div class="chat-list" id="chat">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -82,4 +71,8 @@
     </div>
 </body>
 @await RenderSectionAsync("Scripts", required: false)
+@section Scripts{
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chatlist.js"></script>
 
+}

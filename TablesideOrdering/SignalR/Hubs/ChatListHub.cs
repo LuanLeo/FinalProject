@@ -13,10 +13,10 @@ namespace TablesideOrdering.SignalR.Hubs
             chatRepository = new ChatRepository(connectionString);
         }
 
-        public async Task SendOrders()
+        public async Task SendChats()
         {
-            var orders = chatRepository.GetChats();
-            await Clients.All.SendAsync("ReceivedOrders", orders);
+            var chats = chatRepository.GetChats();
+            await Clients.All.SendAsync("ReceivedChats", chats);
         }
     }
 }

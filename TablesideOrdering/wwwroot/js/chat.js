@@ -29,24 +29,6 @@ connection.on("ReceiveMessage", function (user, message) {
         var datetime = currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear() + " "
             + currentdate.getHours() + ":" + currentdate.getMinutes();
         var doc = $('<div/>');
-        doc.append('    <img src="/Logo/Avatar/defaultavatar.png" alt="" width="32" height="32">');
-        doc.append('    <div class="chat-message-content clearfix">'
-            + `<span class="chat-time">${datetime}</span>`
-            + `<h5>Table - ${user}</h5>`
-            + `<p>${message}</p>`
-            + `</div>`
-            + `</div>`)
-        doc.append('<hr>');
-        SoundChat();
-        $('#chatbox').append(doc);
-    }
-    else
-    {
-        var currentdate = new Date();
-        var datetime = currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear() + " "
-            + currentdate.getHours() + ":" + currentdate.getMinutes();
-
-        var doc = $('<div/>');
         doc.append('    <img src="/Logo/Avatar/user.png" alt="" width="32" height="32">');
         doc.append('    <div class="chat-message-content clearfix">'
             + `<span class="chat-time">${datetime}</span>`
@@ -56,6 +38,23 @@ connection.on("ReceiveMessage", function (user, message) {
             + `</div>`)
         doc.append('<hr>');
 
+        SoundChat();
+        $('#chatbox').append(doc);
+    }
+    else
+    {
+        var currentdate = new Date();
+        var datetime = currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear() + " "
+            + currentdate.getHours() + ":" + currentdate.getMinutes();
+        var doc = $('<div/>');
+        doc.append('    <img src="/Logo/Avatar/defaultavatar.png" alt="" width="32" height="32">');
+        doc.append('    <div class="chat-message-content clearfix">'
+            + `<span class="chat-time">${datetime}</span>`
+            + `<h5>Table - ${user}</h5>`
+            + `<p>${message}</p>`
+            + `</div>`
+            + `</div>`)
+        doc.append('<hr>');
         SoundChat();
         $('#chatbox').append(doc);
     }
