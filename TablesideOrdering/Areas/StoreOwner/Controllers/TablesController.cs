@@ -73,7 +73,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 Chat chat = new Chat();
                 chat.TableId = table.Id.ToString();
                 chat.ChatRoomID = table.IdTable.ToString();
-                _context.Chats.Add(chat);
+                _context.Chat.Add(chat);
                 _context.SaveChanges();
 
                 _notyfService.Success("Table is created successfully", 5);
@@ -113,10 +113,10 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             {
                 _context.Tables.Update(table);
 
-                Chat chat = _context.Chats.FirstOrDefault(x => x.TableId == table.Id.ToString());
+                Chat chat = _context.Chat.FirstOrDefault(x => x.TableId == table.Id.ToString());
                 chat.TableId = table.IdTable.ToString();
                 chat.ChatRoomID = table.IdTable.ToString();
-                _context.Chats.Update(chat);
+                _context.Chat.Update(chat);
 
                 _context.SaveChanges();
                 _notyfService.Success("The info is edited succeesfully", 5);
@@ -156,8 +156,8 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 System.IO.File.Delete(ExitingFile);
                 _context.Tables.Remove(table);
 
-                Chat chat = _context.Chats.FirstOrDefault(x => x.TableId == table.Id.ToString());
-                _context.Chats.Remove(chat);
+                Chat chat = _context.Chat.FirstOrDefault(x => x.TableId == table.Id.ToString());
+                _context.Chat.Remove(chat);
 
                 _context.SaveChanges();
 

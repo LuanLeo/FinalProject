@@ -50,7 +50,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
 
         public IActionResult ChatRoom(string id)
         {
-            var chatRoom = _context.Chats.FirstOrDefault(x => x.ChatRoomID == id);
+            var chatRoom = _context.Chat.FirstOrDefault(x => x.ChatRoomID == id);
             List<ChatHistory> history = new List<ChatHistory>();
 
             if (ChatViewModel.ChatHistory != null)
@@ -76,7 +76,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
 
         public List<Chat> ChatRoomList()
         {
-            List<Chat> chat = _context.Chats.ToList();
+            List<Chat> chat = _context.Chat.ToList();
             return chat;
         }
 

@@ -33,7 +33,7 @@ namespace TablesideOrdering.SignalR.Repositories
 
         public DataTable GetDetailsFromDb()
         {
-            var query = "SELECT Id, TableId, ChatRoomID FROM Chats";
+            var query = "SELECT Id, TableId, ChatRoomID FROM Chat";
             DataTable dataTable = new DataTable();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

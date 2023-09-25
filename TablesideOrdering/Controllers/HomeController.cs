@@ -1355,8 +1355,8 @@ namespace TablesideOrdering.Controllers
             {
                 if (ex != null)
                 {
-                    var chat = _context.Chats.FirstOrDefault(x=>x.TableId == TableNo);
-                    _context.Chats.Remove(chat);
+                    var chat = _context.Chat.FirstOrDefault(x=>x.TableId == TableNo);
+                    _context.Chat.Remove(chat);
                 }
             }
             
@@ -1556,7 +1556,7 @@ namespace TablesideOrdering.Controllers
         public Chat ChatCreate()
         {
             Chat chat = new Chat();
-            var table = _context.Chats.FirstOrDefault(i=>i.TableId == TableNo);
+            var table = _context.Chat.FirstOrDefault(i=>i.TableId == TableNo);
             if (table == null)
             {
                 try
@@ -1569,7 +1569,7 @@ namespace TablesideOrdering.Controllers
                     {
                         chat.ChatRoomID = TableNo;
                         chat.TableId = TableNo;
-                        _context.Chats.Add(chat);
+                        _context.Chat.Add(chat);
                         _context.SaveChanges();
                     }
                 }

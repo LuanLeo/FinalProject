@@ -27,7 +27,7 @@ namespace TablesideOrdering.Data
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<EmailPR> EmailPRs { get; set; }
         public DbSet<Discount> Discounts { get; set; }
-        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Chat> Chat { get; set; }
         public DbSet<VirtualCart> VirtualCarts { get; set; }
         public DbSet<CartDetails> CartDetails { get; set; }
 

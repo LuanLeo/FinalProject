@@ -285,26 +285,7 @@ namespace TablesideOrdering.Migrations
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.Chat", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("ChatRoomID")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TableId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Chats");
-                });
+            
 
             modelBuilder.Entity("TablesideOrdering.Areas.StoreOwner.Models.Discount", b =>
                 {
