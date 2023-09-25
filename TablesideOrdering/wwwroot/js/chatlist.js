@@ -22,15 +22,14 @@ connection.on("ReceivedChats", function (chats) {
 function BindChatsToGrid(chats) {
     $('#chat').empty();
     var tr;
-    $.each(chats, function (chat) {
-            tr = $('<div/>');
-            tr.append(`<a asp-area="Staff" asp-controller="Chat" asp-action="ChatRoom" asp-route-id="${(chat.chatRoomID)}" class="d-flex align-items-center">`);
-            tr.append(`     <div class="flex-shrink-0">`);
-            tr.append(`         <img class="img-fluid" src="~/Logo/Avatar/defaultavatar.png" alt="user img" height="45px" width="45px">`);
-            tr.append(`     </div>`);
-            tr.append(`     <div class="flex-grow-1 ms-3">`);
-            tr.append(`        <h3>Table - ${(chat.chatRoomID)}</h3>`);
-            tr.append(`     </div>`);
-            $('#chat').append(tr);
+    $.each(chats, function (index, chat) {
+        tr = $(`<a onclick="location.href='/Staff/Chat/ChatRoom/${(chat.chatRoomID)}'" class="d-flex align-items-center" />`);
+        tr.append(`<div class="flex-shrink-0">`
+            + `<img class="img-fluid" src="/Logo/Avatar/defaultavatar.png" alt="user img" height="45px" width="45px">`
+            + `</div>`
+            + `<div class="flex-grow-1 ms-3">`
+            + `<h3>Table - ${(chat.chatRoomID)}</h3>`
+            + `</div>`);
+        $('#chat').append(tr);
     });
 }
