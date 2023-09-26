@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using System.Security.Claims;
 using TablesideOrdering.Areas.Staff.Models;
 using TablesideOrdering.Areas.Staff.ViewModels;
@@ -76,6 +77,17 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         public List<Chat> ChatRoomList()
         {
             List<Chat> chat = _context.Chat.ToList();
+            foreach(var chatRoom in _context.Chat)
+            {
+                try
+                {
+                    Convert.ToInt32(chatRoom.ChatRoomID);
+                }
+                catch (Exception ex)
+                {
+                    chat.Remove(chatRoom);
+                }
+            }
             return chat;
         }
 

@@ -1514,6 +1514,7 @@ namespace TablesideOrdering.Controllers
             home.Cart = CartDetails();
             home.LockOrderType = OrderType;
             home.Chat = ChatCreate();
+            home.ChatList = _context.Chat.ToList();
             return home;
         }
         public Cart CartDetails()
@@ -1555,30 +1556,7 @@ namespace TablesideOrdering.Controllers
         //Create Chat Id
         public Chat ChatCreate()
         {
-            Chat chat = new Chat();
-            var table = _context.Chat.FirstOrDefault(i=>i.TableId == TableNo);
-            if (table == null)
-            {
-                try
-                {
-                    Convert.ToInt32(TableNo);
-                }
-                catch (Exception ex)
-                {
-                    if (ex != null)
-                    {
-                        chat.ChatRoomID = TableNo;
-                        chat.TableId = TableNo;
-                        _context.Chat.Add(chat);
-                        _context.SaveChanges();
-                    }
-                }
-            } 
-            else
-            {
-                chat.ChatRoomID = TableNo;
-                chat.TableId = TableNo;
-            }
+            Chat chat = _context.Chat.FirstOrDefault(i=>i.TableId == TableNo);
             return chat;
         }
     }

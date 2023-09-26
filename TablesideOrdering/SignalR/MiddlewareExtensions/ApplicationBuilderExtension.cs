@@ -10,11 +10,5 @@ namespace TablesideOrdering.SignalR.MiddlewareExtensions
             var service = serviceProvider.GetService<SubscribeOrderTableDependency>();
             service.SubscribeTableDependency();
         }
-        public static void UseChatTableDependency(this IApplicationBuilder applicationBuilder)
-        {
-            var serviceProvider = applicationBuilder.ApplicationServices;
-            var service = serviceProvider.GetService<SubscribeChatListTableDependency>();
-            service.SubscribeTableDependency();
-        }
     }
 }

@@ -23,8 +23,6 @@ builder.Services.AddSignalR();
 //DI
 builder.Services.AddSingleton<OrderHub>();
 builder.Services.AddSingleton<SubscribeOrderTableDependency>();
-builder.Services.AddSingleton<ChatListHub>();
-builder.Services.AddSingleton<SubscribeChatListTableDependency>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TablesideOrdering")));
 builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders().AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
@@ -63,7 +61,6 @@ app.UseAuthorization();
 
 app.MapHub<OrderHub>("/orderHub");
 app.MapHub<ChatHub>("/chatHub");
-app.MapHub<ChatListHub>("/chatlistHub");
 
 app.MapRazorPages();
 app.UseEndpoints(endpoints =>
@@ -88,6 +85,4 @@ app.MapControllerRoute(
  */
 
 app.UseOrderTableDependency();
-app.UseChatTableDependency();
-
 app.Run();

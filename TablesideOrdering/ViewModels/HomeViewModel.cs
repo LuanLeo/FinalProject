@@ -39,12 +39,9 @@ namespace TablesideOrdering.ViewModels
         [EmailAddress(ErrorMessage = "Please enter a valid email")]
         public string MailPR { get; set; }
 
-
         //Variables for sorting product
         public string NameSort { get; set; }
         public string Term { get; set; }
-        public string OrderBy { get; set; }
-
 
         //Variables for order detail
         public IQueryable<HomeViewModel> Order { get; set; }
@@ -55,7 +52,7 @@ namespace TablesideOrdering.ViewModels
         public float OrderPrice { get; set; }
 
         public Chat Chat { get; set; }
-
+        public List<Chat>ChatList { get; set; }
         //Lock option in index page
         public string LockOrderType { get; set; }
 
@@ -68,7 +65,6 @@ namespace TablesideOrdering.ViewModels
         public string Size { get; set; }
         public int ProQuantity { get; set; }
         public float Price { get; set; }
-        public float SubTotal { get; set; }
         public string Status { get; set; }
         public string OrderType { get; set; }
 

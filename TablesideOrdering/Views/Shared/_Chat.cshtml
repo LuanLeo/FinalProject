@@ -1,26 +1,6 @@
 ﻿@using TablesideOrdering.ViewModels;
 @model HomeViewModel;
 
-<div id="live-chat" style=" z-index: 1">
-    <header class="clearfix">
-        <h4>Chat with Staff</h4>
-    </header>
-    <div class="chat">
-        <div class="chat-history" id="messages">
-            <div class="chat-message clearfix" id="chatbox">
-            </div>
-        </div>
-        <hr />
-        <fieldset>
-            <input type="hidden" id="userInput" value="@Model.Chat.ChatRoomID" />
-            <input type="hidden" id="receiverInput" value="@Model.Chat.ChatRoomID" />
-            <input style="width:80%; margin:0px 0px 0px 2%" type="text" id="messageInput" />
-            <button type="button" id="sendButton" class="button"><img src="~/Logo/ChatIcon.png" width="25" height="25" /></button>
-        </fieldset>
-        <br />
-    </div> <!-- end chat -->
-</div> <!-- end live-chat -->
-
 <style>
     .button {
         width: 40px;
@@ -52,3 +32,26 @@
         color: #fff;
     }
 </style>
+
+@if (Model.ChatList.Contains(Model.Chat) == true) 
+{
+    <div id="live-chat" style=" z-index: 1">
+    <header class="clearfix">
+        <h4>Chat with Staff</h4>
+    </header>
+    <div class="chat">
+        <div class="chat-history" id="messages">
+            <div class="chat-message clearfix" id="chatbox">
+            </div>
+        </div>
+        <hr />
+        <fieldset>
+            <input type="hidden" id="userInput" value="@Model.Chat.ChatRoomID" />
+            <input type="hidden" id="receiverInput" value="@Model.Chat.ChatRoomID" />
+            <input style="width:80%; margin:0px 0px 0px 2%" type="text" id="messageInput" />
+            <button type="button" id="sendButton" class="button"><img src="~/Logo/ChatIcon.png" width="25" height="25" /></button>
+        </fieldset>
+        <br />
+    </div> <!-- end chat -->
+</div> <!-- end live-chat -->
+}
