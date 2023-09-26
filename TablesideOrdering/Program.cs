@@ -78,7 +78,7 @@ app.MapControllerRoute(
      /*name: "default",
     pattern: "{controller=Home}/{action=TableCheck}/{id?}"*/
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"
+    pattern: "{controller=Home}/{action=TakeIP}/{id?}"
     /*  name: "default",
       pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}"*/
     );

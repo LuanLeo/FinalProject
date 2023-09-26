@@ -34,12 +34,12 @@ function BindChatsToGrid(chats) {
     });
 }
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+var connection2 = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
 //Disable the send button until connection is established.
 document.getElementById("sendButton").disabled = true;
 
-connection.start().then(function () {
+connection2.start().then(function () {
     document.getElementById("sendButton").disabled = false;
 }).catch(function (err) {
     return console.error(err.toString());
@@ -50,16 +50,14 @@ document.getElementById("sendButton").addEventListener("click", function (event)
     var receiver = document.getElementById("receiverInput").value;
     var message = document.getElementById("messageInput").value;
 
-    connection.invoke("SendMessageToGroup", user, receiver, message).catch(function (err) {
+    connection2.invoke("SendMessageToGroup", user, receiver, message).catch(function (err) {
         return console.error(err.toString());
     });
     event.preventDefault();
 });
 
-connection.on("ReceiveMessage", function (user, message) {    
+connection2.on("ReceiveMessage", function (user, message) {    
     if (user != "Admin") {
-
-
         var currentdate = new Date();
         var datetime = currentdate.getDate() + "/" + (currentdate.getMonth()+1) + "/" + currentdate.getFullYear() + " "
             + currentdate.getHours() + ":" + currentdate.getMinutes();
@@ -70,7 +68,7 @@ connection.on("ReceiveMessage", function (user, message) {
             + `</li>`)
         $('#chatbox').append(doc);
     }
-    else {
+    else{
         var currentdate = new Date();
         var datetime = currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear() + " "
             + currentdate.getHours() + ":" + currentdate.getMinutes();
@@ -82,6 +80,8 @@ connection.on("ReceiveMessage", function (user, message) {
             + `</li>`)
         $('#chatbox').append(doc);
     }
+    location.reload();
+
     SoundChat();        
     UpdateScroll();
 });

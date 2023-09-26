@@ -77,8 +77,6 @@ namespace TablesideOrdering.SignalR.Hubs
 
                 SendMessageToCustomer(sender, receiver, message);
                 SendMessageToStaff(sender, message);
-
-
             }
         }
 

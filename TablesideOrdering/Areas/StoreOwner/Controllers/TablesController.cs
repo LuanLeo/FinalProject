@@ -71,7 +71,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 _context.SaveChanges();
 
                 Chat chat = new Chat();
-                chat.TableId = table.Id.ToString();
+                chat.TableId = table.IdTable.ToString();
                 chat.ChatRoomID = table.IdTable.ToString();
                 _context.Chat.Add(chat);
                 _context.SaveChanges();

@@ -66,7 +66,7 @@ namespace TablesideOrdering.Controllers
 
         //Static variables before saving to database
         public static float TotalPrice;
-        public static string TableNo = null;
+        public static string TableNo;
         public static string PhoneNumber;
         public static string CusName;
 
@@ -110,29 +110,29 @@ namespace TablesideOrdering.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            TakeIP();
-
             HomeViewModel Homedata = new HomeViewModel();
             Homedata = NavData();
             Homedata.Category = _context.Categories.ToList();
             return View(Homedata);
         }
 
-        public void TakeIP()
+        public ActionResult TakeIP()
         {
             string IP = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             var AHcart = _context.VirtualCarts.FirstOrDefault(x => x.TableId == IP);
             if (AHcart == null)
             {
                 VirtualCart vcart = new VirtualCart();
+                TableNo = IP;
                 vcart.TableId = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
                 _context.VirtualCarts.Add(vcart);
                 _context.SaveChanges();
-            }
+            } 
             else
             {
                 TableNo = IP;
             }
+            return RedirectToAction("Index");
         }
 
         public void Type(string term)
@@ -328,7 +328,6 @@ namespace TablesideOrdering.Controllers
         [HttpGet]
         public async Task<IActionResult> TableCheck(int id)
         {
-            TableNo = null;
             TableNo = id.ToString();
             OrderType = "Eat in";
             CreateVirtualCart();
@@ -1574,9 +1573,11 @@ namespace TablesideOrdering.Controllers
                         _context.SaveChanges();
                     }
                 }
-            } else
+            } 
+            else
             {
-                chat = table;
+                chat.ChatRoomID = TableNo;
+                chat.TableId = TableNo;
             }
             return chat;
         }
