@@ -66,7 +66,7 @@ namespace TablesideOrdering.Controllers
 
         //Static variables before saving to database
         public static float TotalPrice;
-        public static string TableNo;
+        public static string TableNo = null;
         public static string PhoneNumber;
         public static string CusName;
 
@@ -328,6 +328,7 @@ namespace TablesideOrdering.Controllers
         [HttpGet]
         public async Task<IActionResult> TableCheck(int id)
         {
+            TableNo = null;
             TableNo = id.ToString();
             OrderType = "Eat in";
             CreateVirtualCart();

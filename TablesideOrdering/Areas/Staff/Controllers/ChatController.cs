@@ -70,7 +70,6 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             chat.ChatRoom = chatRoom;
             chat.ChatHistory = history;
             chat.StaffRole = StaffRole;
-
             return View(chat);
         }
 
