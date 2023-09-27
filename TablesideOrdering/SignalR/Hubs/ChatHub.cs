@@ -26,7 +26,7 @@ namespace TablesideOrdering.SignalR.Hubs
             List<string> chatIds = new List<string>();
             foreach (var chat in _context.Chat)
             {
-                chatIds.Add(chat.ChatRoomID);
+                chatIds.Add(chat.ChatRoomID.ToString());
             }
             return chatIds;
         }
@@ -87,7 +87,7 @@ namespace TablesideOrdering.SignalR.Hubs
             {
                 //Delete first space(s) of the message
                 var messageChanges = message.TrimStart().TrimEnd();
-                return Clients.Group(receiver).SendAsync("ReceiveMessage", sender, messageChanges, receiver);
+                return Clients.Group(receiver).SendAsync("ReceiveMessage", sender, messageChanges);
             }
             else
             {

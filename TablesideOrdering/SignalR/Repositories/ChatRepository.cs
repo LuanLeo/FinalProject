@@ -24,7 +24,7 @@ namespace TablesideOrdering.SignalR.Repositories
                 {
                     Id = Convert.ToInt32(row["Id"]),
                     TableId = row["TableId"].ToString(),
-                    ChatRoomID = row["ChatRoomID"].ToString()
+                    ChatRoomID = Convert.ToInt32(row["ChatRoomID"])
                 };
                 chats.Add(chat);
             }

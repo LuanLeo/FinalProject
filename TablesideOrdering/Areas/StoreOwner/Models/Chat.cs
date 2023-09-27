@@ -7,6 +7,6 @@ namespace TablesideOrdering.Areas.StoreOwner.Models
         [Key]
         public int Id { get; set; }
         public string TableId { get; set; }
-        public string ChatRoomID { get; set; }
+        public int ChatRoomID { get; set; }
     }
 }

@@ -49,6 +49,7 @@
                                                 <div class="tab-content" id="myTabContent">
                                                     <div class="tab-pane fade show active" id="Open" role="tabpanel" aria-labelledby="Open-tab">
                                                         <!-- chat-list -->
+                                                        <div class="chat-list">
                                                         @foreach (var chat in Model.ChatRoomList)
                                                         {
                                                             <a asp-action="ChatRoom" asp-route-id="@chat.ChatRoomID" class="d-flex align-items-center">
@@ -63,6 +64,7 @@
                                                             </a>
                                                         }
                                                         <!-- chat-list -->
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

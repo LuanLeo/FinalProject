@@ -43,7 +43,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             List<SelectListItem> chatID = new List<SelectListItem>();
             foreach (var id in chat.ChatRoomList)
             {
-                chatID.Add(new SelectListItem { Text = id.ChatRoomID, Value = id.ChatRoomID });
+                chatID.Add(new SelectListItem { Text = id.ChatRoomID.ToString(), Value = id.ChatRoomID.ToString() });
             }
             ViewBag.ChatTableLists = chatID;
             return View(chat);
@@ -51,7 +51,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
 
         public IActionResult ChatRoom(string id)
         {
-            var chatRoom = _context.Chat.FirstOrDefault(x => x.ChatRoomID == id);
+            var chatRoom = _context.Chat.FirstOrDefault(x => x.ChatRoomID.ToString() == id);
             List<ChatHistory> history = new List<ChatHistory>();
 
             if (ChatViewModel.ChatHistory != null)

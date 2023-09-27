@@ -12846,19 +12846,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Admin\\.nuget\\packages\\": {}
+    "C:\\Users\\pekoi\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
+      "projectUniqueName": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
       "projectName": "TablesideOrdering",
-      "projectPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
-      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\obj\\",
+      "projectPath": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
+      "packagesPath": "C:\\Users\\pekoi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\pekoi\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -12990,7 +12990,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
       }
     }
   },

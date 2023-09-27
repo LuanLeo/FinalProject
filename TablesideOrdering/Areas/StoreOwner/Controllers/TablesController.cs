@@ -72,7 +72,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
 
                 Chat chat = new Chat();
                 chat.TableId = table.IdTable.ToString();
-                chat.ChatRoomID = table.IdTable.ToString();
+                chat.ChatRoomID = table.IdTable;
                 _context.Chat.Add(chat);
                 _context.SaveChanges();
 
@@ -115,7 +115,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
 
                 Chat chat = _context.Chat.FirstOrDefault(x => x.TableId == table.Id.ToString());
                 chat.TableId = table.IdTable.ToString();
-                chat.ChatRoomID = table.IdTable.ToString();
+                chat.ChatRoomID = table.IdTable;
                 _context.Chat.Update(chat);
 
                 _context.SaveChanges();
