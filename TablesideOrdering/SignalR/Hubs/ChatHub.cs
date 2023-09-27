@@ -87,7 +87,7 @@ namespace TablesideOrdering.SignalR.Hubs
             {
                 //Delete first space(s) of the message
                 var messageChanges = message.TrimStart().TrimEnd();
-                return Clients.Group(receiver).SendAsync("ReceiveMessage", sender, messageChanges);
+                return Clients.Group(receiver).SendAsync("ReceiveMessage", sender, messageChanges, receiver);
             }
             else
             {

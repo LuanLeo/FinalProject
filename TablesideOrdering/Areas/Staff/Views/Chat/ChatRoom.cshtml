@@ -46,28 +46,29 @@
             </div>
         </div>
         <div class="modal-body" id='messageBody'>
-            <div class="msg-body">
-                <ul>
+            <div class="msg-body" >
+                <ul id ="chatbox">
                     @foreach (var i in Model.ChatHistory)
                     {
                         if (i.Sender != Model.ChatRoom.ChatRoomID)
-                        {
-                            <li class="sender">
-                                <p>@i.Message</p>
-                                <span class="time">@i.MessageDate</span>
-                            </li>
-                        }
-                        else
                         {
                             <li class="repaly">
                                 <p>@i.Message</p>
                                 <span class="time">@i.MessageDate</span>
                             </li>
                         }
+                        else
+                        {
+                            <li class="sender">
+                                <p>@i.Message</p>
+                                <span class="time">@i.MessageDate</span>
+                            </li>
+                            
+                        }
                     }
                 </ul>
             </div>
-            <div class="msg-body" id="chatbox">
+            <div class="msg-body" >
                
             </div>
         </div>
