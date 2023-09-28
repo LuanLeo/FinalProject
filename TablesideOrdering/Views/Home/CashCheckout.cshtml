@@ -54,13 +54,13 @@
                                     <div class="col-lg-6">
                                         <div class="checkout__input">
                                             <b>Name<span>*</span></b>
-                                            <input asp-for="@Model.Payment.Name" class="form-control" type="text" />
+                                            <input asp-for="@Model.Payment.Name" class="form-control" type="text" required />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="checkout__input">
                                             <b>Phone<span>*</span></b>
-                                            <input type="tel" asp-for="@Model.Cart.PhoneNumber">
+                                            <input type="tel" asp-for="@Model.Cart.PhoneNumber" required/>
                                         </div>
                                     </div>
                                 </div>
@@ -105,7 +105,7 @@
                                     <div class="col-lg-6">
                                         <div class="checkout__input">
                                             <b>Email (Optional)</b>
-                                            <input asp-for="@Model.Email.EmailTo" type="text" placeholder="Email to receive E-Invoice" />
+                                            <input asp-for="@Model.Email.EmailTo" type="text" placeholder="Email to receive E-Invoice"/>
                                         </div>
                                     </div>
                                 }

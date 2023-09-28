@@ -53,12 +53,12 @@ namespace TablesideOrdering.ViewModels
 
         public Chat Chat { get; set; }
         public List<Chat>ChatList { get; set; }
-        //Lock option in index page
-        public string LockOrderType { get; set; }
+        public CustomerInformation Customer { get; set; }
 
         //Show coupon to the page
         public string CouponShow { get; set; }
 
+        public string Lock { get; set; }
         public int ProductQuantity { get; set; }
         public int OrderDetailId { get; set; }
         public string ProductName { get; set; }

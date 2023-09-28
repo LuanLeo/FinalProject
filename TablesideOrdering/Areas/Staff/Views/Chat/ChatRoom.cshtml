@@ -1,4 +1,4 @@
-﻿@using System.Security.Claims;
+﻿﻿@using System.Security.Claims;
 @using TablesideOrdering.Areas.Staff.ViewModels;
 @model ChatViewModel;
 @{
@@ -47,28 +47,28 @@
         </div>
         <div class="modal-body" id='messageBody'>
             <div class="msg-body">
-                <ul>
+                <ul id="chatbox">
                     @foreach (var i in Model.ChatHistory)
                     {
                         if (i.Sender != Model.ChatRoom.ChatRoomID.ToString())
-                        {
-                            <li class="sender">
-                                <p>@i.Message</p>
-                                <span class="time">@i.MessageDate</span>
-                            </li>
-                        }
-                        else
                         {
                             <li class="repaly">
                                 <p>@i.Message</p>
                                 <span class="time">@i.MessageDate</span>
                             </li>
                         }
+                        else
+                        {
+                            <li class="sender">
+                                <p>@i.Message</p>
+                                <span class="time">@i.MessageDate</span>
+                            </li>
+
+                        }
                     }
                 </ul>
             </div>
-            <div class="msg-body" id="chatbox">
-               
+            <div class="msg-body">
             </div>
         </div>
 
@@ -81,7 +81,7 @@
                     <input type="hidden" id="receiverInput" value="@Model.ChatRoom.ChatRoomID" />
                     <button type="submit" id="sendButton"> <i class="fa fa-paper-plane" aria-hidden="true"></i> Send</button>
                 </form>
-            </div>       
+            </div>
         </div>
     </div>
 </div>

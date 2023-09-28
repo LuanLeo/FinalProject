@@ -20,15 +20,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 
-//DI
+//Call SignalR Hub
 builder.Services.AddSingleton<OrderHub>();
 builder.Services.AddSingleton<SubscribeOrderTableDependency>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TablesideOrdering")));
 builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders().AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
-//Call From Appsetting
+//Call From AppSetting
 builder.Services.Configure<SMSMessage>(builder.Configuration.GetSection("SMSTwilio"));
+builder.Services.Configure<SignInPass>(builder.Configuration.GetSection("SignInPass"));
 builder.Services.Configure<Email>(builder.Configuration.GetSection("Email"));
 
 //Call Additional Services or Packages
@@ -75,7 +76,7 @@ app.MapControllerRoute(
      /*name: "default",
     pattern: "{controller=Home}/{action=TableCheck}/{id?}"*/
     name: "default",
-    pattern: "{controller=Home}/{action=TakeIP}/{id?}"
+    pattern: "{controller=Home}/{action=TableCheck}/{id?}"
     /*  name: "default",
       pattern: "{area=Admin}/{controller=Home}/{action=Index}/{id?}"*/
     );

@@ -48,16 +48,12 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a asp-action="Index" asp-controller="Home"><img src="/Logo/horizontal logo.png" style="width:80%; height:80%" alt=""></a>
+                        <img src="/Logo/horizontal logo.png" style="width:80%; height:80%" alt="">
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            @if (ViewBag.OrderType == null)
-                            {
-                                <li><a asp-action="Index" asp-controller="Home">Home</a></li>
-                            }
                             <li><a asp-action="Menu" asp-controller="Home">Menu</a></li>
                             <li><a asp-action="History" asp-controller="Home">Order Tracking</a></li>
                         </ul>
