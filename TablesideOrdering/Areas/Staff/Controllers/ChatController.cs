@@ -40,6 +40,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             ChatViewModel chat = new ChatViewModel();
             chat.StaffRole = StaffRole;
             chat.ChatRoomList = ChatRoomList();
+
             List<SelectListItem> chatID = new List<SelectListItem>();
             foreach (var id in chat.ChatRoomList)
             {
@@ -53,7 +54,6 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         {
             var chatRoom = _context.Chat.FirstOrDefault(x => x.ChatRoomID.ToString() == id);
             List<ChatHistory> history = new List<ChatHistory>();
-
             if (ChatViewModel.ChatHistory != null)
             {
                 foreach (var his in ChatViewModel.ChatHistory)

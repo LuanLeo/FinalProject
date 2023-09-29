@@ -31,6 +31,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders().A
 builder.Services.Configure<SMSMessage>(builder.Configuration.GetSection("SMSTwilio"));
 builder.Services.Configure<SignInPass>(builder.Configuration.GetSection("SignInPass"));
 builder.Services.Configure<Email>(builder.Configuration.GetSection("Email"));
+builder.Services.Configure<IPRestrict>(builder.Configuration.GetSection("IPRestrict"));
 
 //Call Additional Services or Packages
 builder.Services.AddNotyf(config => { config.IsDismissable = true; config.DurationInSeconds = 5; config.Position = NotyfPosition.TopRight; });

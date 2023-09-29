@@ -38,10 +38,8 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             Orders order = _context.Orders.Where(o => o.OrderId == id).FirstOrDefault();
             order.Status = "Delivering";
             _context.SaveChanges();
-
-
-/*            SendSMS(order.PhoneNumber);
-*/        }
+        //  SendSMS(order.PhoneNumber);
+        }
 
         //SENDING SMS TO CUSTOMER FUCNTION
        /* public void SendSMS(string phone)
@@ -67,12 +65,12 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             return validnum;
         }
 
-
         public IActionResult DoneDeliveryOrders()
         {
             var processOrder = _context.Orders.Where(i => i.OrderType == "Delivery" && i.Status == "Done");
             return View(processOrder);
         }
+
         public IActionResult Delivering()
         {
             var delivering = _context.Orders.Where(i => i.OrderType == "Delivery" && i.Status == "delivering");

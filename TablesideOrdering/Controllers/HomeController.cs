@@ -51,6 +51,7 @@ using TablesideOrdering.Areas.Admin.Models;
 using DocumentFormat.OpenXml.EMMA;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace TablesideOrdering.Controllers
 {
@@ -61,46 +62,44 @@ namespace TablesideOrdering.Controllers
         private readonly ApplicationDbContext _context;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+
         private readonly SignInPass _signInPass;
+        private readonly IPRestrict _iPRestrict;
         private readonly SMSMessage _SMSMessage;
         private readonly Email _email;
+
+
         //Call Additional Services
         public INotyfService _notyfService { get; }
-        private readonly IVnPayService _vnPayService;
         private IMomoService _momoService;
+        private readonly IVnPayService _vnPayService;
         private readonly ILogger<LoginModel> _logger;
 
         //Static variables before saving to database
         public string PhoneMessage;
         public static Boolean CheckNotify = false;
 
-        public HomeController(ApplicationDbContext context,
-            SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager,
-            ILogger<LoginModel> logger,
-            INotyfService notyfService,
-            IVnPayService vnPayService,
-            IOptions<SMSMessage> SMSMessage,
-            IOptions<Email> email,
-            IOptions<SignInPass> signInPass,
-            IMomoService momoService,
-            IHostingEnvironment host)
-        {
-            _context = context;
-            _signInManager = signInManager;
-            _userManager = userManager;
-            _logger = logger;
+        public HomeController(ApplicationDbContext context, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
+            ILogger<LoginModel> logger, INotyfService notyfService,IVnPayService vnPayService,
+            IOptions<SMSMessage> SMSMessage, IOptions<Email> email, IOptions<SignInPass> signInPass, IOptions<IPRestrict> iPRestrict,
+            IMomoService momoService,IHostingEnvironment host)
+            {
+                _context = context;
+                _signInManager = signInManager;
+                _userManager = userManager;
+                _logger = logger;
 
-            _signInPass = signInPass.Value;
-            _SMSMessage = SMSMessage.Value;
-            _email = email.Value;
+                _iPRestrict = iPRestrict.Value;
+                _signInPass = signInPass.Value;
+                _SMSMessage = SMSMessage.Value;
+                _email = email.Value;
 
-            _notyfService = notyfService;
-            _vnPayService = vnPayService;
-            _momoService = momoService;
+                _notyfService = notyfService;
+                _vnPayService = vnPayService;
+                _momoService = momoService;
 
-            _host = host;
-        }
+                _host = host;
+            }
 
         //CONTROLLER FOR HOME PAGE
         [HttpGet]
@@ -122,6 +121,7 @@ namespace TablesideOrdering.Controllers
             return View(Homedata);
         }
 
+        //GET TYPE FUNCTION
         public void Type(string term)
         {
             var info = GetUser();
@@ -143,6 +143,13 @@ namespace TablesideOrdering.Controllers
             _context.VirtualCarts.Update(cart);
             _context.SaveChanges();
         }
+
+
+
+
+
+
+
 
 
 
@@ -199,6 +206,7 @@ namespace TablesideOrdering.Controllers
             return View(Homedata);
         }
 
+        //GET TOP FOOD FOR MENU FUNCTION
         public List<TopFood> GetTopFood()
         {
             //Take infor from orders
@@ -280,6 +288,11 @@ namespace TablesideOrdering.Controllers
 
 
 
+
+
+
+
+
         //CONTROLLER FOR RECEIVING ADS MAIL
         [HttpPost]
         public IActionResult MailPR(HomeViewModel home)
@@ -313,48 +326,7 @@ namespace TablesideOrdering.Controllers
 
 
 
-        //INPUTTING TABLE NUMBER BY LINK FUNCTION
-        [HttpGet]
-        public async Task<IActionResult> TableCheck(string id)
-        {
-            if (id != null)
-            {
 
-                _signInManager.SignOutAsync();
-
-                var pass = _signInPass.AccPass;
-                var result = await _signInManager.PasswordSignInAsync($"{id}@gmail.com", pass, true, lockoutOnFailure: false);
-
-                var info = GetUser();
-                var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
-                if (cart == null)
-                {
-                    CreateVirtualCart(info.TableNo);
-
-                    var carts = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
-                    carts.OrderType = "Eat in";
-                    _context.VirtualCarts.Update(carts);
-                    _context.SaveChanges();
-                }
-                return RedirectToAction("Index");
-
-            }
-            else
-            {
-                string IP = TakeIP();
-                var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TakeIP());
-                if (cart == null)
-                {
-                    CreateVirtualCart(TakeIP());
-
-                    var carts = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TakeIP());
-                    carts.OrderType = "Eat in";
-                    _context.VirtualCarts.Update(carts);
-                    _context.SaveChanges();
-                }
-                return RedirectToAction("Index");
-            }
-        }
 
 
 
@@ -530,6 +502,11 @@ namespace TablesideOrdering.Controllers
 
 
 
+        
+
+
+
+
 
         //APPLY COUPON FUNCTION
         public string CouponApply(string CouponCode)
@@ -537,11 +514,11 @@ namespace TablesideOrdering.Controllers
             var info = GetUser();
             string CouponAlert = null;
             var coupon = _context.Discounts.FirstOrDefault(x => x.DisCode == CouponCode);
+
             //Check in database
             if (coupon != null)
             {
                 var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
-
                 //Check day valid
                 if (coupon.DayStart <= DateTime.Now && coupon.DayEnd >= DateTime.Now)
                 {
@@ -566,6 +543,42 @@ namespace TablesideOrdering.Controllers
             return CouponAlert;
         }
 
+        //COUPON SHOW FUNCTION
+        public HomeViewModel CouponShow()
+        {
+            HomeViewModel home = NavData();
+            var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == home.Customer.TableNo);
+            var Coupon = _context.Discounts.FirstOrDefault(i => i.Id.ToString() == cart.Coupon);
+            if (Coupon != null)
+            {
+                if (Coupon.DisType == "Money")
+                {
+                    home.Cart.DicountAmount = Coupon.DisValue;
+                }
+                else if (Coupon.DisType == "Percent")
+                {
+                    home.Cart.DicountAmount = (home.Cart.CartTotal * Coupon.DisValue) / 100;
+                };
+
+                home.Cart.MustPaid = home.Cart.CartTotal - home.Cart.DicountAmount;
+                cart.CartAmount = home.Cart.MustPaid;
+            }
+            else
+            {
+                home.Cart.DicountAmount = 0;
+                home.Cart.MustPaid = home.Cart.CartTotal;
+                cart.CartAmount = home.Cart.MustPaid;
+            }
+            _context.VirtualCarts.Update(cart);
+            _context.SaveChanges();
+            return home;
+        }
+
+
+
+
+
+
 
 
 
@@ -578,11 +591,23 @@ namespace TablesideOrdering.Controllers
             {
                 home.CouponShow = CouponApply(CouponCode);
             }
-
             return View(home);
         }
 
-        //Increase Quantity
+        //CREATE VIRTUAL CART FUNCTION
+        public void CreateVirtualCart(string TableNo)
+        {
+            var cartExist = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TableNo);
+            if (cartExist == null)
+            {
+                VirtualCart cart = new VirtualCart();
+                cart.TableId = TableNo;
+                _context.VirtualCarts.Add(cart);
+                _context.SaveChanges();
+            }
+        }
+
+        //INCREASE QUANTITY
         public void IncQty(int id)
         {
             var info = GetUser();
@@ -590,6 +615,7 @@ namespace TablesideOrdering.Controllers
             List<CartDetails> cartlist = _context.CartDetails.Where(i => i.CartId == carts.TableId).ToList();
             CartDetails cart = new CartDetails();
             ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
+
             if (cartlist.Find(x => x.SizePriceId == productprice.Id) != null)
             {
                 cart = cartlist.Single(x => x.SizePriceId == productprice.Id);
@@ -613,14 +639,16 @@ namespace TablesideOrdering.Controllers
             _context.SaveChanges();
         }
 
-        //Decrease Quantity
+        //DECREASE QUANTITY
         public void DecQty(int id)
         {
             var info = GetUser();
             var carts = _context.VirtualCarts.FirstOrDefault(x => x.TableId == info.TableNo);
+
             List<CartDetails> cartlist = _context.CartDetails.Where(i => i.CartId == carts.TableId).ToList();
             CartDetails cart = new CartDetails();
             ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
+
             if (cartlist.Find(x => x.SizePriceId == productprice.Id) != null)
             {
                 cart = cartlist.Single(x => x.SizePriceId == productprice.Id);
@@ -643,7 +671,6 @@ namespace TablesideOrdering.Controllers
             _context.VirtualCarts.Update(carts);
             _context.SaveChanges();
 
-
             ViewBag.CartQuantity = cartlist.Count();
             ViewBag.CartPrice = carts.CartAmount;
             if (cart.Quantity == 0)
@@ -651,6 +678,7 @@ namespace TablesideOrdering.Controllers
                 DeleteFromCart(id);
             }
         }
+
         //ADD TO CART FUCNTION
         public void AddToCart(int id)
         {
@@ -665,7 +693,6 @@ namespace TablesideOrdering.Controllers
             List<CartDetails> cartlist = _context.CartDetails.Where(i => i.CartId == carts.TableId).ToList();
 
             //Add to Cart
-
             if (cartlist.Count() == 0)
             {
                 cart.SizePriceId = productprice.Id;
@@ -709,7 +736,6 @@ namespace TablesideOrdering.Controllers
 
             ViewBag.CartQuantity = cartlist.Count();
             ViewBag.CartPrice = carts.CartAmount;
-
         }
 
         //DELETE FROM CART FUNCTION
@@ -721,12 +747,12 @@ namespace TablesideOrdering.Controllers
             ProductSizePrice productprice = _context.ProductSizePrice.Find(id);
 
             var carts = _context.VirtualCarts.FirstOrDefault(x => x.TableId == info.TableNo);
-
             if (cart != null)
             {
                 _context.CartDetails.Remove(cart);
                 _context.SaveChanges();
             }
+
             carts.CartAmount = 0;
             foreach (var i in _context.CartDetails)
             {
@@ -742,6 +768,11 @@ namespace TablesideOrdering.Controllers
             _notyfService.Success("The product is deleted", 5);
             return RedirectToAction("Cart", "Home");
         }
+
+
+
+
+        
 
 
 
@@ -762,7 +793,6 @@ namespace TablesideOrdering.Controllers
             _notyfService.Error("Can't receive phone message", 5);
         }
 
-
         //MODIFY PHONE NUMBER FUNCTION
         public string ConvertToPhoneValid()
         {
@@ -775,6 +805,9 @@ namespace TablesideOrdering.Controllers
             }
             return validnum;
         }
+
+
+
 
 
 
@@ -849,7 +882,6 @@ namespace TablesideOrdering.Controllers
                     return true;
                 }
             }
-
             if (cart.PaymentType == "Momo")
             {
                 if (home.MoMoPay.FullName != null && home.Address != null && home.Cart.PhoneNumber != null)
@@ -857,7 +889,6 @@ namespace TablesideOrdering.Controllers
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -881,7 +912,6 @@ namespace TablesideOrdering.Controllers
                     return true;
                 }
             }
-
             if (cart.PaymentType == "Momo")
             {
                 if (home.MoMoPay.FullName != null && home.Cart.PhoneNumber != null && home.PickTime != null)
@@ -889,9 +919,9 @@ namespace TablesideOrdering.Controllers
                     return true;
                 }
             }
-
             return false;
         }
+
         public Boolean EatIn(HomeViewModel home)
         {
             var info = GetUser();
@@ -911,7 +941,6 @@ namespace TablesideOrdering.Controllers
                     return true;
                 }
             }
-
             if (cart.PaymentType == "Momo")
             {
                 if (home.MoMoPay.FullName != null && home.Cart.PhoneNumber != null && home.PickTime != null)
@@ -919,39 +948,12 @@ namespace TablesideOrdering.Controllers
                     return true;
                 }
             }
-
             return false;
         }
 
-        //COUPON SHOW FUNCTION
-        public HomeViewModel CouponShow()
-        {
-            HomeViewModel home = NavData();
-            var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == home.Customer.TableNo);
-            var Coupon = _context.Discounts.FirstOrDefault(i => i.Id.ToString() == cart.Coupon);
-            if (Coupon != null)
-            {
-                if (Coupon.DisType == "Money")
-                {
-                    home.Cart.DicountAmount = Coupon.DisValue;
-                }
-                else if (Coupon.DisType == "Percent")
-                {
-                    home.Cart.DicountAmount = (home.Cart.CartTotal * Coupon.DisValue) / 100;
-                };
-                home.Cart.MustPaid = home.Cart.CartTotal - home.Cart.DicountAmount;
-                cart.CartAmount = home.Cart.MustPaid;
-            }
-            else
-            {
-                home.Cart.DicountAmount = 0;
-                home.Cart.MustPaid = home.Cart.CartTotal;
-                cart.CartAmount = home.Cart.MustPaid;
-            }
-            _context.VirtualCarts.Update(cart);
-            _context.SaveChanges();
-            return home;
-        }
+
+
+
 
         //CASH PAYMENT METHOD PAGE FUCNTION
         public IActionResult CashCheckout()
@@ -992,7 +994,6 @@ namespace TablesideOrdering.Controllers
                 {
                     Cart.CusEmail = home.Email.EmailTo;
                 }
-
                 Email data = new Email();
                 data.EmailTo = home.Email.EmailTo;
 
@@ -1042,6 +1043,7 @@ namespace TablesideOrdering.Controllers
 
                 _context.Orders.Add(order);
                 _context.SaveChanges();
+
                 //Save order list to database
                 List<OrderDetail> orderDetailList = new List<OrderDetail>();
                 foreach (var item in carts)
@@ -1088,11 +1090,9 @@ namespace TablesideOrdering.Controllers
             }
         }
 
-        //CASH CHECKOUT PAGE FUCNTION
-        public IActionResult ThankYou()
-        {
-            return View();
-        }
+
+
+
 
         //VNPAY PAYMENT METHOD PAGE FUCNTION
         public IActionResult VNPayCheckout()
@@ -1115,8 +1115,6 @@ namespace TablesideOrdering.Controllers
 
             if ((cart.OrderType == "Delivery" && DeliveryCheck(home) == true) || (cart.OrderType == "Carry out" && CarryoutCheck(home) == true) || cart.OrderType == "Eat in" && EatIn(home) == true)
             {
-
-
                 PaymentInformationModel model = new PaymentInformationModel();
                 model = home.Payment;
                 model.Amount = Cart.CartTotal;
@@ -1236,6 +1234,10 @@ namespace TablesideOrdering.Controllers
             return RedirectToAction("Index");
         }
 
+
+
+
+
         //MOMO PAYMENT METHOD PAGE FUCNTION
         public IActionResult MomoCheckout()
         {
@@ -1246,6 +1248,8 @@ namespace TablesideOrdering.Controllers
 
             return View(home);
         }
+
+        //CREATE MOMO PAYMENT URL
         [HttpPost]
         public async Task<RedirectResult> CreateMomoPaymentUrl(HomeViewModel home)
         {
@@ -1287,7 +1291,6 @@ namespace TablesideOrdering.Controllers
                 return Redirect("/Home/MomoCheckout");
             }
         }
-
 
         //MOMO PAYMENT FUNCTION 
         [HttpGet]
@@ -1388,13 +1391,17 @@ namespace TablesideOrdering.Controllers
 
                 //Renew the cart
                 RefreshAll();
-
                 return RedirectToAction("ThankYou");
             }
             _notyfService.Error("Something went wrong, please try again!");
             return RedirectToAction("Index");
         }
-        //Refresh Data
+
+
+
+
+
+        //REFRESH DATA AFTER CHANGING TO ORDER
         public void RefreshAll()
         {
             var info = GetUser();
@@ -1412,6 +1419,17 @@ namespace TablesideOrdering.Controllers
             _context.SaveChanges();
         }
 
+        //CASH CHECKOUT PAGE FUCNTION
+        public IActionResult ThankYou()
+        {
+            return View();
+        }
+
+
+
+
+
+
 
 
 
@@ -1423,6 +1441,7 @@ namespace TablesideOrdering.Controllers
             return View(home);
         }
 
+        //SAVE RESERVATION FUNCTION
         public IActionResult ReservationConfirm(HomeViewModel home)
         {
             Reservation book = new Reservation();
@@ -1459,6 +1478,14 @@ namespace TablesideOrdering.Controllers
         }
 
 
+
+
+
+
+
+
+
+
         //ORDER HISTORY FUCNTION
         public IActionResult History(HomeViewModel model)
         {
@@ -1471,6 +1498,7 @@ namespace TablesideOrdering.Controllers
             return View(home);
         }
 
+        //TRACKING ORDER
         public void OrderTracking(HomeViewModel home, HomeViewModel model)
         {
             List<Orders> olist = new List<Orders>();
@@ -1478,20 +1506,6 @@ namespace TablesideOrdering.Controllers
             olist.Add(order);
             home.Orders = olist;
         }
-
-
-        public void CreateVirtualCart(string TableNo)
-        {
-            var cartExist = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TableNo);
-            if (cartExist == null)
-            {
-                VirtualCart cart = new VirtualCart();
-                cart.TableId = TableNo;
-                _context.VirtualCarts.Add(cart);
-                _context.SaveChanges();
-            }
-        }
-
 
         //ORDER DETAILS
         public IActionResult OrderDetails(int id)
@@ -1528,8 +1542,17 @@ namespace TablesideOrdering.Controllers
                                 });
 
             return View(home);
-
         }
+
+
+
+
+
+
+
+
+
+
 
         //RETURN FROM THANK YOU PAGE FUNCTION
         public IActionResult Return()
@@ -1547,6 +1570,13 @@ namespace TablesideOrdering.Controllers
 
 
 
+
+
+
+
+
+
+
         //NAVIGATION FUCNTION
         public HomeViewModel NavData()
         {
@@ -1557,6 +1587,16 @@ namespace TablesideOrdering.Controllers
             home.Customer = GetUser();
             return home;
         }
+
+        //CREATE CHAT ID FUNCTION
+        public Chat ChatCreate()
+        {
+            var info = GetUser();
+            Chat chat = _context.Chat.FirstOrDefault(i => i.TableId == info.TableNo);
+            return chat;
+        }
+
+        //CART DETAILS FOR NAVDATA
         public Cart CartDetails()
         {
             var info = GetUser();
@@ -1592,14 +1632,7 @@ namespace TablesideOrdering.Controllers
             return cart;
         }
 
-        //Create Chat Id
-        public Chat ChatCreate()
-        {
-            var info = GetUser();
-            Chat chat = _context.Chat.FirstOrDefault(i => i.TableId == info.TableNo);
-            return chat;
-        }
-
+        //GET USER FOR NAVDATA
         public CustomerInformation GetUser()
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -1619,10 +1652,86 @@ namespace TablesideOrdering.Controllers
         }
 
 
+
+
+
+
+
+
+
+
+        //INPUTTING TABLE NUMBER BY LINK FUNCTION
+        [HttpGet]
+        public async Task<IActionResult> TableCheck(string id)
+        {
+            if (id != null)
+            {
+                if (LockIP() == true)
+                {
+                    _signInManager.SignOutAsync();
+
+                    var pass = _signInPass.AccPass;
+                    var result = await _signInManager.PasswordSignInAsync($"{id}@gmail.com", pass, true, lockoutOnFailure: false);
+
+                    var info = GetUser();
+                    var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
+                    if (cart == null)
+                    {
+                        CreateVirtualCart(info.TableNo);
+
+                        var carts = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
+                        carts.OrderType = "Eat in";
+                        _context.VirtualCarts.Update(carts);
+                        _context.SaveChanges();
+                    }
+                    return RedirectToAction("Index");
+                }
+                var url = Url.RouteUrl("areas", new { controller = "Account", action = "AccessDenied", area = "Identity" });
+                return LocalRedirect(url);
+            }
+            else
+            {
+                string IP = TakeIP();
+                var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TakeIP());
+                if (cart == null)
+                {
+                    CreateVirtualCart(TakeIP());
+
+                    var carts = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TakeIP());
+                    carts.OrderType = "Eat in";
+                    _context.VirtualCarts.Update(carts);
+                    _context.SaveChanges();
+                }
+                return RedirectToAction("Index");
+            }
+        }
+
+        //CHECK USER IP FUNCTION
+        public Boolean LockIP()
+        {
+            //Take user ip and allow ip
+            string IP = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            string IPCheck = _iPRestrict.IPString;
+
+            //Split allow ip into 2 strings
+            string[] IpCheckSplit = new string[2];
+            IpCheckSplit[0] = IPCheck.Split(".")[0];
+            IpCheckSplit[1] = IPCheck.Split(".")[1];
+
+            //Compare 2 strings with current ip
+            if (IP.Split(".")[0] == IpCheckSplit[0] && IP.Split(".")[1] == IpCheckSplit[1])
+            {
+                return true;
+            }
+            return false;
+        }
+
+        //TAKE USER IP AT HOME FUNCTION
         public string TakeIP()
         {
             string IP = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
             var AHcart = _context.VirtualCarts.FirstOrDefault(x => x.TableId == IP);
+
             if (AHcart == null)
             {
                 VirtualCart vcart = new VirtualCart();
