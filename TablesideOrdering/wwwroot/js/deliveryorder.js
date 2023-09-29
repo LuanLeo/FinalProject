@@ -1,10 +1,9 @@
-﻿
-"use strict";
+﻿"use strict";
 
-var connection = new signalR.HubConnectionBuilder().withUrl("/orderHub").build();
+var connection1 = new signalR.HubConnectionBuilder().withUrl("/orderHub").build();
 
 $(function () {
-    connection.start().then(function () {
+    connection1.start().then(function () {
         InvokeOrders();
     }).catch(function (err) {
         return console.error(err.toString());
@@ -12,28 +11,29 @@ $(function () {
 });
 
 function InvokeOrders() {
-    connection.invoke("SendOrders").catch(function (err) {
+    connection1.invoke("SendOrders").catch(function (err) {
         return consol.error(err.toString());
     });
 }
 
-connection.on("ReceivedOrders", function (orders) {
+connection1.on("ReceivedOrders", function (orders) {
     BindOrdersToGrid(orders)
 });
 function BindOrdersToGrid(orders) {
 
-    $('#tblOrder tbody').empty();
+    $('#Delivery tbody').empty();
     var tr;
     $.each(orders, function (index, order) {
-        if (order.orderType = "Delivery") {
+        if (order.orderType === "Delivery") {
             tr = $('<tr/>');
-            tr.append(`<td>${(index + 1)}</td>`);
+            tr.append(`<td>${(order.orderId)}</td>`);
             tr.append(`<td>${(order.orderDate)}</td>`);
             tr.append(`<td>${(order.orderPrice)}</td>`);
             tr.append(`<td>${(order.productQuantity)}</td>`);
             tr.append(`<td>${(order.phoneNumber)}</td>`);
+            tr.append(`<td>${(order.cusName)}</td>`);
             tr.append(`<td><button type="button" class="btn btn-warning m-1" onclick="location.href='../Staff/Order/Details?id=${(order.orderId)}'">Details</button></td>`);
-            $('#tblOrder').append(tr);
+            $('#Delivery').append(tr);
 
             SoundOrder();
 
@@ -51,6 +51,7 @@ function BindOrdersToGrid(orders) {
 function closeToast() {
     toast.style.transform = "translateX(400px)";
 }
+
 function SoundOrder() {
     var audio = new Audio("/Sound/SoundOrder.mp3");
     audio.addEventListener('ended', function () {

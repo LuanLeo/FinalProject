@@ -178,11 +178,11 @@
                                     @await Html.PartialAsync("Delete", Model)
                                 }
 
-                                @if (Model.Order.OrderType == "Eat in")
+                                @if (Model.Order.OrderType == "Eat in" && Model.Order.Status == "Processing")
                                 {
                                     <div class="col-lg-6">
-                                        <a asp-controller="Order" asp-action="MarkDone" asp-route-id="@Model.Order.OrderId" style="color:white">
-                                            <button class="btn btn-success m-1">
+                                        <a style="color:white">
+                                            <button class="Done btn btn-success m-1" data-id="@Model.Order.OrderId">
                                                 Mark as Done
                                             </button>
                                         </a>

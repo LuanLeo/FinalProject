@@ -25,8 +25,11 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             _context = context;
             _SMSMessage = SMSMessage.Value;
         }
+        public static int Num = 0;
+
         public IActionResult Index()
         {
+            ViewBag.Num = Num;
             ViewBag.Message = "New order has been updated";
             return View();
         }
@@ -37,11 +40,11 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             _context.SaveChanges();
 
 
-            SendSMS(order.PhoneNumber);
-        }
+/*            SendSMS(order.PhoneNumber);
+*/        }
 
         //SENDING SMS TO CUSTOMER FUCNTION
-        public void SendSMS(string phone)
+       /* public void SendSMS(string phone)
         {
             var PhoneMessage = "Your order is ready, please wait a minute!";
             string number = ConvertToPhoneValid(phone);
@@ -50,7 +53,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                 to: new PhoneNumber(number),
                 from: new PhoneNumber(_SMSMessage.PhoneFrom),
                 body: PhoneMessage);
-        }
+        }*/
 
         //MODIFY PHONE NUMBER FUNCTION
         public string ConvertToPhoneValid(string PhoneNumber)

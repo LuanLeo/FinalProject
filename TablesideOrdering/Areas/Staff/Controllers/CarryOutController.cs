@@ -15,8 +15,10 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         {
             _context = context;
         }
+        public static int Num = 0;
         public IActionResult Index()
         {
+            ViewBag.Num = Num;
             ViewBag.Message = "New order has been updated";
             return View();
         }

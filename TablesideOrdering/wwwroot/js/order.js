@@ -24,9 +24,9 @@ function BindOrdersToGrid(orders) {
     $('#EatInOrder tbody').empty();
     var tr;
     $.each(orders, function (index, order) {
-        if (orders.orderType = "Eat in") {
+        if (order.orderType === "Eat in") {
             tr = $('<tr/>');
-            tr.append(`<td>${(index + 1)}</td>`);
+            tr.append(`<td>${(order.orderId)}</td>`);
             tr.append(`<td>${(order.orderDate)}</td>`);
             tr.append(`<td>${(order.orderPrice)}</td>`);
             tr.append(`<td>${(order.productQuantity)}</td>`);
