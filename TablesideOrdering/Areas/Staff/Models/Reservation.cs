@@ -12,6 +12,5 @@ namespace TablesideOrdering.Areas.Staff.Models
         public int People { get; set; }
         public string PhoneNumber { get; set; }
         public string Notes { get; set; }
-        public int OrderId { get; set; }
     }
 }

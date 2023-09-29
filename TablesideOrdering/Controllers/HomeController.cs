@@ -1,5 +1,4 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using AspNetCoreHero.ToastNotification.Abstractions;
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -73,9 +72,7 @@ namespace TablesideOrdering.Controllers
 
         //Static variables before saving to database
         public string PhoneMessage;
-
         public static Boolean CheckNotify = false;
-        public static Reservation ReserModel = new Reservation();
 
         public HomeController(ApplicationDbContext context,
             SignInManager<IdentityUser> signInManager,
@@ -130,11 +127,7 @@ namespace TablesideOrdering.Controllers
             var info = GetUser();
             var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
 
-            if (term == "Reservation")
-            {
-                cart.OrderType = "Reservation";
-            }
-            else if (term == "Delivery")
+            if (term == "Delivery")
             {
                 cart.OrderType = "Delivery";
             }
@@ -146,6 +139,7 @@ namespace TablesideOrdering.Controllers
             {
                 cart.OrderType = "Eat in";
             }
+
             _context.VirtualCarts.Update(cart);
             _context.SaveChanges();
         }
@@ -967,7 +961,6 @@ namespace TablesideOrdering.Controllers
 
             HomeViewModel home = CouponShow();
             home.OrderType = cart.OrderType;
-            home.Reser = ReserModel;
             return View(home);
         }
 
@@ -977,7 +970,7 @@ namespace TablesideOrdering.Controllers
             var info = GetUser();
             var Cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
             var Coupon = _context.Discounts.FirstOrDefault(i => i.Id.ToString() == Cart.Coupon);
-            if ((Cart.OrderType == "Delivery" && DeliveryCheck(home) == true) || (Cart.OrderType == "Carry out" && CarryoutCheck(home) == true) || Cart.OrderType == "Eat in" && EatIn(home) == true || Cart.OrderType == "Reservation")
+            if ((Cart.OrderType == "Delivery" && DeliveryCheck(home) == true) || (Cart.OrderType == "Carry out" && CarryoutCheck(home) == true) || Cart.OrderType == "Eat in" && EatIn(home) == true)
             {
                 List<CartViewModel> carts = (from vc in _context.VirtualCarts
                                              join cd in _context.CartDetails on vc.TableId equals cd.CartId
@@ -1036,7 +1029,6 @@ namespace TablesideOrdering.Controllers
                     order.Address = "";
                     order.TableNo = "";
                 }
-
                 if (Cart.OrderType == "Delivery")
                 {
                     order.Address = home.Address;
@@ -1047,20 +1039,9 @@ namespace TablesideOrdering.Controllers
                     order.Address = "";
                     order.TableNo = info.TableNo;
                 }
-                if (Cart.OrderType == "Reservation")
-                {
-                    order.Address = "";
-                    order.TableNo = "";
-                }
 
                 _context.Orders.Add(order);
                 _context.SaveChanges();
-                if (Cart.OrderType == "Reservation")
-                {
-                    ReserModel.OrderId = order.OrderId;
-                    _context.Reservations.Add(ReserModel);
-                    _context.SaveChanges();
-                }
                 //Save order list to database
                 List<OrderDetail> orderDetailList = new List<OrderDetail>();
                 foreach (var item in carts)
@@ -1121,7 +1102,6 @@ namespace TablesideOrdering.Controllers
 
             HomeViewModel home = CouponShow();
             home.OrderType = cart.OrderType;
-            home.Reser = ReserModel;
             return View(home);
         }
 
@@ -1133,7 +1113,7 @@ namespace TablesideOrdering.Controllers
             var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
             var Coupon = _context.Discounts.FirstOrDefault(i => i.Id.ToString() == cart.Coupon);
 
-            if ((cart.OrderType == "Delivery" && DeliveryCheck(home) == true) || (cart.OrderType == "Carry out" && CarryoutCheck(home) == true) || cart.OrderType == "Eat in" && EatIn(home) == true || cart.OrderType == "Reservation")
+            if ((cart.OrderType == "Delivery" && DeliveryCheck(home) == true) || (cart.OrderType == "Carry out" && CarryoutCheck(home) == true) || cart.OrderType == "Eat in" && EatIn(home) == true)
             {
 
 
@@ -1208,22 +1188,9 @@ namespace TablesideOrdering.Controllers
                     order.Address = "";
                     order.TableNo = info.TableNo;
                 }
-                if (cart.OrderType == "Reservation")
-                {
-                    order.Address = "";
-                    order.TableNo = "";
-
-
-                }
 
                 _context.Orders.Add(order);
                 _context.SaveChanges();
-                if (cart.OrderType == "Reservation")
-                {
-                    ReserModel.OrderId = order.OrderId;
-                    _context.Reservations.Add(ReserModel);
-                    _context.SaveChanges();
-                }
                 //Save order list to database
                 List<OrderDetail> orderDetailList = new List<OrderDetail>();
                 foreach (var item in Cart.cartViewModels)
@@ -1276,7 +1243,6 @@ namespace TablesideOrdering.Controllers
             var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
             HomeViewModel home = CouponShow();
             home.OrderType = cart.OrderType;
-            home.Reser = ReserModel;
 
             return View(home);
         }
@@ -1287,7 +1253,7 @@ namespace TablesideOrdering.Controllers
             var Cart = CartDetails();
             var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
             var Coupon = _context.Discounts.FirstOrDefault(i => i.Id.ToString() == cart.Coupon);
-            if ((cart.OrderType == "Delivery" && DeliveryCheck(home) == true) || (cart.OrderType == "Carry out" && CarryoutCheck(home) == true) || cart.OrderType == "Eat in" && EatIn(home) == true || cart.OrderType == "Reservation")
+            if ((cart.OrderType == "Delivery" && DeliveryCheck(home) == true) || (cart.OrderType == "Carry out" && CarryoutCheck(home) == true) || cart.OrderType == "Eat in" && EatIn(home) == true)
             {
 
                 OrderInfoModel model = new OrderInfoModel();
@@ -1379,20 +1345,10 @@ namespace TablesideOrdering.Controllers
                     order.Address = "";
                     order.TableNo = info.TableNo;
                 }
-                if (cart.OrderType == "Reservation")
-                {
-                    order.Address = "";
-                    order.TableNo = "";
-                }
 
                 _context.Orders.Add(order);
                 _context.SaveChanges();
-                if (cart.OrderType == "Reservation")
-                {
-                    ReserModel.OrderId = order.OrderId;
-                    _context.Reservations.Add(ReserModel);
-                    _context.SaveChanges();
-                }
+
                 //Save order list to database
                 List<OrderDetail> orderDetailList = new List<OrderDetail>();
                 foreach (var item in Cart.cartViewModels)
@@ -1497,18 +1453,9 @@ namespace TablesideOrdering.Controllers
                 book.Notes = "None";
             }
 
-            book.OrderId = 0;
-            if (home.Reservation.ReserveType == "ReservationOnly")
-            {
-                _context.Reservations.Add(book);
-                _context.SaveChanges();
-                return RedirectToAction("ThankYou");
-            }
-            else
-            {
-                ReserModel = book;
-                return RedirectToAction("Menu");
-            }
+            _context.Reservations.Add(book);
+            _context.SaveChanges();
+            return RedirectToAction("ThankYou");
         }
 
 

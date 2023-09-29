@@ -20,7 +20,7 @@ h2 {
     padding: 20px;
 }
 
-form-rev {
+.form-rev {
     width: 100%;
     padding: 20px;
     border-radius: 6px;
@@ -110,7 +110,7 @@ input[type="date"]::-webkit-inner-spin-button {
     text-align: center;
 }
 
-button-rev {
+.button-rev {
     width: 150px;
     padding: 10px;
     border: none;

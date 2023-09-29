@@ -253,9 +253,6 @@ namespace TablesideOrdering.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
                     b.Property<int>("People")
                         .HasColumnType("int");
 

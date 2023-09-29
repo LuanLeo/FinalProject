@@ -28,7 +28,7 @@
 
 <body>
     <div class="testbox">
-        <form-rev asp-action="ReservationConfirm" asp-controller="home" method="post">
+        <form class="form-rev" asp-action="ReservationConfirm" asp-controller="home" method="post">
             <div class="banner">
                 <h2>Table Reservation Form</h2>
             </div>
@@ -78,23 +78,10 @@
                 <b>Additional Notes</b>
                 <textarea asp-for="@Model.Reservation.Notes" rows="3" placeholder="Ex: Table near window"></textarea>
             </div>
-            <div class="checkout__input">
-                <b>Select Reservation Type<span>*</span></b>
-            </div>
-            <div class="row">
-                <div class="col-lg-4">
-                    <input type=radio id="Reservation Only" class="radio-input" asp-for="@Model.Reservation.ReserveType" style="width:22px; height:13px" value="ReservationOnly" required>
-                    <label for="Reservation Only" class="radio-label"> Reservation Only </label>
-                </div>
-                <div class="col-lg-4">
-                    <input type=radio id="Reservation With Drinks" class="radio-input" asp-for="@Model.Reservation.ReserveType" style="width:22px; height:13px" value="WithDrinks" required>
-                    <label for="Reservation With Drinks" class="radio-label"> Reservation With Drinks </label>
-                </div>
-            </div>
             <div class="btn-block">
-                <button-rev type="submit">Send</button-rev>
+                <button class="button-rev" type="submit">Send</button>
             </div>
-        </form-rev>
+        </form>
     </div>
     <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
