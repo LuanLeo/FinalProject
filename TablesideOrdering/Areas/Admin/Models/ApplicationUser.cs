@@ -6,6 +6,6 @@ namespace TablesideOrdering.Areas.Admin.Models
     {
         public string Firstname { get; set; }
         public string Lastname { get; set; }
-        public string ProfilePic { get; set; }
+        public int TableId { get; set; }
     }
 }

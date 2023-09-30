@@ -26,7 +26,7 @@ document.getElementById("sendButton").addEventListener("click", function (event)
 connection.on("ReceiveMessage", function (user, message, receiver) {
     var table = document.getElementById("receiverInput").value;
 
-    if (user === "Admin" && receiver === table) {
+    if ((user === "Admin" && receiver === table) || (user === "Staff" && receiver === table)) {
         var currentdate = new Date();
         var datetime = currentdate.getDate() + "/" + (currentdate.getMonth() + 1) + "/" + currentdate.getFullYear() + " "
             + currentdate.getHours() + ":" + currentdate.getMinutes();
@@ -34,9 +34,8 @@ connection.on("ReceiveMessage", function (user, message, receiver) {
         doc.append('    <img src="/Logo/Avatar/user.png" alt="" width="32" height="32">');
         doc.append('    <div class="chat-message-content clearfix">'
             + `<span class="chat-time">${datetime}</span>`
-            + `<h5>Table - ${user}</h5>`
+            + `<h5>${user}</h5>`
             + `<p>${message}</p>`
-            + `</div>`
             + `</div>`)
         doc.append('<hr>');
 
@@ -53,7 +52,6 @@ connection.on("ReceiveMessage", function (user, message, receiver) {
             + `<span class="chat-time">${datetime}</span>`
             + `<h5>Table - ${user}</h5>`
             + `<p>${message}</p>`
-            + `</div>`
             + `</div>`)
         doc.append('<hr>');
         SoundChat();
@@ -62,6 +60,16 @@ connection.on("ReceiveMessage", function (user, message, receiver) {
     updateScroll();
 
 });
+var doc = $('<div/>');
+doc.append('    <img src="/Logo/Avatar/user.png" alt="" width="32" height="32">');
+doc.append('    <div class="chat-message-content clearfix">'
+    + `<span class="chat-time">${datetime}</span>`
+    + `<h5>Table - ${user}</h5>`
+    + `<p>${message}</p>`
+    + `</div>`
+    + `</div>`)
+doc.append('<hr>');
+$("#chatbox").append(dox);
 function updateScroll() {
     var element = document.getElementById("messages");
     element.scrollTop = element.scrollHeight;

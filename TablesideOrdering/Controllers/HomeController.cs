@@ -1592,7 +1592,7 @@ namespace TablesideOrdering.Controllers
         public Chat ChatCreate()
         {
             var info = GetUser();
-            Chat chat = _context.Chat.FirstOrDefault(i => i.TableId == info.TableNo);
+            Chat chat = _context.Chat.FirstOrDefault(i => i.ChatRoomID.ToString() == info.TableNo);
             return chat;
         }
 
@@ -1666,7 +1666,7 @@ namespace TablesideOrdering.Controllers
         {
             if (id != null)
             {
-                if (LockIP() == true)
+                //if (LockIP() == true)
                 {
                     _signInManager.SignOutAsync();
 

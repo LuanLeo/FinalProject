@@ -5,22 +5,23 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Threading.Tasks;
 using AspNetCoreHero.ToastNotification.Abstractions;
-using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.InkML;
-using DocumentFormat.OpenXml.Office2010.Excel;
+using DocumentFormat.OpenXml.Spreadsheet;
 using ICSharpCode.SharpZipLib.Zip;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Utilities.Zlib;
 using QRCoder;
 using TablesideOrdering.Areas.Admin.Models;
 using TablesideOrdering.Areas.StoreOwner.Models;
 using TablesideOrdering.Data;
-using Twilio.Rest.Preview.Marketplace.AvailableAddOn;
+using TablesideOrdering.Models;
 using Path = System.IO.Path;
 using Table = TablesideOrdering.Areas.StoreOwner.Models.Table;
 
@@ -33,15 +34,18 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
     {
         private readonly ApplicationDbContext _context;
         public readonly IWebHostEnvironment webHostEnvironment;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInPass _signInPass;
 
         public INotyfService _notyfService { get; }
 
-        public static string TableId;
-        public TablesController(ApplicationDbContext context, INotyfService notyfService, IWebHostEnvironment webHostEnvironment)
+        public TablesController(ApplicationDbContext context, INotyfService notyfService, IOptions<SignInPass> signInPass, IWebHostEnvironment webHostEnvironment, UserManager<IdentityUser> userManager)
         {
             _context = context;
             _notyfService = notyfService;
             this.webHostEnvironment = webHostEnvironment;
+            _userManager = userManager;
+            _signInPass = signInPass.Value;
         }
 
         // GET: StoreOwner/Tables
@@ -61,7 +65,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         // POST: StoreOwner/Tables/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Table table)
+        public async Task<IActionResult> Create(Table table)
         {
             var existTable = _context.Tables.FirstOrDefault(x => x.IdTable == table.IdTable);
             if (existTable == null)
@@ -71,9 +75,23 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 _context.SaveChanges();
 
                 Chat chat = new Chat();
-                chat.TableId = table.IdTable.ToString();
+                chat.TableId = table.Id.ToString();
                 chat.ChatRoomID = table.IdTable;
                 _context.Chat.Add(chat);
+
+                var user = CreateUser();
+                user.TableId = table.Id;
+                user.Firstname = table.IdTable.ToString();
+                user.Lastname = table.IdTable.ToString();
+                user.UserName =$"{table.IdTable}@gmail.com";
+                user.Email = $"{table.IdTable}@gmail.com";
+
+                var result = await _userManager.CreateAsync(user, _signInPass.AccPass);
+                if (result.Succeeded)
+                {
+                    await _userManager.AddToRoleAsync(user,"Customer");
+                }
+
                 _context.SaveChanges();
 
                 _notyfService.Success("Table is created successfully", 5);
@@ -81,6 +99,10 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             }
             _notyfService.Error("Table has already existed ", 5);
             return View(table);
+        }
+        private ApplicationUser CreateUser()
+        {
+            return Activator.CreateInstance<ApplicationUser>();
         }
 
         // GET: StoreOwner/Tables/Edit/5
@@ -98,8 +120,6 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 Status = table.Status,
                 PeopleCap = table.PeopleCap,
             };
-
-            TableId = model.IdTable.ToString();
             return PartialView("Edit", model);
         }
 
@@ -107,17 +127,25 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         // POST: StoreOwner/Tables/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Table table)
+        public async Task<IActionResult> Edit(Table table)
         {
             if (ModelState.IsValid)
             {
                 _context.Tables.Update(table);
+                _context.SaveChanges();
 
                 Chat chat = _context.Chat.FirstOrDefault(x => x.TableId == table.Id.ToString());
-                chat.TableId = table.IdTable.ToString();
+                chat.TableId = table.Id.ToString();
                 chat.ChatRoomID = table.IdTable;
                 _context.Chat.Update(chat);
 
+                var user = _context.ApplicationUsers.FirstOrDefault(i=>i.TableId == table.Id);
+                user.Firstname = table.IdTable.ToString();
+                user.Lastname = table.IdTable.ToString();
+                user.Email = $"{table.IdTable}@gmail.com";
+                user.UserName = $"{table.IdTable}@gmail.com";
+
+                await _userManager.UpdateAsync(user);
                 _context.SaveChanges();
                 _notyfService.Success("The info is edited succeesfully", 5);
                 return RedirectToAction("Index");
@@ -147,7 +175,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         // POST: StoreOwner/Tables/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(Table model)
+        public async Task<IActionResult> Delete(Table model)
         {
             var table = _context.Tables.Find(model.Id);
             if (table.Status == "Available")
@@ -159,8 +187,10 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 Chat chat = _context.Chat.FirstOrDefault(x => x.TableId == table.Id.ToString());
                 _context.Chat.Remove(chat);
 
-                _context.SaveChanges();
+                var user = _context.ApplicationUsers.FirstOrDefault(i=>i.TableId == table.Id);
+                _context.ApplicationUsers.Remove(user);
 
+                await _context.SaveChangesAsync();
                 _notyfService.Success("Table is deleted successfully", 5);
                 return RedirectToAction("Index");
             }

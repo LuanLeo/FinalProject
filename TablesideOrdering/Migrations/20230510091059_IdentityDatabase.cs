@@ -27,14 +27,6 @@ namespace TablesideOrdering.Migrations
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
-                name: "ProfilePic",
-                table: "AspNetUsers",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
-            migrationBuilder.AlterColumn<string>(
                 name: "NormalizedUserName",
                 table: "AspNetUsers",
                 type: "nvarchar(256)",
@@ -300,16 +292,6 @@ namespace TablesideOrdering.Migrations
                 oldClrType: typeof(string),
                 oldType: "nvarchar(256)",
                 oldMaxLength: 256,
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "ProfilePic",
-                table: "ApplicationUsers",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
                 oldNullable: true);
 
             migrationBuilder.AlterColumn<string>(
