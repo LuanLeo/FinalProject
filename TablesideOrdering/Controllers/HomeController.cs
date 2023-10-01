@@ -359,7 +359,6 @@ namespace TablesideOrdering.Controllers
                 smtp.Send(email);
                 smtp.Disconnect(true);
             }
-
         }
 
         //CREATE INVOICE FUCNTION
@@ -1077,7 +1076,7 @@ namespace TablesideOrdering.Controllers
 
                 //Send SMS to customer
                 PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
-                //SendSMS();
+                SendSMS();
 
                 //Renew the cart
                 RefreshAll();
@@ -1224,7 +1223,7 @@ namespace TablesideOrdering.Controllers
 
                 //Send SMS to customer
                 PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
-                //SendSMS();
+                SendSMS();
 
                 //Renew the cart
                 RefreshAll();
@@ -1387,7 +1386,7 @@ namespace TablesideOrdering.Controllers
 
                 //Send SMS to customer
                 PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
-                //SendSMS();
+                SendSMS();
 
                 //Renew the cart
                 RefreshAll();
@@ -1666,7 +1665,7 @@ namespace TablesideOrdering.Controllers
         {
             if (id != null)
             {
-                //if (LockIP() == true)
+                if (LockIP() == true)
                 {
                     _signInManager.SignOutAsync();
 
