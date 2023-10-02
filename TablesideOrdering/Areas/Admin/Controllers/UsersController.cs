@@ -17,7 +17,7 @@ using TablesideOrdering.Data;
 namespace TablesideOrdering.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext context;
