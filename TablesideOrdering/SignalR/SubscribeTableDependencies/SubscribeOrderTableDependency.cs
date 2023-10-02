@@ -19,7 +19,7 @@ namespace TablesideOrdering.SignalR.SubscribeTableDependencies
 
         public void SubscribeTableDependency()
         {
-            string connectionString = "server=sql.bsite.net\\MSSQL2016;  Initial Catalog=llcoffee_;Persist Security Info=True;User ID=llcoffee_;Password=Longtran1; MultipleActiveResultSets=True";
+            string connectionString = "server=(localdb)\\MSSQLLocalDB; database=TablesideOrderingSystem; Integrated Security=true;MultipleActiveResultSets=true";
             tableDependency = new SqlTableDependency<Orders>(connectionString);
             tableDependency.OnChanged += TableDependency_OnChanged;
             tableDependency.OnError += TableDependency_OnError;
