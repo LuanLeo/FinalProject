@@ -13,6 +13,10 @@ using TablesideOrdering.PaymentServices.Momo;
 using TablesideOrdering.PaymentServices.VNPay;
 using TablesideOrdering.ViewModels;
 using Twilio;
+using System;
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 using TopFoodSizePrice = TablesideOrdering.Models.TopFoodSizePrice;
@@ -52,6 +56,7 @@ using DocumentFormat.OpenXml.EMMA;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
 using DocumentFormat.OpenXml.Wordprocessing;
+using IPAddress = System.Net.IPAddress;
 
 namespace TablesideOrdering.Controllers
 {
@@ -74,6 +79,7 @@ namespace TablesideOrdering.Controllers
         private IMomoService _momoService;
         private readonly IVnPayService _vnPayService;
         private readonly ILogger<LoginModel> _logger;
+        private IHttpContextAccessor _accessor;
 
         //Static variables before saving to database
         public string PhoneMessage;
@@ -82,12 +88,13 @@ namespace TablesideOrdering.Controllers
         public HomeController(ApplicationDbContext context, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
             ILogger<LoginModel> logger, INotyfService notyfService,IVnPayService vnPayService,
             IOptions<SMSMessage> SMSMessage, IOptions<Email> email, IOptions<SignInPass> signInPass, IOptions<IPRestrict> iPRestrict,
-            IMomoService momoService,IHostingEnvironment host)
+            IMomoService momoService,IHostingEnvironment host, IHttpContextAccessor accessor)
             {
                 _context = context;
                 _signInManager = signInManager;
                 _userManager = userManager;
                 _logger = logger;
+                _accessor = accessor;
 
                 _iPRestrict = iPRestrict.Value;
                 _signInPass = signInPass.Value;
@@ -1690,17 +1697,16 @@ namespace TablesideOrdering.Controllers
             }
             else
             {
-                string IP = TakeIP();
-                var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TakeIP());
-                if (cart == null)
-                {
-                    CreateVirtualCart(TakeIP());
+                    var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TakeIP());
+                    if (cart == null)
+                    {
+                        CreateVirtualCart(TakeIP());
 
-                    var carts = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TakeIP());
-                    carts.OrderType = "Eat in";
-                    _context.VirtualCarts.Update(carts);
-                    _context.SaveChanges();
-                }
+                        var carts = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TakeIP());
+                        carts.OrderType = "Eat in";
+                        _context.VirtualCarts.Update(carts);
+                        _context.SaveChanges();
+                    }
                 return RedirectToAction("Index");
             }
         }
@@ -1709,7 +1715,13 @@ namespace TablesideOrdering.Controllers
         public Boolean LockIP()
         {
             //Take user ip and allow ip
-            string IP = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            var ip = System.Net.Dns.GetHostEntry(Environment.MachineName).AddressList.Take(0).ToList();
+            string IP = "";
+            foreach (var i in ip)
+            {
+                IP = i.MapToIPv4().ToString();
+            }
+
             string IPCheck = _iPRestrict.IPString;
 
             //Split allow ip into 2 strings
@@ -1728,17 +1740,28 @@ namespace TablesideOrdering.Controllers
         //TAKE USER IP AT HOME FUNCTION
         public string TakeIP()
         {
-            string IP = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-            var AHcart = _context.VirtualCarts.FirstOrDefault(x => x.TableId == IP);
-
-            if (AHcart == null)
+            var IP = Response.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
+            if(IP =="0.0.0.1")
             {
-                VirtualCart vcart = new VirtualCart();
-                vcart.TableId = HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-                _context.VirtualCarts.Add(vcart);
-                _context.SaveChanges();
+                IP = Dns.GetHostEntry(Dns.GetHostName()).AddressList[2].MapToIPv4().ToString();
             }
             return IP;
         }
+        /*public string TakeIP()
+        {
+            string IP = "";
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            List<string> l  = new List<string>();
+            foreach (var ip in host.AddressList)
+            {
+                l.Add(ip.MapToIPv4().ToString());
+                if (ip.AddressFamily != AddressFamily.InterNetwork)
+                {
+                    IP = ip.MapToIPv4().ToString();
+                }
+            }
+            var ll = l;
+            return IP;
+        }*/
     }
 }
