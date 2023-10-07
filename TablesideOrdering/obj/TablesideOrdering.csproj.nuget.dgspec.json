@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj": {}
+    "C:\\Users\\USER\\Desktop\\1\\TablesideOrdering\\TablesideOrdering.csproj": {}
   },
   "projects": {
-    "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj": {
+    "C:\\Users\\USER\\Desktop\\1\\TablesideOrdering\\TablesideOrdering.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
+        "projectUniqueName": "C:\\Users\\USER\\Desktop\\1\\TablesideOrdering\\TablesideOrdering.csproj",
         "projectName": "TablesideOrdering",
-        "projectPath": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
+        "projectPath": "C:\\Users\\USER\\Desktop\\1\\TablesideOrdering\\TablesideOrdering.csproj",
         "packagesPath": "C:\\Users\\USER\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\obj\\",
+        "outputPath": "C:\\Users\\USER\\Desktop\\1\\TablesideOrdering\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\USER\\AppData\\Roaming\\NuGet\\NuGet.Config",

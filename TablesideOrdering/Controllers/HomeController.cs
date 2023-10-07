@@ -57,6 +57,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Http;
 using DocumentFormat.OpenXml.Wordprocessing;
 using IPAddress = System.Net.IPAddress;
+using DocumentFormat.OpenXml.InkML;
 
 namespace TablesideOrdering.Controllers
 {
@@ -86,27 +87,27 @@ namespace TablesideOrdering.Controllers
         public static Boolean CheckNotify = false;
 
         public HomeController(ApplicationDbContext context, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
-            ILogger<LoginModel> logger, INotyfService notyfService,IVnPayService vnPayService,
+            ILogger<LoginModel> logger, INotyfService notyfService, IVnPayService vnPayService,
             IOptions<SMSMessage> SMSMessage, IOptions<Email> email, IOptions<SignInPass> signInPass, IOptions<IPRestrict> iPRestrict,
-            IMomoService momoService,IHostingEnvironment host, IHttpContextAccessor accessor)
-            {
-                _context = context;
-                _signInManager = signInManager;
-                _userManager = userManager;
-                _logger = logger;
-                _accessor = accessor;
+            IMomoService momoService, IHostingEnvironment host, IHttpContextAccessor accessor)
+        {
+            _context = context;
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _logger = logger;
+            _accessor = accessor;
 
-                _iPRestrict = iPRestrict.Value;
-                _signInPass = signInPass.Value;
-                _SMSMessage = SMSMessage.Value;
-                _email = email.Value;
+            _iPRestrict = iPRestrict.Value;
+            _signInPass = signInPass.Value;
+            _SMSMessage = SMSMessage.Value;
+            _email = email.Value;
 
-                _notyfService = notyfService;
-                _vnPayService = vnPayService;
-                _momoService = momoService;
+            _notyfService = notyfService;
+            _vnPayService = vnPayService;
+            _momoService = momoService;
 
-                _host = host;
-            }
+            _host = host;
+        }
 
         //CONTROLLER FOR HOME PAGE
         [HttpGet]
@@ -508,7 +509,7 @@ namespace TablesideOrdering.Controllers
 
 
 
-        
+
 
 
 
@@ -778,7 +779,7 @@ namespace TablesideOrdering.Controllers
 
 
 
-        
+
 
 
 
@@ -1672,47 +1673,43 @@ namespace TablesideOrdering.Controllers
         {
             if (id != null)
             {
-                if (LockIP() == true)
+                _signInManager.SignOutAsync();
+
+                var pass = _signInPass.AccPass;
+                var result = await _signInManager.PasswordSignInAsync($"{id}@gmail.com", pass, true, lockoutOnFailure: false);
+
+                var info = GetUser();
+                var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
+                if (cart == null)
                 {
-                    _signInManager.SignOutAsync();
+                    CreateVirtualCart(info.TableNo);
 
-                    var pass = _signInPass.AccPass;
-                    var result = await _signInManager.PasswordSignInAsync($"{id}@gmail.com", pass, true, lockoutOnFailure: false);
-
-                    var info = GetUser();
-                    var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
-                    if (cart == null)
-                    {
-                        CreateVirtualCart(info.TableNo);
-
-                        var carts = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
-                        carts.OrderType = "Eat in";
-                        _context.VirtualCarts.Update(carts);
-                        _context.SaveChanges();
-                    }
-                    return RedirectToAction("Index");
+                    var carts = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
+                    carts.OrderType = "Eat in";
+                    _context.VirtualCarts.Update(carts);
+                    _context.SaveChanges();
                 }
-                var url = Url.RouteUrl("areas", new { controller = "Account", action = "AccessDenied", area = "Identity" });
-                return LocalRedirect(url);
+                return RedirectToAction("Index");
+
             }
             else
             {
-                    var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TakeIP());
-                    if (cart == null)
-                    {
-                        CreateVirtualCart(TakeIP());
+                var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TakeIP());
+                if (cart == null)
+                {
+                    CreateVirtualCart(TakeIP());
 
-                        var carts = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TakeIP());
-                        carts.OrderType = "Eat in";
-                        _context.VirtualCarts.Update(carts);
-                        _context.SaveChanges();
-                    }
+                    var carts = _context.VirtualCarts.FirstOrDefault(i => i.TableId == TakeIP());
+                    carts.OrderType = "Eat in";
+                    _context.VirtualCarts.Update(carts);
+                    _context.SaveChanges();
+                }
                 return RedirectToAction("Index");
             }
         }
 
         //CHECK USER IP FUNCTION
-        public Boolean LockIP()
+        /*public Boolean LockIP()
         {
             //Take user ip and allow ip
             var ip = System.Net.Dns.GetHostEntry(Environment.MachineName).AddressList.Take(0).ToList();
@@ -1735,33 +1732,18 @@ namespace TablesideOrdering.Controllers
                 return true;
             }
             return false;
-        }
+        }*/
 
         //TAKE USER IP AT HOME FUNCTION
         public string TakeIP()
         {
             var IP = Response.HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
-            if(IP =="0.0.0.1")
+
+            if (IP == "0.0.0.1")
             {
                 IP = Dns.GetHostEntry(Dns.GetHostName()).AddressList[2].MapToIPv4().ToString();
             }
             return IP;
         }
-        /*public string TakeIP()
-        {
-            string IP = "";
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            List<string> l  = new List<string>();
-            foreach (var ip in host.AddressList)
-            {
-                l.Add(ip.MapToIPv4().ToString());
-                if (ip.AddressFamily != AddressFamily.InterNetwork)
-                {
-                    IP = ip.MapToIPv4().ToString();
-                }
-            }
-            var ll = l;
-            return IP;
-        }*/
     }
 }
