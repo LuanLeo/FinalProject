@@ -13,20 +13,22 @@ namespace TablesideOrdering.Areas.Admin.Controllers
     public class AppRolesController : Controller
     {
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly ApplicationDbContext _context;
         public INotyfService _notyfService { get; }
-        public AppRolesController(RoleManager<IdentityRole> roleManager, INotyfService notyfService, ApplicationDbContext context)
+        public AppRolesController(RoleManager<IdentityRole> roleManager, INotyfService notyfService, ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _roleManager = roleManager;
             _notyfService = notyfService;
             _context = context;
-
+            _userManager = userManager;
         }
         public IActionResult Index()
         {
             var roles = _roleManager.Roles;
             return View(roles);
         }
+
         [HttpGet]
         public IActionResult Create()
         {

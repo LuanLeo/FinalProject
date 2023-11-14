@@ -13,20 +13,12 @@ using TablesideOrdering.PaymentServices.Momo;
 using TablesideOrdering.SignalR.SubscribeTableDependencies;
 using TablesideOrdering.SignalR.MiddlewareExtensions;
 using TablesideOrdering.SignalR.Hubs;
-using Microsoft.AspNetCore.HttpOverrides;
-using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
-builder.Services.Configure<ForwardedHeadersOptions>(option =>
-{
-    option.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-});
 
 //Call SignalR Hub
 builder.Services.AddSingleton<OrderHub>();
@@ -35,8 +27,6 @@ builder.Services.AddSingleton<SubscribeOrderTableDependency>();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("TablesideOrdering")));
 builder.Services.AddDefaultIdentity<IdentityUser>().AddDefaultTokenProviders().AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddHttpContextAccessor();
-builder.Services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
 //Call From AppSetting
 builder.Services.Configure<SMSMessage>(builder.Configuration.GetSection("SMSTwilio"));
 builder.Services.Configure<SignInPass>(builder.Configuration.GetSection("SignInPass"));
@@ -68,7 +58,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthentication(); ;
-app.UseForwardedHeaders();
+
 app.UseAuthorization();
 
 app.MapHub<OrderHub>("/orderHub");
