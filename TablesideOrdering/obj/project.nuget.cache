@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "51htkDX0t9R7/R1Tuh4ZzySCgImP/C0lee23mdhLsgp0Czt2ermmAmZ83BzuT8uEWnV8usBaa73BMe7Xr8mEUQ==",
+  "dgSpecHash": "SGuk2dAqGVnRtxlxtIIlgeRX0gch7z8lmJYZmKAbEzNZsGeI6NL1m29MkBXVsWJbRbCIdRBB8cCWcFjFJWDSsw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
+  "projectFilePath": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject-main\\TablesideOrdering\\TablesideOrdering.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pekoi\\.nuget\\packages\\aspnetcorehero.toastnotification\\1.1.0\\aspnetcorehero.toastnotification.1.1.0.nupkg.sha512",
     "C:\\Users\\pekoi\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",

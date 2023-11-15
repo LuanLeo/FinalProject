@@ -73,7 +73,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             if (model.PicFile == null)
             {
                 ViewBag.NullFile = "Please upload an image!";
-                return View();
+                return RedirectToAction("Index");
             }
 
             if (model.PicFile != null)
@@ -83,7 +83,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 await _context.SaveChangesAsync();
 
                 notyfService.Success("New category has been created");
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
             notyfService.Error("Something went wrong, please try again!");
             return RedirectToAction("Index");

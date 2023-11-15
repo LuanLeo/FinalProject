@@ -12851,11 +12851,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
+      "projectUniqueName": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject-main\\TablesideOrdering\\TablesideOrdering.csproj",
       "projectName": "TablesideOrdering",
-      "projectPath": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\TablesideOrdering.csproj",
+      "projectPath": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject-main\\TablesideOrdering\\TablesideOrdering.csproj",
       "packagesPath": "C:\\Users\\pekoi\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject\\TablesideOrdering\\obj\\",
+      "outputPath": "C:\\Users\\pekoi\\Documents\\Desktop\\FinalProject-main\\TablesideOrdering\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\pekoi\\AppData\\Roaming\\NuGet\\NuGet.Config",
