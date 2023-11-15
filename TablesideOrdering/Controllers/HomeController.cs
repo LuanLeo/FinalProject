@@ -1443,6 +1443,7 @@ namespace TablesideOrdering.Controllers
         public IActionResult Reservation()
         {
             HomeViewModel home = NavData();
+            home.Reservation = new ReservationViewModel();
             return View(home);
         }
 
