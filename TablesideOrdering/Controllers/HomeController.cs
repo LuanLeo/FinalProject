@@ -52,6 +52,7 @@ using DocumentFormat.OpenXml.EMMA;
 using System.Reflection;
 using Microsoft.AspNetCore.Http;
 using DocumentFormat.OpenXml.Wordprocessing;
+using DocumentFormat.OpenXml.VariantTypes;
 
 namespace TablesideOrdering.Controllers
 {
@@ -126,6 +127,7 @@ namespace TablesideOrdering.Controllers
         {
             var info = GetUser();
             var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
+            
 
             if (term == "Delivery")
             {
@@ -803,7 +805,7 @@ namespace TablesideOrdering.Controllers
         {
             var Cart = CartDetails();
             string validnum = "";
-            if (Cart.PhoneNumber.Substring(1) != "0")
+           if (Cart.PhoneNumber.Substring(1) != "0")
             {
                 string number = Cart.PhoneNumber.Substring(1);
                 validnum = "+84" + number;
@@ -968,6 +970,7 @@ namespace TablesideOrdering.Controllers
 
             HomeViewModel home = CouponShow();
             home.OrderType = cart.OrderType;
+            home.Reser = new Reservation();
             return View(home);
         }
 
@@ -1107,6 +1110,8 @@ namespace TablesideOrdering.Controllers
 
             HomeViewModel home = CouponShow();
             home.OrderType = cart.OrderType;
+            home.Reser = new Reservation();
+
             return View(home);
         }
 
@@ -1250,6 +1255,7 @@ namespace TablesideOrdering.Controllers
             var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
             HomeViewModel home = CouponShow();
             home.OrderType = cart.OrderType;
+            home.Reser = new Reservation();
 
             return View(home);
         }

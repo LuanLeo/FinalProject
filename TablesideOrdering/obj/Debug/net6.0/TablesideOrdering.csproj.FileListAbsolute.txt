@@ -4349,3 +4349,4 @@ C:\Users\pekoi\Documents\Desktop\FinalProject-3b7bd37129f56d7ef40f61c681b29ce67c
 C:\Users\pekoi\Documents\Desktop\FinalProject-3b7bd37129f56d7ef40f61c681b29ce67ca6c9db\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.csproj.CopyComplete
 C:\Users\pekoi\Documents\Desktop\FinalProject-3b7bd37129f56d7ef40f61c681b29ce67ca6c9db\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.genruntimeconfig.cache
 C:\Users\pekoi\Documents\Desktop\FinalProject-3b7bd37129f56d7ef40f61c681b29ce67ca6c9db\TablesideOrdering\obj\Debug\net6.0\ref\TablesideOrdering.dll
+C:\Users\Admin\OneDrive\Máy tính\FinalProject\TablesideOrdering\obj\Debug\net6.0\TablesideOrdering.sourcelink.json
