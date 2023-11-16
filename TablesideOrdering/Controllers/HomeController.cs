@@ -77,7 +77,6 @@ namespace TablesideOrdering.Controllers
         private readonly ILogger<LoginModel> _logger;
 
         //Static variables before saving to database
-        public string PhoneMessage;
         public static Boolean CheckNotify = false;
 
         public HomeController(ApplicationDbContext context, SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager,
@@ -786,28 +785,27 @@ namespace TablesideOrdering.Controllers
 
 
         //SENDING SMS TO CUSTOMER FUCNTION
-        public void SendSMS()
+        public void SendSMS(VirtualCart cart, string phone)
         {
-            if (PhoneMessage != null)
+            if (cart.EmailMessage != null)
             {
-                string number = ConvertToPhoneValid();
+                string number = ConvertToPhoneValid(phone);
                 TwilioClient.Init(_SMSMessage.AccountSid, _SMSMessage.AuthToken);
                 var message = MessageResource.Create(
                     to: new PhoneNumber(number),
                     from: new PhoneNumber(_SMSMessage.PhoneFrom),
-                    body: PhoneMessage);
+                    body: cart.EmailMessage);
             }
             _notyfService.Error("Can't receive phone message", 5);
         }
 
         //MODIFY PHONE NUMBER FUNCTION
-        public string ConvertToPhoneValid()
+        public string ConvertToPhoneValid(string phone)
         {
-            var Cart = CartDetails();
-            string validnum = "";
-           if (Cart.PhoneNumber.Substring(1) != "0")
+           string validnum = "";
+           if (phone.Substring(1) != "0")
             {
-                string number = Cart.PhoneNumber.Substring(1);
+                string number = phone.Substring(1);
                 validnum = "+84" + number;
             }
             return validnum;
@@ -1084,8 +1082,11 @@ namespace TablesideOrdering.Controllers
                 }
 
                 //Send SMS to customer
-                PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
-                SendSMS();
+                Cart.EmailMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
+                Cart.Subject = "Placed Sucess";
+                _context.VirtualCarts.Update(Cart);
+                _context.SaveChanges();
+                SendSMS(Cart, home.Cart.PhoneNumber);
 
                 //Renew the cart
                 RefreshAll();
@@ -1233,8 +1234,11 @@ namespace TablesideOrdering.Controllers
                 }
 
                 //Send SMS to customer
-                PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
-                SendSMS();
+                cart.EmailMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
+                cart.Subject = "Placed Sucess";
+                _context.VirtualCarts.Update(cart);
+                _context.SaveChanges();
+                SendSMS(cart, home.Cart.PhoneNumber);
 
                 //Renew the cart
                 RefreshAll();
@@ -1397,8 +1401,12 @@ namespace TablesideOrdering.Controllers
                 }
 
                 //Send SMS to customer
-                PhoneMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
-                SendSMS();
+                //Send SMS to customer
+                cart.EmailMessage = $"Your order has been placed successfully, your order ID is {order.OrderId}";
+                cart.Subject = "Placed Sucess";
+                _context.VirtualCarts.Update(cart);
+                _context.SaveChanges();
+                SendSMS(cart, home.Cart.PhoneNumber);
 
                 //Renew the cart
                 RefreshAll();

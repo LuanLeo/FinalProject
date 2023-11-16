@@ -1,0 +1,2 @@
+ngrok config add-authtoken 2NuSlfS4WfCa3MQjN7FcgHN2K8q_Q43Vq9vVM5oXp4gCiRP4
+ngrok http https://localhost:7270/
