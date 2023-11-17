@@ -1,0 +1,46 @@
+﻿@using TablesideOrdering.Areas.Staff.Models;
+@model Reservation
+@{
+    ViewData["Title"] = "Delete Res";
+}
+
+<div class="modal fade" id="DeleteRes-@Model.Id" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete</h5>
+            </div>
+            <div class="container-fluid">
+                <form asp-action="Delete" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <h3>Are you sure you want to delete this?</h3>
+                    <div class="form-group">
+                        <label class="control-label">Phone number:</label>
+                        @Html.DisplayFor(model => model.PhoneNumber)
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Customer Name:</label>
+                        @Html.DisplayFor(model => model.CusName)
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Email:</label>
+                        @Html.DisplayFor(model => model.Email)
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">People:</label>
+                        @Html.DisplayFor(model => model.People)
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Notes:</label>
+                        @Html.DisplayFor(model => model.Notes)
+                    </div>
+
+                    <div class="modal-footer">
+                        <input type="submit" value="Delete" class="btn btn-danger" />
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

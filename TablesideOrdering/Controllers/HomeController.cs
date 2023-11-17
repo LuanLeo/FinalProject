@@ -1238,7 +1238,7 @@ namespace TablesideOrdering.Controllers
                 cart.Subject = "Placed Sucess";
                 _context.VirtualCarts.Update(cart);
                 _context.SaveChanges();
-                SendSMS(cart, home.Cart.PhoneNumber);
+                SendSMS(cart, cart.CusPhoneNum);
 
                 //Renew the cart
                 RefreshAll();
@@ -1406,7 +1406,7 @@ namespace TablesideOrdering.Controllers
                 cart.Subject = "Placed Sucess";
                 _context.VirtualCarts.Update(cart);
                 _context.SaveChanges();
-                SendSMS(cart, home.Cart.PhoneNumber);
+                SendSMS(cart, cart.CusPhoneNum);
 
                 //Renew the cart
                 RefreshAll();
