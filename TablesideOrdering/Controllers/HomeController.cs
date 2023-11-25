@@ -1686,8 +1686,8 @@ namespace TablesideOrdering.Controllers
         {
             if (id != null)
             {
-                if (LockIP() == true)
-                {
+                /*if (LockIP() == true)
+                {*/
                     _signInManager.SignOutAsync();
 
                     var pass = _signInPass.AccPass;
@@ -1705,9 +1705,9 @@ namespace TablesideOrdering.Controllers
                         _context.SaveChanges();
                     }
                     return RedirectToAction("Index");
-                }
+               /* }
                 var url = Url.RouteUrl("areas", new { controller = "Account", action = "AccessDenied", area = "Identity" });
-                return LocalRedirect(url);
+                return LocalRedirect(url);*/
             }
             else
             {

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "HuCzVl0ASYNKtWGOjMIJBHw2EbKYT6Jy9DdxvOQ0d6A=",
+  "Hash": "132fD0cuAkMCkI83JffIz/JQiOmDawv8yQnvhc8gzX4=",
   "Source": "TablesideOrdering",
   "BasePath": "_content/TablesideOrdering",
   "Mode": "Default",
@@ -15690,6 +15690,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\ProductImage\\Use Case (Total System).PNG"
+    },
+    {
+      "Identity": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\QR\\QRCode-Table0.png",
+      "SourceId": "TablesideOrdering",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\",
+      "BasePath": "_content/TablesideOrdering",
+      "RelativePath": "QR/QRCode-Table0.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\QR\\QRCode-Table0.png"
     },
     {
       "Identity": "C:\\Users\\Admin\\OneDrive\\Máy tính\\FinalProject\\TablesideOrdering\\wwwroot\\QR\\QRCode-Table1.png",
