@@ -30,7 +30,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         public IActionResult Index()
         {
             ViewBag.Num = Num;
-            ViewBag.Message = "New order has been updated";
+            ViewBag.Message = "New order has been updated!";
             return View();
         }
         public void Delivery(int id)
@@ -38,20 +38,20 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             Orders order = _context.Orders.Where(o => o.OrderId == id).FirstOrDefault();
             order.Status = "Delivering";
             _context.SaveChanges();
-        //  SendSMS(order.PhoneNumber);
+            SendSMS(order.PhoneNumber);
         }
 
         //SENDING SMS TO CUSTOMER FUCNTION
-       /* public void SendSMS(string phone)
+        public void SendSMS(string phone)
         {
-            var PhoneMessage = "Your order is ready, please wait a minute!";
+            var PhoneMessage = "Your order is delivering!";
             string number = ConvertToPhoneValid(phone);
             TwilioClient.Init(_SMSMessage.AccountSid, _SMSMessage.AuthToken);
             var message = MessageResource.Create(
                 to: new PhoneNumber(number),
                 from: new PhoneNumber(_SMSMessage.PhoneFrom),
                 body: PhoneMessage);
-        }*/
+        }
 
         //MODIFY PHONE NUMBER FUNCTION
         public string ConvertToPhoneValid(string PhoneNumber)
@@ -75,7 +75,6 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         {
             var delivering = _context.Orders.Where(i => i.OrderType == "Delivery" && i.Status == "delivering");
             return View(delivering);
-
         }
     }
 }

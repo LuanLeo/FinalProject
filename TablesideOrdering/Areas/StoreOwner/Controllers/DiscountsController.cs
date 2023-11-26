@@ -78,7 +78,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 context.Update(discount);
                 await context.SaveChangesAsync();
 
-                notyfService.Information("The info has been updated", 5);
+                notyfService.Information("The info has been updated!", 5);
                 return RedirectToAction(nameof(Index));
             }
             notyfService.Error("Something went wrong, try again!");
@@ -113,7 +113,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 context.Discounts.Remove(discount);
             }
             await context.SaveChangesAsync();
-            notyfService.Success("The discount is deleted", 5);
+            notyfService.Success("The discount is deleted!", 5);
             return RedirectToAction(nameof(Index));
         }
     }

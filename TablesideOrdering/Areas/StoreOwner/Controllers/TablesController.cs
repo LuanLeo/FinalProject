@@ -94,10 +94,10 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
 
                 _context.SaveChanges();
 
-                _notyfService.Success("Table is created successfully", 5);
+                _notyfService.Success("Table has been created!", 5);
                 return RedirectToAction(nameof(Index));
             }
-            _notyfService.Error("Table has already existed ", 5);
+            _notyfService.Error("Table has already existed!", 5);
             return View(table);
         }
         private ApplicationUser CreateUser()
@@ -147,7 +147,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
 
                 await _userManager.UpdateAsync(user);
                 _context.SaveChanges();
-                _notyfService.Success("The info is edited succeesfully", 5);
+                _notyfService.Success("The info has been updated!", 5);
                 return RedirectToAction("Index");
             }
 
@@ -191,10 +191,10 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 _context.ApplicationUsers.Remove(user);
 
                 await _context.SaveChangesAsync();
-                _notyfService.Success("Table is deleted successfully", 5);
+                _notyfService.Success("The table is deleted!", 5);
                 return RedirectToAction("Index");
             }
-            _notyfService.Warning("Table is being used", 5);
+            _notyfService.Warning("Table is being used!", 5);
             return View("Index");
         }
 

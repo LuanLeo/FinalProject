@@ -19,7 +19,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
         public IActionResult Index()
         {
             ViewBag.Num = Num;
-            ViewBag.Message = "New order has been updated";
+            ViewBag.Message = "New order has been updated!";
             return View();
         }
 

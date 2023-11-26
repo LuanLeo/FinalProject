@@ -51,10 +51,10 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             context.Add(category);
             await context.SaveChangesAsync();
 
-            notyfService.Success("New category has been created");
+            notyfService.Success("New category has been created!");
             return RedirectToAction(nameof(Index));
         }
-        notyfService.Error("Something went wrong, please try again!");
+        notyfService.Error("Something went wrong, try again!");
         return View(category);
     }
 
@@ -96,10 +96,10 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                     throw;
                 }
             }
-            notyfService.Information("The category info has been updated", 5);
+            notyfService.Information("The info has been updated!", 5);
             return RedirectToAction(nameof(Index));
         }
-        notyfService.Error("Something went wrong, please try again!");
+        notyfService.Error("Something went wrong, try again!");
         return View(category);
     }
 
@@ -130,7 +130,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             context.Categories.Remove(category);
         }
         await context.SaveChangesAsync();
-        notyfService.Success("The category is deleted", 5);
+        notyfService.Success("The category is deleted!", 5);
         return RedirectToAction(nameof(Index));
     }
 

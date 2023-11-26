@@ -63,7 +63,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                 _context.Reservations.Remove(res);
             }
             await _context.SaveChangesAsync();
-            _notyfService.Success("The reservation is deleted", 5);
+            _notyfService.Success("The reservation is deleted!", 5);
             return RedirectToAction(nameof(Index));
         }
     }

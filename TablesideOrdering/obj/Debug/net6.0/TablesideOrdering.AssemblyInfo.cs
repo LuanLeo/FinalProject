@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TablesideOrdering")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+df29eed7ff33a359eb168300413413a147b12233")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
 [assembly: System.Reflection.AssemblyProductAttribute("TablesideOrdering")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TablesideOrdering")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

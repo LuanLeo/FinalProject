@@ -52,10 +52,10 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 _context.Add(productSize);
                 await _context.SaveChangesAsync();
 
-                notyfService.Success("New size has been created");
+                notyfService.Success("New size has been created!");
                 return RedirectToAction(nameof(Index));
             }
-            notyfService.Error("Something went wrong, please try again!");
+            notyfService.Error("Something went wrong, try again!");
             return View(productSize);
         }
 
@@ -85,10 +85,10 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 _context.Update(productSize);
                 await _context.SaveChangesAsync();
 
-                notyfService.Information("The size info has been updated", 5);
+                notyfService.Information("The info has been updated!", 5);
                 return RedirectToAction(nameof(Index));
             }
-            notyfService.Error("Something went wrong, please try again!");
+            notyfService.Error("Something went wrong, try again!");
             return View(productSize);
         }
 
@@ -116,7 +116,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         {
             _context.ProductSize.Remove(productSize);
             await _context.SaveChangesAsync();
-            notyfService.Success("The size is deleted", 5);
+            notyfService.Success("The size is deleted!", 5);
             return RedirectToAction(nameof(Index));
         }
     }

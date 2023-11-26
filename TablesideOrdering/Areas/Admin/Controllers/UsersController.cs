@@ -90,7 +90,7 @@
                     await userManager.AddToRoleAsync(user, model.Register.Role);
                     return RedirectToAction("Index");
                 }
-                notyfService.Error("Something went wrong, please try again", 5);
+                notyfService.Error("Something went wrong, try again!", 5);
                 return RedirectToAction("Index");
             }
 
@@ -133,7 +133,7 @@
                 }
                 context.ApplicationUsers.Remove(user);
                 context.SaveChanges();
-                notyfService.Success("The user is deleted", 5);
+                notyfService.Success("The user is deleted!", 5);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -175,7 +175,7 @@
                 var userWithSameEmail = await userManager.FindByEmailAsync(model.Email);
                 if (userWithSameEmail != null && userWithSameEmail.Id != model.UserID)
                 {
-                    ModelState.AddModelError("Email", "This email is already used");
+                    ModelState.AddModelError("Email", "This email is already used!");
                     return View(model);
                 }
 
@@ -199,7 +199,7 @@
                 await userManager.RemoveFromRolesAsync(user, oldrole);
                 await userManager.AddToRoleAsync(user, newrole);
 
-                notyfService.Information("The user info has been updated", 5);
+                notyfService.Information("The info has been updated!", 5);
                 return RedirectToAction("Index");
             }
 

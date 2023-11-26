@@ -32,7 +32,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
         public async Task<IActionResult> Index()
         {
             ProductSizeList();
-            return _context.ProductSizePrice != null ? 
+            return _context.ProductSizePrice != null ?
                           View(await _context.ProductSizePrice.ToListAsync()) :
                           Problem("Entity set 'ApplicationDbContext.ProductSizePrice'  is null.");
         }
@@ -48,17 +48,17 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( ProductSizePrice productSizePrice)
+        public async Task<IActionResult> Create(ProductSizePrice productSizePrice)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(productSizePrice);
                 await _context.SaveChangesAsync();
 
-                notyfService.Success("New product's size and price have been created");
+                notyfService.Success("New product has been created!");
                 return RedirectToAction(nameof(Index));
             }
-            notyfService.Error("Something went wrong, please try again!");
+            notyfService.Error("Something went wrong, try again!");
 
             return View(productSizePrice);
         }
@@ -80,7 +80,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             {
                 return NotFound();
             }
-            notyfService.Success("New product's size and price have been edited");
+            notyfService.Success("The info has been updated!");
             return PartialView("Edit", productSizePrice);
         }
 
@@ -96,26 +96,10 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(productSizePrice);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ProductSizePriceExists(productSizePrice.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                notyfService.Information("The product's size and price info have been updated", 5);
-                return RedirectToAction(nameof(Index));
+                _context.Update(productSizePrice);
+                await _context.SaveChangesAsync();
             }
-            notyfService.Error("Something went wrong, please try again!");
+            notyfService.Error("Something went wrong, try again!");
             return View(productSizePrice);
         }
 
@@ -178,7 +162,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
 
         private bool ProductSizePriceExists(int id)
         {
-          return (_context.ProductSizePrice?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.ProductSizePrice?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

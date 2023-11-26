@@ -36,7 +36,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             if (Num == 0)
             {
                 ViewBag.Num = Num;
-                ViewBag.Message = "New order has been updated";
+                ViewBag.Message = "New order has been updated!";
             }
             Num = 0;
             return View();
@@ -102,7 +102,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             _context.SaveChanges();
 
             Num++;
-            _notyfService.Success("The order is deleted", 5);
+            _notyfService.Success("The order is deleted!", 5);
             return RedirectToAction(nameof(Index));
         }
         public void MarkDone(int id)
@@ -111,7 +111,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
             order.Status = "Done";
 
             _context.SaveChanges();
-            _notyfService.Success("The order is marked as done", 5);
+            _notyfService.Success("The order is marked as done!", 5);
         }
     }
 }

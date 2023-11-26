@@ -106,7 +106,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             _context.Orders.Remove(order);
             _context.SaveChanges();
 
-            _notyfService.Success("The order is deleted", 5);
+            _notyfService.Success("The order is deleted!", 5);
             return RedirectToAction("AllOrders");
         }
 
@@ -123,7 +123,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
 
                 return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", "OrdersList.csv");
             }
-            _notyfService.Warning("Lack of orders to export.", 5);
+            _notyfService.Warning("Lack of orders to export!", 5);
             return RedirectToAction("Index");
         }
 
@@ -171,7 +171,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "OrdersList.xlsx");
             }
 
-            _notyfService.Warning("Lack of orders to export.", 5);
+            _notyfService.Warning("Lack of orders to export!", 5);
             return RedirectToAction("Index");
         }
 

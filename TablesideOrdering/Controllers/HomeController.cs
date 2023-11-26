@@ -313,18 +313,18 @@ namespace TablesideOrdering.Controllers
                 {
                     _context.EmailPRs.Add(Email);
                     _context.SaveChanges();
-                    _notyfService.Success("Email is subcribed success", 5);
+                    _notyfService.Success("Email is subcribed success!", 5);
                 }
                 else
                 {
-                    _notyfService.Error("Email has been subcribed", 5);
+                    _notyfService.Error("Email has been subcribed!", 5);
                 };
             }
             else
             {
                 _context.EmailPRs.Add(Email);
                 _context.SaveChanges();
-                _notyfService.Success("Email is subcribed success", 5);
+                _notyfService.Success("Email is subcribed success!", 5);
             }
             return RedirectToAction("Index");
         }
@@ -539,7 +539,7 @@ namespace TablesideOrdering.Controllers
                     }
                     _context.VirtualCarts.Update(cart);
                     _context.SaveChanges();
-                    _notyfService.Success("Coupon is applies success!", 5);
+                    _notyfService.Success("Coupon is applied success!", 5);
                 }
                 else
                 {
@@ -771,7 +771,7 @@ namespace TablesideOrdering.Controllers
             _context.VirtualCarts.Update(carts);
             _context.SaveChanges();
 
-            _notyfService.Success("The product is deleted", 5);
+            _notyfService.Success("The product is deleted!", 5);
             return RedirectToAction("Cart", "Home");
         }
 
@@ -796,7 +796,7 @@ namespace TablesideOrdering.Controllers
                     from: new PhoneNumber(_SMSMessage.PhoneFrom),
                     body: cart.EmailMessage);
             }
-            _notyfService.Error("Can't receive phone message", 5);
+            _notyfService.Error("Can't receive phone message!", 5);
         }
 
         //MODIFY PHONE NUMBER FUNCTION
@@ -860,10 +860,10 @@ namespace TablesideOrdering.Controllers
             }
             else
             {
-                _notyfService.Warning("The cart is emtpy", 5);
+                _notyfService.Warning("The cart is emtpy!", 5);
                 return RedirectToAction("Cart");
             }
-            _notyfService.Error("Something went wrong, please try again!", 5);
+            _notyfService.Error("Something went wrong, try again!", 5);
             return RedirectToAction("Cart");
         }
 
@@ -1094,7 +1094,7 @@ namespace TablesideOrdering.Controllers
             }
             else
             {
-                _notyfService.Warning("Please fill all needed info", 5);
+                _notyfService.Warning("Please fill all needed info!", 5);
                 return RedirectToAction("CashCheckout");
             }
         }
@@ -1153,7 +1153,7 @@ namespace TablesideOrdering.Controllers
             }
             else
             {
-                _notyfService.Warning("Please fill all needed info", 5);
+                _notyfService.Warning("Please fill all needed info!", 5);
                 return RedirectToAction("VNPayCheckout");
             }
         }
@@ -1244,7 +1244,7 @@ namespace TablesideOrdering.Controllers
                 RefreshAll();
                 return RedirectToAction("ThankYou");
             }
-            _notyfService.Error("Something went wrong, please try again!");
+            _notyfService.Error("Something went wrong, try again!");
             return RedirectToAction("Index");
         }
 
@@ -1302,7 +1302,7 @@ namespace TablesideOrdering.Controllers
             }
             else
             {
-                _notyfService.Warning("Please fill all needed info", 5);
+                _notyfService.Warning("Please fill all needed info!", 5);
                 return Redirect("/Home/MomoCheckout");
             }
         }
@@ -1412,7 +1412,7 @@ namespace TablesideOrdering.Controllers
                 RefreshAll();
                 return RedirectToAction("ThankYou");
             }
-            _notyfService.Error("Something went wrong, please try again!");
+            _notyfService.Error("Something went wrong, try again!");
             return RedirectToAction("Index");
         }
 
@@ -1510,7 +1510,7 @@ namespace TablesideOrdering.Controllers
         public IActionResult History(HomeViewModel model)
         {
             HomeViewModel home = NavData();
-            if (model.OrderId != null && model.PhoneNumber != null)
+            if (model.OrderId != 0 && model.PhoneNumber != null)
             {
                 OrderTracking(home, model);
                 CreateVirtualCart(home.Customer.TableNo);
@@ -1523,8 +1523,11 @@ namespace TablesideOrdering.Controllers
         {
             List<Orders> olist = new List<Orders>();
             Orders order = _context.Orders.Where(o => o.OrderId == model.OrderId && o.PhoneNumber == model.PhoneNumber).FirstOrDefault();
-            olist.Add(order);
-            home.Orders = olist;
+            if (order != null)
+            {
+                olist.Add(order);
+                home.Orders = olist;
+            }
         }
 
         //ORDER DETAILS
