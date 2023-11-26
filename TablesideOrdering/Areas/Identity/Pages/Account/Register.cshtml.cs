@@ -25,6 +25,7 @@ using TablesideOrdering.Areas.Admin.Models;
 
 namespace TablesideOrdering.Areas.Identity.Pages.Account
 {
+    [Authorize]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<IdentityUser> _signInManager;
