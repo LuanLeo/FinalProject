@@ -46,7 +46,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
                 context.Add(discount);
                 await context.SaveChangesAsync();
 
-                notyfService.Success("New discount has been created");
+                notyfService.Success("New discount has been created!");
                 return RedirectToAction(nameof(Index));
             }
             notyfService.Error("Something went wrong, try again!");

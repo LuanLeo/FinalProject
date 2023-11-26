@@ -38,10 +38,26 @@
                         <label asp-for="@Model.Order.PhoneNumber" class="control-label">Customer Name: </label>
                         @Html.DisplayFor(model => model.Order.CusName)
                     </div>
-                    <div class="form-group">
+                    @if(Model.Order.OrderType=="Eat in")
+                    {
+                        <div class="form-group">
                         <label asp-for="@Model.Order.TableNo" class="control-label">Table Number: </label>
                         @Html.DisplayFor(model => model.Order.TableNo)
-                    </div>                    
+                        </div>
+                    }
+                    else if (Model.Order.OrderType == "Delivery")
+                    {
+                        <div class="form-group">
+                            <label asp-for="@Model.Order.TableNo" class="control-label">Address: </label>
+                            @Html.DisplayFor(model => model.Order.Address)
+                        </div>
+                    }else{
+                        <div class="form-group">
+                            <label asp-for="@Model.Order.TableNo" class="control-label">Pick-up Time: </label>
+                            @Html.DisplayFor(model => model.Order.PickTime)
+                        </div>
+                    }
+
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-danger">Delete</button>
                         <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>

@@ -94,7 +94,7 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
 
                 _context.SaveChanges();
 
-                _notyfService.Success("Table has been created!", 5);
+                _notyfService.Success("New table has been created!", 5);
                 return RedirectToAction(nameof(Index));
             }
             _notyfService.Error("Table has already existed!", 5);

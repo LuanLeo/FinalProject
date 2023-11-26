@@ -42,10 +42,10 @@ namespace TablesideOrdering.Areas.Admin.Controllers
             if (!_roleManager.RoleExistsAsync(model.Name).GetAwaiter().GetResult())
             {
                 _roleManager.CreateAsync(new IdentityRole(model.Name)).GetAwaiter().GetResult();
-                _notyfService.Success("New role has been created!");
+                _notyfService.Success("New role has been created");
                 return RedirectToAction(nameof(Index));
             }
-            _notyfService.Error("Something went wrong, try again!");
+            _notyfService.Error("Something went wrong, please try again!");
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> Delete(string id)
@@ -97,12 +97,12 @@ namespace TablesideOrdering.Areas.Admin.Controllers
 
                 //Delete roles
                 await _roleManager.DeleteAsync(roles);
-                _notyfService.Success("The role is deleted!", 5);
+                _notyfService.Success("The role is deleted", 5);
                 return RedirectToAction("Index");
             }
             else
             {
-                _notyfService.Warning("This role is already in use!");
+                _notyfService.Warning("This role is already in use");
             }
             return RedirectToAction("Index");
         }

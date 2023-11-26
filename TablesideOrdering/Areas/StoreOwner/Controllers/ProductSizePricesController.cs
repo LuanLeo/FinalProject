@@ -80,7 +80,6 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             {
                 return NotFound();
             }
-            notyfService.Success("The info has been updated!");
             return PartialView("Edit", productSizePrice);
         }
 
@@ -98,6 +97,9 @@ namespace TablesideOrdering.Areas.StoreOwner.Controllers
             {
                 _context.Update(productSizePrice);
                 await _context.SaveChangesAsync();
+
+                notyfService.Success("New product has been updated!");
+                return RedirectToAction(nameof(Index));
             }
             notyfService.Error("Something went wrong, try again!");
             return View(productSizePrice);

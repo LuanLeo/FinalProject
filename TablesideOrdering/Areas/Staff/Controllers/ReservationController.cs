@@ -14,10 +14,8 @@ namespace TablesideOrdering.Areas.Staff.Controllers
 
         public ReservationController(INotyfService notyfService, ApplicationDbContext context)
         {
-            
             _context = context;
             _notyfService = notyfService; 
-
         }
         public IActionResult Index(string term = "")
         {
@@ -27,7 +25,7 @@ namespace TablesideOrdering.Areas.Staff.Controllers
                 return View(res);
             }
             else { 
-                    var res = _context.Reservations.ToList();
+                var res = _context.Reservations.ToList();
                 return View(res);
             }
         }

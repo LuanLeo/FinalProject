@@ -207,7 +207,7 @@ namespace TablesideOrdering.Controllers
 
             if (CheckNotify == true)
             {
-                _notyfService.Success("Add to cart successfully", 5);
+                _notyfService.Success("Add to cart successfully!", 5);
                 CheckNotify = false;
             }
             return View(Homedata);
@@ -539,7 +539,7 @@ namespace TablesideOrdering.Controllers
                     }
                     _context.VirtualCarts.Update(cart);
                     _context.SaveChanges();
-                    _notyfService.Success("Coupon is applied success!", 5);
+                    _notyfService.Success("Coupon is applies success!", 5);
                 }
                 else
                 {
@@ -1094,7 +1094,7 @@ namespace TablesideOrdering.Controllers
             }
             else
             {
-                _notyfService.Warning("Please fill all needed info!", 5);
+                _notyfService.Warning("Please fill all info!", 5);
                 return RedirectToAction("CashCheckout");
             }
         }
@@ -1153,7 +1153,7 @@ namespace TablesideOrdering.Controllers
             }
             else
             {
-                _notyfService.Warning("Please fill all needed info!", 5);
+                _notyfService.Warning("Please fill all info!", 5);
                 return RedirectToAction("VNPayCheckout");
             }
         }
@@ -1302,7 +1302,7 @@ namespace TablesideOrdering.Controllers
             }
             else
             {
-                _notyfService.Warning("Please fill all needed info!", 5);
+                _notyfService.Warning("Please fill all info!", 5);
                 return Redirect("/Home/MomoCheckout");
             }
         }
