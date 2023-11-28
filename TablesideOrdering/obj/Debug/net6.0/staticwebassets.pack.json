@@ -61,8 +61,16 @@
       "PackagePath": "staticwebassets\\PaymentMethod\\VNPay.png"
     },
     {
+      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\Cappuccino.jpg",
+      "PackagePath": "staticwebassets\\ProductImage\\Cappuccino.jpg"
+    },
+    {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\Use Case (Total System).PNG",
       "PackagePath": "staticwebassets\\ProductImage\\Use Case (Total System).PNG"
+    },
+    {
+      "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\ProductImage\\iced-tea.jpg",
+      "PackagePath": "staticwebassets\\ProductImage\\iced-tea.jpg"
     },
     {
       "Id": "C:\\Users\\USER\\Desktop\\FinalProject\\TablesideOrdering\\wwwroot\\QR\\QRCode-Table0.png",

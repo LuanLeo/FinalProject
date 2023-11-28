@@ -126,28 +126,33 @@ namespace TablesideOrdering.Controllers
         {
             var info = GetUser();
             var cart = _context.VirtualCarts.FirstOrDefault(i => i.TableId == info.TableNo);
-            
-
-            if (term == "Delivery")
+            if (cart != null)
             {
-                cart.OrderType = "Delivery";
+                if (term == "Delivery")
+                {
+                    cart.OrderType = "Delivery";
 
-                _context.VirtualCarts.Update(cart);
-                _context.SaveChanges();
+                    _context.VirtualCarts.Update(cart);
+                    _context.SaveChanges();
+                }
+                else if (term == "Carry out")
+                {
+                    cart.OrderType = "Carry out";
+
+                    _context.VirtualCarts.Update(cart);
+                    _context.SaveChanges();
+                }
+                else if (term == "Eat in")
+                {
+                    cart.OrderType = "Eat in";
+
+                    _context.VirtualCarts.Update(cart);
+                    _context.SaveChanges();
+                }
             }
-            else if (term == "Carry out")
+            else
             {
-                cart.OrderType = "Carry out";
-
-                _context.VirtualCarts.Update(cart);
-                _context.SaveChanges();
-            }
-            else if (term == "Eat in")
-            {
-                cart.OrderType = "Eat in";
-
-                _context.VirtualCarts.Update(cart);
-                _context.SaveChanges();
+                TableCheck(info.TableNo);
             }
         }
 
