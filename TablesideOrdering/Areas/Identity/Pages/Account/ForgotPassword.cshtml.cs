@@ -30,8 +30,6 @@ namespace TablesideOrdering.Areas.Identity.Pages.Account
 
         private readonly Email _email;
 
-        private static string LinkURL;
-
         public INotyfService _notyfService { get; }
         public ForgotPasswordModel(UserManager<IdentityUser> userManager, IEmailSender emailSender, INotyfService notyfService, IOptions<Email> email, SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
         {
@@ -78,13 +76,13 @@ namespace TablesideOrdering.Areas.Identity.Pages.Account
 
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                LinkURL = Url.Page(
+                string LinkURL = Url.Page(
                     "/Account/ResetPassword",
                     pageHandler: null,
                     values: new { area = "Identity", code },
                     protocol: Request.Scheme);
 
-                SendMail();
+                SendMail(LinkURL);
                 _notyfService.Success("The email has been sent!", 5);
                 return Page();
             }
@@ -105,7 +103,7 @@ namespace TablesideOrdering.Areas.Identity.Pages.Account
             }
         }
 
-        public void SendMail()
+        public void SendMail(string LinkURL)
         {
             Email data = new Email();
             data.EmailFrom = _email.EmailFrom;
