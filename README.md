@@ -8,10 +8,11 @@ The system is a secure web-enabled role-based platform for users to place orders
 ## Application Image
 
 ### Login Form
-![Login](https://user-images.githubusercontent.com/105436645/229393213-633020a1-9c5a-4cce-9365-97f599028503.png)
+![image_2024-01-11_001415196](https://github.com/LuanLeo/FinalProject/assets/117885072/6d91ae55-9da9-498f-84be-7a42444adaf6)
+
 
 ### Home Page
-![Home Page](https://user-images.githubusercontent.com/97430041/229363819-55ab0d6f-ceee-4c3b-b460-87b23ffd50ab.png)
+![image](https://github.com/LuanLeo/FinalProject/assets/117885072/0e0987d2-35a1-44da-9645-c988c4655097)
 
 ## Roles
 
