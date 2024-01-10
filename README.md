@@ -1,9 +1,9 @@
-# L&L Coffee - A Ordering system for customers to order delivery and order at the table.
+# L&L Coffee - An ordering system for customers to order delivery and order at the table.
 This project is our final project at the University of Greenwich.
 
 ## Overview
 
-The system is a secure web-enabled role-based platform for users to place orders as well as manage the cafe. Including 4 user groups: Admin, employees, store owners and customers.
+The system is a secure web-enabled role-based platform for users to place orders as well as manage the cafe. Including 4 user groups: Admin, employees, store owners, and customers.
 
 ## Application Image
 
@@ -17,7 +17,7 @@ The system is a secure web-enabled role-based platform for users to place orders
 ## Roles
 
 - **Admin:** Can access to any account.
-- **Staff:** Manages the process of placed orders.
+- **Staff:** Manages the process of the placed orders.
 - **Store owner:** Can manage the products and view statistical charts.
 - **Customer:** Can add products to the cart and then place an order.
 
@@ -27,26 +27,26 @@ The system is a secure web-enabled role-based platform for users to place orders
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Admin    | Can manage all roles and accounts. Can access all accounts                                                                                                |
 | Staff    | Can manage all placed orders. Can reply to messages from customers using the service at the table.  |
-| Store owner | Can manage products, categories, sizes, and prices. Can view all completed orders. Can view charts of revenue and the most popular categories by day, month or year.  |
+| Store owner | Can manage products, categories, sizes, and prices. Can view all completed orders. Can view charts of revenue and the most popular categories by day, month, or year.  |
 | Customer    | Can view menu, add to cart, place order with many payment methods, and chat with staff. |
 ## Features
 
 | Feature               | Description                                                                                                                                                         |
 | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|  Menu Viewing  | Customer can see all products in menu page and put them in to their cart.|
-|  Search, Sort and Filter products   | Customer can search for specific products by name, sort products by price and name or filter products by size or category.     |
-| Various payment methods       | Customer can place their order with one of 3 payment methods: cash, MoMo or VNPay.        |
+|  Menu Viewing  | Customers can see all products on the menu page and put them into their cart.|
+|  Search, Sort, and Filter products   | Customers can search for specific products by name, sort products by price and name, or filter products by size or category.     |
+| Various payment methods       | Customer can place their order with one of 3 payment methods: cash, MoMo, or VNPay.        |
 |Send SMS   | After placing an order, there will be an SMS message sent to the customer to confirm the order has been placed successfully and a text message when the order is ready.|
 | E-invoice email   | Customers can optionally enter email to receive an electronic invoice when entering order information.|
 | Tracking order          | Customers can track their order by Order ID and their phone number to see order status.  |
 | Chat with staff    | Eat-in customers can chat with staff by using SignalR.  |
-| Real-time order receiving     | Staff can receive new order with reload page.    |
-| Update order status  | Order status can be switched based on real life status by staff.                          |
-| Manage products, categories, sizes and price   | CRUD products, category sizes and price is available for store owner account.|
-| Manage tables   | Store owner can use CRUD table functions and create new QR code for each table when create table. |
-| Download QR code (all/each table)| Store owner can download all available QR code or each QR code at a time.|
+| Real-time order receiving     | Staff can receive new orders without reloading the page.    |
+| Update order status  | Order status can be switched based on real-life status by staff.                          |
+| Manage products, categories, sizes, and prices   | CRUD products, category sizes, and prices are available for store owner accounts.|
+| Manage tables   | Store owners can use CRUD table functions and create new QR codes for each table when creating a table. |
+| Download QR code (all/each table)| Store owner can download all available QR codes or each QR code at a time.|
 | Download CSV and Excel | CSV/Excel includes data of all orders. |
-| Role and account manage| Only admin can create new account and assign role for that account. |
+| Role and account management | Only the admin can create a new account and assign a role for that account. |
 ## Reports
 
 ### Statistics
@@ -57,13 +57,13 @@ The system is a secure web-enabled role-based platform for users to place orders
 
 ### Exception Reports
 
-- Place order with empty cart
+- Place an order with the empty cart
 - Place order without entering information
 - Place order without selecting payment methods
 
 ## Statistical Analysis
 
-Statistical analysis such as Top 3 popular products by day/month/year is available.
+Statistical analysis such as the Top 3 popular products by day/month/year is available.
 
 ## Technology Stack
 
@@ -76,4 +76,5 @@ The technology stack for this system includes:
 ## Contributors
 
 Tran Phan Phi Long 
+
 Dinh Thanh Luan
